@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Endogenous Dynamics of the Continuum within an Open Nonlinear Dynamic System"
+authors:
+
+- family-names: "Marnov"
+  given-names: "Maksym"
+  abstract: "A formal theorem and mathematical framework describing the endogenous dynamics of the Continuum within an open nonlinear dynamic system. The work treats Matter of Space Time as a dynamic process of structural self-organization of various forms, levels, and transitional states in the observable dynamics of the Continuum."
+  keywords:
+- "Endogenous dynamics"
+- "Continuum"
+- "Open nonlinear dynamic systems"
+- "Structural self-organization"
+- "Endogenous structural coherence"
+- "Resonance window"
+- "Cubic saturation"
+- "Volumetric dissipation of impulse"
+  license: "CC-BY-4.0"
+  repository-code: "https://github.com/YOUR-USERNAME/Endogenous-Dynamics-of-the-Continuum"
+  version: "1.0.0"
+  date-released: "2026-06-06"
+  preferred-citation:
+  type: article
+  title: "Endogenous Dynamics of the Continuum within an Open Nonlinear Dynamic System"
+  authors:
+  - family-names: "Marnov"
+    given-names: "Maksym"
+    year: 2026
+    notes: "Russian semantic control text with English literal academic translation. GitHub repository release; DOI to be added after Zenodo archiving."
