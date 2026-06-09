@@ -354,29 +354,163 @@ grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
 EN — Repository Structure
 
+The repository is structured as a theorem-algorithmic work on the open nonlinear dissipative dynamic structure of the Continuum observed by us.
+
+The repository structure is divided into four interconnected layers:
+
+1. entry publication layer;
+2. theorem-descriptive layer;
+3. mathematical-formal layer;
+4. algorithmic modular layer.
+
 README.md — bilingual entry file of the repository.
 
-LICENSE — publication license.
+LICENSE.md — publication license.
 
 CITATION.cff — citation file.
 
-endogenous_dynamics_RU.md — Russian semantic control text of the theorem.
-
-endogenous_dynamics_EN.md — English literal academic translation.
-
-glossary_RU.md — Russian glossary of symbols.
-
-glossary_EN.md — English glossary of symbols.
-
-mathematical_apparatus_RU.md — Russian mathematical apparatus.
-
-mathematical_apparatus_EN.md — English mathematical apparatus.
-
-boundary_conditions_RU.md — boundary conditions and dynamic interface.
-
-boundary_conditions_EN.md — English version of the boundary conditions.
-
 release_notes.md — release description.
+
+theorem_RU_EN/README.md — index of the bilingual structure of the theorem-algorithmic work.
+
+theorem_RU_EN/chapter_01/chapter_01_RU.md
+theorem_RU_EN/chapter_01/chapter_01_EN.md
+
+CHAPTER 1. ONTOLOGICAL FOUNDATIONS OF THE CONTINUUM
+
+This chapter defines the initial ontological foundation of the Continuum as the open dynamic system observed by us and as the primary medium of various forms and levels of structural self-organization of Matter of Space Time.
+
+theorem_RU_EN/chapter_02/chapter_02_RU.md
+theorem_RU_EN/chapter_02/chapter_02_EN.md
+
+CHAPTER 2. STRUCTURAL SELF-ORGANIZATION OF MATTER OF SPACE TIME
+
+This chapter unfolds structural self-organization of Matter of Space Time as a manifestation of the endogenous dynamics of the Continuum and introduces the phase-parametric state of various forms, levels, and transitional states.
+
+theorem_RU_EN/chapter_03/chapter_03_RU.md
+theorem_RU_EN/chapter_03/chapter_03_EN.md
+
+CHAPTER 3. LAYERED TOPOLOGY OF THE MEDIUM OF THE CONTINUUM
+
+This chapter describes the layered topology of the medium of the Continuum, po-tactive connectedness, dissipative trace, binding energy, the admissible state-space domain Omega, and mechanisms of coherent resonance coupling.
+
+theorem_RU_EN/chapter_04/chapter_04_RU.md
+theorem_RU_EN/chapter_04/chapter_04_EN.md
+
+CHAPTER 4. PHOTON AS THE LIMITING DYNAMIC CHANNEL OF PHASE ALIGNMENT
+
+This chapter describes the photon not as a moving object, but as the limiting massless dynamic channel of phase alignment, exchange, and coherent connection of the Continuum.
+
+theorem_RU_EN/chapter_05/chapter_05_RU.md
+theorem_RU_EN/chapter_05/chapter_05_EN.md
+
+CHAPTER 5. NUCLEAR SYNTHESIS AS A TRANSITION BETWEEN DYNAMIC PROCESSES OF STRUCTURAL SELF-ORGANIZATION
+
+This chapter considers nuclear synthesis as a phase transition between dynamic processes of structural self-organization of Matter of Space Time.
+
+theorem_RU_EN/chapter_06/chapter_06_RU.md
+theorem_RU_EN/chapter_06/chapter_06_EN.md
+
+CHAPTER 6. ATOMIC NUCLEUS AS A SUPERDENSE DYNAMIC PROCESS OF STRUCTURAL SELF-ORGANIZATION
+
+This chapter describes the atomic nucleus as a superdense dynamic process of structural self-organization retained through internal coherence, phase coupling, and binding energy.
+
+theorem_RU_EN/chapter_07/chapter_07_RU.md
+theorem_RU_EN/chapter_07/chapter_07_EN.md
+
+CHAPTER 7. THE SUN AS THE MACRO-NUCLEUS OF THE SOLAR SYSTEM
+
+This chapter considers the Sun as the macro-nucleus of the Solar System and as a volumetric plasma macroresonator through which scale mechanisms of phase-energy coupling are unfolded.
+
+theorem_RU_EN/chapter_08/chapter_08_RU.md
+theorem_RU_EN/chapter_08/chapter_08_EN.md
+
+CHAPTER 8. FROM ATOM TO SOLAR SYSTEM
+
+This chapter connects the atomic, molecular, plasma, and star-planetary levels as different scale manifestations of recursive po-tactive structural self-organization of Matter of Space Time.
+
+theorem_RU_EN/chapter_09/chapter_09_RU.md
+theorem_RU_EN/chapter_09/chapter_09_EN.md
+
+CHAPTER 9. ENDOGENOUS DYNAMICS OF THE CONTINUUM WITHIN AN OPEN NONLINEAR DYNAMIC SYSTEM
+
+This chapter assembles the general theorem formulation of the endogenous dynamics of the Continuum, the conditions of endogenous dynamic stability EDS, endogenous dynamic criticality EDC, recursive inheritance, phase-coherent retention, and transitions between forms, levels, and transitional states of Matter of Space Time.
+
+theorem_RU_EN/glossary/glossary_RU.md
+theorem_RU_EN/glossary/glossary_EN.md
+
+The glossary fixes the key terms, symbols, and distinctions: R(t), phase synchronization, phase coherence, C(t), P(t), Phi, Omega(t), T_int, J_flux, rho_cont, resilience, and other working categories of EDK.
+
+theorem_RU_EN/mathematical_apparatus/mathematical_apparatus_RU.md
+theorem_RU_EN/mathematical_apparatus/mathematical_apparatus_EN.md
+
+The mathematical apparatus contains the formulas of endogenous dynamic stability EDS, endogenous dynamic criticality EDC, recursive inheritance, phase-coherent folding, cubic nonlinear saturation of volume, dynamics of the exchange flow, and geometry of the resonance window of phase transition.
+
+theorem_RU_EN/boundary_conditions/boundary_conditions_RU.md
+theorem_RU_EN/boundary_conditions/boundary_conditions_EN.md
+
+The boundary conditions describe the dynamic interface of manifestation, conditions of form retention, tangential and normal contours of the gradient of manifested mass, loss of phase coherence, and transition to demanifestation.
+
+THEORY_TENSOR_MATRIX_RU.md
+THEORY_TENSOR_MATRIX_EN.md
+
+The tensor matrix files define the description of the dynamic interface tensor T_int, its isotropic and deviatoric parts, field coupling, geophysical extension, and connection with cascade resilience of the model.
+
+requirements.txt
+
+Dependency file of the algorithmic layer.
+
+Base dependency:
+
+numpy
+
+framework_core.py
+
+Base quantum-phase core of EDK.
+
+The module contains the initial computational layer for C(t), M(t), T_int, J_flux, and Marnov Protocol.
+
+module_solar_synthesis/solar_synthesis_resonator.py
+
+Independent macrolevel of solar synthesis.
+
+The module defines solar_flux and macro forcing as macroscopic forcing parameters that can be connected to the general through-matrix.
+
+module_wave_genetics/wave_genetics_dna_oscillator.py
+
+Biological wave layer.
+
+The module depends on framework_core.py.
+
+Causal chain:
+
+J_flux → biophoton_signal → phantom_coherence
+
+module_molecular_chemistry/molecular_phase_chemistry.py
+
+Molecular-chemical layer.
+
+The module depends on framework_core.py and module_wave_genetics.
+
+Causal chain:
+
+biophoton_signal → medium_memory_tensor → binding_matrix
+
+module_planetary_resonance/schumann_planetary_resonator.py
+
+Planetary resonance layer.
+
+The module depends on framework_core.py, module_solar_synthesis, module_wave_genetics, and module_molecular_chemistry.
+
+Causal chain:
+
+Schumann forcing → r_geo → cascade stabilization
+
+continuum_core_engine.py
+
+System orchestrator of EDK.
+
+The module assembles framework_core.py, solar_synthesis, wave_genetics, molecular_chemistry, and planetary_resonance into a unified through theorem-algorithmic matrix.
 
 ---
 
