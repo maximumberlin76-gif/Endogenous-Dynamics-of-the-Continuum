@@ -166,17 +166,17 @@ It is precisely endogenous structural coherence that determines the ability of o
 
 ---
 
-#### 1.6. Loss of Endogenous Structural Coherence as the Condition of Loss of Dynamic Stability of Observed Forms, Levels, and Transitional States of Matter of Space Time
+#### 1.6. Loss of Endogenous Structural Coherence as the Condition for the Loss of Dynamic Resilience of Observed Forms, Levels, and Transitional States of Matter of Space Time
 
-If endogenous structural coherence determines the ability of observed forms, levels, and transitional states of Matter of Space Time to preserve dynamic stability, then the following fundamental question arises:
+If endogenous structural coherence determines the ability of observed forms, levels, and transitional states of Matter of Space Time to preserve dynamic resilience, then the following fundamental question arises:
 
 what happens when endogenous structural coherence begins to be destroyed?
 
-Within the framework of the open nonlinear dissipative dynamic system of the Continuum, the dynamic stability of observed forms, levels, and transitional states of Matter of Space Time is not an absolute static magnitude.
+Within the framework of the open nonlinear dissipative dynamic system of the Continuum, the dynamic resilience of observed forms, levels, and transitional states of Matter of Space Time is not an absolute static magnitude.
 
 It is the result of continuous dynamic retention of these forms, levels, and transitional states in the total endogenous dynamics of the Continuum.
 
-Consequently, the destruction of endogenous structural coherence leads to a decrease in the ability of observed forms, levels, and transitional states of Matter of Space Time to preserve their own dynamic stability.
+Consequently, the destruction of endogenous structural coherence leads to a decrease in the ability of observed forms, levels, and transitional states of Matter of Space Time to preserve their own dynamic resilience.
 
 At the initial stages, the destruction of endogenous structural coherence manifests as an increase in internal losses, misalignment of processes, growth of sensitivity to perturbations, and a change in the qualitative characteristics of endogenous drift.
 
@@ -208,7 +208,7 @@ The condition
 
 Phi(...) -> 0
 
-means the loss of the ability of observed forms, levels, and transitional states of Matter of Space Time to preserve their own dynamic stability.
+means the loss of the ability of observed forms, levels, and transitional states of Matter of Space Time to preserve their own dynamic resilience.
 
 Consequently, under
 
@@ -221,8 +221,6 @@ After the loss of the ability for dynamic retention, these forms, levels, and tr
 Thus, the disintegration of observed forms, levels, and transitional states of Matter of Space Time represents not the destruction of the process, but a phase transition within the dynamic process of structural self-organization of the Continuum.
 
 Therefore, within process logic, birth, existence, degradation, disintegration, and the subsequent formation of new observed forms, levels, and transitional states of Matter of Space Time are various phases of a unified continuous dynamic process of structural self-organization of the Continuum.
-
----
 
 ---
 
@@ -449,4 +447,3 @@ Phi(...) -> 0
 Таким образом, распад наблюдаемых форм, уровней и переходных состояний Материи Пространства Времени представляет собой не уничтожение процесса, а фазовый переход внутри динамического процесса структурной самоорганизации Континуума.
 
 Поэтому в рамках процессной логики рождение, существование, деградация, распад и последующее формирование новых наблюдаемых форм, уровней и переходных состояний Материи Пространства Времени являются различными фазами единого непрерывного динамического процесса структурной самоорганизации Континуума.
-
