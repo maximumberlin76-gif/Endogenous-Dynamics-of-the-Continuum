@@ -22,23 +22,6 @@ The English version is the literal academic translation for international public
 
 ## EN — Folder Structure
 
-- `chapter_01/` — Chapter 1. Ontological Foundations of the Continuum.
-
-- `chapter_02/` — Chapter 2. Structural Self-Organization of Matter of Space Time.
-
-- `chapter_03/` — Chapter 3. Layered Topology of the Medium of the Continuum.
-
-- `chapter_04/` — Chapter 4. Photon as the Limiting Dynamic Channel of Phase Alignment.
-
-- `chapter_05/` — Chapter 5. Resonance Window Theorem and Recursive Dynamic Retention.
-
-- `chapter_06/` — Chapter 6. Po-Tactive Recursive Balance and Resilience of the Wave Monolith in the Gauge Fields of the Continuum.
-
-- `chapter_07/` — Chapter 7. The Law of Fractal Nestedness as the Basis of Scale Isomorphism, Evolution, and De-Evolution of Various Forms of Structural Self-Organization of Matter of Space Time in the Continuum.
-
----
-## EN — Folder Structure
-
 - `chapter_01/` — Chapter 1. Limits of Applicability of Einstein’s Relativistic Invariant and the Principles and Mechanisms of the Endogenous Dynamics of the Continuum.
 
 - `chapter_02/` — Chapter 2. Quantum Multipletness as the Basis of Observable Forms, Levels, and Transitional States of Structural Self-Organization of Matter of Space Time.
@@ -66,32 +49,6 @@ The English version is the literal academic translation for international public
 - `mathematical_apparatus/` — Mathematical apparatus, formulas, operators, and invariants.
 
 - `boundary_conditions/` — Boundary conditions, dynamic interface of manifestation, interface tensor, and related retention conditions.
-
----
-
-## EN — File Naming
-
-Each chapter is placed in a separate subfolder in two versions:
-
-- `chapter_XX_EN.md` — English literal academic translation.
-
-- `chapter_XX_RU.md` — Russian semantic control text.
-
-Example:
-
-- `chapter_01/chapter_01_EN.md`
-
-- `chapter_01/chapter_01_RU.md`
-
-Additional sections:
-
-- `mathematical_apparatus/mathematical_apparatus_EN.md`
-
-- `mathematical_apparatus/mathematical_apparatus_RU.md`
-
-- `boundary_conditions/boundary_conditions_EN.md`
-
-- `boundary_conditions/boundary_conditions_RU.md`
 
 ---
 
