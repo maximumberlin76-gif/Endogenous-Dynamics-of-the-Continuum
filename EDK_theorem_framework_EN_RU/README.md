@@ -1,4 +1,4 @@
-# EDK_theorem_framework_EN_RU
+### EDK_theorem_framework_EN_RU
 
 ## EN — Theorem-Algorithmic Framework
 
