@@ -36,6 +36,23 @@ The English version is the literal academic translation for international public
 
 - `chapter_07/` — Chapter 7. The Law of Fractal Nestedness as the Basis of Scale Isomorphism, Evolution, and De-Evolution of Various Forms of Structural Self-Organization of Matter of Space Time in the Continuum.
 
+---
+## EN — Folder Structure
+
+- `chapter_01/` — Chapter 1. Limits of Applicability of Einstein’s Relativistic Invariant and the Principles and Mechanisms of the Endogenous Dynamics of the Continuum.
+
+- `chapter_02/` — Chapter 2. Quantum Multipletness as the Basis of Observable Forms, Levels, and Transitional States of Structural Self-Organization of Matter of Space Time.
+
+- `chapter_03/` — Chapter 3. Layered Topology of the Medium of the Continuum.
+
+- `chapter_04/` — Chapter 4. Photon as the Limiting Dynamic Channel of Phase Alignment.
+
+- `chapter_05/` — Chapter 5. Nuclear Synthesis as a Transition Between Dynamic Processes of Structural Self-Organization of Various Forms, Levels, and Transitional States of Matter of Space Time.
+
+- `chapter_06/` — Chapter 6. Atomic Nucleus as a Superdense Dynamic Process of Structural Self-Organization of Various Forms, Levels, and Transitional States of Matter of Space Time.
+
+- `chapter_07/` — Chapter 7. The Law of Fractal Nestedness as the Basis of Scale Isomorphism, Evolution, and De-Evolution of Various Forms of Structural Self-Organization of Matter of Space Time in the Continuum.
+
 - `chapter_08/` — Chapter 8. Planetary, Stellar, and Galactic Structural Domains of the Continuum as Levels of Structural Self-Organization of Matter of Space Time.
 
 - `chapter_09/` — Chapter 9. Multidimensional Levels of Structural Self-Organization of the Continuum and Their Physical Interpretation.
@@ -100,17 +117,17 @@ EN → RU
 
 ## RU — Структура папки
 
-- `chapter_01/` — Глава 1. Онтологические основания Континуума.
+- `chapter_01/` — Глава 1. Границы применимости релятивистского инварианта Эйнштейна и принципы и механизмы эндогенной динамики Континуума.
 
-- `chapter_02/` — Глава 2. Структурная самоорганизация Материи Пространства Времени.
+- `chapter_02/` — Глава 2. Квантовая мультиплетность как основание наблюдаемых форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени.
 
 - `chapter_03/` — Глава 3. Послойная топология среды Континуума.
 
 - `chapter_04/` — Глава 4. Фотон как предельный динамический канал фазового согласования.
 
-- `chapter_05/` — Глава 5. Теорема Резонансного Окна и рекурсивное динамическое удержание.
+- `chapter_05/` — Глава 5. Ядерный синтез как переход между динамическими процессами структурной самоорганизации различных форм, уровней и переходных состояний Материи Пространства Времени.
 
-- `chapter_06/` — Глава 6. Потактовый рекурсивный баланс и устойчивость волнового монолита в калибровочных полях Континуума.
+- `chapter_06/` — Глава 6. Ядро атома как сверхплотный динамический процесс структурной самоорганизации различных форм, уровней и переходных состояний Материи Пространства Времени.
 
 - `chapter_07/` — Глава 7. Закон фрактальной вложенности как основа масштабного изоморфизма, эволюции и деэволюции различных форм структурной самоорганизации Материи Пространства Времени в Континууме.
 
