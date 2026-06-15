@@ -12,11 +12,15 @@ This protocol layer is not a completed physical theory in the academic sense.
 
 It represents a theorem-algorithmic framework based on mathematically confirmed consequences, numerical verification of invariants and further modular formalization of the model.
 
+---
+
 ## 1. System Definition
 
 Within the EDK framework, the observed manifested structure is considered not as a static object, but as a locally retained dynamic regime.
 
-Basic chain:
+The manifested form arises through a full causal chain of phase-layer organization, interface retention, mass anchoring, massless exchange, dissipation and further biological / molecular modulation.
+
+Basic direct chain:
 
 multiplet of phase layers → operator Φ → phase coherence → C(t) → T_int → M(t) → J_flux → biological / molecular modulation
 
@@ -26,19 +30,23 @@ C(t) — general endogenous structural coherence of the system.
 
 P(t) — external parasitic pressure of the medium.
 
-T_int — dynamic interface tensor of form manifestation.
+T_int — dynamic interface tensor of form manifestation, coupling and retention.
 
-M(t) — locally retained invariant mass anchor.
+M(t) — locally retained invariant mass anchor of the manifested form.
 
-J_flux — massless dissipative flow after demanifestation or energy redistribution.
+J / J_flux — massless channel of exchange, dissipation, energy redistribution and structural influence, connecting the retained interface T_int, the manifested mass anchor M(t), demanifestation processes, biological / molecular modulation and background modes of the Continuum.
 
 Key criterion of dynamic stability:
 
 C(t) > P(t)
 
-If endogenous structural coherence exceeds external parasitic pressure, the system is capable of retaining the manifested form.
+If endogenous structural coherence exceeds external parasitic pressure, the system is capable of retaining the manifested form through T_int, preserving M(t) and maintaining the exchange / dissipation channel J_flux without loss of the retained dynamic regime.
 
-If pressure exceeds coherence, interface degradation, loss of retention and demanifestation of the form begin.
+If pressure exceeds coherence, the reverse chain begins:
+
+loss of C(t) → degradation of T_int → demanifestation of M(t) → growth of J_flux → return into background modes of the Continuum
+
+In this reverse process, J_flux is not an optional consequence, but the mandatory massless channel through which energy, phase influence and structural influence are redistributed after the loss of local interface retention.
 
 ---
 
@@ -273,11 +281,15 @@ loss of C(t) → degradation of T_int → demanifestation of M(t) → growth of 
 
 Он представляет теоремно-алгоритмический каркас, основанный на математически подтверждённых следствиях, численной проверке инвариантов и дальнейшей модульной формализации модели.
 
+---
+
 ## 1. Системное определение
 
 В рамках EDK наблюдаемая манифестированная структура рассматривается не как статический объект, а как локально удержанный динамический режим.
 
-Базовая цепочка:
+Манифестированная форма возникает через полную причинную цепочку организации фазовых слоёв, удержания интерфейса, якорения массы, безмассового обмена, диссипации и дальнейшей биологической / молекулярной модуляции.
+
+Базовая прямая цепочка:
 
 мультиплет фазовых слоёв → оператор Φ → фазовая когерентность → C(t) → T_int → M(t) → J_flux → биологическая / молекулярная модуляция
 
@@ -287,19 +299,23 @@ C(t) — общая эндогенная структурная когерент
 
 P(t) — внешнее паразитное давление среды.
 
-T_int — динамический интерфейсный тензор манифестации формы.
+T_int — динамический интерфейсный тензор манифестации, сопряжения и удержания формы.
 
-M(t) — локально удержанный инвариантный якорь массы.
+M(t) — локально удержанный инвариантный якорь массы манифестированной формы.
 
-J_flux — безмассовый диссипативный поток после деманифестации или перераспределения энергии.
+J / J_flux — безмассовый канал обмена, диссипации, перераспределения энергии и структурного влияния, связывающий удержанный интерфейс T_int, манифестированный якорь массы M(t), процессы деманифестации, биологическую / молекулярную модуляцию и фоновые моды Континуума.
 
 Ключевой критерий динамической устойчивости:
 
 C(t) > P(t)
 
-Если эндогенная структурная когерентность превышает внешнее паразитное давление, система способна удерживать манифестированную форму.
+Если эндогенная структурная когерентность превышает внешнее паразитное давление, система способна удерживать манифестированную форму через T_int, сохранять M(t) и поддерживать канал обмена / диссипации J_flux без потери удержанного динамического режима.
 
-Если давление превышает когерентность, начинается деградация интерфейса, потеря удержания и деманифестация формы.
+Если давление превышает когерентность, начинается обратная цепочка:
+
+потеря C(t) → деградация T_int → деманифестация M(t) → рост J_flux → возврат в фоновые моды Континуума
+
+В этом обратном процессе J_flux является не опциональным следствием, а обязательным безмассовым каналом, через который энергия, фазовое влияние и структурное влияние перераспределяются после потери локального интерфейсного удержания.
 
 ---
 
