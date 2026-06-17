@@ -8,10 +8,10 @@ class MarnovOrganicMatrixGenerator:
         self.dx = dx
         self.shape = (grid_size, grid_size, grid_size)
 
-        # Инициализируем матрицу плотности органического вещества (био-матрица)
+        # Initialize the density matrix of organic matter: the bio-matrix.
         self.bio_density = np.zeros(self.shape)
 
-        # Начальная точка инициации ("клетка-предок" или волновой фокус в центре)
+        # Initial point of initiation: ancestor cell or wave focus at the center.
         self.bio_density[
             grid_size // 2,
             grid_size // 2,
@@ -20,10 +20,10 @@ class MarnovOrganicMatrixGenerator:
 
     def generate_asymmetric_c3_field(self, epsilon=0.236068):
         """
-        Генерация 6D кубического замка C^3 с золотым сечением (иррациональностью).
+        Generate the 6D cubic phase lock C^3 with Golden Ratio irrationality.
 
-        epsilon = 0.236068
-        производная от Золотого Сечения, обеспечивающая живую асимметрию.
+        epsilon = 0.236068 is derived from the Golden Ratio
+        and introduces living asymmetry into the field.
         """
         x, y, z = np.indices(self.shape)
 
@@ -31,33 +31,34 @@ class MarnovOrganicMatrixGenerator:
         cy = self.grid_size // 2
         cz = self.grid_size // 2
 
-        # Строим базовый тор
+        # Build the base toroidal field.
         r_tor = np.sqrt((x - cx) ** 2 + (y - cy) ** 2)
         d_tor = np.sqrt((r_tor - self.grid_size // 5) ** 2 + (z - cz) ** 2)
 
-        # Вводим иррациональную угловую асимметрию
+        # Introduce irrational angular asymmetry.
         theta = np.arctan2(y - cy, x - cx)
         asymmetry_factor = 1.0 + epsilon * np.sin(3.0 * theta + z * 0.1)
 
-        # Результирующий кубический замок удержания объема
-        C3 = asymmetry_factor * np.exp(-(d_tor ** 2) / (2.0 * 3.0 ** 2))
+        # Resulting cubic phase lock of volumetric retention.
+        c3_field = asymmetry_factor * np.exp(-(d_tor ** 2) / (2.0 * 3.0 ** 2))
 
-        return C3
+        return c3_field
 
-    def grow_organic_matrix(self, C3, steps=10):
+    def grow_organic_matrix(self, c3_field, steps=10):
         """
-        Рекурсивный потактовый рост био-структуры.
+        Perform recursive tact-by-tact growth of the bio-structure.
 
-        Каждый шаг учитывает нелинейную диффузию и иррациональное давление C^3.
+        Each step includes nonlinear diffusion and irrational pressure
+        introduced by the asymmetric C^3 field.
         """
         dt = 0.1
-        D_coef = 0.15  # Коэффициент диффузии континуума
+        diffusion_coefficient = 0.15
 
-        for step in range(steps):
-            # Вычисляем пространственный Лапласиан био-плотности центральными разностями
+        for _ in range(steps):
+            # Compute the spatial Laplacian of bio-density using central differences.
             laplacian = np.zeros_like(self.bio_density)
 
-            # Стандартный сдвиг для расчета диффузии в 3D
+            # Standard 3D diffusion stencil.
             for axis in range(3):
                 laplacian += (
                     np.roll(self.bio_density, 1, axis=axis)
@@ -65,21 +66,26 @@ class MarnovOrganicMatrixGenerator:
                     - 2.0 * self.bio_density
                 ) / (self.dx ** 2)
 
-            # Уравнение EDS живой матрицы:
-            # Growth = Диффузия + Удержание(C^3) - Иррациональное насыщение
-            # Нелинейный член (bio_density^2) ограничивает избыточный рост,
-            # формируя мембраны / границы
-            growth_rate = D_coef * laplacian + 2.0 * C3 * (1.0 - self.bio_density)
+            # EDS equation of the living matrix:
+            # growth = diffusion + retention through C^3 - nonlinear saturation.
+            # The nonlinear term limits excessive growth and forms membranes or boundaries.
+            growth_rate = (
+                diffusion_coefficient * laplacian
+                + 2.0 * c3_field * (1.0 - self.bio_density)
+            )
 
             self.bio_density += dt * growth_rate
 
-            # Симулируем рекурсивный фрактальный почкующийся сдвиг
-            # На каждом шаге асимметрия C^3 "проедает" в био-массе фрактальные каналы
+            # Recursive fractal budding shift:
+            # at each step, C^3 asymmetry forms fractal channels inside the bio-mass.
             self.bio_density = np.clip(self.bio_density, 0.0, 1.0)
 
-    def visualize_organic_slice(self):
+    def visualize_organic_slice(self, output_file="marnov_organic_matrix_slices.png"):
         """
-        Визуализация структуры полученной живой матрицы в разрезе.
+        Visualize and save the generated living matrix through 2D observational slices.
+
+        The saved image is mandatory because repository execution,
+        mobile execution or headless environments may not display plt.show().
         """
         mid_z = self.grid_size // 2
         mid_y = self.grid_size // 2
@@ -87,49 +93,52 @@ class MarnovOrganicMatrixGenerator:
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
         fig.suptitle(
-            "Протокол Марнова — Манифестация Органической Матрицы (3D)",
+            "Marnov Protocol — Manifestation of the Organic Matrix (3D)",
             fontsize=13,
             fontweight="bold"
         )
 
-        # Горизонтальный срез XY
+        # Horizontal XY slice.
         im1 = ax1.imshow(
             self.bio_density[:, :, mid_z],
             cmap="YlGnBu",
             origin="lower"
         )
-        ax1.set_title("Срез био-матрицы XY (Стволовое сечение)")
-        ax1.set_xlabel("Проекция X")
-        ax1.set_ylabel("Проекция Y")
-        fig.colorbar(im1, ax=ax1, label="Плотность органической ткани")
+        ax1.set_title("Bio-Matrix XY Slice")
+        ax1.set_xlabel("X Projection")
+        ax1.set_ylabel("Y Projection")
+        fig.colorbar(im1, ax=ax1, label="Organic Tissue Density")
 
-        # Вертикальный срез XZ
+        # Vertical XZ slice.
         im2 = ax2.imshow(
             self.bio_density[mid_y, :, :],
             cmap="YlGnBu",
             origin="lower"
         )
-        ax2.set_title("Срез био-матрицы XZ (Капиллярное ветвление)")
-        ax2.set_xlabel("Проекция Z")
-        ax2.set_ylabel("Проекция X")
-        fig.colorbar(im2, ax=ax2, label="Плотность органической ткани")
+        ax2.set_title("Bio-Matrix XZ Slice")
+        ax2.set_xlabel("Z Projection")
+        ax2.set_ylabel("X Projection")
+        fig.colorbar(im2, ax=ax2, label="Organic Tissue Density")
 
         plt.tight_layout()
+
+        # Mandatory file output.
+        plt.savefig(output_file, dpi=300, bbox_inches="tight")
+
+        # Optional interactive display when the environment supports it.
         plt.show()
 
-
-# ==============================================================================
-# ЗАПУСК ГЕНЕРАЦИИ ЖИВОЙ СТРУКТУРЫ
-# ==============================================================================
 
 if __name__ == "__main__":
     generator = MarnovOrganicMatrixGenerator(grid_size=64)
 
-    print("1. Активация 6D фазового замка с иррациональностью Золотого Сечения...")
-    C3_field = generator.generate_asymmetric_c3_field()
+    print("1. Activating the 6D phase lock with Golden Ratio irrationality...")
+    c3_field = generator.generate_asymmetric_c3_field()
 
-    print("2. Запуск рекурсивного каскада роста органической матрицы (15 тактов)...")
-    generator.grow_organic_matrix(C3_field, steps=15)
+    print("2. Running the recursive growth cascade of the organic matrix for 15 tacts...")
+    generator.grow_organic_matrix(c3_field, steps=15)
 
-    print("3. Вывод фрактального среза проявления живой системы:")
-    generator.visualize_organic_slice()
+    print("3. Saving and displaying the fractal observational slices of the living system...")
+    generator.visualize_organic_slice(
+        output_file="marnov_organic_matrix_slices.png"
+    )
