@@ -1,347 +1,599 @@
 # Tensor Matrix of the Dynamic Interface of Manifestation
 
-## EN — Tensor Layer of the Mathematical Apparatus
+## EN — Tensor Matrix of the Dynamic Interface of Manifestation
 
-This file fixes the tensor layer of the mathematical apparatus of the Marnov Protocol within the EDK framework.
+This file contains the tensor matrix of the dynamic interface of manifestation within the Mathematical Protocol of Endogenous Dynamics of Various Forms, Levels and Transitional States of Structural Self-Organization of Matter of Space Time of the Continuum.
 
-The tensor layer describes the dynamic interface through which a manifested form is retained, bounded, stabilized, degraded or demanifested.
+The tensor layer fixes the formal interface through which the retained topological contour, the volumetric manifestation of observable Matter and the directed exchange flow J / J_flux remain connected in one mathematical structure.
 
-This layer must not be removed from the mathematical formalism, because the transition from phase coherence C(t) to manifested form requires an interface tensor.
+The dynamic interface tensor T_int is not an auxiliary addition to the protocol.
 
-The basic causal chain is:
+It is the tensor layer that connects:
 
-C(t) → T_int → M(t) → J / J_flux
+T_mu_nu — topological monolith of dynamic retention and causal continuity;
 
-Where:
+E = m c^2 — volumetric manifestation and local mass anchor;
 
-C(t) — general endogenous structural coherence.
+J / J_flux — directed exchange flow, phase transfer, dissipation, energy redistribution and structural influence;
 
-T_int — dynamic interface tensor of manifestation, coupling and retention.
+Omega(t) — geometry of the resonance window of phase transition to a new level of structural self-organization;
 
-M(t) — locally retained invariant mass anchor of the manifested form.
+C^3 — cubic nonlinear saturation inherited from phase-coherent folding.
 
-J / J_flux — through massless channel of exchange, phase transfer, dissipation and redistribution of structural influence.
+## EN — 1. General Role of the Dynamic Interface Tensor T_int
 
-## EN — Dynamic Interface Tensor T_int
+The dynamic interface tensor T_int describes the boundary layer between retained topological continuity and volumetric manifestation.
 
-The dynamic interface tensor T_int describes the retained boundary of manifestation of the form.
+At this layer, the retained 4D topological monolith does not become a disconnected 3D object.
 
-It fixes the local interface where the endogenous structural coherence of the system is translated into the contour of manifestation, retention and possible demanifestation.
+It passes through the dynamic interface of manifestation, where retained topology, phase coherence, volumetric density and directed exchange remain coupled.
 
-Basic tensor matrix:
+The general role of T_int is:
 
-T_int =
-[ sigma_xx  tau_xy    tau_xz ]
-[ tau_yx    sigma_yy  tau_yz ]
-[ tau_zx    tau_zy    sigma_zz ]
+T_mu_nu → T_int → E = m c^2 → J / J_flux
 
 Where:
 
-sigma_xx, sigma_yy, sigma_zz — normal components of interface retention.
+T_mu_nu — tensor of dynamic retention and causal-topological continuity;
 
-tau_xy, tau_xz, tau_yx, tau_yz, tau_zx, tau_zy — tangential coupling components of the dynamic interface.
+T_int — dynamic interface tensor of manifestation;
 
-The normal components fix the retained pressure / tension of the interface along the principal axes.
+E = m c^2 — local volumetric manifestation and mass anchor;
 
-The tangential components fix shear coupling, boundary interaction and redistribution of structural influence along the manifestation boundary.
+J / J_flux — directed exchange flow with the Continuum.
 
-## EN — Tensor Decomposition
+T_int fixes the transition from retained topological continuity to observable volumetric manifestation without breaking the causal, phase and structural continuity of the mathematical protocol.
 
-The interface tensor is decomposed into isotropic and deviatoric components:
+## EN — 2. General Form of the Dynamic Interface Tensor
+
+The dynamic interface tensor may be represented as:
+
+T_int = T_mu_nu · N_mu · N_nu + T_tan + T_flux
+
+Where:
+
+T_int — dynamic interface tensor of manifestation;
+
+T_mu_nu — topological monolith tensor of dynamic retention and causal continuity;
+
+N_mu, N_nu — normal vectors of the interface domain;
+
+T_tan — tangential component of the interface tensor;
+
+T_flux — exchange-flow component associated with J / J_flux.
+
+This expression fixes that the interface is not a flat static boundary.
+
+It contains:
+
+normal retention component;
+
+tangential coupling component;
+
+exchange-flow component.
+
+## EN — 3. Normal Component of the Interface Tensor
+
+The normal component describes how the retained topological monolith is projected into the manifestation interface.
+
+T_normal = T_mu_nu · N_mu · N_nu
+
+Where:
+
+T_normal — normal component of the dynamic interface tensor;
+
+T_mu_nu — retained causal-topological tensor;
+
+N_mu, N_nu — normal vectors defining the direction of interface projection.
+
+The normal component fixes the pressure of retained topology toward volumetric manifestation.
+
+It determines how the retained 4D contour enters the interface layer before becoming expressed as observable 3D manifestation.
+
+## EN — 4. Tangential Component of the Interface Tensor
+
+The tangential component describes the internal coherence and lateral coupling inside the manifestation interface.
+
+T_tan = T_int - T_normal
+
+Where:
+
+T_tan — tangential component of the interface tensor;
+
+T_int — full dynamic interface tensor;
+
+T_normal — normal projection component of retained topological continuity.
+
+The tangential component fixes how the interface distributes retained structural influence across the manifestation surface.
+
+It prevents the manifestation process from collapsing into a single linear projection.
+
+## EN — 5. Exchange-Flow Component T_flux
+
+The exchange-flow component connects the interface tensor with the directed exchange flow J / J_flux.
+
+T_flux = J_mu J_nu
+
+Where:
+
+T_flux — exchange-flow component of the dynamic interface tensor;
+
+J_mu, J_nu — components of the directed exchange flow;
+
+J / J_flux — massless channel of exchange, phase transfer, dissipation, energy redistribution and structural influence.
+
+This component fixes that the manifestation interface is not closed.
+
+It remains open through J / J_flux and therefore remains coupled with the Continuum.
+
+Without T_flux, the tensor layer would describe only static retention and would lose the directed exchange channel.
+
+## EN — 6. Isotropic and Deviatoric Decomposition
+
+The dynamic interface tensor may be decomposed into isotropic and deviatoric components:
 
 T_int = T_iso + T_dev
 
-T_iso = C(t) · I
+Where:
 
-T_dev = tau_dev
+T_iso — isotropic component of the dynamic interface tensor;
 
-Therefore:
+T_dev — deviatoric component of the dynamic interface tensor.
 
-T_int = C(t) · I + tau_dev
+The isotropic component fixes uniform interface pressure:
+
+T_iso = (1 / 3) Tr(T_int) I
 
 Where:
 
-T_iso — isotropic component of endogenous structural coherence.
-
-T_dev — deviatoric component of interface deformation and tangential coupling.
+Tr(T_int) — trace of the dynamic interface tensor;
 
 I — identity tensor.
 
-tau_dev — deviatoric tensor of shear, anisotropic stress and interface deformation.
+The deviatoric component fixes directional distortion of the interface:
 
-This decomposition fixes that the manifested form is not retained only by scalar coherence C(t), but by the tensor interface where scalar coherence is distributed across the spatial and boundary components of manifestation.
+T_dev = T_int - T_iso
 
-## EN — Interface Retention Equation
+This decomposition is necessary because the manifestation interface may retain both:
 
-The dynamic evolution of the interface tensor is described as:
+uniform pressure of manifestation;
 
-partial T_int / partial t = gamma · (R(theta) · I - eta · P_ext) + J_bio tensor J_bio
+directional distortion, anisotropy and drift.
 
-Where:
+## EN — 7. Interface-Retention Equation
 
-partial T_int / partial t — temporal evolution of the dynamic interface tensor.
+The interface-retention equation links the dynamic interface tensor with retained coherence, resonance-window geometry and directed exchange flow.
 
-gamma — coupling coefficient of interface response.
+A general interface-retention relation may be written as:
 
-R(theta) — phase-resonant support function of the interface.
-
-I — identity tensor.
-
-eta — coefficient of external pressure coupling.
-
-P_ext — external parasitic / destabilizing pressure.
-
-J_bio tensor J_bio — biological / biophoton contribution to interface retention and modulation.
-
-This equation describes how the interface tensor changes under the influence of phase-resonant support, external pressure and biological / biophoton modulation.
-
-## EN — Geophysical Extension of the Interface Equation
-
-For planetary and geophysical layers, the interface equation may be extended as:
-
-partial T_int / partial t = gamma · (R(theta) · I - eta · P_ext + lambda_geo · Sigma_geo(omega_S)) + J_bio tensor J_bio
+partial T_int / partial t + div(J_flux T_int) = - lambda grad Omega(t) + eta C^3 T_int - kappa P(t) T_int
 
 Where:
 
-lambda_geo — coupling coefficient of geophysical resonance influence.
+partial T_int / partial t — temporal change of the dynamic interface tensor;
 
-Sigma_geo(omega_S) — geophysical / Schumann resonance contribution.
+div(J_flux T_int) — transport of interface structure through the directed exchange flow;
 
-omega_S — planetary resonance frequency parameter.
+lambda grad Omega(t) — influence of the gradient of the resonance-window geometry;
 
-This extension describes how the dynamic interface tensor can be modulated by planetary resonance conditions.
+eta C^3 T_int — reinforcement of the interface through cubic nonlinear saturation;
 
-## EN — Relation Between T_int and T_mu_nu
+kappa P(t) T_int — destabilizing pressure acting on the interface tensor;
 
-T_int describes the local dynamic interface of manifestation.
+lambda, eta, kappa — coupling coefficients.
 
-T_mu_nu describes the closed contour of evolution / energy-momentum tensor of retention at the 4D layer.
+This relation fixes that the interface is dynamically retained only while the interaction between Omega(t), C^3, J / J_flux and P(t) remains within the retention capacity of the system.
 
-The transition is fixed as:
+## EN — 8. Relation Between T_int and T_mu_nu
 
-Omega(t) + C^3 + Psi_coh → T_mu_nu
+T_mu_nu fixes the retained causal-topological monolith.
 
-The topological monolith is written as:
+T_int fixes the manifestation interface through which this retained monolith becomes connected to volumetric manifestation and directed exchange.
 
-T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+Their relation can be written as:
+
+T_int = Projection(T_mu_nu, N_mu, J_flux, Omega(t), C^3)
 
 Where:
 
-T_mu_nu — energy-momentum tensor of retention / closed contour of evolution.
+Projection — operator of interface projection;
 
-Omega(t) — resonance window of phase transition.
+T_mu_nu — retained topological monolith;
 
-Psi_coh — complex order parameter of phase-coherent connectedness.
+N_mu — normal direction of the interface;
 
-g_mu_nu — metric tensor.
+J_flux — directed exchange flow;
 
-V(Psi_coh) — potential of the coherent field configuration.
+Omega(t) — geometry of the resonance window of phase transition to a new level of structural self-organization;
 
-C^3 — cubic nonlinear saturation of volume.
+C^3 — cubic nonlinear saturation.
 
-dOmega_5D — integration domain of the 5D resonance-window geometry.
+This relation fixes that T_int is not detached from T_mu_nu.
 
-This equation fixes how the resonance window Omega(t), coherent field Psi_coh and cubic saturation C^3 are folded into the 4D topological monolith.
+It is the interface expression of retained causal-topological continuity in the manifestation domain.
 
-## EN — Role of the Tensor Layer in Manifestation and Demanifestation
+## EN — 9. Geophysical Extension of the Interface Tensor
 
-The tensor layer is the bridge between coherence and manifestation.
+For geophysical or volumetric media, the dynamic interface tensor may be extended to describe the interaction between retained structure, density gradients and exchange-flow dynamics.
 
-Direct chain:
+A geophysical interface relation may be written as:
 
-C(t) → T_int → M(t) → J / J_flux
+partial T_int / partial t =
+- a grad rho_cont
++ b C^3 T_int
+- d div(J_flux)
+- e P(t) T_int
 
-Reverse chain:
+Where:
 
-loss of C(t) → degradation of T_int → demanifestation of M(t) → growth of J / J_flux → return into background modes of the Continuum
+rho_cont — density of the Continuum medium;
 
-If C(t) > P(t), the dynamic interface tensor T_int remains retained and the manifested form can preserve its local mass anchor M(t).
+grad rho_cont — density-gradient influence of the medium;
 
-If C(t) → P(t), the interface enters the critical domain and the risk of degradation or phase transition increases.
+C^3 T_int — reinforcement of the interface through cubic nonlinear saturation;
 
-If C(t) ≤ P(t), the interface tensor degrades, the local mass anchor M(t) is demanifested, and J / J_flux carries energy, phase influence and structural influence into the background modes of the Continuum.
+div(J_flux) — divergence of directed exchange flow;
 
-## EN — Status of the Tensor Layer
+P(t) T_int — destabilizing pressure acting on the dynamic interface tensor;
 
-The tensor layer is a mandatory part of the mathematical apparatus.
+a, b, d, e — coupling coefficients.
 
-Without T_int, the apparatus loses the transition between endogenous structural coherence C(t), manifested mass anchor M(t), and the through exchange / dissipation channel J / J_flux.
+This relation fixes the role of density gradients and directed exchange flow in the retention or deformation of the manifestation interface.
 
-Without T_mu_nu, the apparatus loses the 4D closed contour of retention and the topological monolith of the dynamic regime.
+## EN — 10. Role of T_int in Manifestation and Demanifestation
 
-Therefore, T_int and T_mu_nu must be preserved as load-bearing elements of the mathematical formalism.
+T_int participates in both manifestation and demanifestation.
 
----
+In manifestation:
+
+T_mu_nu → T_int → E = m c^2 → J / J_flux
+
+The retained topological monolith passes through the dynamic interface tensor into volumetric manifestation and remains connected through the directed exchange flow.
+
+In demanifestation:
+
+loss of C(t) → degradation of T_int → demanifestation of M(t) → growth of J_flux → return into background modes of the Continuum
+
+Where:
+
+C(t) — endogenous structural coherence;
+
+T_int — dynamic interface tensor;
+
+M(t) — manifested mass anchor;
+
+J_flux — directed exchange-flow channel;
+
+background modes of the Continuum — non-retained modes into which the demanifested structure returns.
+
+The demanifestation chain fixes that the loss of interface retention leads not to disappearance into nothing, but to redistribution through J_flux into background modes of the Continuum.
+
+## EN — 11. Tensor Layer in the Through Mathematical Protocol
+
+The tensor layer connects the following chain:
+
+Psi_coh → C^3
+
+C^3 → Omega(t)
+
+Omega(t) → T_mu_nu
+
+T_mu_nu → T_int
+
+T_int → E = m c^2
+
+E = m c^2 → J / J_flux
+
+J / J_flux → exchange, phase transfer, dissipation, energy redistribution and structural influence through the Continuum
+
+This chain fixes that the tensor layer is a mandatory part of the mathematical protocol.
+
+Without T_int, the protocol has a gap between retained causal-topological continuity and observable volumetric manifestation.
+
+## EN — Result
+
+The dynamic interface tensor T_int fixes the tensor matrix of manifestation, coupling and retention.
+
+It connects T_mu_nu, Omega(t), C^3, E = m c^2 and J / J_flux into one through mathematical structure.
+
+T_int is therefore the formal tensor layer through which retained topological continuity becomes volumetric manifestation while remaining dynamically connected to the Continuum through the directed exchange flow J / J_flux.
 
 # Тензорная матрица динамического интерфейса манифестации
 
-## RU — Тензорный слой математического аппарата
+## RU — Тензорная матрица динамического интерфейса манифестации
 
-Данный файл фиксирует тензорный слой математического аппарата Протокола Марнова в рамках EDK.
+Этот файл содержит тензорную матрицу динамического интерфейса манифестации в рамках Математического Протокола эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума.
 
-Тензорный слой описывает динамический интерфейс, через который манифестированная форма удерживается, ограничивается, стабилизируется, деградирует или деманифестируется.
+Тензорный слой фиксирует формальный интерфейс, через который удержанный топологический контур, объёмная манифестация наблюдаемой Материи и направленный поток обмена J / J_flux остаются связанными в единой математической структуре.
 
-Этот слой нельзя удалять из математического аппарата, потому что переход от фазовой когерентности C(t) к манифестированной форме требует интерфейсного тензора.
+Динамический интерфейсный тензор T_int не является вспомогательным добавлением к протоколу.
 
-Базовая причинная цепочка:
+Он является тензорным слоем, который связывает:
 
-C(t) → T_int → M(t) → J / J_flux
+T_mu_nu — топологический монолит динамического удержания и причинно-следственной непрерывности;
 
-Где:
+E = m c^2 — объёмную манифестацию и локальный якорь массы;
 
-C(t) — общая эндогенная структурная когерентность.
+J / J_flux — направленный поток обмена, фазовый перенос, диссипацию, перераспределение энергии и структурное влияние;
 
-T_int — динамический интерфейсный тензор манифестации, сопряжения и удержания.
+Omega(t) — геометрию резонансного окна фазового перехода на новый уровень структурной самоорганизации;
 
-M(t) — локально удержанный инвариантный якорь массы манифестированной формы.
+C^3 — кубическое нелинейное насыщение, наследуемое от фазово-когерентного сворачивания.
 
-J / J_flux — сквозной безмассовый канал обмена, фазового переноса, диссипации и перераспределения структурного влияния.
+## RU — 1. Общая роль динамического интерфейсного тензора T_int
 
-## RU — Динамический интерфейсный тензор T_int
+Динамический интерфейсный тензор T_int описывает граничный слой между удержанной топологической непрерывностью и объёмной манифестацией.
 
-Динамический интерфейсный тензор T_int описывает удержанную границу манифестации формы.
+На этом слое удержанный 4D-топологический монолит не становится отсоединённым 3D-объектом.
 
-Он фиксирует локальный интерфейс, где эндогенная структурная когерентность системы переводится в контур манифестации, удержания и возможной деманифестации.
+Он проходит через динамический интерфейс манифестации, где удержанная топология, фазовая когерентность, объёмная плотность и направленный обмен остаются сопряжёнными.
 
-Базовая тензорная матрица:
+Общая роль T_int:
 
-T_int =
-[ sigma_xx  tau_xy    tau_xz ]
-[ tau_yx    sigma_yy  tau_yz ]
-[ tau_zx    tau_zy    sigma_zz ]
+T_mu_nu → T_int → E = m c^2 → J / J_flux
 
 Где:
 
-sigma_xx, sigma_yy, sigma_zz — нормальные компоненты интерфейсного удержания.
+T_mu_nu — тензор динамического удержания и причинно-топологической непрерывности;
 
-tau_xy, tau_xz, tau_yx, tau_yz, tau_zx, tau_zy — тангенциальные компоненты сопряжения динамического интерфейса.
+T_int — динамический интерфейсный тензор манифестации;
 
-Нормальные компоненты фиксируют удержанное давление / натяжение интерфейса по главным осям.
+E = m c^2 — локальная объёмная манифестация и якорь массы;
 
-Тангенциальные компоненты фиксируют сдвиговое сопряжение, граничное взаимодействие и перераспределение структурного влияния вдоль границы манифестации.
+J / J_flux — направленный поток обмена с Континуумом.
 
-## RU — Тензорное разложение
+T_int фиксирует переход от удержанной топологической непрерывности к наблюдаемой объёмной манифестации без разрыва причинно-следственной, фазовой и структурной непрерывности математического протокола.
 
-Интерфейсный тензор раскладывается на изотропную и девиаторную компоненты:
+## RU — 2. Общая форма динамического интерфейсного тензора
+
+Динамический интерфейсный тензор может быть представлен как:
+
+T_int = T_mu_nu · N_mu · N_nu + T_tan + T_flux
+
+Где:
+
+T_int — динамический интерфейсный тензор манифестации;
+
+T_mu_nu — тензор топологического монолита динамического удержания и причинно-следственной непрерывности;
+
+N_mu, N_nu — нормальные векторы интерфейсной области;
+
+T_tan — тангенциальная компонента интерфейсного тензора;
+
+T_flux — компонента потока обмена, связанная с J / J_flux.
+
+Это выражение фиксирует, что интерфейс не является плоской статической границей.
+
+Он содержит:
+
+нормальную компоненту удержания;
+
+тангенциальную компоненту сопряжения;
+
+компоненту потока обмена.
+
+## RU — 3. Нормальная компонента интерфейсного тензора
+
+Нормальная компонента описывает, как удержанный топологический монолит проецируется в интерфейс манифестации.
+
+T_normal = T_mu_nu · N_mu · N_nu
+
+Где:
+
+T_normal — нормальная компонента динамического интерфейсного тензора;
+
+T_mu_nu — удержанный причинно-топологический тензор;
+
+N_mu, N_nu — нормальные векторы, задающие направление интерфейсной проекции.
+
+Нормальная компонента фиксирует давление удержанной топологии в сторону объёмной манифестации.
+
+Она определяет, как удержанный 4D-контур входит в интерфейсный слой перед выражением в виде наблюдаемой 3D-манифестации.
+
+## RU — 4. Тангенциальная компонента интерфейсного тензора
+
+Тангенциальная компонента описывает внутреннюю когерентность и боковое сопряжение внутри интерфейса манифестации.
+
+T_tan = T_int - T_normal
+
+Где:
+
+T_tan — тангенциальная компонента интерфейсного тензора;
+
+T_int — полный динамический интерфейсный тензор;
+
+T_normal — нормальная проекционная компонента удержанной топологической непрерывности.
+
+Тангенциальная компонента фиксирует, как интерфейс распределяет удержанное структурное влияние по поверхности манифестации.
+
+Она не позволяет процессу манифестации схлопнуться в одну линейную проекцию.
+
+## RU — 5. Компонента потока обмена T_flux
+
+Компонента потока обмена связывает интерфейсный тензор с направленным потоком обмена J / J_flux.
+
+T_flux = J_mu J_nu
+
+Где:
+
+T_flux — компонента потока обмена динамического интерфейсного тензора;
+
+J_mu, J_nu — компоненты направленного потока обмена;
+
+J / J_flux — безмассовый канал обмена, фазового переноса, диссипации, перераспределения энергии и структурного влияния.
+
+Эта компонента фиксирует, что интерфейс манифестации не является закрытым.
+
+Он остаётся открытым через J / J_flux и поэтому остаётся сопряжённым с Континуумом.
+
+Без T_flux тензорный слой описывал бы только статическое удержание и потерял бы направленный канал обмена.
+
+## RU — 6. Изотропное и девиаторное разложение
+
+Динамический интерфейсный тензор может быть разложен на изотропную и девиаторную компоненты:
 
 T_int = T_iso + T_dev
 
-T_iso = C(t) · I
+Где:
 
-T_dev = tau_dev
+T_iso — изотропная компонента динамического интерфейсного тензора;
 
-Следовательно:
+T_dev — девиаторная компонента динамического интерфейсного тензора.
 
-T_int = C(t) · I + tau_dev
+Изотропная компонента фиксирует равномерное давление интерфейса:
+
+T_iso = (1 / 3) Tr(T_int) I
 
 Где:
 
-T_iso — изотропная компонента эндогенной структурной когерентности.
+Tr(T_int) — след динамического интерфейсного тензора;
 
-T_dev — девиаторная компонента интерфейсной деформации и тангенциального сопряжения.
+I — тождественный тензор.
 
-I — единичный тензор.
+Девиаторная компонента фиксирует направленное искажение интерфейса:
 
-tau_dev — девиаторный тензор сдвига, анизотропного напряжения и интерфейсной деформации.
+T_dev = T_int - T_iso
 
-Это разложение фиксирует, что манифестированная форма удерживается не только скалярной когерентностью C(t), а тензорным интерфейсом, где скалярная когерентность распределяется по пространственным и граничным компонентам манифестации.
+Это разложение необходимо, потому что интерфейс манифестации может удерживать одновременно:
 
-## RU — Уравнение интерфейсного удержания
+равномерное давление манифестации;
 
-Динамическая эволюция интерфейсного тензора описывается как:
+направленное искажение, анизотропию и дрейф.
 
-partial T_int / partial t = gamma · (R(theta) · I - eta · P_ext) + J_bio tensor J_bio
+## RU — 7. Уравнение интерфейсного удержания
 
-Где:
+Уравнение интерфейсного удержания связывает динамический интерфейсный тензор с удержанной когерентностью, геометрией резонансного окна и направленным потоком обмена.
 
-partial T_int / partial t — временная эволюция динамического интерфейсного тензора.
+Общее отношение интерфейсного удержания может быть записано как:
 
-gamma — коэффициент сопряжения интерфейсного отклика.
-
-R(theta) — функция фазово-резонансной поддержки интерфейса.
-
-I — единичный тензор.
-
-eta — коэффициент сопряжения внешнего давления.
-
-P_ext — внешнее паразитное / дестабилизирующее давление.
-
-J_bio tensor J_bio — биологический / биофотонный вклад в интерфейсное удержание и модуляцию.
-
-Это уравнение описывает, как интерфейсный тензор изменяется под влиянием фазово-резонансной поддержки, внешнего давления и биологической / биофотонной модуляции.
-
-## RU — Геофизическое расширение интерфейсного уравнения
-
-Для планетарных и геофизических слоёв интерфейсное уравнение может быть расширено как:
-
-partial T_int / partial t = gamma · (R(theta) · I - eta · P_ext + lambda_geo · Sigma_geo(omega_S)) + J_bio tensor J_bio
+partial T_int / partial t + div(J_flux T_int) = - lambda grad Omega(t) + eta C^3 T_int - kappa P(t) T_int
 
 Где:
 
-lambda_geo — коэффициент сопряжения геофизического резонансного влияния.
+partial T_int / partial t — временное изменение динамического интерфейсного тензора;
 
-Sigma_geo(omega_S) — геофизический / шумановский резонансный вклад.
+div(J_flux T_int) — перенос интерфейсной структуры через направленный поток обмена;
 
-omega_S — параметр планетарной резонансной частоты.
+lambda grad Omega(t) — влияние градиента геометрии резонансного окна;
 
-Это расширение описывает, как динамический интерфейсный тензор может модулироваться планетарными резонансными условиями.
+eta C^3 T_int — усиление интерфейса через кубическое нелинейное насыщение;
 
-## RU — Связь между T_int и T_mu_nu
+kappa P(t) T_int — дестабилизирующее давление, действующее на интерфейсный тензор;
 
-T_int описывает локальный динамический интерфейс манифестации.
+lambda, eta, kappa — коэффициенты сопряжения.
 
-T_mu_nu описывает замкнутый контур эволюции / тензор энергии-импульса удержания на 4D-слое.
+Это отношение фиксирует, что интерфейс динамически удерживается только пока взаимодействие между Omega(t), C^3, J / J_flux и P(t) остаётся внутри удерживающей способности системы.
 
-Переход фиксируется как:
+## RU — 8. Связь между T_int и T_mu_nu
 
-Omega(t) + C^3 + Psi_coh → T_mu_nu
+T_mu_nu фиксирует удержанный причинно-топологический монолит.
 
-Топологический монолит записывается как:
+T_int фиксирует интерфейс манифестации, через который этот удержанный монолит становится связанным с объёмной манифестацией и направленным обменом.
 
-T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+Их связь может быть записана как:
+
+T_int = Projection(T_mu_nu, N_mu, J_flux, Omega(t), C^3)
 
 Где:
 
-T_mu_nu — тензор энергии-импульса удержания / замкнутый контур эволюции.
+Projection — оператор интерфейсной проекции;
 
-Omega(t) — резонансное окно фазового перехода.
+T_mu_nu — удержанный топологический монолит;
 
-Psi_coh — комплексный параметр порядка фазово-когерентной связности.
+N_mu — нормальное направление интерфейса;
 
-g_mu_nu — метрический тензор.
+J_flux — направленный поток обмена;
 
-V(Psi_coh) — потенциал когерентной полевой конфигурации.
+Omega(t) — геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации;
 
-C^3 — кубическое нелинейное насыщение объёма.
+C^3 — кубическое нелинейное насыщение.
 
-dOmega_5D — область интегрирования 5D-геометрии резонансного окна.
+Это отношение фиксирует, что T_int не отсоединён от T_mu_nu.
 
-Это уравнение фиксирует, как резонансное окно Omega(t), когерентное поле Psi_coh и кубическое насыщение C^3 сворачиваются в 4D-топологический монолит.
+Он является интерфейсным выражением удержанной причинно-топологической непрерывности в области манифестации.
 
-## RU — Роль тензорного слоя в манифестации и деманифестации
+## RU — 9. Геофизическое расширение интерфейсного тензора
 
-Тензорный слой является мостом между когерентностью и манифестацией.
+Для геофизических или объёмных сред динамический интерфейсный тензор может быть расширен для описания взаимодействия между удержанной структурой, градиентами плотности и динамикой потока обмена.
 
-Прямая цепочка:
+Геофизическое интерфейсное отношение может быть записано как:
 
-C(t) → T_int → M(t) → J / J_flux
+partial T_int / partial t =
+- a grad rho_cont
++ b C^3 T_int
+- d div(J_flux)
+- e P(t) T_int
 
-Обратная цепочка:
+Где:
 
-потеря C(t) → деградация T_int → деманифестация M(t) → рост J / J_flux → возврат в фоновые моды Континуума
+rho_cont — плотность среды Континуума;
 
-Если C(t) > P(t), динамический интерфейсный тензор T_int остаётся удержанным и манифестированная форма может сохранять локальный якорь массы M(t).
+grad rho_cont — влияние градиента плотности среды;
 
-Если C(t) → P(t), интерфейс входит в критическую область и риск деградации или фазового перехода возрастает.
+C^3 T_int — усиление интерфейса через кубическое нелинейное насыщение;
 
-Если C(t) ≤ P(t), интерфейсный тензор деградирует, локальный якорь массы M(t) деманифестируется, а J / J_flux переносит энергию, фазовое влияние и структурное влияние в фоновые моды Континуума.
+div(J_flux) — дивергенция направленного потока обмена;
 
-## RU — Статус тензорного слоя
+P(t) T_int — дестабилизирующее давление, действующее на динамический интерфейсный тензор;
 
-Тензорный слой является обязательной частью математического аппарата.
+a, b, d, e — коэффициенты сопряжения.
 
-Без T_int аппарат теряет переход между эндогенной структурной когерентностью C(t), манифестированным якорем массы M(t) и сквозным каналом обмена / диссипации J / J_flux.
+Это отношение фиксирует роль градиентов плотности и направленного потока обмена в удержании или деформации интерфейса манифестации.
 
-Без T_mu_nu аппарат теряет 4D-замкнутый контур удержания и топологический монолит динамического режима.
+## RU — 10. Роль T_int в манифестации и деманифестации
 
-Следовательно, T_int и T_mu_nu должны сохраняться как несущие элементы математического аппарата.
+T_int участвует как в манифестации, так и в деманифестации.
+
+В манифестации:
+
+T_mu_nu → T_int → E = m c^2 → J / J_flux
+
+Удержанный топологический монолит проходит через динамический интерфейсный тензор в объёмную манифестацию и остаётся связанным через направленный поток обмена.
+
+В деманифестации:
+
+потеря C(t) → деградация T_int → деманифестация M(t) → рост J_flux → возврат в фоновые моды Континуума
+
+Где:
+
+C(t) — эндогенная структурная когерентность;
+
+T_int — динамический интерфейсный тензор;
+
+M(t) — манифестированный якорь массы;
+
+J_flux — канал направленного потока обмена;
+
+фоновые моды Континуума — неудержанные моды, в которые возвращается деманифестированная структура.
+
+Цепочка деманифестации фиксирует, что потеря интерфейсного удержания ведёт не к исчезновению в ничто, а к перераспределению через J_flux в фоновые моды Континуума.
+
+## RU — 11. Тензорный слой в сквозном математическом протоколе
+
+Тензорный слой связывает следующую цепочку:
+
+Psi_coh → C^3
+
+C^3 → Omega(t)
+
+Omega(t) → T_mu_nu
+
+T_mu_nu → T_int
+
+T_int → E = m c^2
+
+E = m c^2 → J / J_flux
+
+J / J_flux → обмен, фазовый перенос, диссипация, перераспределение энергии и структурное влияние через Континуум
+
+Эта цепочка фиксирует, что тензорный слой является обязательной частью математического протокола.
+
+Без T_int в протоколе возникает разрыв между удержанной причинно-топологической непрерывностью и наблюдаемой объёмной манифестацией.
+
+## RU — Итог
+
+Динамический интерфейсный тензор T_int фиксирует тензорную матрицу манифестации, сопряжения и удержания.
+
+Он связывает T_mu_nu, Omega(t), C^3, E = m c^2 и J / J_flux в единую сквозную математическую структуру.
+
+T_int является поэтому формальным тензорным слоем, через который удержанная топологическая непрерывность становится объёмной манифестацией, оставаясь динамически связанной с Континуумом через направленный поток обмена J / J_flux.
