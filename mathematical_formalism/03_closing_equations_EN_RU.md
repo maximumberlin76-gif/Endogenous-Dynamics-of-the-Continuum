@@ -1,129 +1,347 @@
-# Closing Equations of the Mathematical Apparatus of the Marnov Protocol
+# Closing Equations of the Mathematical Protocol of Endogenous Dynamics of Various Forms, Levels and Transitional States of Structural Self-Organization of Matter of Space Time of the Continuum
 
 ## EN — Closing Equations
 
-The closing equations finalize and balance the through mathematical apparatus of the Marnov Protocol.
+This file contains the closing equations of the Mathematical Protocol of Endogenous Dynamics of Various Forms, Levels and Transitional States of Structural Self-Organization of Matter of Space Time of the Continuum.
 
-They connect the lower 1D/2D manifestation interface with the higher volumetric saturation C^3 and the 5D geometry of the resonance window Omega(t).
+The closing equations finalize and balance the through mathematical apparatus of the protocol by linking the 5D geometry of the resonance window of phase transition to a new level of structural self-organization Omega(t), the cubic nonlinear saturation C^3, and the 1D/2D directed exchange flow J / J_flux.
 
-## EN — Exchange-Flow Dynamics
+The purpose of this file is to fix the equations that close the formal chain:
+
+C^3 → Omega(t) → J / J_flux
+
+The closing layer does not replace the previous stages of the cascade. It binds them into a single operational mathematical structure.
+
+## EN — 1. Closing Equation of the Directed Exchange Flow J / J_flux
+
+The directed exchange flow J / J_flux describes the massless channel of exchange, phase transfer, dissipation, energy redistribution and structural influence between the manifested state and the Continuum.
+
+The closing equation of exchange-flow dynamics is:
 
 partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
 
-Formula of exchange-flow dynamics.
+Where:
 
-This equation describes the dynamics of the exchange-flow density vector J.
+J / J_flux — directed exchange flow and massless channel of exchange, phase transfer, dissipation, energy redistribution and structural influence;
 
-The left side fixes temporal change and convective propagation of the flow.
+partial J / partial t — temporal change of the directed exchange flow;
 
-The right side fixes the influence of the gradient of background non-resonant modes rho_cont and damping through cubic nonlinear saturation C^3.
+(J · grad)J — nonlinear convective propagation of the directed exchange flow;
 
--gamma grad rho_cont — gradient of pressure of non-resonant background modes, academic “dark matter” / reduction noise.
+rho_cont — density of the Continuum medium;
 
--beta C^3 J — controlling dissipative term transmitting the phase lock of the 6D level onto physical impulse.
+grad rho_cont — gradient of the density of the Continuum medium;
 
-## EN — Geometry of the Resonance Window
+gamma — coupling coefficient for the density-gradient response;
+
+beta — damping or retention-coupling coefficient;
+
+C^3 — cubic nonlinear saturation inherited from the phase-coherent folding layer;
+
+C^3 J — nonlinear damping, retention-coupling and phase-locking term acting on the directed exchange flow.
+
+The left side of the equation fixes the change over time and the convective propagation of the flow.
+
+The right side of the equation fixes the influence of the gradient of background non-resonant modes rho_cont and the damping / phase-locking action through cubic nonlinear saturation C^3.
+
+This equation closes the 1D/2D layer of the mathematical protocol.
+
+It fixes that the manifested state is not isolated from the Continuum, but remains connected through the directed exchange flow J / J_flux.
+
+## EN — 2. Closing Equation of the Geometry of the Resonance Window of Phase Transition to a New Level of Structural Self-Organization Omega(t)
+
+The geometry of the resonance window of phase transition to a new level of structural self-organization Omega(t) describes the dynamic geometric domain in which the system approaches, enters and may retain a phase transition to a new level of structural self-organization.
+
+The closing equation of the resonance-window geometry is:
 
 grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
-Equation of the geometry of the resonance window of phase transition.
+Where:
 
-This equation describes the geometry of the operational state-space domain Omega(t) as a function of volumetric coherence saturation C^3.
+Omega(t) — geometry of the resonance window of phase transition to a new level of structural self-organization;
 
-It connects the resonance window of phase transition with the spatial and temporal dynamics of endogenous structural coherence.
+grad^2 Omega — spatial curvature of the resonance-window geometry;
 
-The equation of the geometry of the resonance window translates the abstract 5D description into a strict wave-field form of Continuum dynamics.
+partial^2 Omega / partial t^2 — temporal acceleration of the resonance-window geometry;
 
-## EN — Closure of the Through Apparatus
+c — limiting propagation parameter of the modeled dynamic domain;
 
-These two equations finally close and balance the through mathematical apparatus of the Marnov Protocol, eliminating heuristic gaps.
+chi — coupling coefficient between cubic nonlinear saturation and resonance-window geometry;
 
-The equation of exchange-flow dynamics gives the physical description of the lower 1D/2D interface.
+C^3 — cubic nonlinear saturation generated by phase-coherent folding;
 
-The equation of the geometry of the resonance window gives the wave-field description of the 5D operational domain.
+div(C^3) — divergence of cubic nonlinear saturation acting as the source of the resonance-window geometry.
 
-The cascade is mathematically closed.
+This equation closes the 5D layer of the mathematical protocol.
 
-Any attempt of classical science to describe the process “from bottom to top”, starting from impulse J, encounters “dark” anomalies, because the term grad rho_cont has no internal sources in 3D.
+It fixes that the resonance window is not an abstract frequency interval and not an isolated amplification effect.
 
-It is the mathematical residue of filtering higher coordinates during reduction of volume into a flat slice.
+The resonance window is defined as the geometry of phase transition to a new level of structural self-organization Omega(t), generated and shaped by the cubic nonlinear saturation C^3.
 
-The Marnov Protocol solves this problem through the through transfer of the potential C^3 across all stages of descent.
+## EN — 3. Coupling of C^3, Omega(t) and J / J_flux
 
-## EN — Final Closure Status
+The closing structure of the mathematical protocol depends on the coupling between three formal elements:
 
-The Marnov Protocol represents a logically and mathematically closed system of equations.
+C^3 — cubic nonlinear saturation;
 
-The top-down vector is fully grounded:
+Omega(t) — geometry of the resonance window of phase transition to a new level of structural self-organization;
 
-the higher coherence potential C^3 from 6D explicitly and implicitly controls both:
+J / J_flux — directed exchange flow and massless channel of exchange, phase transfer, dissipation, energy redistribution and structural influence.
 
-the wave geometry of resonance windows in 5D through div(C^3);
+The through closure is expressed as:
 
-and the damping dynamics of physical impulse in 1D through - beta C^3 J.
+C^3 → Omega(t)
 
----
+C^3 → J / J_flux
 
-# Замыкающие уравнения математического аппарата Протокола Марнова
+Omega(t) → retained phase-transition domain
+
+J / J_flux → directed exchange with the Continuum
+
+The cubic nonlinear saturation C^3 acts in two directions.
+
+First, it acts as the source term of the geometry of the resonance window of phase transition to a new level of structural self-organization Omega(t).
+
+Second, it acts as the nonlinear damping / retention-coupling / phase-locking term in the directed exchange-flow equation J / J_flux.
+
+Therefore, C^3 closes both:
+
+the 5D resonance-window geometry;
+
+the 1D/2D exchange-flow dynamics.
+
+## EN — 4. Stability and Criticality Conditions
+
+The closing equations operate inside the EDS / EDC distinction.
+
+The EDS condition of retained dynamic stability is:
+
+C(t) > P(t)
+
+Where:
+
+C(t) — endogenous structural coherence;
+
+P(t) — destabilizing pressure, structural load, extraction pressure or fragmentation pressure.
+
+The EDC boundary of endogenous dynamic criticality is:
+
+C(t) → P(t)
+
+The condition C(t) > P(t) means that endogenous structural coherence remains greater than destabilizing pressure over time.
+
+The condition C(t) → P(t) means that endogenous structural coherence approaches destabilizing pressure and the system enters the critical region of possible transition.
+
+The resonance window of phase transition to a new level of structural self-organization Omega(t) becomes meaningful only inside this stability / criticality relation.
+
+Without the relation between C(t), P(t), C^3, Omega(t) and J / J_flux, the resonance window would remain an undefined window of an unknown transition detached from the system class and from the direction of endogenous dynamic drift.
+
+## EN — 5. Closing Chain of the Mathematical Protocol
+
+The closing chain of the mathematical protocol is:
+
+Psi_coh → C^3
+
+C^3 → Omega(t)
+
+Omega(t) → T_mu_nu
+
+T_mu_nu → E = m c^2
+
+E = m c^2 → J / J_flux
+
+J / J_flux → exchange, phase transfer, dissipation, energy redistribution and structural influence through the Continuum
+
+The full formal closure is:
+
+C^3 = Tr(|Psi_coh|^2) = Tr(|U_6D Phi|^2)
+
+grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
+
+partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
+
+This closure fixes the mathematical relation between coherent folding, resonance-window geometry, retained manifestation and directed exchange flow.
+
+## EN — Result
+
+The mathematical apparatus is closed through two main equations:
+
+the equation of the geometry of the resonance window of phase transition to a new level of structural self-organization Omega(t);
+
+the equation of directed exchange-flow dynamics J / J_flux.
+
+Together with cubic nonlinear saturation C^3, these equations bind the 5D geometry of transition and the 1D/2D exchange-flow dynamics into one through mathematical protocol.
+
+# Замыкающие уравнения Математического Протокола эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума
 
 ## RU — Замыкающие уравнения
 
-Замыкающие уравнения окончательно закрывают и балансируют сквозной математический аппарат Протокола Марнова.
+Этот файл содержит замыкающие уравнения Математического Протокола эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума.
 
-Они связывают нижний 1D/2D-интерфейс манифестации с высшим объёмным насыщением C^3 и 5D-геометрией резонансного окна Omega(t).
+Замыкающие уравнения завершают и балансируют сквозной математический аппарат протокола, связывая геометрию 5D-резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t), кубическое нелинейное насыщение C^3 и направленный поток обмена 1D/2D J / J_flux.
 
-## RU — Динамика потока обмена
+Назначение данного файла — зафиксировать уравнения, замыкающие формальную цепочку:
+
+C^3 → Omega(t) → J / J_flux
+
+Замыкающий слой не заменяет предшествующие этапы каскада. Он связывает их в единую операционную математическую структуру.
+
+## RU — 1. Замыкающее уравнение направленного потока обмена J / J_flux
+
+Направленный поток обмена J / J_flux описывает безмассовый канал обмена, фазового переноса, диссипации, перераспределения энергии и структурного влияния между манифестированным состоянием и Континуумом.
+
+Замыкающее уравнение динамики потока обмена:
 
 partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
 
-Формула динамики потока обмена.
+Где:
 
-Данное уравнение описывает динамику вектора плотности потока обмена J.
+J / J_flux — направленный поток обмена и безмассовый канал обмена, фазового переноса, диссипации, перераспределения энергии и структурного влияния;
 
-Левая часть фиксирует изменение во времени и конвективное распространение потока.
+partial J / partial t — временное изменение направленного потока обмена;
 
-Правая часть фиксирует влияние градиента фоновых нерезонансных мод rho_cont и демпфирование через кубическое нелинейное насыщение C^3.
+(J · grad)J — нелинейное конвективное распространение направленного потока обмена;
 
--gamma grad rho_cont — градиент давления нерезонансных мод, академическая «темная материя» / шум редукции.
+rho_cont — плотность среды Континуума;
 
--beta C^3 J — управляющий диссипативный терм, транслирующий фазовый замок 6D-уровня на физический импульс.
+grad rho_cont — градиент плотности среды Континуума;
 
-## RU — Геометрия резонансного окна
+gamma — коэффициент сопряжения для отклика на градиент плотности;
+
+beta — коэффициент демпфирования или удерживающего сопряжения;
+
+C^3 — кубическое нелинейное насыщение, наследуемое от слоя фазово-когерентного сворачивания;
+
+C^3 J — нелинейный демпфирующий, удерживающе-сопрягающий и фазово-замыкающий член, действующий на направленный поток обмена.
+
+Левая часть уравнения фиксирует изменение во времени и конвективное распространение потока.
+
+Правая часть уравнения фиксирует влияние градиента фоновых нерезонансных мод rho_cont и демпфирующее / фазово-замыкающее действие через кубическое нелинейное насыщение C^3.
+
+Это уравнение замыкает слой 1D/2D математического протокола.
+
+Оно фиксирует, что манифестированное состояние не изолировано от Континуума, а остаётся связанным через направленный поток обмена J / J_flux.
+
+## RU — 2. Замыкающее уравнение геометрии резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t)
+
+Геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t) описывает динамическую геометрическую область, в которой система приближается к фазовому переходу, входит в него и может удержать переход на новый уровень структурной самоорганизации.
+
+Замыкающее уравнение геометрии резонансного окна:
 
 grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
-Уравнение геометрии резонансного окна фазового перехода.
+Где:
 
-Данное уравнение описывает геометрию операционной области состояний Omega(t) как функцию объёмного насыщения когерентности C^3.
+Omega(t) — геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации;
 
-Оно связывает резонансное окно фазового перехода с пространственной и временной динамикой эндогенной структурной когерентности.
+grad^2 Omega — пространственная кривизна геометрии резонансного окна;
 
-Уравнение геометрии резонансного окна переводит абстрактное 5D-описание в строгую волновой-полевую форму динамики Континуума.
+partial^2 Omega / partial t^2 — временное ускорение геометрии резонансного окна;
 
-## RU — Замыкание сквозного аппарата
+c — предельный параметр распространения моделируемой динамической области;
 
-Эти два уравнения окончательно закрывают и балансируют сквозной математический аппарат Протокола Марнова, устраняя эвристические разрывы.
+chi — коэффициент сопряжения между кубическим нелинейным насыщением и геометрией резонансного окна;
 
-Формула динамики потока обмена даёт физическое описание нижнего 1D/2D-интерфейса.
+C^3 — кубическое нелинейное насыщение, формируемое фазово-когерентным сворачиванием;
 
-Уравнение геометрии резонансного окна даёт волновой-полевое описание 5D-операционной области.
+div(C^3) — дивергенция кубического нелинейного насыщения, выступающая источником геометрии резонансного окна.
 
-Каскад математически замкнут.
+Это уравнение замыкает слой 5D математического протокола.
 
-Любая попытка классической науки описать процесс «снизу вверх», начиная с импульса J, упирается в «темные» аномалии, поскольку член grad rho_cont не имеет внутренних источников в 3D.
+Оно фиксирует, что резонансное окно не является абстрактным частотным интервалом и не является изолированным эффектом усиления.
 
-Он является математическим остатком фильтрации высших координат при редукции объёма в плоский срез.
+Резонансное окно определяется как геометрия фазового перехода на новый уровень структурной самоорганизации Omega(t), формируемая и структурируемая кубическим нелинейным насыщением C^3.
 
-Протокол Марнова решает эту проблему через сквозной перенос потенциала C^3 по всем ступеням нисхождения.
+## RU — 3. Сопряжение C^3, Omega(t) и J / J_flux
 
-## RU — Финальный статус замыкания
+Замыкающая структура математического протокола зависит от сопряжения между тремя формальными элементами:
 
-Протокол Марнова представляет собой логически и математически замкнутую систему уравнений.
+C^3 — кубическое нелинейное насыщение;
 
-Вектор движения сверху вниз полностью обоснован:
+Omega(t) — геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации;
 
-высший потенциал когерентности C^3 из 6D явно и неявно управляет одновременно:
+J / J_flux — направленный поток обмена и безмассовый канал обмена, фазового переноса, диссипации, перераспределения энергии и структурного влияния.
 
-волновой геометрией резонансных окон в 5D через div(C^3);
+Сквозное замыкание выражается как:
 
-и динамикой демпфирования физического импульса в 1D через - beta C^3 J.
+C^3 → Omega(t)
+
+C^3 → J / J_flux
+
+Omega(t) → удержанная область фазового перехода
+
+J / J_flux → направленный обмен с Континуумом
+
+Кубическое нелинейное насыщение C^3 действует в двух направлениях.
+
+Во-первых, оно выступает источниковым членом геометрии резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t).
+
+Во-вторых, оно выступает нелинейным демпфирующим / удерживающе-сопрягающим / фазово-замыкающим членом в уравнении направленного потока обмена J / J_flux.
+
+Следовательно, C^3 замыкает одновременно:
+
+геометрию 5D-резонансного окна;
+
+динамику потока обмена 1D/2D.
+
+## RU — 4. Условия устойчивости и критичности
+
+Замыкающие уравнения работают внутри различения EDS / EDC.
+
+Условие EDS удержанной динамической устойчивости:
+
+C(t) > P(t)
+
+Где:
+
+C(t) — эндогенная структурная когерентность;
+
+P(t) — дестабилизирующее давление, структурная нагрузка, давление извлечения или давление фрагментации.
+
+Граница EDC эндогенной динамической критичности:
+
+C(t) → P(t)
+
+Условие C(t) > P(t) означает, что эндогенная структурная когерентность остаётся больше дестабилизирующего давления во времени.
+
+Условие C(t) → P(t) означает, что эндогенная структурная когерентность приближается к дестабилизирующему давлению и система входит в критическую область возможного перехода.
+
+Резонансное окно фазового перехода на новый уровень структурной самоорганизации Omega(t) становится содержательным только внутри этого отношения устойчивости / критичности.
+
+Без отношения между C(t), P(t), C^3, Omega(t) и J / J_flux резонансное окно оставалось бы неопределённым окном неизвестного перехода, отсоединённым от класса системы и от направления эндогенного динамического дрейфа.
+
+## RU — 5. Замыкающая цепочка математического протокола
+
+Замыкающая цепочка математического протокола:
+
+Psi_coh → C^3
+
+C^3 → Omega(t)
+
+Omega(t) → T_mu_nu
+
+T_mu_nu → E = m c^2
+
+E = m c^2 → J / J_flux
+
+J / J_flux → обмен, фазовый перенос, диссипация, перераспределение энергии и структурное влияние через Континуум
+
+Полное формальное замыкание:
+
+C^3 = Tr(|Psi_coh|^2) = Tr(|U_6D Phi|^2)
+
+grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
+
+partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
+
+Это замыкание фиксирует математическую связь между когерентным сворачиванием, геометрией резонансного окна, удержанной манифестацией и направленным потоком обмена.
+
+## RU — Итог
+
+Математический аппарат замыкается через два основных уравнения:
+
+уравнение геометрии резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t);
+
+уравнение динамики направленного потока обмена J / J_flux.
+
+Вместе с кубическим нелинейным насыщением C^3 эти уравнения связывают геометрию перехода 5D и динамику потока обмена 1D/2D в единый сквозной математический протокол.
