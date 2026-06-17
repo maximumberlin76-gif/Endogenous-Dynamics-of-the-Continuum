@@ -1,246 +1,536 @@
-# Detailed Stage Formulas of the Marnov Protocol
+# Detailed Stage Formulas of the Mathematical Protocol of Endogenous Dynamics of Various Forms, Levels and Transitional States of Structural Self-Organization of Matter of Space Time of the Continuum from 7D to 1D
 
-## Controlling cascade of the multidimensional Continuum: 7D → 1D
+## EN — Controlling Cascade of the Multidimensional Continuum: 7D → 1D
 
-## EN — Stage 1: 7D — Contour of recursive inheritance and higher synthesis
+This file contains the detailed stage-by-stage formulas of the Mathematical Protocol of Endogenous Dynamics of Various Forms, Levels and Transitional States of Structural Self-Organization of Matter of Space Time of the Continuum from 7D to 1D.
 
-Function:
+The purpose of this file is to unfold the through cascade by stages and to show how each formal layer inherits the qualitative characteristics of the previous layer without breaking the causal, phase and structural continuity of the mathematical protocol.
 
-Definition of the qualitative structure, inheritance of the invariants of the preceding tact and generation of the Super-Code.
+The cascade is described through the following layers:
 
-Formula of recursive inheritance of qualitative characteristics:
+7D — recursive synthesis and inheritance of qualitative characteristics;
 
-Describes the transfer and transformation of qualitative parameters between steps of discrete time:
+6D — phase-coherent folding and cubic nonlinear saturation C^3;
 
-n → n+1
+5D — geometry of the resonance window of phase transition to a new level of structural self-organization Omega(t);
+
+4D — dynamic retention, causal continuity and topological monolith T_mu_nu;
+
+3D — volumetric manifestation of observable Matter and local mass anchor m c^2;
+
+2D/1D — instrumental reduction of the volumetric process to the flat slice of the observer’s sensors 2D and fixation of the minimal linear exchange vector 1D.
+
+## EN — Stage 1. 7D Recursive Synthesis and Inheritance of Qualitative Characteristics
+
+The 7D layer describes recursive synthesis as the upper formal layer of the mathematical protocol.
+
+At this layer, the next state of the cascade is not generated from zero, but is formed through the inheritance of qualitative characteristics of the previous retained cycle of structural self-organization.
 
 Q(n+1) = Phi(Q(n), D(n), R(n), A(n), E_medium)
 
 Where:
 
-Q(n) — current qualities.
+Q(n+1) — qualitative characteristics of the next cycle of structural self-organization;
 
-D(n) — accumulated dissipative trace of the medium.
+Q(n) — qualitative characteristics of the previous retained cycle of structural self-organization;
 
-R(n) — configuration of phase support.
+D(n) — accumulated dissipative inheritance of the previous cycle;
 
-A(n) — geometry of the attractor.
+R(n) — resonance condition of the previous cycle;
 
-E_medium — manifested energy of the medium.
+A(n) — attractor topology inherited from the previous retained cycle;
 
-Formula of higher-order recursive synthesis, Super-Code:
+E_medium — energy state of the medium of the Continuum involved in the current cycle;
 
-Integrates the parameters into a pure control wave function:
+Phi — recursive nonlinear mapping operator.
+
+The recursive synthesis state of the 7D layer is written as:
 
 Psi_7D = Phi(Q(n), D(n), A(n))
 
-## EN — Stage 2: 6D — Contour of phase-coherent folding
+Where:
 
-Function:
+Psi_7D — recursive synthesis state of the 7D layer;
 
-Transition from the informational structure to a dissipation-free toroidal configuration of fields.
+Phi(Q(n), D(n), A(n)) — nonlinear mapping of qualitative characteristics, dissipative inheritance and attractor topology into the next recursive synthesis state.
 
-Formula of phase-coherent folding:
+The 7D layer fixes the first condition of the mathematical protocol:
 
-The action of the toroidal projection operator U_6D fixes the phase lock, ordering the chaos of the Continuum:
+the next cycle of structural self-organization inherits the qualitative characteristics of the previous retained cycle and does not begin as an isolated state.
+
+## EN — Stage 2. 6D Phase-Coherent Folding and Cubic Nonlinear Saturation
+
+The 6D layer describes the phase-coherent folding of the recursive synthesis state into a coherent operational configuration.
+
+The transition from 7D to 6D is expressed as:
 
 Psi_coh = U_6D Phi(Q(n), D(n), A(n))
 
-Cubic nonlinear saturation of volume C^3:
+Where:
 
-Defines the scalar density of coherent retention through the trace of the density matrix, translating coherence into the potential of self-focusing:
+Psi_coh — phase-coherently folded state;
+
+U_6D — folding operator of the 6D layer;
+
+Phi(Q(n), D(n), A(n)) — recursive synthesis state inherited from the 7D layer.
+
+The phase-coherent folding layer does not merely compress the previous layer. It converts the recursive synthesis state into a coherent configuration capable of generating cubic nonlinear saturation.
 
 C^3 = Tr(|Psi_coh|^2) = Tr(|U_6D Phi|^2)
 
-## EN — Stage 3: 5D — Domain of bifurcation choice and resonance-window geometry
+Where:
 
-Function:
+C^3 — cubic nonlinear saturation;
 
-Fixation of the critical operational domain of phase transitions, assessment of demanifestation risks and opening of transition windows.
+Tr — trace operator;
 
-Formula of endogenous dynamic criticality EDC:
+|Psi_coh|^2 — squared modulus of the phase-coherently folded state;
 
-Describes the approach to the critical boundary at which the system enters the domain of bifurcation trajectories:
+|U_6D Phi|^2 — squared modulus of the folded recursive mapping.
 
-C(t) → P(t)
+The 6D layer fixes the second condition of the mathematical protocol:
 
-At this point, internal coherence C(t) approaches the destabilizing pressure of the medium P(t).
+recursive synthesis must pass into phase-coherent folding before it can become a source of resonance-window geometry and further structural retention.
 
-Equation of the geometry of the resonance window of phase transition:
+## EN — Stage 3. 5D Geometry of the Resonance Window of Phase Transition to a New Level of Structural Self-Organization and Endogenous Dynamic Criticality EDC
 
-Describes the geometry of the operational state-space domain Omega(t) as a function of volumetric coherence saturation C^3.
+The 5D layer describes the geometry of the resonance window of phase transition to a new level of structural self-organization Omega(t).
 
-It connects the resonance window with the spatial and temporal dynamics of endogenous coherence:
+At this layer, the resonance window is treated as a dynamic geometric domain of phase transition to a new level of structural self-organization, not as an abstract frequency coincidence or isolated amplification interval.
+
+The 5D resonance-window geometry is generated by the cubic nonlinear saturation C^3 inherited from the 6D layer.
 
 grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
-## EN — Stage 4: 4D — Contour of dynamic retention and causal continuity
+Where:
 
-Function:
+Omega(t) — geometry of the resonance window of phase transition to a new level of structural self-organization;
 
-Ensuring temporal continuity of the volumetric process, linking states through recursive po-tactive self-organization.
+grad^2 Omega — spatial curvature of the resonance-window geometry;
 
-Formula of endogenous dynamic resilience EDS:
+partial^2 Omega / partial t^2 — temporal acceleration of the resonance-window geometry;
 
-Mathematical condition under which the system is capable of retaining form, manifestation interface and structural integrity over time:
+c — limiting propagation parameter of the modeled dynamic domain;
 
-C(t) > P(t)
+chi — coupling coefficient between cubic nonlinear saturation and resonance-window geometry;
 
-Formation of the Topological Monolith:
+div(C^3) — divergence of cubic nonlinear saturation acting as the source of the resonance-window geometry.
 
-Fulfillment of the EDS criterion C > P allows the window Omega(t) to be folded into a closed contour of evolution — the energy-momentum tensor of retention T_mu_nu, where cubic saturation C^3 retains the geometry from decay:
+The endogenous dynamic criticality boundary of this layer is expressed as:
+
+C(t) → P(t)
+
+Where:
+
+C(t) — endogenous structural coherence;
+
+P(t) — destabilizing pressure, structural load, extraction pressure or fragmentation pressure.
+
+The state C(t) → P(t) marks the approach to the EDC boundary, where endogenous structural coherence approaches destabilizing pressure and the system enters the critical region of possible transition.
+
+The 5D layer fixes the third condition of the mathematical protocol:
+
+the resonance window becomes meaningful only when it is tied to the geometry of phase transition to a new level of structural self-organization and to the stability / criticality relation between C(t) and P(t).
+
+## EN — Stage 4. 4D Dynamic Retention, Causal Continuity and Topological Monolith T_mu_nu
+
+The 4D layer describes dynamic retention, causal continuity and the formation of the topological monolith T_mu_nu.
+
+At this layer, the phase transition opened by the 5D resonance-window geometry must be retained as a coherent dynamic contour.
 
 T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
 
-## EN — Stage 5: 3D — Volumetric manifestation of observable Matter
+Where:
 
-Function:
+T_mu_nu — topological monolith tensor of dynamic retention and causal continuity;
 
-Local spatial “freeze-frame” of the wave packet, transformation of excess multidimensional energy into mass m c^2.
+integral_5D — integration over the 5D resonance-window domain;
 
-In 3D space, the spatial components of the EDS retention tensor unfold into a stable three-dimensional domain.
+Omega(t) — geometry of the resonance window of phase transition to a new level of structural self-organization;
 
-Mass is not an isolated object; it is a wave node of the medium localized by cubic saturation C^3, EDS equations:
+partial_mu Psi_coh partial_nu Psi_coh* — phase-gradient interaction of the coherent state;
+
+g_mu_nu — metric tensor of the modeled domain;
+
+V(Psi_coh) — potential of the coherent state;
+
+C^3 — cubic nonlinear saturation inherited from the 6D layer and acting inside the retained 4D contour;
+
+dOmega_5D — volume element of the 5D resonance-window domain.
+
+The EDS condition of retained dynamic stability is expressed as:
+
+C(t) > P(t)
+
+Where:
+
+C(t) — endogenous structural coherence;
+
+P(t) — destabilizing pressure, structural load, extraction pressure or fragmentation pressure.
+
+The state C(t) > P(t) means that endogenous structural coherence remains greater than destabilizing pressure over time and the phase transition can be retained as a coherent dynamic contour.
+
+The 4D layer fixes the fourth condition of the mathematical protocol:
+
+a resonance-window transition does not become a retained result until it is stabilized as dynamic retention, causal continuity and topological monolith T_mu_nu.
+
+## EN — Stage 5. 3D Volumetric Manifestation of Observable Matter and Local Mass Anchor m c^2
+
+The 3D layer describes volumetric manifestation of observable Matter and the formation of the local mass anchor.
+
+At this layer, the retained causal-topological contour of the 4D layer becomes expressed as volumetric manifestation in the observable domain.
+
+E_rest = m c^2
+
+Where:
+
+E_rest — local rest-energy expression of the volumetrically manifested state;
+
+m — local mass anchor;
+
+c — limiting propagation parameter.
+
+The mass anchor is not treated as an isolated static substance. It is treated as a local expression of retained dynamic topology and volumetric manifestation of Matter of Space Time.
+
+The volumetric energy expression of the 3D layer may be written as:
 
 E = m c^2 = integral_3D((grad rho_cont · C^3) dV_3D)
 
-As long as the EDS retention law C(t) > P(t) is fulfilled, the Continuum density rho_cont is retained in a stable toroidal configuration.
+Where:
 
-## EN — Stage 6: 2D/1D — Manifestation interface and directed impulse
+E — energy expression of the volumetrically manifested state;
 
-Function:
+rho_cont — density of the Continuum medium;
 
-Instrumental reduction of the volumetric process to a flat slice of perception 2D and fixation of the minimal linear vector of exchange 1D.
+grad rho_cont — density gradient of the Continuum medium;
 
-During instrumental measurement, sensors fix a flat 2D trace — an indicator of synchronization R(t).
+C^3 — cubic nonlinear saturation inherited from the coherent folding layer;
 
-Instantaneous impulse exchange in the 1D channel obeys the equation of exchange-flow dynamics:
+dV_3D — volume element of the 3D manifestation domain.
+
+The 3D layer fixes the fifth condition of the mathematical protocol:
+
+observable volumetric Matter is expressed as a retained manifestation of the previous layers, not as a disconnected final object.
+
+## EN — Stage 6. 2D/1D Manifestation Interface and Directed Exchange Flow J / J_flux
+
+The 2D/1D layer describes the manifestation interface and directed exchange flow J / J_flux.
+
+At this layer, the mathematical protocol fixes the channel through which the retained and volumetrically manifested state exchanges phase, energy, dissipation, redistribution and structural influence with the Continuum.
+
+partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
+
+Where:
+
+J / J_flux — directed exchange flow and massless channel of exchange, phase transfer, dissipation, energy redistribution and structural influence;
+
+partial J / partial t — temporal change of the directed exchange flow;
+
+(J · grad)J — nonlinear convective component of the directed exchange flow;
+
+gamma grad rho_cont — density-gradient response of the Continuum medium;
+
+beta C^3 J — nonlinear damping or retention-coupling term acting through cubic nonlinear saturation;
+
+rho_cont — density of the Continuum medium;
+
+gamma — coupling coefficient for the density-gradient response;
+
+beta — damping or retention-coupling coefficient.
+
+The 2D/1D layer fixes the sixth condition of the mathematical protocol:
+
+the volumetric process is instrumentally reduced to the flat 2D trace of the observer’s sensors and the minimal linear 1D exchange vector, while the manifested state remains connected to the Continuum through the directed exchange flow J / J_flux.
+
+## EN — Conclusion of Stage 6
+
+Instrumental reduction of the volumetric process to the flat slice of the observer’s sensors 2D and fixation of the minimal linear exchange vector 1D.
+
+During instrumental measurement, the observer’s sensors fix the flat 2D trace — the synchronization indicator R(t).
+
+Instantaneous impulse exchange in the 1D channel is governed by the equation of exchange-flow dynamics:
 
 partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
 
 Left side:
 
-Fixes temporal change and convective propagation of the flow.
+fixes the change over time and the convective propagation of the flow.
 
 Right side:
 
-Fixes the influence of the gradient of background non-resonant modes rho_cont, academic reduction noise masking itself as “dark matter”, and damping, the controlling phase lock, through cubic nonlinear saturation C^3.
+fixes the influence of the gradient of background non-resonant modes rho_cont, the academic noise of reduction masked as “dark matter”, and damping, the controlling phase lock, through cubic nonlinear saturation C^3.
 
-# Подробные поэтапные формулы Протокола Марнова
+## EN — Through Chain of the Stage Formulas
 
-## Управляющий каскад многомерного Континуума: 7D → 1D
+Q(n+1) = Phi(Q(n), D(n), R(n), A(n), E_medium)
 
-## RU — Этап 1: 7D — Контур рекурсивного наследования и высшего синтеза
+Psi_7D = Phi(Q(n), D(n), A(n))
 
-Функция:
+Psi_coh = U_6D Phi(Q(n), D(n), A(n))
 
-Определение качественной структуры, наследование инвариантов предыдущего такта и генерация Супер-Кода.
+C^3 = Tr(|Psi_coh|^2) = Tr(|U_6D Phi|^2)
 
-Формула рекурсивного наследования качественных характеристик:
+grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
-Описывает перенос и трансформацию качественных параметров между шагами дискретного времени:
+C(t) → P(t)
 
-n → n+1
+T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+
+C(t) > P(t)
+
+E = m c^2 = integral_3D((grad rho_cont · C^3) dV_3D)
+
+partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
+
+# Подробные поэтапные формулы Математического Протокола эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума от 7D к 1D
+
+## RU — Управляющий каскад многомерного Континуума: 7D → 1D
+
+Этот файл содержит подробные поэтапные формулы Математического Протокола эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума от 7D к 1D.
+
+Назначение данного файла — развернуть сквозной каскад по этапам и показать, как каждый формальный слой наследует качественные характеристики предшествующего слоя без разрыва причинно-следственной, фазовой и структурной непрерывности математического протокола.
+
+Каскад описывается через следующие слои:
+
+7D — рекурсивный синтез и наследование качественных характеристик;
+
+6D — фазово-когерентное сворачивание и кубическое нелинейное насыщение C^3;
+
+5D — геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t);
+
+4D — динамическое удержание, причинно-следственная непрерывность и топологический монолит T_mu_nu;
+
+3D — объёмная манифестация наблюдаемой Материи и локальный якорь массы m c^2;
+
+2D/1D — инструментальная редукция объёмного процесса до плоского среза сенсоров наблюдателя 2D и фиксация минимального линейного вектора обмена 1D.
+
+## RU — Этап 1. 7D-рекурсивный синтез и наследование качественных характеристик
+
+Слой 7D описывает рекурсивный синтез как верхний формальный слой математического протокола.
+
+На этом слое следующее состояние каскада не генерируется из нуля, а формируется через наследование качественных характеристик предшествующего удержанного цикла структурной самоорганизации.
 
 Q(n+1) = Phi(Q(n), D(n), R(n), A(n), E_medium)
 
 Где:
 
-Q(n) — текущие качества.
+Q(n+1) — качественные характеристики следующего цикла структурной самоорганизации;
 
-D(n) — накопленный диссипативный след среды.
+Q(n) — качественные характеристики предшествующего удержанного цикла структурной самоорганизации;
 
-R(n) — конфигурация фазовой поддержки.
+D(n) — накопленное диссипативное наследование предшествующего цикла;
 
-A(n) — геометрия аттрактора.
+R(n) — резонансное условие предшествующего цикла;
 
-E_medium — проявленная энергия среды.
+A(n) — топология аттрактора, наследуемая от предшествующего удержанного цикла;
 
-Формула рекурсивного синтеза высшего порядка, Супер-Код:
+E_medium — энергетическое состояние среды Континуума, вовлечённое в текущий цикл;
 
-Интегрирует параметры в чистую волновую функцию управления:
+Phi — рекурсивный нелинейный оператор отображения.
+
+Состояние рекурсивного синтеза слоя 7D записывается как:
 
 Psi_7D = Phi(Q(n), D(n), A(n))
 
-## RU — Этап 2: 6D — Контур фазово-когерентного сворачивания
+Где:
 
-Функция:
+Psi_7D — состояние рекурсивного синтеза слоя 7D;
 
-Переход от информационной структуры к бездиссипативной тороидальной конфигурации полей.
+Phi(Q(n), D(n), A(n)) — нелинейное отображение качественных характеристик, диссипативного наследования и топологии аттрактора в следующее состояние рекурсивного синтеза.
 
-Формула фазово-когерентного сворачивания:
+Слой 7D фиксирует первое условие математического протокола:
 
-Действие оператора тороидальной проекции U_6D фиксирует фазовый замок, упорядочивая хаос Континуума:
+следующий цикл структурной самоорганизации наследует качественные характеристики предшествующего удержанного цикла и не начинается как изолированное состояние.
+
+## RU — Этап 2. 6D-фазово-когерентное сворачивание и кубическое нелинейное насыщение
+
+Слой 6D описывает фазово-когерентное сворачивание состояния рекурсивного синтеза в когерентную операционную конфигурацию.
+
+Переход от 7D к 6D выражается как:
 
 Psi_coh = U_6D Phi(Q(n), D(n), A(n))
 
-Кубическое нелинейное насыщение объема C^3:
+Где:
 
-Определяет скалярную плотность когерентного удержания через след матрицы плотности, переводя когерентность в потенциал самофокусировки:
+Psi_coh — фазово-когерентно свёрнутое состояние;
+
+U_6D — оператор сворачивания слоя 6D;
+
+Phi(Q(n), D(n), A(n)) — состояние рекурсивного синтеза, наследуемое от слоя 7D.
+
+Слой фазово-когерентного сворачивания не просто сжимает предшествующий слой. Он переводит состояние рекурсивного синтеза в когерентную конфигурацию, способную формировать кубическое нелинейное насыщение.
 
 C^3 = Tr(|Psi_coh|^2) = Tr(|U_6D Phi|^2)
 
-## RU — Этап 3: 5D — Область бифуркационного выбора и геометрии резонансных окон
+Где:
 
-Функция:
+C^3 — кубическое нелинейное насыщение;
 
-Фиксация критической операционной области фазовых переходов, оценка рисков деманифестации и открытие окон переходов.
+Tr — оператор следа;
 
-Формула эндогенной динамической критичности EDC:
+|Psi_coh|^2 — квадрат модуля фазово-когерентно свёрнутого состояния;
 
-Описывает приближение к критической границе, при которой система входит в область бифуркационных траекторий:
+|U_6D Phi|^2 — квадрат модуля свёрнутого рекурсивного отображения.
 
-C(t) → P(t)
+Слой 6D фиксирует второе условие математического протокола:
 
-В этой точке внутренняя когерентность C(t) приближается к дестабилизирующему давлению среды P(t).
+рекурсивный синтез должен перейти в фазово-когерентное сворачивание, прежде чем он сможет стать источником геометрии резонансного окна и дальнейшего структурного удержания.
 
-Уравнение геометрии резонансного окна фазового перехода:
+## RU — Этап 3. 5D-геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации и эндогенная динамическая критичность EDC
 
-Описывает геометрию операционной области состояний Omega(t) как функцию объемного насыщения когерентности C^3.
+Слой 5D описывает геометрию резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t).
 
-Оно связывает резонансное окно с пространственной и временной динамикой эндогенной когерентности:
+На этом слое резонансное окно рассматривается как динамическая геометрическая область фазового перехода на новый уровень структурной самоорганизации, а не как абстрактное частотное совпадение или изолированный интервал усиления.
+
+Геометрия 5D-резонансного окна формируется кубическим нелинейным насыщением C^3, наследуемым от слоя 6D.
 
 grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
-## RU — Этап 4: 4D — Контур динамического удержания и причинно-следственной непрерывности
+Где:
 
-Функция:
+Omega(t) — геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации;
 
-Обеспечение временной непрерывности объёмного процесса, связывание состояний через рекурсивную потактовую самоорганизацию.
+grad^2 Omega — пространственная кривизна геометрии резонансного окна;
 
-Формула эндогенной динамической устойчивости EDS:
+partial^2 Omega / partial t^2 — временное ускорение геометрии резонансного окна;
 
-Математическое условие, при котором система способна удерживать форму, интерфейс проявления и структурную целостность во времени:
+c — предельный параметр распространения моделируемой динамической области;
 
-C(t) > P(t)
+chi — коэффициент сопряжения между кубическим нелинейным насыщением и геометрией резонансного окна;
 
-Формирование Топологического Монолита:
+div(C^3) — дивергенция кубического нелинейного насыщения, выступающая источником геометрии резонансного окна.
 
-Выполнение критерия EDS C > P позволяет свернуть окно Omega(t) в замкнутый контур эволюции — тензор энергии-импульса удержания T_mu_nu, где кубическое насыщение C^3 удерживает геометрию от распада:
+Граница эндогенной динамической критичности этого слоя выражается как:
+
+C(t) → P(t)
+
+Где:
+
+C(t) — эндогенная структурная когерентность;
+
+P(t) — дестабилизирующее давление, структурная нагрузка, давление извлечения или давление фрагментации.
+
+Состояние C(t) → P(t) отмечает приближение к границе EDC, где эндогенная структурная когерентность приближается к дестабилизирующему давлению и система входит в критическую область возможного перехода.
+
+Слой 5D фиксирует третье условие математического протокола:
+
+резонансное окно становится содержательным только тогда, когда оно связано с геометрией фазового перехода на новый уровень структурной самоорганизации и с отношением устойчивости / критичности между C(t) и P(t).
+
+## RU — Этап 4. 4D-динамическое удержание, причинно-следственная непрерывность и топологический монолит T_mu_nu
+
+Слой 4D описывает динамическое удержание, причинно-следственную непрерывность и формирование топологического монолита T_mu_nu.
+
+На этом слое фазовый переход, открытый геометрией 5D-резонансного окна, должен быть удержан как когерентный динамический контур.
 
 T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
 
-## RU — Этап 5: 3D — Объем проявления наблюдаемой Материи
+Где:
 
-Функция:
+T_mu_nu — тензор топологического монолита динамического удержания и причинно-следственной непрерывности;
 
-Локальный пространственный «стоп-кадр» волнового пакета, превращение избытка многомерной энергии в массу m c^2.
+integral_5D — интегрирование по 5D-области резонансного окна;
 
-В 3D-пространстве пространственные компоненты тензора удержания EDS разворачиваются в стабильный трехмерный домен.
+Omega(t) — геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации;
 
-Масса не является изолированным объектом, это локализованный за счет кубического насыщения C^3 волновой узел среды, уравнения EDS:
+partial_mu Psi_coh partial_nu Psi_coh* — фазово-градиентное взаимодействие когерентного состояния;
+
+g_mu_nu — метрический тензор моделируемой области;
+
+V(Psi_coh) — потенциал когерентного состояния;
+
+C^3 — кубическое нелинейное насыщение, наследуемое от слоя 6D и действующее внутри удержанного 4D-контура;
+
+dOmega_5D — элемент объёма 5D-области резонансного окна.
+
+Условие EDS удержанной динамической устойчивости выражается как:
+
+C(t) > P(t)
+
+Где:
+
+C(t) — эндогенная структурная когерентность;
+
+P(t) — дестабилизирующее давление, структурная нагрузка, давление извлечения или давление фрагментации.
+
+Состояние C(t) > P(t) означает, что эндогенная структурная когерентность остаётся больше дестабилизирующего давления во времени и фазовый переход может быть удержан как когерентный динамический контур.
+
+Слой 4D фиксирует четвёртое условие математического протокола:
+
+переход через резонансное окно не становится удержанным результатом, пока он не стабилизирован как динамическое удержание, причинно-следственная непрерывность и топологический монолит T_mu_nu.
+
+## RU — Этап 5. 3D-объёмная манифестация наблюдаемой Материи и локальный якорь массы m c^2
+
+Слой 3D описывает объёмную манифестацию наблюдаемой Материи и формирование локального якоря массы.
+
+На этом слое удержанный причинно-топологический контур слоя 4D получает выражение как объёмная манифестация в наблюдаемой области.
+
+E_rest = m c^2
+
+Где:
+
+E_rest — локальное выражение энергии покоя объёмно манифестированного состояния;
+
+m — локальный якорь массы;
+
+c — предельный параметр распространения.
+
+Якорь массы не рассматривается как изолированная статическая субстанция. Он рассматривается как локальное выражение удержанной динамической топологии и объёмной манифестации Материи Пространства Времени.
+
+Объёмное энергетическое выражение слоя 3D может быть записано как:
 
 E = m c^2 = integral_3D((grad rho_cont · C^3) dV_3D)
 
-Пока выполняется закон удержания EDS C(t) > P(t), плотность Континуума rho_cont удерживается в стабильной тороидальной конфигурации.
+Где:
 
-## RU — Этап 6: 2D/1D — Интерфейс проявления и направленный импульс
+E — энергетическое выражение объёмно манифестированного состояния;
 
-Функция:
+rho_cont — плотность среды Континуума;
 
-Инструментальная редукция объемного процесса до плоского среза восприятия 2D и фиксация минимального линейного вектора обмена 1D.
+grad rho_cont — градиент плотности среды Континуума;
 
-При инструментальном измерении сенсоры фиксируют плоский 2D-след — индикатор синхронизации R(t).
+C^3 — кубическое нелинейное насыщение, наследуемое от слоя когерентного сворачивания;
+
+dV_3D — элемент объёма 3D-области манифестации.
+
+Слой 3D фиксирует пятое условие математического протокола:
+
+наблюдаемая объёмная Материя выражается как удержанная манифестация предшествующих слоёв, а не как отсоединённый конечный объект.
+
+## RU — Этап 6. 2D/1D-интерфейс манифестации и направленный поток обмена J / J_flux
+
+Слой 2D/1D описывает интерфейс манифестации и направленный поток обмена J / J_flux.
+
+На этом слое математический протокол фиксирует канал, через который удержанное и объёмно манифестированное состояние обменивается фазой, энергией, диссипацией, перераспределением и структурным влиянием с Континуумом.
+
+partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
+
+Где:
+
+J / J_flux — направленный поток обмена и безмассовый канал обмена, фазового переноса, диссипации, перераспределения энергии и структурного влияния;
+
+partial J / partial t — временное изменение направленного потока обмена;
+
+(J · grad)J — нелинейная конвективная компонента направленного потока обмена;
+
+gamma grad rho_cont — отклик среды Континуума на градиент плотности;
+
+beta C^3 J — нелинейный демпфирующий или удерживающе-сопрягающий член, действующий через кубическое нелинейное насыщение;
+
+rho_cont — плотность среды Континуума;
+
+gamma — коэффициент сопряжения для отклика на градиент плотности;
+
+beta — коэффициент демпфирования или удерживающего сопряжения.
+
+Слой 2D/1D фиксирует шестое условие математического протокола:
+
+объёмный процесс инструментально редуцируется до плоского 2D-следа сенсоров наблюдателя и минимального линейного 1D-вектора обмена, при этом манифестированное состояние остаётся связанным с Континуумом через направленный поток обмена J / J_flux.
+
+## RU — Вывод по этапу 6
+
+Инструментальная редукция объемного процесса до плоского среза сенсоров наблюдателя 2D и фиксация минимального линейного вектора обмена 1D.
+
+При инструментальном измерении сенсоры наблюдателя фиксируют плоский 2D-след — индикатор синхронизации R(t).
 
 Мгновенный обмен импульсом в 1D-канале подчинен уравнению динамики потока обмена:
 
@@ -253,3 +543,25 @@ partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
 Правая часть:
 
 фиксирует влияние градиента фоновых нерезонансных мод rho_cont, академический шум редукции, маскирующийся под «темную материю», и демпфирование, управляющий фазовый замок, через кубическое нелинейное насыщение C^3.
+
+## RU — Сквозная цепочка поэтапных формул
+
+Q(n+1) = Phi(Q(n), D(n), R(n), A(n), E_medium)
+
+Psi_7D = Phi(Q(n), D(n), A(n))
+
+Psi_coh = U_6D Phi(Q(n), D(n), A(n))
+
+C^3 = Tr(|Psi_coh|^2) = Tr(|U_6D Phi|^2)
+
+grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
+
+C(t) → P(t)
+
+T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+
+C(t) > P(t)
+
+E = m c^2 = integral_3D((grad rho_cont · C^3) dV_3D)
+
+partial J / partial t + (J · grad)J = - gamma grad rho_cont - beta C^3 J
