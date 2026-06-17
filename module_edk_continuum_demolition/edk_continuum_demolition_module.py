@@ -1,164 +1,336 @@
 import numpy as np
 
 
-class EDKContinuumDemolitionSimulation:
-    def __init__(self, num_layers=5, dt=0.01):
+class EDKContinuumDemolition:
+    """
+    EDK Continuum Demolition Module.
+
+    This module describes the demolition / demanifestation regime of a local
+    dynamic interface inside the open nonlinear dissipative dynamic Continuum.
+
+    The module is focused on the Marnov Protocol:
+
+    P_ext >> C(t)
+
+    Under excessive external pressure, endogenous structural coherence C(t)
+    collapses, the dynamic interface tensor T_int approaches zero, manifested
+    mass M(t) is demanifested, and the dissipative flow channel J_flux registers
+    the transition of the local manifested form back into the background modes
+    of the Continuum.
+
+    The module is a standalone Python simulation layer.
+    """
+
+    def __init__(
+        self,
+        initial_coherence: float = 1.0,
+        initial_mass: float = 10.0,
+        dt: float = 0.01,
+    ):
         """
-        Initialization of the open dynamic system of the Continuum.
+        Initialize the continuum demolition module.
 
-        num_layers: Number of quantum layers, or fields, of the multiplet.
+        Parameters
+        ----------
+        initial_coherence:
+            Initial endogenous structural coherence C(t).
+        initial_mass:
+            Initial manifested mass M(t).
+        dt:
+            Discrete simulation time step.
         """
-        self.num_layers = num_layers
-        self.dt = dt
+        if initial_coherence < 0:
+            raise ValueError("initial_coherence must be non-negative.")
+        if initial_mass < 0:
+            raise ValueError("initial_mass must be non-negative.")
+        if dt <= 0:
+            raise ValueError("dt must be positive.")
 
-        # Initial phases of the layers, chaotic state of the vacuum.
-        self.phases = np.random.uniform(0, 2 * np.pi, num_layers)
+        self.C = float(initial_coherence)
+        self.M = float(initial_mass)
+        self.dt = float(dt)
 
-        # Own frequencies of the layers, internal spectrum of the medium.
-        self.omega = np.random.uniform(5.0, 15.0, num_layers)
+        # Dynamic interface tensor of local manifestation.
+        self.T_int = np.eye(3, dtype=np.float64) * self.C
 
-        # System parameters.
-        self.C = 1.0  # Endogenous structural coherence.
-        self.M = 0.0  # Manifested mass, invariant anchor.
+        # Dissipative / exchange flow channel.
+        self.J_flux = 0.0
 
-        # Dynamic interface tensor T_int, 3x3 for 3D manifestation.
-        self.T_int = np.eye(3)
+        # External parasitic pressure.
+        self.external_pressure = 0.0
 
-    def calculate_phi_operator(self, K):
+        # Demolition / appearance indicators.
+        self.demolition_index = 0.0
+        self.continuum_appearance_index = 0.0
+        self.last_delay_time = 0.0
+        self.last_velocity = 0.0
+
+    def calculate_delay_scaling(
+        self,
+        external_pressure: float,
+        mu: float = 0.5,
+    ) -> float:
         """
-        Phi operator, Phi, phase-frequency synchronizer of nonlinear oscillators.
+        Calculate the delay scaling law for the demolition wave.
 
-        K: Coupling strength, coherence of the medium.
+        The delay scaling law is represented as:
+
+        velocity = mu * external_pressure
+        t_delay = velocity ** (-1/3)
+
+        Parameters
+        ----------
+        external_pressure:
+            External parasitic pressure P_ext.
+        mu:
+            Drift coefficient of the tension-wave velocity.
+
+        Returns
+        -------
+        float:
+            Delay time t_delay.
         """
-        # Matrix of phase differences between all layers of the multiplet.
-        phase_diff = self.phases[:, None] - self.phases
+        if external_pressure <= 0:
+            raise ValueError("external_pressure must be positive.")
+        if mu <= 0:
+            raise ValueError("mu must be positive.")
 
-        # Kuramoto equation for nonlinear phase synchronization.
-        d_phases = self.omega + (K / self.num_layers) * np.sum(
-            np.sin(phase_diff),
-            axis=1,
+        velocity = mu * external_pressure
+        t_delay = velocity ** (-1.0 / 3.0)
+
+        self.last_velocity = float(velocity)
+        self.last_delay_time = float(t_delay)
+
+        return float(t_delay)
+
+    def update_demolition_state(
+        self,
+        external_pressure: float,
+        mu: float = 0.5,
+    ) -> dict[str, float | str]:
+        """
+        Advance the demolition state by one recursive po-tactive step.
+
+        Parameters
+        ----------
+        external_pressure:
+            External parasitic pressure P_ext.
+        mu:
+            Drift coefficient of the tension-wave velocity.
+
+        Returns
+        -------
+        dict[str, float | str]:
+            Current demolition state.
+        """
+        if external_pressure <= 0:
+            raise ValueError("external_pressure must be positive.")
+
+        self.external_pressure = float(external_pressure)
+
+        t_delay = self.calculate_delay_scaling(
+            external_pressure=external_pressure,
+            mu=mu,
         )
 
-        self.phases = (self.phases + d_phases * self.dt) % (2 * np.pi)
+        # Recursive po-tactive decrease of endogenous structural coherence.
+        coherence_loss = external_pressure * t_delay * self.dt
+        self.C = max(self.C - coherence_loss, 0.0)
 
-        # Calculation of accumulated coherence, order parameter.
-        r = np.abs(np.sum(np.exp(1j * self.phases))) / self.num_layers
+        # Dynamic interface tensor demolition.
+        self.T_int *= self.C
 
-        return r
+        # Mass demanifestation.
+        previous_mass = self.M
+        self.M = self.M * self.C
 
-    def update_state(self, K, P_ext):
+        # Dissipative / exchange flow channel.
+        self.J_flux = previous_mass * (1.0 - self.C)
+
+        self._update_demolition_index()
+        self._update_continuum_appearance()
+
+        return self.calculate_demolition_state()
+
+    def _update_demolition_index(self) -> None:
         """
-        Step of system dynamics under the influence of external forcing
-        or parasitic pressure.
+        Update the demolition index.
 
-        P_ext: External parasitic pressure of the medium.
+        The demolition index increases when external pressure dominates
+        endogenous structural coherence and manifested mass begins to collapse.
         """
-        # 1. Work of the Phi operator.
-        r = self.calculate_phi_operator(K)
+        pressure_factor = self.external_pressure / (1.0 + self.C)
+        tensor_collapse = 1.0 / (1.0 + max(float(np.trace(self.T_int)), 0.0))
+        flux_factor = np.log1p(max(self.J_flux, 0.0))
 
-        # 2. Evolution of endogenous coherence.
-        # Coherence grows from synchronization of the layers,
-        # but is suppressed by external pressure.
-        self.C = r / (1.0 + P_ext)
+        self.demolition_index = float(
+            pressure_factor
+            * tensor_collapse
+            * (1.0 + flux_factor)
+        )
 
-        # 3. Mass synthesis, resonance window of phase transition.
-        if self.C > 0.8:
-            # Stabilization threshold of the multiplet.
-            self.M = self.C * 10.0
+    def _update_continuum_appearance(self) -> None:
+        """
+        Update the Continuum appearance index after demolition pressure.
 
-            # Manifestation of mass, invariant anchor fixed.
-            self.T_int = np.eye(3) * self.C
+        The appearance index decreases when C(t), M(t), and T_int collapse.
+        """
+        tensor_trace = float(np.trace(self.T_int))
 
-            # Interface manifested in 3D.
+        coherence_factor = max(self.C, 0.0)
+        mass_factor = np.log1p(max(self.M, 0.0))
+        tensor_factor = np.log1p(max(tensor_trace, 0.0))
+        pressure_penalty = 1.0 / (1.0 + self.external_pressure)
+
+        self.continuum_appearance_index = float(
+            coherence_factor
+            * (1.0 + mass_factor)
+            * (1.0 + tensor_factor)
+            * pressure_penalty
+        )
+
+    def calculate_demolition_state(self) -> dict[str, float | str]:
+        """
+        Return the current demolition state.
+
+        Returns
+        -------
+        dict[str, float | str]:
+            Current values of C(t), M(t), T_int, J_flux, delay scaling,
+            demolition index, and regime.
+        """
+        if self.C <= 1e-5 and self.M <= 1e-5:
+            demolition_regime = "FULL CONTINUUM INTERFACE DEMANIFESTATION"
+        elif self.demolition_index >= 10.0:
+            demolition_regime = "CRITICAL CONTINUUM DEMOLITION"
+        elif self.demolition_index >= 3.0:
+            demolition_regime = "ACTIVE CONTINUUM DEMOLITION"
         else:
-            # Disintegration under loss of coherence.
-            self.M *= 0.1
+            demolition_regime = "PARTIAL CONTINUUM DEMOLITION"
 
-        return r
+        return {
+            "endogenous_structural_coherence": float(self.C),
+            "manifested_mass": float(self.M),
+            "tensor_trace": float(np.trace(self.T_int)),
+            "j_flux": float(self.J_flux),
+            "external_pressure": float(self.external_pressure),
+            "delay_time": float(self.last_delay_time),
+            "tension_wave_velocity": float(self.last_velocity),
+            "demolition_index": float(self.demolition_index),
+            "continuum_appearance_index": float(
+                self.continuum_appearance_index
+            ),
+            "demolition_regime": demolition_regime,
+        }
 
-    def run_edk_demolition(self, P_ext, mu=0.5):
+    def run_marnov_protocol(
+        self,
+        external_pressure: float,
+        mu: float = 0.5,
+        min_coherence: float = 1e-5,
+        max_steps: int = 10_000,
+    ) -> list[dict[str, float | str]]:
         """
-        Implementation of the EDK demolition protocol:
-        tact-by-tact demolition under P >> C.
+        Run the Marnov Protocol until the local interface is demanifested.
+
+        Parameters
+        ----------
+        external_pressure:
+            External parasitic pressure P_ext.
+        mu:
+            Drift coefficient for the tension-wave velocity.
+        min_coherence:
+            Stop threshold for endogenous structural coherence C(t).
+        max_steps:
+            Safety limit preventing infinite loops.
+
+        Returns
+        -------
+        list[dict[str, float | str]]:
+            Full demolition trajectory.
         """
+        if external_pressure <= 0:
+            raise ValueError("external_pressure must be positive.")
+        if mu <= 0:
+            raise ValueError("mu must be positive.")
+        if min_coherence < 0:
+            raise ValueError("min_coherence must be non-negative.")
+        if max_steps <= 0:
+            raise ValueError("max_steps must be positive.")
+
+        trajectory = []
+
         print(
-            f"[START] Activation of the EDK demolition protocol. "
-            f"External pressure P = {P_ext}"
+            "[START] Marnov Protocol activated. "
+            f"External pressure P = {external_pressure:.4f}"
         )
 
         step = 0
 
-        while self.C > 1e-5:
+        while self.C > min_coherence and step < max_steps:
             step += 1
 
-            # Calculation of the drift velocity of the tension wave.
-            v = mu * P_ext
-
-            # THEOREM 2: Delay Scaling Law.
-            t_delay = v ** (-1 / 3)
-
-            # Tact-by-tact fall of endogenous coherence.
-            self.C -= (P_ext * t_delay) * self.dt
-
-            if self.C < 0:
-                self.C = 0.0
-
-            # Algorithm of demolition of the interface tensor T_int -> 0.
-            self.T_int = self.T_int * self.C
-
-            # Calculation of the mass gradient, normal mass shift tends to 0.
-            grad_M = self.M * self.C
-
-            # Mass demanifestation, anchor breaks, energy goes into the flow J.
-            J_flux = self.M * (1.0 - self.C)
-
-            self.M = grad_M
-
-            print(
-                f"Tact {step:02d} | "
-                f"t_delay: {t_delay:.5f} | "
-                f"C: {self.C:.4f} | "
-                f"Mass: {self.M:.4f} | "
-                f"Flow J: {J_flux:.4f}"
+            state = self.update_demolition_state(
+                external_pressure=external_pressure,
+                mu=mu,
             )
 
-        # Mathematical closure of the system: return into the Continuum.
+            trajectory.append(state)
+
+            print(
+                f"Tick {step:02d} | "
+                f"t_delay: {state['delay_time']:.5f} | "
+                f"C: {state['endogenous_structural_coherence']:.4f} | "
+                f"Mass: {state['manifested_mass']:.4f} | "
+                f"J flux: {state['j_flux']:.4f} | "
+                f"Demolition: {state['demolition_index']:.4f} | "
+                f"Appearance: {state['continuum_appearance_index']:.4f}"
+            )
+
+        # Mathematical closure:
+        # the local dynamic interface is fully demanifested.
+        self.C = 0.0
+        self.M = 0.0
+        self.T_int = np.zeros((3, 3), dtype=np.float64)
+        self.J_flux = 0.0
+        self.continuum_appearance_index = 0.0
+
+        closure_state = self.calculate_demolition_state()
+        trajectory.append(closure_state)
+
         print(
             "[SHUTDOWN] Interface T_int -> 0. "
-            "Matter is fully demanifested into the background modes of the Continuum."
+            "Matter is fully demanifested into the background modes "
+            "of the Continuum."
         )
 
-        self.T_int = np.zeros((3, 3))
-        self.M = 0.0
+        return trajectory
 
-
-# ==============================================================================
-# TEST RUN OF THE SIMULATION
-# ==============================================================================
 
 if __name__ == "__main__":
-    # Create a multiplet of quantum layers.
-    system = EDKContinuumDemolitionSimulation(num_layers=8)
+    demolition_module = EDKContinuumDemolition(
+        initial_coherence=1.0,
+        initial_mass=10.0,
+        dt=0.01,
+    )
 
-    print("=== STAGE 1: Formation of multiplet resonance, synthesis of structure ===")
+    print("=== EDK CONTINUUM DEMOLITION MODULE ===")
 
-    for tact in range(5):
-        # Accumulate coherence, K=15.0;
-        # external pressure is minimal, P=0.1.
-        coherence = system.update_state(K=15.0, P_ext=0.1)
+    initial_state = demolition_module.calculate_demolition_state()
 
-        print(
-            f"Step {tact} | "
-            f"Phase coherence of layers: {coherence:.4f} | "
-            f"Manifested mass: {system.M:.2f}"
-        )
+    print(
+        f"Initial C: "
+        f"{initial_state['endogenous_structural_coherence']:.4f}"
+    )
 
-    print()
-    print("=== STAGE 2: Activation of critical overstrain of the Continuum ===")
+    print(
+        f"Initial mass: "
+        f"{initial_state['manifested_mass']:.4f}"
+    )
 
-    # External parasitic pressure sharply exceeds internal coherence:
-    # P=50.0 >> C.
-    system.update_state(K=2.0, P_ext=50.0)
+    print("\n=== MARNOV PROTOCOL DEMOLITION RUN ===")
 
-    # Launch of the tact-by-tact EDK demolition process.
-    system.run_edk_demolition(P_ext=50.0)
+    demolition_module.run_marnov_protocol(
+        external_pressure=50.0,
+        mu=0.5,
+    )
