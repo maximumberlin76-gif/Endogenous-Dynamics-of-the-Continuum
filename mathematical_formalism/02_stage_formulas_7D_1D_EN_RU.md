@@ -138,7 +138,7 @@ The 4D layer describes dynamic retention, causal continuity and the formation of
 
 At this layer, the phase transition opened by the 5D resonance-window geometry must be retained as a coherent dynamic contour.
 
-T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
 
 Where:
 
@@ -148,7 +148,7 @@ integral_5D — integration over the 5D resonance-window domain;
 
 Omega(t) — geometry of the resonance window of phase transition to a new level of structural self-organization;
 
-partial_mu Psi_coh partial_nu Psi_coh* — phase-gradient interaction of the coherent state;
+partial_mu Psi_coh partial_nu Psi_coh — phase-gradient interaction of the coherent state;
 
 g_mu_nu — metric tensor of the modeled domain;
 
@@ -274,7 +274,7 @@ grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
 C(t) → P(t)
 
-T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
 
 C(t) > P(t)
 
@@ -422,7 +422,7 @@ P(t) — дестабилизирующее давление, структурн
 
 На этом слое фазовый переход, открытый геометрией 5D-резонансного окна, должен быть удержан как когерентный динамический контур.
 
-T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
 
 Где:
 
@@ -432,7 +432,7 @@ integral_5D — интегрирование по 5D-области резона
 
 Omega(t) — геометрия резонансного окна фазового перехода на новый уровень структурной самоорганизации;
 
-partial_mu Psi_coh partial_nu Psi_coh* — фазово-градиентное взаимодействие когерентного состояния;
+partial_mu Psi_coh partial_nu Psi_coh — фазово-градиентное взаимодействие когерентного состояния;
 
 g_mu_nu — метрический тензор моделируемой области;
 
@@ -558,7 +558,7 @@ grad^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
 
 C(t) → P(t)
 
-T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh* - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
+T_mu_nu = integral_5D Omega(t) · [partial_mu Psi_coh partial_nu Psi_coh - g_mu_nu(1/2(partial_alpha Psi_coh)^2 - V(Psi_coh) + C^3)] dOmega_5D
 
 C(t) > P(t)
 
