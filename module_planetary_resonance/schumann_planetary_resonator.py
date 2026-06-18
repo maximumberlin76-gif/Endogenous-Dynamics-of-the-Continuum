@@ -70,7 +70,6 @@ class SchumannPlanetaryResonator:
 
         if self.schumann_modes.size == 0:
             raise ValueError("schumann_modes must not be empty.")
-
         if np.any(self.schumann_modes <= 0):
             raise ValueError("all schumann_modes must be positive.")
 
