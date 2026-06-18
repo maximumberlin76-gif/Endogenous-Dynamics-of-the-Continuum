@@ -36,7 +36,6 @@ class SolarSynthesisResonator:
         """
         if num_plasma_domains <= 0:
             raise ValueError("num_plasma_domains must be positive.")
-
         if coupling_strength_k < 0:
             raise ValueError("coupling_strength_k must be non-negative.")
 
@@ -86,7 +85,6 @@ class SolarSynthesisResonator:
         """
         if external_forcing_density < 0:
             raise ValueError("external_forcing_density must be non-negative.")
-
         if dt <= 0:
             raise ValueError("dt must be positive.")
 
