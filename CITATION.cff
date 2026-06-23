@@ -1,29 +1,34 @@
 cff-version: 1.2.0
-message: "If you use this work, please cite it as below."
-title: "Endogenous Dynamics of the Continuum within an Open Nonlinear Dynamic System"
-authors:
+message: "If you use this work, please cite it using the metadata below."
 
-- family-names: "Marnov"
-  given-names: "Maksym"
-  abstract: "A formal theorem and mathematical framework describing the endogenous dynamics of the Continuum within an open nonlinear dynamic system. The work treats Matter of Space Time as a dynamic process of structural self-organization of various forms, levels, and transitional states in the observable dynamics of the Continuum."
-  keywords:
-- "Endogenous dynamics"
-- "Continuum"
-- "Open nonlinear dynamic systems"
-- "Structural self-organization"
-- "Endogenous structural coherence"
-- "Resonance window"
-- "Cubic saturation"
-- "Volumetric dissipation of impulse"
-  license: "CC-BY-4.0"
-  repository-code: "https://github.com/YOUR-USERNAME/Endogenous-Dynamics-of-the-Continuum"
-  version: "1.0.0"
-  date-released: "2026-06-06"
-  preferred-citation:
-  type: article
-  title: "Endogenous Dynamics of the Continuum within an Open Nonlinear Dynamic System"
-  authors:
+title: "Endogenous Dynamics of the Continuum (EDK)"
+type: software
+
+authors:
   - family-names: "Marnov"
     given-names: "Maksym"
-    year: 2026
-    notes: "Russian semantic control text with English literal academic translation. GitHub repository release; DOI to be added after Zenodo archiving."
+    alias: "Alchimist"
+
+abstract: >-
+  A bilingual theorem-algorithmic framework of Endogenous Dynamics of the
+  Continuum within an open nonlinear dynamic system, where Matter of Space Time
+  is considered as diverse forms, levels, and transitional states of structural
+  self-organization of the Continuum.
+
+keywords:
+  - "Endogenous dynamics"
+  - "Continuum"
+  - "Open nonlinear dynamic systems"
+  - "Structural self-organization"
+  - "Endogenous structural coherence"
+  - "Resonance window"
+  - "Cubic nonlinear volumetric retention"
+  - "Volumetric dissipation of impulse"
+
+version: 1.0.9
+date-released: 2026-06-23
+
+license: CC-BY-4.0
+
+repository-code: "https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum"
+url: "https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum"
