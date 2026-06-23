@@ -1,4 +1,4 @@
-cff-version: 1.2.0
+cff-version: "1.2.0"
 message: "If you use this work, please cite it using the metadata below."
 
 title: "Endogenous Dynamics of the Continuum (EDK)"
@@ -16,19 +16,24 @@ abstract: >-
   self-organization of the Continuum.
 
 keywords:
-  - "Endogenous dynamics"
-  - "Continuum"
-  - "Open nonlinear dynamic systems"
+  - "Physics"
+  - "Theoretical physics"
+  - "Quantum mechanics"
+  - "Open systems theory"
+  - "Nonlinear dynamics"
+  - "Dynamical systems"
+  - "Complex systems"
   - "Structural self-organization"
+  - "Endogenous dynamics"
   - "Endogenous structural coherence"
+  - "Phase coherence"
   - "Resonance window"
-  - "Cubic nonlinear volumetric retention"
-  - "Volumetric dissipation of impulse"
+  - "Continuum"
 
-version: 1.0.9
-date-released: 2026-06-23
+version: "1.0.9"
+date-released: "2026-06-23"
 
-license: CC-BY-4.0
+license: "CC-BY-4.0"
 
 repository-code: "https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum"
 url: "https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum"
