@@ -4,7 +4,7 @@ from module_framework_core.framework_core import ContinuumSimulation
 from module_wave_genetics.wave_genetics_dna_oscillator import (
     WaveGeneticsDNAOscillator,
 )
-from module_molecular_chemistry.molecular_phase_chemistry import (
+from module_molecular_phase_chemistry.molecular_phase_chemistry import (
     MolecularPhaseChemistry,
 )
 from module_solar_synthesis.solar_synthesis_resonator import (
