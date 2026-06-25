@@ -146,27 +146,147 @@ class ContinuumSimulation:
         self.last_external_pressure = float(external_pressure)
 
         # 1. Phi operator:
-        # phase-frequency synchronization of multiplet layers.
+        # phase-synchronization indicator R(t) of the multiplet layers.
         phase_coherence = self.calculate_phi_operator(
             coupling_strength=coupling_strength,
         )
+        phase_order_parameter = float(phase_coherence)
 
-        # 2. Endogenous structural coherence:
-        # phase coherence increases C(t), external pressure suppresses it.
-        self.C = phase_coherence / (1.0 + external_pressure)
+        # 2. General endogenous structural coherence C(t):
+        # recursively inherited system state supported by phase synchronization
+        # and reduced by phase disorder and external pressure.
+        previous_C = float(self.C)
 
-        # 3. Resonance-window phase transition:
-        # when coherence exceeds the threshold, manifested mass and T_int appear.
+        coherence_gain = (
+            phase_order_parameter
+            * (1.0 - previous_C)
+        )
+
+        coherence_loss = (
+            (1.0 - phase_order_parameter)
+            + external_pressure
+        ) * previous_C
+
+        self.C = float(
+            np.clip(
+                previous_C
+                + self.dt
+                * (
+                    coherence_gain
+                    - coherence_loss
+                ),
+                0.0,
+                1.0,
+            )
+        )
+
+        # 3. Dynamic interface tensor T_int:
+        # retained as an independent interface-tensor state.
+        interface_target = (
+            np.eye(
+                3,
+                dtype=np.float64,
+            )
+            * self.C
+        )
+
+        self.T_int = (
+            self.T_int
+            + self.dt
+            * (
+                interface_target
+                - self.T_int
+                - external_pressure
+                * self.T_int
+            )
+        )
+
+        previous_M = float(
+            self.M
+        )
+
+        tensor_retention = max(
+            float(
+                np.trace(
+                    self.T_int
+                )
+            )
+            / 3.0,
+            0.0,
+        )
+
+        # 4. Resonance-window phase transition and manifested mass M(t).
         if self.C > 0.8:
-            self.M = self.C * 10.0
-            self.T_int = np.eye(3, dtype=np.float64) * self.C
-        else:
-            # Loss of coherence leads to partial demanifestation.
-            self.M *= 0.1
-            self.T_int *= self.C
+            mass_target = (
+                10.0
+                * tensor_retention
+            )
 
-        # 4. Current dissipative / exchange flow channel.
-        self.J_flux = self.M * phase_coherence
+            self.M = max(
+                0.0,
+                previous_M
+                + self.dt
+                * (
+                    mass_target
+                    - previous_M
+                ),
+            )
+        else:
+            demanifestation_rate = (
+                external_pressure
+                + (
+                    0.8
+                    - self.C
+                )
+            )
+
+            self.M = max(
+                0.0,
+                previous_M
+                - self.dt
+                * demanifestation_rate
+                * previous_M,
+            )
+
+        # 5. J_flux as a retained tact-by-tact massless exchange channel.
+        mass_release_rate = (
+            max(
+                previous_M
+                - self.M,
+                0.0,
+            )
+            / self.dt
+        )
+
+        flux_drive = (
+            phase_order_parameter
+            * self.C
+            + mass_release_rate
+            + external_pressure
+            * (
+                1.0
+                - self.C
+            )
+        )
+
+        flux_damping = (
+            self.C
+            * float(
+                self.J_flux
+            )
+        )
+
+        self.J_flux = max(
+            0.0,
+            float(
+                self.J_flux
+            )
+            + self.dt
+            * (
+                flux_drive
+                - flux_damping
+            ),
+        )
 
         # 5. Update local Continuum appearance.
         self._update_continuum_appearance()
