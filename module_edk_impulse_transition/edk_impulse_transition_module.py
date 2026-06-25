@@ -43,6 +43,7 @@ class EDKProtocolSimulation:
         self.J = np.zeros((3, *self.shape))
 
         # State holders for monitoring
+        self.C_t = 1.0
         self.C3_field = np.zeros(self.shape)
         self.mass_field = np.zeros(self.shape)
 
@@ -69,7 +70,8 @@ class EDKProtocolSimulation:
         """
         STAGE 2: Phase fixation in 6D space (toroidal field of reference frequencies).
         Formula: Psi_coh = U_hat_6D * Psi_7D
-        Formula of cubic saturation: C^3 = Tr(|Psi_coh|^2)
+        Formula of cubic nonlinear saturation, compression, and delay:
+        C^3 = Tr(|Psi_coh|^2)
         """
         # Microstructure of the phase lock:
         # U_6D = product exp(i * kappa * sin(Delta_phi)) * H_asym
@@ -88,8 +90,9 @@ class EDKProtocolSimulation:
         # Resulting phase-coherent configuration of the fields
         Psi_coh = H_asym_factor * np.exp(1j * (phase_7D + kappa * delta_phi))
 
-        # Generation of cubic nonlinear retention of volume C^3 through Tr of the density matrix
-        # In spatial projection, this is the three-dimensional density of coherence "donuts"
+        # Generation of cubic nonlinear saturation, compression, and delay C^3
+        # through Tr of the density matrix. In spatial projection, this is the
+        # three-dimensional density of the toroidal phase-lock configuration.
         C3 = np.power(np.abs(Psi_coh), 3)
 
         # Distribute C3 across the volume of our grid, simulating spatial toroidal geometry
@@ -104,7 +107,7 @@ class EDKProtocolSimulation:
         r_tor = np.sqrt((x - cx) ** 2 + (y - cy) ** 2)
         d_tor = np.sqrt((r_tor - self.grid_size // 4) ** 2 + (z - cz) ** 2)
 
-        # Modulate the base torus by the magnitude of the obtained cubic coherence
+        # Modulate the base torus by the magnitude of C^3
         C3_spatial = C3 * np.exp(
             -(d_tor ** 2) / (2.0 * (self.grid_size // 8) ** 2)
         )
@@ -113,7 +116,7 @@ class EDKProtocolSimulation:
 
         return C3_spatial
 
-    def step_5d_4d_3d_cascade(self, C3, P_t, P_intent_vector):
+    def step_5d_4d_3d_cascade(self, C3, C_t, P_t, P_intent_vector):
         """
         STAGE 3: Trajectory filtration in 5D (EDC criticality: C(t) -> P(t))
         STAGE 4: Topological Monolith in 4D (EDS stability: C(t) > P(t))
@@ -121,8 +124,14 @@ class EDKProtocolSimulation:
         """
         # --- STAGE 3: EDC criticality and calculation of the geometry of the Omega(t) window ---
 
-        # Calculate the average coherence of the system for EDC evaluation
-        C_t = np.mean(C3)
+        # C(t) is the general endogenous structural coherence of the system.
+        # It is supplied independently and is not calculated from C^3.
+        C_t = float(C_t)
+
+        if not np.isfinite(C_t):
+            raise ValueError("C_t must be finite.")
+
+        self.C_t = C_t
 
         # Scan nodes for the EDC condition (convergence of coherence and pressure of the medium)
         # Window equation:
@@ -163,8 +172,11 @@ class EDKProtocolSimulation:
 
         # --- STAGE 4: Check of the EDS condition (C(t) > P(t)) and fixation of the Monolith ---
 
-        # Omega(t) passes only those zones where internal coherence has suppressed the medium
-        eds_mask = (C3 > P_t) & (self.Omega_curr > 0.1)
+        # Omega(t) passes only those zones where the general endogenous
+        # structural coherence C(t) exceeds the destabilizing pressure P(t).
+        # C^3 remains the independent cubic nonlinear saturation, compression,
+        # and delay field that shapes Omega(t) and the manifested mass density.
+        eds_mask = (self.C_t > P_t) & (self.Omega_curr > 0.1)
 
         # --- STAGE 5: Manifestation of mass mc^2 in 3D ---
 
@@ -210,7 +222,7 @@ class EDKProtocolSimulation:
         # Update of the 1D impulse of the exchange flow J at step dt
         for d in range(3):
             # Right side: pressure of the non-resonant noise of the Continuum
-            # and damping by the cubic phase lock
+            # and damping by cubic nonlinear saturation, compression, and delay C^3
             rhs = -self.gamma * grad_rho[d] - self.beta * C3 * self.J[d]
 
             # Differential step: J_new = J_old + dt * (-(J * nabla)J + RHS)
@@ -222,7 +234,17 @@ class EDKProtocolSimulation:
 
         return R_t
 
-    def execute_full_cycle(self, Q_n, D_n, R_n, A_n, E_medium, P_t, P_intent):
+    def execute_full_cycle(
+        self,
+        Q_n,
+        D_n,
+        R_n,
+        A_n,
+        E_medium,
+        C_t,
+        P_t,
+        P_intent,
+    ):
         """
         Full tact-by-tact launch of the through cascade of the EDK Protocol strictly from top to bottom.
         """
@@ -240,7 +262,12 @@ class EDKProtocolSimulation:
         C3 = self.step_6d_phase_lock(Psi_7D)
 
         # 5D / 4D / 3D Filtration, EDC Criticality, EDS Stability and Manifestation of mass
-        eds_mask = self.step_5d_4d_3d_cascade(C3, P_t, P_intent)
+        eds_mask = self.step_5d_4d_3d_cascade(
+            C3,
+            C_t,
+            P_t,
+            P_intent,
+        )
 
         # 2D / 1D Reduction of volume into the flat slice of perception and calculation of the exchange-flow vector
         R_t = self.step_1d_2d_flux_dynamics(eds_mask, C3)
@@ -265,6 +292,7 @@ if __name__ == "__main__":
     R_initial = 0.95       # Initial phase synchronization
     A_initial = 1.2        # Amplitude coefficient of the attractor
     E_medium = 0.4         # Background of manifested energy of the medium
+    C_initial = 0.9        # General endogenous structural coherence C(t)
     P_t = 0.5              # Destabilizing pressure of the external medium
     P_intent_vector = 0.8  # Focusing of the operator intention (coherent ensemble)
 
@@ -278,6 +306,7 @@ if __name__ == "__main__":
             R_initial,
             A_initial,
             E_medium,
+            C_initial,
             P_t,
             P_intent_vector,
         )
