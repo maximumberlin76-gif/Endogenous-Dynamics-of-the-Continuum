@@ -1,6 +1,6 @@
 import numpy as np
 
-from framework_core import ContinuumSimulation
+from module_framework_core.framework_core import ContinuumSimulation
 
 
 class WaveGeneticsDNAOscillator:
