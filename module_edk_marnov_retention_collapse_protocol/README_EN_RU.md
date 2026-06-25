@@ -1227,8 +1227,6 @@ It provides a controlled protocol for studying:
     phase-attractor decay
     amplitude-regime decay
 
-The module does not by itself establish a universal physical collapse law.
-
 The inverse-cubic-root retardation relation is implemented as a configurable model assumption whose consequences can be numerically tested against alternative delay laws.
 
 ## License
@@ -2447,8 +2445,6 @@ T_int должен вычисляться отдельным модулем уд
     снятия сопряжения
     распада фазового аттрактора
     распада амплитудного режима
-
-Сам модуль не устанавливает универсальный физический закон срыва.
 
 Ретардационное соотношение обратного кубического корня реализуется как настраиваемое модельное предположение, последствия которого могут численно сравниваться с альтернативными законами задержки.
 
