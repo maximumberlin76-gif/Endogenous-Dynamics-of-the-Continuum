@@ -1,5 +1,7 @@
-import numpy as np
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 class MarnovCubicPotentialVisualizer:
@@ -12,15 +14,26 @@ class MarnovCubicPotentialVisualizer:
     - their tensor-product contraction into an 8x8 multiplet operator U_6D;
     - tact-by-tact suppression of phase mismatch;
     - normalized phase-lock amplitude;
-    - cubic retention potential C3;
-    - transition through an interface-density barrier;
-    - the EDS retention criterion C3 > P;
-    - the bifurcation boundary C3 = P.
+    - cubic nonlinear saturation, compression, and delay C3;
+    - transition across a local cubic-dissipation barrier P_cubic;
+    - the independent system-level relation C(t) to P(t).
 
-    The name U_6D refers to a multiplet assembled from three orthogonal
-    two-dimensional phase planes. The numerical state itself is represented
-    by an 8x8 tensor-product operator, not by six spatial coordinates.
+    The implementation preserves the distinctions:
+
+    C(t) != C3
+    P(t) != P_cubic
+
+    The local equality C3 = P_cubic is a cubic-potential transition
+    boundary. It is not the EDS / EDC system boundary.
+
+    The EDS / EDC system relation is determined independently through
+    the general endogenous structural coherence C(t) and the
+    destabilizing pressure P(t).
     """
+
+    EDS_RETENTION = "ENDOGENOUS_DYNAMIC_STABILITY"
+    EDC_BOUNDARY = "ENDOGENOUS_DYNAMIC_CRITICALITY"
+    DEGRADATION_DRIFT = "DEGRADATION_DRIFT"
 
     def __init__(
         self,
@@ -33,8 +46,11 @@ class MarnovCubicPotentialVisualizer:
         noise_strength: float = 0.03,
         psi_amplitude: float = 1.5,
         dissipation_coefficient: float = 0.5,
+        C_t: float = 0.90,
+        P_t: float = 0.35,
+        critical_tolerance: float = 1.0e-12,
         seed: int | None = 42,
-    ):
+    ) -> None:
         """
         Initialize the engineering visual simulator.
 
@@ -43,7 +59,7 @@ class MarnovCubicPotentialVisualizer:
         alpha_lock:
             Base phase-lock coupling coefficient.
         base_support:
-            Initial coherence-support parameter R(n).
+            Initial phase-support coefficient R(n), constrained to [0, 1].
         epsilon:
             Micro-asymmetry angle of the pair-lock matrix.
         dt:
@@ -55,53 +71,301 @@ class MarnovCubicPotentialVisualizer:
         noise_strength:
             Standard intensity of external dissipative phase noise.
         psi_amplitude:
-            Scalar field amplitude used in the cubic-potential calculation.
+            Scalar field amplitude used in the C3 calculation.
         dissipation_coefficient:
-            Coefficient of the environmental dissipation level P.
+            Coefficient of the local cubic-dissipation level P_cubic.
+        C_t:
+            General endogenous structural coherence C(t).
+        P_t:
+            Destabilizing system pressure P(t).
+        critical_tolerance:
+            Numerical tolerance for the system-level EDC boundary.
         seed:
             Optional random seed for reproducible simulations.
         """
-        if alpha_lock < 0.0:
-            raise ValueError("alpha_lock must be non-negative.")
-        if base_support < 0.0:
-            raise ValueError("base_support must be non-negative.")
-        if dt <= 0.0:
-            raise ValueError("dt must be positive.")
-        if num_steps <= 0:
-            raise ValueError("num_steps must be positive.")
-        if gamma < 0.0:
-            raise ValueError("gamma must be non-negative.")
-        if noise_strength < 0.0:
-            raise ValueError("noise_strength must be non-negative.")
-        if psi_amplitude <= 0.0:
-            raise ValueError("psi_amplitude must be positive.")
-        if dissipation_coefficient < 0.0:
-            raise ValueError(
-                "dissipation_coefficient must be non-negative."
-            )
+        self.alpha_lock = self._non_negative_finite(
+            "alpha_lock",
+            alpha_lock,
+        )
 
-        self.alpha_lock = alpha_lock
-        self.base_support = base_support
-        self.epsilon = epsilon
-        self.dt = dt
-        self.num_steps = num_steps
-        self.gamma = gamma
-        self.noise_strength = noise_strength
-        self.psi_amplitude = psi_amplitude
-        self.dissipation_coefficient = dissipation_coefficient
+        self.base_support = self._bounded_finite(
+            "base_support",
+            base_support,
+            0.0,
+            1.0,
+        )
+
+        self.epsilon = self._finite_scalar(
+            "epsilon",
+            epsilon,
+        )
+
+        self.dt = self._positive_finite(
+            "dt",
+            dt,
+        )
+
+        if isinstance(num_steps, bool) or int(num_steps) != num_steps:
+            raise ValueError("num_steps must be an integer.")
+
+        self.num_steps = int(num_steps)
+
+        if self.num_steps <= 0:
+            raise ValueError("num_steps must be positive.")
+
+        self.gamma = self._non_negative_finite(
+            "gamma",
+            gamma,
+        )
+
+        self.noise_strength = self._non_negative_finite(
+            "noise_strength",
+            noise_strength,
+        )
+
+        self.psi_amplitude = self._positive_finite(
+            "psi_amplitude",
+            psi_amplitude,
+        )
+
+        self.dissipation_coefficient = self._non_negative_finite(
+            "dissipation_coefficient",
+            dissipation_coefficient,
+        )
+
+        self.C_t = self._bounded_finite(
+            "C_t",
+            C_t,
+            0.0,
+            1.0,
+        )
+
+        self.P_t = self._non_negative_finite(
+            "P_t",
+            P_t,
+        )
+
+        self.critical_tolerance = self._non_negative_finite(
+            "critical_tolerance",
+            critical_tolerance,
+        )
 
         self.rng = np.random.default_rng(seed)
 
-        self.history_steps = np.empty(0, dtype=np.int64)
-        self.history_phi = np.empty((0, 3), dtype=np.float64)
-        self.history_lock_amplitude = np.empty(0, dtype=np.float64)
-        self.history_c3 = np.empty(0, dtype=np.float64)
+        self.history_steps = np.empty(
+            0,
+            dtype=np.int64,
+        )
 
-        self.x_coordinates = np.empty(0, dtype=np.float64)
-        self.support_profile = np.empty(0, dtype=np.float64)
-        self.interface_c3 = np.empty(0, dtype=np.float64)
-        self.interface_dissipation = np.empty(0, dtype=np.float64)
-        self.bifurcation_points = np.empty(0, dtype=np.float64)
+        self.history_phi = np.empty(
+            (0, 3),
+            dtype=np.float64,
+        )
+
+        self.history_lock_amplitude = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        self.history_c3 = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        self.x_coordinates = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        self.support_profile = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        self.interface_c3 = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        self.interface_p_cubic = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        self.local_cubic_margin = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        self.cubic_transition_points = np.empty(
+            0,
+            dtype=np.float64,
+        )
+
+        # Backward-compatible aliases for the previous field names.
+        self.interface_dissipation = self.interface_p_cubic
+        self.bifurcation_points = self.cubic_transition_points
+
+    @staticmethod
+    def _finite_scalar(
+        name: str,
+        value: float,
+    ) -> float:
+        scalar = float(value)
+
+        if not np.isfinite(scalar):
+            raise ValueError(
+                f"{name} must be finite."
+            )
+
+        return scalar
+
+    @classmethod
+    def _positive_finite(
+        cls,
+        name: str,
+        value: float,
+    ) -> float:
+        scalar = cls._finite_scalar(
+            name,
+            value,
+        )
+
+        if scalar <= 0.0:
+            raise ValueError(
+                f"{name} must be positive."
+            )
+
+        return scalar
+
+    @classmethod
+    def _non_negative_finite(
+        cls,
+        name: str,
+        value: float,
+    ) -> float:
+        scalar = cls._finite_scalar(
+            name,
+            value,
+        )
+
+        if scalar < 0.0:
+            raise ValueError(
+                f"{name} must be non-negative."
+            )
+
+        return scalar
+
+    @classmethod
+    def _bounded_finite(
+        cls,
+        name: str,
+        value: float,
+        lower: float,
+        upper: float,
+    ) -> float:
+        scalar = cls._finite_scalar(
+            name,
+            value,
+        )
+
+        if not lower <= scalar <= upper:
+            raise ValueError(
+                f"{name} must be within "
+                f"[{lower}, {upper}]."
+            )
+
+        return scalar
+
+    @staticmethod
+    def _finite_vector(
+        name: str,
+        values: np.ndarray,
+        expected_shape: tuple[int, ...],
+    ) -> np.ndarray:
+        array = np.asarray(
+            values,
+            dtype=np.float64,
+        )
+
+        if array.shape != expected_shape:
+            raise ValueError(
+                f"{name} must have shape "
+                f"{expected_shape}, "
+                f"received {array.shape}."
+            )
+
+        if not np.all(
+            np.isfinite(array)
+        ):
+            raise ValueError(
+                f"{name} contains non-finite values."
+            )
+
+        return array
+
+    def set_system_state(
+        self,
+        C_t: float,
+        P_t: float,
+    ) -> None:
+        """
+        Set the independent system-level EDS / EDC state parameters.
+        """
+        self.C_t = self._bounded_finite(
+            "C_t",
+            C_t,
+            0.0,
+            1.0,
+        )
+
+        self.P_t = self._non_negative_finite(
+            "P_t",
+            P_t,
+        )
+
+    def classify_system_regime(
+        self,
+        C_t: float | None = None,
+        P_t: float | None = None,
+    ) -> str:
+        """
+        Classify the system-level relation between C(t) and P(t).
+
+        This classification is independent of the local C3 profile.
+        """
+        coherence = (
+            self.C_t
+            if C_t is None
+            else self._bounded_finite(
+                "C_t",
+                C_t,
+                0.0,
+                1.0,
+            )
+        )
+
+        pressure = (
+            self.P_t
+            if P_t is None
+            else self._non_negative_finite(
+                "P_t",
+                P_t,
+            )
+        )
+
+        margin = (
+            coherence
+            - pressure
+        )
+
+        if margin > self.critical_tolerance:
+            return self.EDS_RETENTION
+
+        if margin < -self.critical_tolerance:
+            return self.DEGRADATION_DRIFT
+
+        return self.EDC_BOUNDARY
 
     def build_pair_lock(
         self,
@@ -111,36 +375,45 @@ class MarnovCubicPotentialVisualizer:
     ) -> np.ndarray:
         """
         Build one phase lock on a two-dimensional phase plane.
-
-        The operator contains:
-
-        - opposite phase propagation in the two counter-directed channels;
-        - an asymmetric rotation matrix;
-        - a coherence-support amplitude.
-
-        Parameters
-        ----------
-        delta_phi:
-            Phase difference between counter-directed wave channels.
-        kappa:
-            Local nonlinear phase-lock strength.
-        support:
-            Local coherence-support parameter R(n).
-
-        Returns
-        -------
-        np.ndarray:
-            Complex 2x2 pair-lock operator.
         """
-        if support < 0.0:
-            raise ValueError("support must be non-negative.")
+        delta_phi = self._finite_scalar(
+            "delta_phi",
+            delta_phi,
+        )
 
-        phase_angle = kappa * np.sin(delta_phi)
+        kappa = self._non_negative_finite(
+            "kappa",
+            kappa,
+        )
+
+        support = self._bounded_finite(
+            "support",
+            support,
+            0.0,
+            1.0,
+        )
+
+        phase_angle = (
+            kappa
+            * np.sin(delta_phi)
+        )
 
         phase_operator = np.array(
             [
-                [np.exp(1j * phase_angle), 0.0],
-                [0.0, np.exp(-1j * phase_angle)],
+                [
+                    np.exp(
+                        1j
+                        * phase_angle
+                    ),
+                    0.0,
+                ],
+                [
+                    0.0,
+                    np.exp(
+                        -1j
+                        * phase_angle
+                    ),
+                ],
             ],
             dtype=np.complex128,
         )
@@ -159,11 +432,27 @@ class MarnovCubicPotentialVisualizer:
             dtype=np.complex128,
         )
 
-        support_amplitude = np.sqrt(support)
-
-        return support_amplitude * (
-            phase_operator @ asymmetry_operator
+        support_amplitude = np.sqrt(
+            support
         )
+
+        pair_lock = (
+            support_amplitude
+            * (
+                phase_operator
+                @ asymmetry_operator
+            )
+        )
+
+        if not np.all(
+            np.isfinite(pair_lock)
+        ):
+            raise FloatingPointError(
+                "The pair-lock operator "
+                "became non-finite."
+            )
+
+        return pair_lock
 
     def calculate_u_6d(
         self,
@@ -173,53 +462,44 @@ class MarnovCubicPotentialVisualizer:
     ) -> np.ndarray:
         """
         Contract three orthogonal two-dimensional phase locks into U_6D.
-
-        The tensor product of three 2x2 pair-lock operators produces
-        one complex 8x8 multiplet operator.
-
-        Parameters
-        ----------
-        delta_phi:
-            Three phase differences for the X, Y, and Z phase planes.
-        kappa:
-            Local nonlinear phase-lock strength.
-        support:
-            Local coherence-support parameter R(n).
-
-        Returns
-        -------
-        np.ndarray:
-            Complex 8x8 tensor-product operator U_6D.
         """
-        delta_phi = np.asarray(
+        phase_differences = self._finite_vector(
+            "delta_phi",
             delta_phi,
-            dtype=np.float64,
+            (3,),
         )
 
-        if delta_phi.shape != (3,):
-            raise ValueError(
-                "delta_phi must contain exactly three phase differences."
-            )
+        kappa = self._non_negative_finite(
+            "kappa",
+            kappa,
+        )
+
+        support = self._bounded_finite(
+            "support",
+            support,
+            0.0,
+            1.0,
+        )
 
         lock_x = self.build_pair_lock(
-            delta_phi=delta_phi[0],
+            delta_phi=phase_differences[0],
             kappa=kappa,
             support=support,
         )
 
         lock_y = self.build_pair_lock(
-            delta_phi=delta_phi[1],
+            delta_phi=phase_differences[1],
             kappa=kappa,
             support=support,
         )
 
         lock_z = self.build_pair_lock(
-            delta_phi=delta_phi[2],
+            delta_phi=phase_differences[2],
             kappa=kappa,
             support=support,
         )
 
-        return np.kron(
+        multiplet_operator = np.kron(
             np.kron(
                 lock_x,
                 lock_y,
@@ -227,92 +507,141 @@ class MarnovCubicPotentialVisualizer:
             lock_z,
         )
 
+        if multiplet_operator.shape != (
+            8,
+            8,
+        ):
+            raise RuntimeError(
+                "U_6D must be represented "
+                "by an 8x8 operator."
+            )
+
+        if not np.all(
+            np.isfinite(
+                multiplet_operator
+            )
+        ):
+            raise FloatingPointError(
+                "U_6D became non-finite."
+            )
+
+        return multiplet_operator
+
     @staticmethod
     def calculate_lock_amplitude(
         multiplet_operator: np.ndarray,
     ) -> float:
         """
         Calculate the normalized phase-lock amplitude.
-
-        The raw trace is normalized by the operator dimension so that
-        the resulting amplitude can be compared across simulation stages.
-
-        Parameters
-        ----------
-        multiplet_operator:
-            Complex square multiplet operator.
-
-        Returns
-        -------
-        float:
-            Normalized lock amplitude.
         """
-        multiplet_operator = np.asarray(
+        operator = np.asarray(
             multiplet_operator,
             dtype=np.complex128,
         )
 
-        if multiplet_operator.ndim != 2:
+        if operator.ndim != 2:
             raise ValueError(
-                "multiplet_operator must be a two-dimensional matrix."
+                "multiplet_operator must be "
+                "a two-dimensional matrix."
             )
 
-        rows, columns = multiplet_operator.shape
+        rows, columns = operator.shape
+
+        if rows == 0 or columns == 0:
+            raise ValueError(
+                "multiplet_operator must not be empty."
+            )
 
         if rows != columns:
             raise ValueError(
                 "multiplet_operator must be square."
             )
 
-        return float(
+        if not np.all(
+            np.isfinite(operator)
+        ):
+            raise ValueError(
+                "multiplet_operator contains "
+                "non-finite values."
+            )
+
+        amplitude = float(
             np.abs(
-                np.trace(multiplet_operator)
+                np.trace(operator)
             )
             / rows
         )
+
+        if not np.isfinite(
+            amplitude
+        ):
+            raise FloatingPointError(
+                "The normalized lock amplitude "
+                "became non-finite."
+            )
+
+        return amplitude
 
     def calculate_cubic_potential(
         self,
         lock_amplitude: float,
     ) -> float:
         """
-        Calculate the cubic retention potential C3.
+        Calculate C3 as cubic nonlinear saturation,
+        compression, and delay.
 
-        C3 is defined as the cubic saturation of the normalized
-        phase-lock amplitude, scaled by the field intensity.
-
-        Parameters
-        ----------
-        lock_amplitude:
-            Normalized phase-lock amplitude.
-
-        Returns
-        -------
-        float:
-            Cubic retention potential C3.
+        C3 = (psi_amplitude * lock_amplitude)^3
         """
-        lock_amplitude = max(
-            float(lock_amplitude),
-            0.0,
+        lock_amplitude = self._non_negative_finite(
+            "lock_amplitude",
+            lock_amplitude,
         )
 
-        return float(
-            self.psi_amplitude**2
-            * lock_amplitude**3
-        )
+        C3 = (
+            self.psi_amplitude
+            * lock_amplitude
+        ) ** 3
 
-    def calculate_dissipation_level(self) -> float:
-        """
-        Calculate the environmental dissipation level P.
+        if not np.isfinite(
+            C3
+        ):
+            raise FloatingPointError(
+                "C3 became non-finite."
+            )
 
-        Returns
-        -------
-        float:
-            Dissipation level P.
+        return float(C3)
+
+    def calculate_cubic_dissipation_level(
+        self,
+    ) -> float:
         """
-        return float(
+        Calculate the local cubic-dissipation level P_cubic.
+
+        P_cubic is not the system-level destabilizing pressure P(t).
+        """
+        P_cubic = (
             self.dissipation_coefficient
-            * self.psi_amplitude**3
+            * self.psi_amplitude ** 3
+        )
+
+        if not np.isfinite(
+            P_cubic
+        ):
+            raise FloatingPointError(
+                "P_cubic became non-finite."
+            )
+
+        return float(P_cubic)
+
+    def calculate_dissipation_level(
+        self,
+    ) -> float:
+        """
+        Backward-compatible alias for
+        calculate_cubic_dissipation_level.
+        """
+        return (
+            self.calculate_cubic_dissipation_level()
         )
 
     def simulate_temporal_dynamics(
@@ -326,72 +655,89 @@ class MarnovCubicPotentialVisualizer:
     ]:
         """
         Simulate tact-by-tact phase stabilization.
-
-        The phase state evolves through:
-
-        - nonlinear sinusoidal restoring force;
-        - external dissipative noise;
-        - recursive inheritance of the preceding phase state.
-
-        The noise increment is scaled by sqrt(dt), preventing the stochastic
-        forcing from changing incorrectly when the tact duration changes.
-
-        Parameters
-        ----------
-        initial_phi:
-            Initial phase differences on the three phase planes.
-
-        Returns
-        -------
-        tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-            Tact indices, phase history, lock-amplitude history,
-            and cubic-potential history.
         """
         if initial_phi is None:
             current_phi = np.array(
-                [0.8, -0.7, 0.5],
+                [
+                    0.8,
+                    -0.7,
+                    0.5,
+                ],
                 dtype=np.float64,
             )
         else:
-            current_phi = np.asarray(
+            current_phi = self._finite_vector(
+                "initial_phi",
                 initial_phi,
-                dtype=np.float64,
+                (3,),
             ).copy()
 
-        if current_phi.shape != (3,):
-            raise ValueError(
-                "initial_phi must contain exactly three phase differences."
-            )
+        history_steps = np.empty(
+            self.num_steps,
+            dtype=np.int64,
+        )
 
-        history_steps: list[int] = []
-        history_phi: list[np.ndarray] = []
-        history_lock_amplitude: list[float] = []
-        history_c3: list[float] = []
+        history_phi = np.empty(
+            (
+                self.num_steps,
+                3,
+            ),
+            dtype=np.float64,
+        )
+
+        history_lock_amplitude = np.empty(
+            self.num_steps,
+            dtype=np.float64,
+        )
+
+        history_c3 = np.empty(
+            self.num_steps,
+            dtype=np.float64,
+        )
 
         kappa = (
             self.alpha_lock
             * self.base_support
         )
 
-        for step in range(self.num_steps):
-            multiplet_operator = self.calculate_u_6d(
-                delta_phi=current_phi,
-                kappa=kappa,
-                support=self.base_support,
+        for tact_index in range(
+            self.num_steps
+        ):
+            multiplet_operator = (
+                self.calculate_u_6d(
+                    delta_phi=current_phi,
+                    kappa=kappa,
+                    support=self.base_support,
+                )
             )
 
-            lock_amplitude = self.calculate_lock_amplitude(
-                multiplet_operator
+            lock_amplitude = (
+                self.calculate_lock_amplitude(
+                    multiplet_operator
+                )
             )
 
-            cubic_potential = self.calculate_cubic_potential(
-                lock_amplitude
+            C3 = (
+                self.calculate_cubic_potential(
+                    lock_amplitude
+                )
             )
 
-            history_steps.append(step)
-            history_phi.append(current_phi.copy())
-            history_lock_amplitude.append(lock_amplitude)
-            history_c3.append(cubic_potential)
+            history_steps[
+                tact_index
+            ] = tact_index
+
+            history_phi[
+                tact_index
+            ] = current_phi
+
+            history_lock_amplitude[
+                tact_index
+            ] = lock_amplitude
+
+            history_c3[
+                tact_index
+            ] = C3
 
             restoring_increment = (
                 -self.gamma
@@ -408,8 +754,9 @@ class MarnovCubicPotentialVisualizer:
                 size=3,
             )
 
-            current_phi += (
-                restoring_increment
+            current_phi = (
+                current_phi
+                + restoring_increment
                 + noise_increment
             )
 
@@ -417,27 +764,32 @@ class MarnovCubicPotentialVisualizer:
                 current_phi
                 + np.pi
             ) % (
-                2.0 * np.pi
+                2.0
+                * np.pi
             ) - np.pi
 
-        self.history_steps = np.asarray(
-            history_steps,
-            dtype=np.int64,
+            if not np.all(
+                np.isfinite(current_phi)
+            ):
+                raise FloatingPointError(
+                    "The phase state "
+                    "became non-finite."
+                )
+
+        self.history_steps = (
+            history_steps
         )
 
-        self.history_phi = np.asarray(
-            history_phi,
-            dtype=np.float64,
+        self.history_phi = (
+            history_phi
         )
 
-        self.history_lock_amplitude = np.asarray(
-            history_lock_amplitude,
-            dtype=np.float64,
+        self.history_lock_amplitude = (
+            history_lock_amplitude
         )
 
-        self.history_c3 = np.asarray(
-            history_c3,
-            dtype=np.float64,
+        self.history_c3 = (
+            history_c3
         )
 
         return (
@@ -463,87 +815,87 @@ class MarnovCubicPotentialVisualizer:
         np.ndarray,
     ]:
         """
-        Calculate the phase-lock stability profile across an interface barrier.
+        Calculate the local C3 profile across an interface barrier.
 
-        The coherence-support profile R(n) decreases inside the barrier
-        and recovers outside it.
-
-        The local lock strength is:
-
-        kappa_local = alpha_lock * R(n)
-
-        The cubic potential is:
-
-        C3 = psi_amplitude^2 * lock_amplitude^3
-
-        The EDS retention condition is:
-
-        C3 > P
-
-        The critical boundary is:
-
-        C3 = P
-
-        Parameters
-        ----------
-        x_start:
-            Initial spatial coordinate.
-        x_end:
-            Final spatial coordinate.
-        num_points:
-            Number of spatial sampling points.
-        barrier_center:
-            Center coordinate of the interface barrier.
-        barrier_width:
-            Gaussian width of the barrier.
-        barrier_depth:
-            Maximum decrease of the coherence-support profile.
-        fixed_phi:
-            Phase differences used for the spatial interface calculation.
-
-        Returns
-        -------
-        tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-            Spatial coordinates, support profile, C3 profile,
-            and dissipation profile.
+        The local comparison C3 to P_cubic is visualized independently
+        from the system-level EDS / EDC relation C(t) to P(t).
         """
+        x_start = self._finite_scalar(
+            "x_start",
+            x_start,
+        )
+
+        x_end = self._finite_scalar(
+            "x_end",
+            x_end,
+        )
+
+        barrier_center = self._finite_scalar(
+            "barrier_center",
+            barrier_center,
+        )
+
+        barrier_width = self._positive_finite(
+            "barrier_width",
+            barrier_width,
+        )
+
+        barrier_depth = self._bounded_finite(
+            "barrier_depth",
+            barrier_depth,
+            0.0,
+            1.0,
+        )
+
         if x_end <= x_start:
             raise ValueError(
                 "x_end must be greater than x_start."
             )
+
+        if (
+            isinstance(
+                num_points,
+                bool,
+            )
+            or int(num_points)
+            != num_points
+        ):
+            raise ValueError(
+                "num_points must be an integer."
+            )
+
+        num_points = int(
+            num_points
+        )
+
         if num_points < 2:
             raise ValueError(
                 "num_points must be at least 2."
             )
-        if barrier_width <= 0.0:
-            raise ValueError(
-                "barrier_width must be positive."
-            )
-        if not 0.0 <= barrier_depth < 1.0:
-            raise ValueError(
-                "barrier_depth must be in the interval [0, 1)."
-            )
 
         if fixed_phi is None:
             fixed_phase_state = np.array(
-                [0.1, -0.1, 0.05],
+                [
+                    0.1,
+                    -0.1,
+                    0.05,
+                ],
                 dtype=np.float64,
             )
         else:
-            fixed_phase_state = np.asarray(
-                fixed_phi,
-                dtype=np.float64,
-            )
-
-        if fixed_phase_state.shape != (3,):
-            raise ValueError(
-                "fixed_phi must contain exactly three phase differences."
+            fixed_phase_state = (
+                self._finite_vector(
+                    "fixed_phi",
+                    fixed_phi,
+                    (3,),
+                )
             )
 
         x_coordinates = np.linspace(
             x_start,
             x_end,
             num_points,
+            dtype=np.float64,
         )
 
         support_profile = (
@@ -563,25 +915,35 @@ class MarnovCubicPotentialVisualizer:
         support_profile = np.clip(
             support_profile,
             0.0,
-            None,
+            1.0,
         )
 
-        cubic_potential_values: list[float] = []
-
-        dissipation_level = (
-            self.calculate_dissipation_level()
+        cubic_potential_profile = np.empty(
+            num_points,
+            dtype=np.float64,
         )
 
-        for local_support in support_profile:
+        for (
+            index,
+            local_support,
+        ) in enumerate(
+            support_profile
+        ):
             local_kappa = (
                 self.alpha_lock
                 * local_support
             )
 
-            local_operator = self.calculate_u_6d(
-                delta_phi=fixed_phase_state,
-                kappa=local_kappa,
-                support=local_support,
+            local_operator = (
+                self.calculate_u_6d(
+                    delta_phi=(
+                        fixed_phase_state
+                    ),
+                    kappa=local_kappa,
+                    support=float(
+                        local_support
+                    ),
+                )
             )
 
             local_lock_amplitude = (
@@ -590,139 +952,296 @@ class MarnovCubicPotentialVisualizer:
                 )
             )
 
-            local_cubic_potential = (
+            cubic_potential_profile[
+                index
+            ] = (
                 self.calculate_cubic_potential(
                     local_lock_amplitude
                 )
             )
 
-            cubic_potential_values.append(
-                local_cubic_potential
+        P_cubic = (
+            self.calculate_cubic_dissipation_level()
+        )
+
+        cubic_dissipation_profile = np.full(
+            num_points,
+            P_cubic,
+            dtype=np.float64,
+        )
+
+        local_cubic_margin = (
+            cubic_potential_profile
+            - cubic_dissipation_profile
+        )
+
+        self.x_coordinates = (
+            x_coordinates
+        )
+
+        self.support_profile = (
+            support_profile
+        )
+
+        self.interface_c3 = (
+            cubic_potential_profile
+        )
+
+        self.interface_p_cubic = (
+            cubic_dissipation_profile
+        )
+
+        self.local_cubic_margin = (
+            local_cubic_margin
+        )
+
+        self.cubic_transition_points = (
+            self._find_transition_points(
+                x_coordinates=(
+                    x_coordinates
+                ),
+                first_profile=(
+                    cubic_potential_profile
+                ),
+                second_profile=(
+                    cubic_dissipation_profile
+                ),
             )
-
-        cubic_potential_profile = np.asarray(
-            cubic_potential_values,
-            dtype=np.float64,
         )
 
-        dissipation_profile = np.full_like(
-            cubic_potential_profile,
-            fill_value=dissipation_level,
-            dtype=np.float64,
+        # Backward-compatible aliases.
+        self.interface_dissipation = (
+            self.interface_p_cubic
         )
-
-        self.x_coordinates = x_coordinates
-        self.support_profile = support_profile
-        self.interface_c3 = cubic_potential_profile
-        self.interface_dissipation = dissipation_profile
 
         self.bifurcation_points = (
-            self._find_bifurcation_points(
-                x_coordinates=x_coordinates,
-                cubic_potential=cubic_potential_profile,
-                dissipation=dissipation_profile,
-            )
+            self.cubic_transition_points
         )
 
         return (
             self.x_coordinates.copy(),
             self.support_profile.copy(),
             self.interface_c3.copy(),
-            self.interface_dissipation.copy(),
+            self.interface_p_cubic.copy(),
         )
 
     @staticmethod
-    def _find_bifurcation_points(
+    def _find_transition_points(
         x_coordinates: np.ndarray,
-        cubic_potential: np.ndarray,
-        dissipation: np.ndarray,
+        first_profile: np.ndarray,
+        second_profile: np.ndarray,
     ) -> np.ndarray:
         """
-        Find approximate coordinates where C3 crosses P.
+        Find coordinates where two finite one-dimensional profiles are equal.
 
-        Linear interpolation is used between neighboring samples.
-
-        Parameters
-        ----------
-        x_coordinates:
-            Spatial coordinates.
-        cubic_potential:
-            Cubic-retention potential profile.
-        dissipation:
-            Dissipation profile.
-
-        Returns
-        -------
-        np.ndarray:
-            Approximate bifurcation coordinates.
+        Exact equality samples and sign-changing intervals are both retained.
         """
-        difference = (
-            cubic_potential
-            - dissipation
-        )
-
-        crossing_indices = np.where(
-            np.signbit(difference[:-1])
-            != np.signbit(difference[1:])
-        )[0]
-
-        crossing_points: list[float] = []
-
-        for index in crossing_indices:
-            x_left = x_coordinates[index]
-            x_right = x_coordinates[index + 1]
-
-            y_left = difference[index]
-            y_right = difference[index + 1]
-
-            denominator = (
-                y_right
-                - y_left
-            )
-
-            if denominator == 0.0:
-                crossing_coordinate = x_left
-            else:
-                crossing_coordinate = (
-                    x_left
-                    - y_left
-                    * (
-                        x_right
-                        - x_left
-                    )
-                    / denominator
-                )
-
-            crossing_points.append(
-                float(crossing_coordinate)
-            )
-
-        return np.asarray(
-            crossing_points,
+        x = np.asarray(
+            x_coordinates,
             dtype=np.float64,
         )
 
-    def visualize_engineering_data(self) -> None:
+        first = np.asarray(
+            first_profile,
+            dtype=np.float64,
+        )
+
+        second = np.asarray(
+            second_profile,
+            dtype=np.float64,
+        )
+
+        if (
+            x.ndim != 1
+            or first.ndim != 1
+            or second.ndim != 1
+        ):
+            raise ValueError(
+                "Transition profiles must "
+                "be one-dimensional."
+            )
+
+        if not (
+            x.size
+            == first.size
+            == second.size
+        ):
+            raise ValueError(
+                "Transition profiles must "
+                "have equal lengths."
+            )
+
+        if x.size < 2:
+            raise ValueError(
+                "At least two profile "
+                "points are required."
+            )
+
+        if not (
+            np.all(np.isfinite(x))
+            and np.all(
+                np.isfinite(first)
+            )
+            and np.all(
+                np.isfinite(second)
+            )
+        ):
+            raise ValueError(
+                "Transition profiles contain "
+                "non-finite values."
+            )
+
+        if np.any(
+            np.diff(x) <= 0.0
+        ):
+            raise ValueError(
+                "x_coordinates must be "
+                "strictly increasing."
+            )
+
+        difference = (
+            first
+            - second
+        )
+
+        scale = max(
+            1.0,
+            float(
+                np.max(
+                    np.abs(first)
+                )
+            ),
+            float(
+                np.max(
+                    np.abs(second)
+                )
+            ),
+        )
+
+        tolerance = (
+            64.0
+            * np.finfo(
+                np.float64
+            ).eps
+            * scale
+        )
+
+        points: list[float] = []
+
+        exact_indices = np.where(
+            np.abs(
+                difference
+            ) <= tolerance
+        )[0]
+
+        points.extend(
+            float(
+                x[index]
+            )
+            for index in exact_indices
+        )
+
+        for index in range(
+            x.size - 1
+        ):
+            y_left = (
+                difference[index]
+            )
+
+            y_right = (
+                difference[index + 1]
+            )
+
+            if (
+                abs(y_left)
+                <= tolerance
+                or abs(y_right)
+                <= tolerance
+            ):
+                continue
+
+            if (
+                np.signbit(y_left)
+                == np.signbit(y_right)
+            ):
+                continue
+
+            x_left = (
+                x[index]
+            )
+
+            x_right = (
+                x[index + 1]
+            )
+
+            crossing = (
+                x_left
+                - y_left
+                * (
+                    x_right
+                    - x_left
+                )
+                / (
+                    y_right
+                    - y_left
+                )
+            )
+
+            points.append(
+                float(crossing)
+            )
+
+        if not points:
+            return np.empty(
+                0,
+                dtype=np.float64,
+            )
+
+        return np.asarray(
+            sorted(
+                set(points)
+            ),
+            dtype=np.float64,
+        )
+
+    def visualize_engineering_data(
+        self,
+        show: bool = True,
+    ) -> plt.Figure:
         """
-        Visualize temporal phase dynamics, phase-space trajectory,
-        cubic-potential dynamics, and the interface stability map.
+        Visualize temporal phase dynamics,
+        U_6D, C3, and the interface map.
         """
         if self.history_steps.size == 0:
             raise RuntimeError(
-                "Temporal dynamics have not been simulated."
+                "Temporal dynamics have not "
+                "been simulated."
             )
 
         if self.x_coordinates.size == 0:
             raise RuntimeError(
-                "The interface profile has not been calculated."
+                "The interface profile has not "
+                "been calculated."
             )
 
         figure = plt.figure(
-            figsize=(16, 11),
+            figsize=(
+                16,
+                11,
+            ),
+        )
+
+        system_regime = (
+            self.classify_system_regime()
         )
 
         figure.suptitle(
-            "Marnov Protocol Engineering Simulator — U_6D / C3 Core",
+            "Marnov Protocol Engineering Simulator "
+            "— U_6D / C3 Core\n"
+            f"System relation: "
+            f"C(t)={self.C_t:.6f}, "
+            f"P(t)={self.P_t:.6f}, "
+            f"regime={system_regime}",
             fontsize=14,
             fontweight="bold",
         )
@@ -754,22 +1273,37 @@ class MarnovCubicPotentialVisualizer:
 
         phase_axis.plot(
             self.history_steps,
-            self.history_phi[:, 0],
-            label="X axis: delta_phi_1",
+            self.history_phi[
+                :,
+                0,
+            ],
+            label=(
+                "X axis: delta_phi_1"
+            ),
             linewidth=2.0,
         )
 
         phase_axis.plot(
             self.history_steps,
-            self.history_phi[:, 1],
-            label="Y axis: delta_phi_2",
+            self.history_phi[
+                :,
+                1,
+            ],
+            label=(
+                "Y axis: delta_phi_2"
+            ),
             linewidth=2.0,
         )
 
         phase_axis.plot(
             self.history_steps,
-            self.history_phi[:, 2],
-            label="Z axis: delta_phi_3",
+            self.history_phi[
+                :,
+                2,
+            ],
+            label=(
+                "Z axis: delta_phi_3"
+            ),
             linewidth=2.0,
         )
 
@@ -780,11 +1314,12 @@ class MarnovCubicPotentialVisualizer:
         )
 
         phase_axis.set_title(
-            "Tact-by-Tact Suppression of Phase Mismatch"
+            "Tact-by-Tact Suppression "
+            "of Phase Mismatch"
         )
 
         phase_axis.set_xlabel(
-            "Self-Assembly Tact"
+            "Structural Self-Organization Tact"
         )
 
         phase_axis.set_ylabel(
@@ -799,25 +1334,52 @@ class MarnovCubicPotentialVisualizer:
         phase_axis.legend()
 
         phase_space_axis.plot(
-            self.history_phi[:, 0],
-            self.history_phi[:, 1],
-            self.history_phi[:, 2],
+            self.history_phi[
+                :,
+                0,
+            ],
+            self.history_phi[
+                :,
+                1,
+            ],
+            self.history_phi[
+                :,
+                2,
+            ],
             linewidth=2.0,
         )
 
         phase_space_axis.scatter(
-            self.history_phi[0, 0],
-            self.history_phi[0, 1],
-            self.history_phi[0, 2],
+            self.history_phi[
+                0,
+                0,
+            ],
+            self.history_phi[
+                0,
+                1,
+            ],
+            self.history_phi[
+                0,
+                2,
+            ],
             marker="o",
             s=45,
             label="Initial state",
         )
 
         phase_space_axis.scatter(
-            self.history_phi[-1, 0],
-            self.history_phi[-1, 1],
-            self.history_phi[-1, 2],
+            self.history_phi[
+                -1,
+                0,
+            ],
+            self.history_phi[
+                -1,
+                1,
+            ],
+            self.history_phi[
+                -1,
+                2,
+            ],
             marker="x",
             s=60,
             label="Final state",
@@ -845,7 +1407,9 @@ class MarnovCubicPotentialVisualizer:
             self.history_steps,
             self.history_lock_amplitude,
             linewidth=2.5,
-            label="Normalized lock amplitude",
+            label=(
+                "Normalized lock amplitude"
+            ),
         )
 
         lock_axis.set_title(
@@ -853,7 +1417,7 @@ class MarnovCubicPotentialVisualizer:
         )
 
         lock_axis.set_xlabel(
-            "Self-Assembly Tact"
+            "Structural Self-Organization Tact"
         )
 
         lock_axis.set_ylabel(
@@ -865,31 +1429,44 @@ class MarnovCubicPotentialVisualizer:
             alpha=0.3,
         )
 
-        cubic_axis = lock_axis.twinx()
+        cubic_axis = (
+            lock_axis.twinx()
+        )
 
         cubic_axis.plot(
             self.history_steps,
             self.history_c3,
             linestyle="--",
             linewidth=2.0,
-            label="C3 potential",
+            label="C3",
         )
 
         cubic_axis.set_ylabel(
-            "Cubic Retention Potential C3"
+            "C3: Cubic Nonlinear Saturation, "
+            "Compression, and Delay"
         )
 
-        lock_lines, lock_labels = (
-            lock_axis.get_legend_handles_labels()
+        (
+            lock_lines,
+            lock_labels,
+        ) = (
+            lock_axis
+            .get_legend_handles_labels()
         )
 
-        cubic_lines, cubic_labels = (
-            cubic_axis.get_legend_handles_labels()
+        (
+            cubic_lines,
+            cubic_labels,
+        ) = (
+            cubic_axis
+            .get_legend_handles_labels()
         )
 
         lock_axis.legend(
-            lock_lines + cubic_lines,
-            lock_labels + cubic_labels,
+            lock_lines
+            + cubic_lines,
+            lock_labels
+            + cubic_labels,
             loc="best",
         )
 
@@ -897,42 +1474,50 @@ class MarnovCubicPotentialVisualizer:
             self.x_coordinates,
             self.interface_c3,
             linewidth=2.5,
-            label="C3 cubic retention potential",
+            label="C3 profile",
         )
 
         interface_axis.plot(
             self.x_coordinates,
-            self.interface_dissipation,
+            self.interface_p_cubic,
             linestyle="--",
             linewidth=2.0,
-            label="Environmental dissipation P",
+            label=(
+                "Local cubic-dissipation "
+                "level P_cubic"
+            ),
         )
 
         interface_axis.fill_between(
             self.x_coordinates,
             self.interface_c3,
-            self.interface_dissipation,
+            self.interface_p_cubic,
             where=(
                 self.interface_c3
-                < self.interface_dissipation
+                < self.interface_p_cubic
             ),
             alpha=0.2,
-            label="Breakdown domain: C3 <= P",
+            label=(
+                "Local cubic-dissipation "
+                "dominance"
+            ),
         )
 
         interface_axis.fill_between(
             self.x_coordinates,
             self.interface_c3,
-            self.interface_dissipation,
+            self.interface_p_cubic,
             where=(
                 self.interface_c3
-                >= self.interface_dissipation
+                >= self.interface_p_cubic
             ),
             alpha=0.2,
-            label="Retention domain: C3 > P",
+            label="Local C3 dominance",
         )
 
-        for point in self.bifurcation_points:
+        for point in (
+            self.cubic_transition_points
+        ):
             interface_axis.axvline(
                 point,
                 linestyle=":",
@@ -940,7 +1525,8 @@ class MarnovCubicPotentialVisualizer:
             )
 
         interface_axis.set_title(
-            "EDS Criterion Across the Interface Barrier"
+            "Local C3 / P_cubic Transition "
+            "Across the Interface Barrier"
         )
 
         interface_axis.set_xlabel(
@@ -948,7 +1534,7 @@ class MarnovCubicPotentialVisualizer:
         )
 
         interface_axis.set_ylabel(
-            "Retention Potential / Dissipation"
+            "C3 / P_cubic"
         )
 
         interface_axis.grid(
@@ -963,19 +1549,29 @@ class MarnovCubicPotentialVisualizer:
                 0.0,
                 0.0,
                 1.0,
-                0.96,
+                0.94,
             )
         )
 
-        plt.show()
+        if show:
+            plt.show()
 
-    def run_visual_simulation(self) -> None:
+        return figure
+
+    def run_visual_simulation(
+        self,
+        show: bool = True,
+    ) -> plt.Figure:
         """
-        Run the complete temporal and spatial engineering simulation.
+        Run the complete temporal and spatial engineering visualization.
         """
         self.simulate_temporal_dynamics(
             initial_phi=np.array(
-                [0.8, -0.7, 0.5],
+                [
+                    0.8,
+                    -0.7,
+                    0.5,
+                ],
                 dtype=np.float64,
             )
         )
@@ -988,13 +1584,18 @@ class MarnovCubicPotentialVisualizer:
             barrier_width=1.5,
             barrier_depth=0.8,
             fixed_phi=np.array(
-                [0.1, -0.1, 0.05],
+                [
+                    0.1,
+                    -0.1,
+                    0.05,
+                ],
                 dtype=np.float64,
             ),
         )
 
         print(
-            "=== MARNOV U_6D / C3 ENGINEERING SIMULATOR ==="
+            "=== MARNOV U_6D / C3 "
+            "ENGINEERING VISUALIZER ==="
         )
 
         print(
@@ -1008,36 +1609,65 @@ class MarnovCubicPotentialVisualizer:
         )
 
         print(
-            "Initial cubic potential C3: "
+            "Initial C3: "
             f"{self.history_c3[0]:.6f}"
         )
 
         print(
-            "Final cubic potential C3: "
+            "Final C3: "
             f"{self.history_c3[-1]:.6f}"
         )
 
         print(
-            "Environmental dissipation P: "
-            f"{self.calculate_dissipation_level():.6f}"
+            "Local cubic-dissipation level "
+            "P_cubic: "
+            f"{self.calculate_cubic_dissipation_level():.6f}"
         )
 
-        if self.bifurcation_points.size > 0:
+        print(
+            "System-level general endogenous "
+            "structural coherence C(t): "
+            f"{self.C_t:.6f}"
+        )
+
+        print(
+            "System-level destabilizing "
+            "pressure P(t): "
+            f"{self.P_t:.6f}"
+        )
+
+        print(
+            "System regime: "
+            f"{self.classify_system_regime()}"
+        )
+
+        if (
+            self.cubic_transition_points.size
+            > 0
+        ):
             formatted_points = ", ".join(
                 f"{point:.4f}"
-                for point in self.bifurcation_points
+                for point in (
+                    self.cubic_transition_points
+                )
             )
 
             print(
-                "Bifurcation coordinates C3 = P: "
+                "Local transition coordinates "
+                "C3 = P_cubic: "
                 f"{formatted_points}"
             )
         else:
             print(
-                "No C3 = P bifurcation crossing was detected."
+                "No local C3 = P_cubic "
+                "transition crossing was detected."
             )
 
-        self.visualize_engineering_data()
+        return (
+            self.visualize_engineering_data(
+                show=show
+            )
+        )
 
 
 if __name__ == "__main__":
@@ -1051,6 +1681,8 @@ if __name__ == "__main__":
         noise_strength=0.03,
         psi_amplitude=1.5,
         dissipation_coefficient=0.5,
+        C_t=0.90,
+        P_t=0.35,
         seed=42,
     )
 
