@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 from numpy.typing import NDArray
 
@@ -11,46 +13,31 @@ class MetricBridgeSolver:
     """
     Dynamic interface-balance solver for the EDK metric bridge.
 
-    The solver implements the formal chain:
+    The solver implements the computational chain:
 
     J_flux
+    -> spatial Jacobian grad_J_flux
+    -> convective transport
+    -> background-mode gradient
+    -> cubic retention C3
     -> exchange-flow residual R_J
     -> interface projection G_int
-    -> projected energy-momentum divergence
-    -> metric-deformation proxy
-
-    Exchange-flow residual:
-
-    R_J =
-    partial_t J_flux
-    + (J_flux dot grad)J_flux
-    + gamma * grad(rho_cont)
-    + beta * C3 * J_flux
-
-    Flow-evolution form:
-
-    partial_t J_flux =
-    -(J_flux dot grad)J_flux
-    - gamma * grad(rho_cont)
-    - beta * C3 * J_flux
-
-    Interface projection:
-
-    partial_mu T^{mu nu} =
-    G_int^{nu}_{lambda}
-    * R_J^{lambda}
-
-    The metric update implemented here is a model-specific deformation
-    proxy. It is not a numerical solution of the Einstein field equations.
+    -> projected residual
+    -> EDS / EDC regime classification
+    -> retained metric or metric-deformation proxy
     """
+
+    EDS_RETENTION = "EDS_RETENTION"
+    EDC_CRITICAL_BOUNDARY = "EDC_CRITICAL_BOUNDARY"
+    INVERSE_DISSIPATIVE_CASCADE = "INVERSE_DISSIPATIVE_CASCADE"
 
     def __init__(
         self,
-        gamma: float,
-        beta: float,
-        chi: float,
-        critical_tolerance: float = 1e-9,
-    ):
+        gamma: float = 0.4,
+        beta: float = 0.8,
+        chi: float = 0.05,
+        critical_tolerance: float = 1.0e-9,
+    ) -> None:
         """
         Initialize the metric-bridge solver.
 
@@ -63,28 +50,56 @@ class MetricBridgeSolver:
         chi:
             Plasticity coefficient of the metric-deformation proxy.
         critical_tolerance:
-            Numerical tolerance used at the boundary C(t) = P(t).
+            Numerical tolerance at the boundary C(t) = P(t).
         """
-        if gamma < 0.0:
-            raise ValueError("gamma must be non-negative.")
-
-        if beta < 0.0:
-            raise ValueError("beta must be non-negative.")
-
-        if chi < 0.0:
-            raise ValueError("chi must be non-negative.")
-
-        if critical_tolerance <= 0.0:
-            raise ValueError(
-                "critical_tolerance must be positive."
-            )
-
-        self.gamma = float(gamma)
-        self.beta = float(beta)
-        self.chi = float(chi)
-        self.critical_tolerance = float(
-            critical_tolerance
+        self.gamma = self._non_negative_finite("gamma", gamma)
+        self.beta = self._non_negative_finite("beta", beta)
+        self.chi = self._non_negative_finite("chi", chi)
+        self.critical_tolerance = self._positive_finite(
+            "critical_tolerance",
+            critical_tolerance,
         )
+
+    @staticmethod
+    def _finite_scalar(
+        name: str,
+        value: float,
+    ) -> float:
+        try:
+            scalar = float(value)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise ValueError(f"{name} must be a finite scalar.") from exc
+
+        if not np.isfinite(scalar):
+            raise ValueError(f"{name} must be finite.")
+
+        return scalar
+
+    @classmethod
+    def _positive_finite(
+        cls,
+        name: str,
+        value: float,
+    ) -> float:
+        scalar = cls._finite_scalar(name, value)
+
+        if scalar <= 0.0:
+            raise ValueError(f"{name} must be positive.")
+
+        return scalar
+
+    @classmethod
+    def _non_negative_finite(
+        cls,
+        name: str,
+        value: float,
+    ) -> float:
+        scalar = cls._finite_scalar(name, value)
+
+        if scalar < 0.0:
+            raise ValueError(f"{name} must be non-negative.")
+
+        return scalar
 
     @staticmethod
     def _validate_vector(
@@ -92,7 +107,7 @@ class MetricBridgeSolver:
         name: str,
     ) -> FloatArray:
         """
-        Validate and return a one-dimensional floating-point vector.
+        Validate and return a one-dimensional finite vector.
         """
         result = np.asarray(
             vector,
@@ -100,19 +115,13 @@ class MetricBridgeSolver:
         )
 
         if result.ndim != 1:
-            raise ValueError(
-                f"{name} must be a one-dimensional vector."
-            )
+            raise ValueError(f"{name} must be a one-dimensional vector.")
 
         if result.size == 0:
-            raise ValueError(
-                f"{name} must not be empty."
-            )
+            raise ValueError(f"{name} must not be empty.")
 
         if not np.all(np.isfinite(result)):
-            raise ValueError(
-                f"{name} must contain only finite values."
-            )
+            raise ValueError(f"{name} must contain only finite values.")
 
         return result
 
@@ -122,7 +131,7 @@ class MetricBridgeSolver:
         name: str,
     ) -> FloatArray:
         """
-        Validate and return a square floating-point matrix.
+        Validate and return a square finite matrix.
         """
         result = np.asarray(
             matrix,
@@ -130,28 +139,79 @@ class MetricBridgeSolver:
         )
 
         if result.ndim != 2:
-            raise ValueError(
-                f"{name} must be a two-dimensional matrix."
-            )
+            raise ValueError(f"{name} must be a two-dimensional matrix.")
 
         rows, columns = result.shape
 
         if rows != columns:
-            raise ValueError(
-                f"{name} must be square."
-            )
+            raise ValueError(f"{name} must be square.")
 
         if rows == 0:
-            raise ValueError(
-                f"{name} must not be empty."
-            )
+            raise ValueError(f"{name} must not be empty.")
 
         if not np.all(np.isfinite(result)):
-            raise ValueError(
-                f"{name} must contain only finite values."
-            )
+            raise ValueError(f"{name} must contain only finite values.")
 
         return result
+
+    @staticmethod
+    def _validate_projection_operator(
+        projection_operator: FloatArray,
+        flow_dimension: int,
+    ) -> FloatArray:
+        """
+        Validate the interface projection operator G_int.
+        """
+        operator = np.asarray(
+            projection_operator,
+            dtype=np.float64,
+        )
+
+        if operator.ndim != 2:
+            raise ValueError("projection_operator must be a matrix.")
+
+        if operator.shape[0] == 0:
+            raise ValueError("projection_operator must have output rows.")
+
+        if operator.shape[1] != flow_dimension:
+            raise ValueError(
+                "projection_operator input dimension must match "
+                "interface_residual dimension."
+            )
+
+        if not np.all(np.isfinite(operator)):
+            raise ValueError(
+                "projection_operator must contain only finite values."
+            )
+
+        return operator
+
+    def _resolve_c_p_values(
+        self,
+        C_t: float | None,
+        P_t: float | None,
+        endogenous_coherence: float | None,
+        external_pressure: float | None,
+    ) -> tuple[float, float]:
+        """
+        Resolve current C(t) and P(t) values from new and legacy names.
+        """
+        if C_t is None:
+            C_t = endogenous_coherence
+
+        if P_t is None:
+            P_t = external_pressure
+
+        if C_t is None:
+            raise ValueError("C_t must be provided.")
+
+        if P_t is None:
+            raise ValueError("P_t must be provided.")
+
+        C_value = self._non_negative_finite("C_t", C_t)
+        P_value = self._non_negative_finite("P_t", P_t)
+
+        return C_value, P_value
 
     def calculate_interface_residual(
         self,
@@ -166,68 +226,27 @@ class MetricBridgeSolver:
 
         The Jacobian convention is:
 
-        grad_j_flux[i, j] =
-        partial J_flux[i] / partial x[j]
+        grad_j_flux[i, j] = partial J_flux[i] / partial x[j]
 
         Therefore:
 
-        (J_flux dot grad)J_flux =
-        grad_j_flux @ j_flux
-
-        Parameters
-        ----------
-        j_flux:
-            Current exchange-flow vector.
-        grad_j_flux:
-            Spatial Jacobian of J_flux.
-        grad_rho_cont:
-            Gradient of background non-resonant modes.
-        c3_potential:
-            Current cubic retention potential C3.
-        temporal_derivative:
-            Optional partial_t J_flux vector.
-            If omitted, it is treated as zero.
-
-        Returns
-        -------
-        dict[str, np.ndarray]:
-            Individual residual components and the full residual.
+        (J_flux · grad)J_flux = grad_j_flux @ j_flux
         """
-        j_flux = self._validate_vector(
-            j_flux,
-            "j_flux",
-        )
-
-        grad_rho_cont = self._validate_vector(
-            grad_rho_cont,
-            "grad_rho_cont",
-        )
-
-        grad_j_flux = self._validate_square_matrix(
-            grad_j_flux,
-            "grad_j_flux",
-        )
+        j_flux = self._validate_vector(j_flux, "j_flux")
+        grad_rho_cont = self._validate_vector(grad_rho_cont, "grad_rho_cont")
+        grad_j_flux = self._validate_square_matrix(grad_j_flux, "grad_j_flux")
+        c3_value = self._non_negative_finite("c3_potential", c3_potential)
 
         dimension = j_flux.size
 
         if grad_rho_cont.size != dimension:
             raise ValueError(
-                "grad_rho_cont must have the same dimension "
-                "as j_flux."
+                "grad_rho_cont must have the same dimension as j_flux."
             )
 
-        if grad_j_flux.shape != (
-            dimension,
-            dimension,
-        ):
+        if grad_j_flux.shape != (dimension, dimension):
             raise ValueError(
-                "grad_j_flux shape must be "
-                "(j_flux.size, j_flux.size)."
-            )
-
-        if c3_potential < 0.0:
-            raise ValueError(
-                "c3_potential must be non-negative."
+                "grad_j_flux shape must be (j_flux.size, j_flux.size)."
             )
 
         if temporal_derivative is None:
@@ -243,25 +262,15 @@ class MetricBridgeSolver:
 
             if temporal_term.size != dimension:
                 raise ValueError(
-                    "temporal_derivative must have the same "
-                    "dimension as j_flux."
+                    "temporal_derivative must have the same dimension "
+                    "as j_flux."
                 )
 
-        convective_term = (
-            grad_j_flux
-            @ j_flux
-        )
+        convective_term = grad_j_flux @ j_flux
 
-        continuum_gradient_term = (
-            self.gamma
-            * grad_rho_cont
-        )
+        continuum_gradient_term = self.gamma * grad_rho_cont
 
-        cubic_retention_term = (
-            self.beta
-            * float(c3_potential)
-            * j_flux
-        )
+        cubic_retention_term = self.beta * c3_value * j_flux
 
         residual = (
             temporal_term
@@ -270,13 +279,19 @@ class MetricBridgeSolver:
             + cubic_retention_term
         )
 
-        return {
+        components = {
             "temporal_term": temporal_term,
             "convective_term": convective_term,
             "continuum_gradient_term": continuum_gradient_term,
             "cubic_retention_term": cubic_retention_term,
             "residual": residual,
         }
+
+        for name, value in components.items():
+            if not np.all(np.isfinite(value)):
+                raise FloatingPointError(f"{name} contains non-finite values.")
+
+        return components
 
     def calculate_exchange_flow_acceleration(
         self,
@@ -289,25 +304,9 @@ class MetricBridgeSolver:
         Calculate partial_t J_flux from the balanced flow equation.
 
         partial_t J_flux =
-        -(J_flux dot grad)J_flux
-        - gamma * grad(rho_cont)
-        - beta * C3 * J_flux
-
-        Parameters
-        ----------
-        j_flux:
-            Current exchange-flow vector.
-        grad_j_flux:
-            Spatial Jacobian of J_flux.
-        grad_rho_cont:
-            Gradient of background modes.
-        c3_potential:
-            Cubic retention potential C3.
-
-        Returns
-        -------
-        np.ndarray:
-            Tact-by-tact change of J_flux.
+        -(J_flux · grad)J_flux
+        - gamma · grad rho_cont
+        - beta · C3 · J_flux
         """
         components = self.calculate_interface_residual(
             j_flux=j_flux,
@@ -317,11 +316,18 @@ class MetricBridgeSolver:
             temporal_derivative=None,
         )
 
-        return -(
+        acceleration = -(
             components["convective_term"]
             + components["continuum_gradient_term"]
             + components["cubic_retention_term"]
         )
+
+        if not np.all(np.isfinite(acceleration)):
+            raise FloatingPointError(
+                "exchange-flow acceleration contains non-finite values."
+            )
+
+        return acceleration
 
     @staticmethod
     def project_interface_residual(
@@ -331,256 +337,164 @@ class MetricBridgeSolver:
         """
         Project the internal exchange-flow residual into the target layer.
 
-        projected_residual =
-        G_int @ R_J
-
-        Parameters
-        ----------
-        interface_residual:
-            Internal exchange-flow residual R_J.
-        projection_operator:
-            Interface operator G_int.
-
-            Expected shape:
-
-            target_dimension × flow_dimension
-
-        Returns
-        -------
-        np.ndarray:
-            Projected residual in the target layer.
+        projected_residual = G_int @ R_J
         """
-        interface_residual = np.asarray(
+        residual = np.asarray(
             interface_residual,
             dtype=np.float64,
         )
 
-        projection_operator = np.asarray(
+        if residual.ndim != 1:
+            raise ValueError("interface_residual must be a vector.")
+
+        if residual.size == 0:
+            raise ValueError("interface_residual must not be empty.")
+
+        if not np.all(np.isfinite(residual)):
+            raise ValueError(
+                "interface_residual must contain only finite values."
+            )
+
+        operator = MetricBridgeSolver._validate_projection_operator(
             projection_operator,
-            dtype=np.float64,
+            residual.size,
         )
 
-        if interface_residual.ndim != 1:
-            raise ValueError(
-                "interface_residual must be a vector."
+        projected_residual = operator @ residual
+
+        if not np.all(np.isfinite(projected_residual)):
+            raise FloatingPointError(
+                "projected_residual contains non-finite values."
             )
 
-        if projection_operator.ndim != 2:
-            raise ValueError(
-                "projection_operator must be a matrix."
-            )
-
-        if projection_operator.shape[1] != (
-            interface_residual.size
-        ):
-            raise ValueError(
-                "projection_operator input dimension must match "
-                "interface_residual dimension."
-            )
-
-        if not np.all(
-            np.isfinite(projection_operator)
-        ):
-            raise ValueError(
-                "projection_operator must contain only finite values."
-            )
-
-        return (
-            projection_operator
-            @ interface_residual
-        )
+        return projected_residual
 
     def classify_dynamic_regime(
         self,
-        endogenous_coherence: float,
-        external_pressure: float,
+        C_t: float | None = None,
+        P_t: float | None = None,
+        *,
+        endogenous_coherence: float | None = None,
+        external_pressure: float | None = None,
     ) -> str:
         """
         Classify the current EDS / EDC dynamic regime.
-
-        Parameters
-        ----------
-        endogenous_coherence:
-            General endogenous structural coherence C(t).
-        external_pressure:
-            Environmental pressure P(t).
-
-        Returns
-        -------
-        str:
-            Current dynamic regime.
         """
-        if endogenous_coherence < 0.0:
-            raise ValueError(
-                "endogenous_coherence must be non-negative."
-            )
-
-        if external_pressure < 0.0:
-            raise ValueError(
-                "external_pressure must be non-negative."
-            )
-
-        difference = (
-            endogenous_coherence
-            - external_pressure
+        C_value, P_value = self._resolve_c_p_values(
+            C_t=C_t,
+            P_t=P_t,
+            endogenous_coherence=endogenous_coherence,
+            external_pressure=external_pressure,
         )
 
+        difference = C_value - P_value
+
         if difference > self.critical_tolerance:
-            return "EDS_RETENTION"
+            return self.EDS_RETENTION
 
         if abs(difference) <= self.critical_tolerance:
-            return "EDC_CRITICAL_BOUNDARY"
+            return self.EDC_CRITICAL_BOUNDARY
 
-        return "INVERSE_DISSIPATIVE_CASCADE"
+        return self.INVERSE_DISSIPATIVE_CASCADE
 
     def recompute_4d_metric(
         self,
         g_mu_nu: FloatArray,
         interface_residual: FloatArray,
         projection_operator: FloatArray,
-        endogenous_coherence: float,
-        external_pressure: float,
+        C_t: float | None = None,
+        P_t: float | None = None,
         dt: float = 1.0,
+        *,
+        endogenous_coherence: float | None = None,
+        external_pressure: float | None = None,
     ) -> dict[str, FloatArray | float | str]:
         """
         Recompute the local metric-deformation proxy.
 
-        The method does not replace the energy-momentum tensor with the
-        metric tensor.
+        In the retained regime C(t) > P(t), the current metric is preserved.
 
-        It uses:
-
-        - g_mu_nu as the current metric;
-        - G_int @ R_J as the projected interface residual;
-        - C(t) and P(t) as the EDS / EDC regime criterion.
-
-        In the retained regime:
-
-        C(t) > P(t)
-
-        the metric is preserved.
-
-        At criticality or during the inverse dissipative cascade:
-
-        C(t) <= P(t)
-
-        the model calculates:
+        At criticality or during the inverse dissipative cascade, the method
+        calculates:
 
         delta_g_mu_nu =
-        chi
-        * severity
-        * outer(projected_residual, projected_residual)
-        * dt
-
-        Parameters
-        ----------
-        g_mu_nu:
-            Current square metric tensor.
-        interface_residual:
-            Internal exchange-flow residual R_J.
-        projection_operator:
-            Interface projection operator G_int.
-        endogenous_coherence:
-            General endogenous structural coherence C(t).
-        external_pressure:
-            Environmental pressure P(t).
-        dt:
-            Discrete metric-update interval.
-
-        Returns
-        -------
-        dict[str, np.ndarray | float | str]:
-            Regime, projected residual, metric deformation,
-            updated metric, and deformation severity.
+        chi · severity · outer(projected_residual, projected_residual) · dt
         """
-        if dt <= 0.0:
-            raise ValueError("dt must be positive.")
+        dt = self._positive_finite("dt", dt)
 
-        g_mu_nu = self._validate_square_matrix(
-            g_mu_nu,
-            "g_mu_nu",
-        )
-
-        regime = self.classify_dynamic_regime(
+        C_value, P_value = self._resolve_c_p_values(
+            C_t=C_t,
+            P_t=P_t,
             endogenous_coherence=endogenous_coherence,
             external_pressure=external_pressure,
         )
 
-        projected_residual = (
-            self.project_interface_residual(
-                interface_residual=interface_residual,
-                projection_operator=projection_operator,
-            )
+        g_mu_nu = self._validate_square_matrix(g_mu_nu, "g_mu_nu")
+
+        regime = self.classify_dynamic_regime(
+            C_t=C_value,
+            P_t=P_value,
+        )
+
+        projected_residual = self.project_interface_residual(
+            interface_residual=interface_residual,
+            projection_operator=projection_operator,
         )
 
         metric_dimension = g_mu_nu.shape[0]
 
         if projected_residual.size != metric_dimension:
             raise ValueError(
-                "The projected residual dimension must match "
-                "the metric dimension."
+                "The projected residual dimension must match the metric dimension."
             )
 
-        if regime == "EDS_RETENTION":
+        if regime == self.EDS_RETENTION:
             deformation_severity = 0.0
-
-            delta_g_mu_nu = np.zeros_like(
-                g_mu_nu,
-                dtype=np.float64,
-            )
-
+            delta_g_mu_nu = np.zeros_like(g_mu_nu, dtype=np.float64)
             updated_metric = g_mu_nu.copy()
-
         else:
             pressure_scale = max(
-                abs(external_pressure),
+                abs(P_value),
                 self.critical_tolerance,
             )
 
-            if regime == "EDC_CRITICAL_BOUNDARY":
+            if regime == self.EDC_CRITICAL_BOUNDARY:
                 deformation_severity = 1.0
             else:
-                deformation_severity = (
-                    1.0
-                    + (
-                        external_pressure
-                        - endogenous_coherence
-                    )
-                    / pressure_scale
-                )
+                deformation_severity = 1.0 + (P_value - C_value) / pressure_scale
 
             delta_g_mu_nu = (
                 self.chi
                 * deformation_severity
-                * np.outer(
-                    projected_residual,
-                    projected_residual,
-                )
+                * np.outer(projected_residual, projected_residual)
                 * dt
             )
 
-            delta_g_mu_nu = 0.5 * (
-                delta_g_mu_nu
-                + delta_g_mu_nu.T
-            )
+            delta_g_mu_nu = 0.5 * (delta_g_mu_nu + delta_g_mu_nu.T)
+            updated_metric = g_mu_nu + delta_g_mu_nu
 
-            updated_metric = (
-                g_mu_nu
-                + delta_g_mu_nu
-            )
+        outputs = {
+            "projected_residual": projected_residual,
+            "metric_deformation": delta_g_mu_nu,
+            "updated_metric": updated_metric,
+        }
+
+        for name, value in outputs.items():
+            if not np.all(np.isfinite(value)):
+                raise FloatingPointError(f"{name} contains non-finite values.")
 
         return {
             "regime": regime,
             "projected_residual": projected_residual,
             "metric_deformation": delta_g_mu_nu,
             "updated_metric": updated_metric,
-            "deformation_severity": float(
-                deformation_severity
-            ),
+            "deformation_severity": float(deformation_severity),
+            "C_t": float(C_value),
+            "P_t": float(P_value),
         }
 
 
-if __name__ == "__main__":
+def run_demo() -> None:
     solver = MetricBridgeSolver(
         gamma=0.4,
         beta=0.8,
@@ -608,23 +522,19 @@ if __name__ == "__main__":
 
     c3_potential = 1.4
 
-    flow_acceleration = (
-        solver.calculate_exchange_flow_acceleration(
-            j_flux=j_flux,
-            grad_j_flux=grad_j_flux,
-            grad_rho_cont=grad_rho_cont,
-            c3_potential=c3_potential,
-        )
+    flow_acceleration = solver.calculate_exchange_flow_acceleration(
+        j_flux=j_flux,
+        grad_j_flux=grad_j_flux,
+        grad_rho_cont=grad_rho_cont,
+        c3_potential=c3_potential,
     )
 
-    residual_components = (
-        solver.calculate_interface_residual(
-            j_flux=j_flux,
-            grad_j_flux=grad_j_flux,
-            grad_rho_cont=grad_rho_cont,
-            c3_potential=c3_potential,
-            temporal_derivative=flow_acceleration,
-        )
+    residual_components = solver.calculate_interface_residual(
+        j_flux=j_flux,
+        grad_j_flux=grad_j_flux,
+        grad_rho_cont=grad_rho_cont,
+        c3_potential=c3_potential,
+        temporal_derivative=flow_acceleration,
     )
 
     projection_operator = np.array(
@@ -637,53 +547,27 @@ if __name__ == "__main__":
         dtype=np.float64,
     )
 
-    g_mu_nu = np.diag(
-        [-1.0, 1.0, 1.0, 1.0]
-    ).astype(np.float64)
+    g_mu_nu = np.diag([-1.0, 1.0, 1.0, 1.0]).astype(np.float64)
 
     metric_state = solver.recompute_4d_metric(
         g_mu_nu=g_mu_nu,
         interface_residual=residual_components["residual"],
         projection_operator=projection_operator,
-        endogenous_coherence=0.7,
-        external_pressure=1.0,
+        C_t=0.7,
+        P_t=1.0,
         dt=0.05,
     )
 
     print("=== METRIC BRIDGE SOLVER ===")
+    print("Exchange-flow acceleration:", flow_acceleration)
+    print("Interface residual:", residual_components["residual"])
+    print("Dynamic regime:", metric_state["regime"])
+    print("Projected residual:", metric_state["projected_residual"])
+    print("Metric deformation:")
+    print(metric_state["metric_deformation"])
+    print("Updated metric:")
+    print(metric_state["updated_metric"])
 
-    print(
-        "Exchange-flow acceleration:",
-        flow_acceleration,
-    )
 
-    print(
-        "Interface residual:",
-        residual_components["residual"],
-    )
-
-    print(
-        "Dynamic regime:",
-        metric_state["regime"],
-    )
-
-    print(
-        "Projected residual:",
-        metric_state["projected_residual"],
-    )
-
-    print(
-        "Metric deformation:"
-    )
-
-    print(
-        metric_state["metric_deformation"]
-    )
-
-    print(
-        "Updated metric:"
-    )
-
-    print(
-        metric_state["updated_metric"]
-    )
+if __name__ == "__main__":
+    run_demo()
