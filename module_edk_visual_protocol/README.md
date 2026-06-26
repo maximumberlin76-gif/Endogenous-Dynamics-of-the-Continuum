@@ -1,8 +1,8 @@
-# EDK visual protocol module
+# EDK Visual Protocol Module
 
-## EN — README for the EDK visual protocol module
+## EN — README for the EDK Visual Protocol Module
 
-Module folder:
+Module directory:
 
 module_edk_visual_protocol
 
@@ -14,176 +14,287 @@ README file:
 
 README.md
 
-## EN — Purpose of the module
+## EN — Module Purpose
 
-This module adds a graphical rendering block to the EDK software complex based on the Matplotlib library.
+This module adds a graphical rendering layer based on Matplotlib to the Endogenous Dynamics of the Continuum software complex.
 
-The module unfolds frame-by-frame output of two key sections of the 3D manifestation screen:
+The module performs tact-by-tact rendering of two central 2D slices of the 3D manifestation grid:
 
-• 2D slice of the central toroidal vortex of cubic coherence C^3 — to make the “donut” geometry visible.
+1. A 2D slice of the central toroidal field C3.
 
-• 2D map of manifested inertial mass mc^2 — to visually fix how the EDS retention freeze-frame works.
+2. A 2D map of the manifested-mass field M(t).
 
-The module includes the mathematical core and the graphical rendering block.
+The field C3 represents cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
 
-## EN — What the visualization shows
+The field M(t) represents the spatial distribution of manifested mass retained by the current local dynamic state.
 
-The visualization module renders two central 2D sections along the middle Z-axis of the 3D grid.
+The module contains both a local mathematical simulation core and a graphical rendering layer.
 
-The left screen displays the 6D toroidal phase lock through the cubic coherence field C^3.
+It visualizes a local descending computational cascade and does not represent the complete through architecture containing all independent T_int and J_flux layers.
 
-The right screen displays the 3D manifestation of Matter through the manifested inertial mass field mc^2.
+## EN — What the Visualization Shows
 
-The purpose of the module is not only to run the cascade numerically, but also to show how the hidden volumetric process becomes visible as a two-dimensional observation slice.
+The visualization renders two central 2D slices along the middle Z axis of the three-dimensional computational grid.
 
-## EN — Mathematical cascade represented by the module
+The left screen displays the toroidal spatial field C3 formed after the 6D phase-lock stage.
 
-The visualization follows the same top-down EDK cascade:
+The right screen displays the 3D manifested-mass field M(t) through its central 2D section.
+
+The purpose of the module is not limited to numerical execution of the cascade.
+
+The module also shows how an internal volumetric process becomes observable through a two-dimensional section of the computational domain.
+
+## EN — Mathematical Cascade Represented by the Module
+
+The visualization follows the local descending EDK cascade:
 
 Phi
--> Psi_7D
--> Psi_coh
--> C^3
--> Omega(t)
--> EDS retention mask
--> mc^2
--> 2D visualization slice
+→ Psi_7D
+→ Psi_coh
+→ C3
+→ Omega(t)
+→ EDC
+→ EDS retention mask
+→ M(t)
+→ 2D visualization slice
 
-The module does not begin with a visual image.
+The visualization is generated only after the internal cascade has formed:
 
-The visual image appears only after the internal cascade produces:
+1. The field of cubic nonlinear saturation, compression, and delay C3.
 
-• cubic coherence field C^3;
+2. The phase-transition window Omega(t).
 
-• resonance-window dynamics Omega(t);
+3. The independent general endogenous structural coherence C(t).
 
-• EDS retention condition C(t) > P(t);
+4. The destabilizing pressure P(t).
 
-• manifested mass field mc^2.
+5. The EDS retention condition C(t) > P(t).
 
-## EN — First rendered screen: 2D slice of C^3
+6. The operational retention mask.
 
-The first rendered screen displays the 2D slice of the central toroidal vortex of cubic coherence C^3.
+7. The manifested-mass field M(t).
 
-This screen corresponds to the 6D toroidal phase lock.
+The principal semantic distinction is:
 
-It visualizes the geometry of the toroidal section.
+C(t) ≠ C3
 
-The cubic coherence field C^3 is generated after the phase-coherent configuration Psi_coh is formed by the toroidal projection operator U_hat_6D.
+C(t) is the general endogenous structural coherence of the system.
 
-The visualized field is not a decorative image.
+C3 is the spatial field of cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
 
-It is the projected density of cubic nonlinear volume retention.
+C3 must not be used as a substitute for C(t).
 
-The toroidal distribution is placed in the center of the computational grid.
+## EN — First Rendered Screen: 2D Slice of C3
 
-The field shows the spatial projection of the phase lock that was produced after the 7D Super-Code Psi_7D was folded into the 6D coherent toroidal configuration Psi_coh.
+The first rendered screen displays a central 2D slice of the toroidal field C3.
 
-## EN — Second rendered screen: 2D map of manifested inertial mass mc^2
+This screen corresponds to the spatial projection of the 6D toroidal phase lock.
 
-The second rendered screen displays the 2D map of manifested inertial mass mc^2.
+The phase-coherent configuration Psi_coh is formed through the toroidal phase-lock operator.
 
-This screen corresponds to the 3D manifestation layer.
+The field C3 is then calculated as:
 
-The mass does not appear as a blurred cloud.
+C3 = |Psi_coh|^3
 
-It appears as localized quantized clusters in those nodes where the EDS stability criterion is fulfilled:
+The field represents cubic nonlinear saturation, compression, and delay.
+
+It is not the general endogenous structural coherence C(t).
+
+The toroidal distribution is placed in the central region of the computational grid.
+
+The rendered slice shows the spatial geometry produced after transformation of the 7D Super-Code Psi_7D into the 6D phase-coherent toroidal configuration Psi_coh.
+
+## EN — Second Rendered Screen: 2D Map of Manifested Mass M(t)
+
+The second rendered screen displays a central 2D map of the manifested-mass field M(t).
+
+This screen corresponds to the 3D manifestation layer of the local computational cascade.
+
+Manifested mass is formed only in the local regions of the computational grid where the operational retention mask is satisfied.
+
+The general endogenous dynamic stability criterion is:
 
 C(t) > P(t)
 
-Outside this zone, the Continuum remains in the state of non-resonant noise.
+The local numerical retention mask additionally requires the phase-transition window to exceed its operational threshold:
 
-The mass field is therefore not rendered as an arbitrary density.
+eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
 
-It is rendered as the result of the EDS retention condition acting on the C^3 field and the background non-resonant modes rho_cont.
+The field C3 participates in the calculation of the local manifested-mass density but does not determine the general endogenous structural coherence.
 
-## EN — EDS retention logic
+The manifested-mass field is calculated only inside the retained contour.
 
-The module uses the EDS retention condition:
+Outside the retained contour, mass_field remains equal to zero while the background non-resonant modes rho_cont remain part of the computational medium.
+
+## EN — EDS Retention Logic
+
+The module uses the endogenous dynamic stability condition:
 
 C(t) > P(t)
 
-This condition means that the general endogenous structural coherence C(t) exceeds the destabilizing pressure of the medium P(t).
+This condition means that the general endogenous structural coherence C(t) exceeds the destabilizing pressure P(t).
 
-Only the zones that pass this condition become admissible for mass manifestation.
+C_t is supplied as an independent parameter.
 
-The EDS mask defines where the local freeze-frame of quasi-rest can hold the manifested domain.
+It is not calculated as a mean, integral, or other reduction of C3.
 
-This is why the mass field mc^2 appears only inside the stable retention contour.
+The operational retention mask is:
 
-## EN — Visual interpretation of the left screen
+eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
+
+The first condition determines the current system-level retention relation.
+
+The second condition determines the local spatial regions where the phase-transition window has reached the required operational threshold.
+
+Only the grid regions satisfying both conditions are available for manifestation of the local mass field M(t).
+
+## EN — Visual Interpretation of the Left Screen
 
 Left screen:
 
-6D toroidal lock C^3
+6D toroidal field C3
 
-The geometry of the toroidal section is clearly visualized.
+The screen visualizes the spatial geometry of the toroidal section.
 
-Due to amplitude asymmetry, the edges of the toroidal “donut” have non-uniform density.
+Amplitude asymmetry can produce a nonuniform field density along the toroidal structure.
 
-This non-uniformity prevents phase degeneration and supports the retention of a coherent volumetric configuration.
+The visualized asymmetry represents the nonuniform spatial distribution of cubic nonlinear saturation, compression, and delay.
 
-## EN — Visual interpretation of the right screen
+The screen does not directly display C(t).
+
+It displays C3.
+
+## EN — Visual Interpretation of the Right Screen
 
 Right screen:
 
-3D manifestation of Matter mc^2
+3D manifested-mass field M(t)
 
-The mass appears as localized quantized clusters in those nodes where the EDS stability criterion is fulfilled:
+The field appears in localized regions of the computational grid where the operational EDS retention mask is satisfied.
 
-C(t) > P(t)
+The screen demonstrates the difference between the retained manifested domain and the background non-resonant modes of the computational medium.
 
-Outside this zone, the Continuum remains in the state of non-resonant noise.
+The screen does not represent rest energy m c^2 as an independent field.
 
-This demonstrates the difference between a retained manifested domain and background non-resonant modes.
+It represents the numerically calculated manifested-mass field M(t).
 
-## EN — Main fields used in the module
+## EN — Main Fields Used by the Module
 
-Omega_prev — previous state of the resonance window Omega(t).
+Omega_prev
 
-Omega_curr — current state of the resonance window Omega(t).
+Previous state of the phase-transition window Omega(t).
 
-Omega_next — next state of the resonance window Omega(t).
+Omega_curr
 
-rho_cont — background non-resonant modes of the Continuum.
+Current state of the phase-transition window Omega(t).
 
-J — vector field of exchange and impulse transfer.
+Omega_next
 
-C3_field — field of cubic coherence C^3.
+Subsequent state of the phase-transition window Omega(t).
 
-mass_field — manifested inertial mass field mc^2.
+rho_cont
 
-## EN — Main methods of the module
+Background non-resonant modes of the Continuum.
 
-step_7d_recursive_inheritance
+J
 
-Generates the 7D Super-Code Psi_7D through the recursive governing operator Phi.
+Local vector field of exchange and impulse transfer.
 
-step_6d_phase_lock
+J remains distinct from the through massless channel J_flux:
 
-Forms the phase-coherent configuration Psi_coh and generates the cubic coherence field C^3.
+J ≠ J_flux
 
-step_5d_4d_3d_cascade
+C3_field
 
-Updates the resonance window Omega(t), checks EDS retention and manifests mass mc^2.
+Spatial field of cubic nonlinear saturation, compression, and delay.
 
-step_1d_2d_flux_dynamics
+mass_field
 
-Updates the exchange-flow vector J and returns the 2D synchronization indicator R(t).
+Spatial field of manifested mass M(t).
 
-execute_full_cycle
+eds_mask
 
-Runs the complete top-down cascade for one tact.
+Boolean operational mask of the retained local regions.
 
-visualize_slice
+C_t
 
-Generates the graphical output of two central 2D sections:
+Independent general endogenous structural coherence.
 
-• C^3 toroidal coherence field;
+P_t
 
-• mc^2 manifested mass field.
+Destabilizing pressure acting on the current local state.
 
-## EN — Dependency
+R_t
+
+Phase synchronization indicator calculated from the local exchange dynamics.
+
+R_t is not the general endogenous structural coherence:
+
+R_t ≠ C(t)
+
+## EN — Main Module Methods
+
+### step_7d_recursive_inheritance
+
+Generates the 7D Super-Code Psi_7D through the recursive control operator Phi.
+
+### step_6d_phase_lock
+
+Forms the phase-coherent configuration Psi_coh and generates the field C3.
+
+### step_5d_4d_3d_cascade
+
+Updates the phase-transition window Omega(t), evaluates the independent retention relation C(t) > P(t), forms the operational EDS mask, and calculates the manifested-mass field M(t).
+
+### step_1d_2d_flux_dynamics
+
+Updates the local vector exchange field J and returns the phase synchronization indicator R_t.
+
+The local vector field J is not the through massless channel J_flux.
+
+### execute_full_cycle
+
+Executes one complete tact of the local descending computational cascade.
+
+### visualize_slice
+
+Generates the graphical rendering of the two central 2D slices:
+
+1. The toroidal field C3.
+
+2. The manifested-mass field M(t).
+
+## EN — Scope of the Visualization Module
+
+This module visualizes a local descending cascade and its central spatial slices.
+
+It does not by itself visualize the complete through architecture:
+
+solar
+→ planetary
+→ bio_planetary
+→ continuum_core
+→ interface_tensor
+→ massless_exchange_channel
+→ wave_genetics
+→ molecular_phase_chemistry
+→ feedback
+
+The dynamic interface tensor T_int and the through massless channel J_flux remain independent architectural layers.
+
+They must not be inferred directly from the displayed C3 or J fields.
+
+The following distinctions remain mandatory:
+
+C(t) ≠ C3
+
+R_t ≠ C(t)
+
+J ≠ J_flux
+
+T_int ≠ M(t)
+
+## EN — Dependencies
 
 The module requires:
 
@@ -191,25 +302,25 @@ numpy
 
 matplotlib
 
-Install dependencies:
+Installation command:
 
 pip install numpy matplotlib
 
-## EN — Run command
+## EN — Launch Command
 
 python edk_visual_protocol_module.py
 
-## EN — Expected output
+## EN — Expected Result
 
-The module prints tact-by-tact simulation status and opens graphical windows with two rendered 2D sections:
+The module prints the tact-by-tact simulation status and opens graphical windows containing two rendered central 2D slices:
 
-• left screen — toroidal coherence C^3;
+1. Left screen — toroidal field C3.
 
-• right screen — manifested inertial mass mc^2.
+2. Right screen — manifested-mass field M(t).
 
-Each tact updates the cascade and renders the current state of the observation slice.
+Each tact updates the computational cascade and renders the current state of the observation slice.
 
-# Модуль визуализации EDK
+---
 
 ## RU — README к модулю визуализации EDK
 
@@ -227,174 +338,285 @@ README.md
 
 ## RU — Назначение модуля
 
-Этот модуль добавляет в программный комплекс EDK блок графического рендеринга на базе библиотеки Matplotlib.
+Этот модуль добавляет в программный комплекс Эндогенной Динамики Континуума блок графического рендеринга на базе библиотеки Matplotlib.
 
-Модуль разворачивает покадровый вывод двух ключевых сечений 3D-экрана проявления:
+Модуль выполняет потактовый вывод двух центральных 2D-срезов трёхмерной расчётной сетки манифестации:
 
-• 2D-срез центрального тороидального вихря кубической когерентности C^3 — чтобы увидеть геометрию «бублика».
+1. 2D-срез центрального тороидального поля C3.
 
-• 2D-карта манифестированной инертной массы mc^2 — чтобы наглядно зафиксировать, как работает стоп-кадр удержания EDS.
+2. 2D-карту поля манифестированной массы M(t).
 
-Модуль включает математическое ядро и графический блок.
+Поле C3 представляет кубическое нелинейное насыщение, сжатие и задержку фазово-когерентной конфигурации.
+
+Поле M(t) представляет пространственное распределение манифестированной массы, удерживаемой текущим локальным динамическим состоянием.
+
+Модуль содержит локальное математическое ядро симуляции и графический блок.
+
+Он визуализирует локальный нисходящий вычислительный каскад и не является полной визуализацией всей сквозной архитектуры с самостоятельными слоями T_int и J_flux.
 
 ## RU — Что показывает визуализация
 
-Модуль визуализации рендерит два центральных 2D-среза по средней оси Z трехмерной сетки.
+Модуль визуализации рендерит два центральных 2D-среза по средней оси Z трёхмерной расчётной сетки.
 
-Левый экран отображает 6D-тороидальный фазовый замок через поле кубической когерентности C^3.
+Левый экран отображает тороидальное пространственное поле C3, сформированное после этапа 6D-фазового замка.
 
-Правый экран отображает 3D-манифестацию Материи через поле манифестированной инертной массы mc^2.
+Правый экран отображает поле манифестированной массы M(t) через его центральный 2D-срез.
 
-Назначение модуля состоит не только в численном запуске каскада, но и в отображении того, как скрытый объемный процесс становится видимым в виде двухмерного среза наблюдения.
+Назначение модуля состоит не только в численном запуске каскада.
+
+Модуль также отображает, как внутренний объёмный процесс становится наблюдаемым через двумерный срез расчётной области.
 
 ## RU — Математический каскад, представленный модулем
 
-Визуализация следует тому же нисходящему каскаду EDK:
+Визуализация следует локальному нисходящему каскаду EDK:
 
 Phi
--> Psi_7D
--> Psi_coh
--> C^3
--> Omega(t)
--> EDS retention mask
--> mc^2
--> 2D visualization slice
+→ Psi_7D
+→ Psi_coh
+→ C3
+→ Omega(t)
+→ EDC
+→ EDS retention mask
+→ M(t)
+→ 2D visualization slice
 
-Модуль не начинается с визуальной картинки.
+Визуализация формируется только после того, как внутренний каскад сформировал:
 
-Визуальная картинка появляется только после того, как внутренний каскад сформировал:
+1. Поле кубического нелинейного насыщения, сжатия и задержки C3.
 
-• поле кубической когерентности C^3;
+2. Окно фазового перехода Omega(t).
 
-• динамику резонансного окна Omega(t);
+3. Самостоятельную общую эндогенную структурную когерентность C(t).
 
-• условие удержания EDS C(t) > P(t);
+4. Дестабилизующее давление P(t).
 
-• поле манифестированной массы mc^2.
+5. Условие эндогенной динамической устойчивости C(t) > P(t).
 
-## RU — Первый рендерируемый экран: 2D-срез C^3
+6. Операционную маску удержания.
 
-Первый рендерируемый экран отображает 2D-срез центрального тороидального вихря кубической когерентности C^3.
+7. Поле манифестированной массы M(t).
 
-Этот экран соответствует 6D-тороидальному фазовому замку.
+Основное смысловое различие:
 
-Он визуализирует геометрию тороидального сечения.
+C(t) ≠ C3
 
-Поле кубической когерентности C^3 формируется после того, как фазово-когерентная конфигурация Psi_coh создается оператором тороидальной проекции U_hat_6D.
+C(t) — общая эндогенная структурная когерентность системы.
 
-Визуализируемое поле не является декоративной картинкой.
+C3 — пространственное поле кубического нелинейного насыщения, сжатия и задержки фазово-когерентной конфигурации.
 
-Это проецированная плотность кубического нелинейного удержания объема.
+C3 не должно использоваться как замена C(t).
 
-Тороидальное распределение помещается в центр расчетной сетки.
+## RU — Первый рендерируемый экран: 2D-срез C3
 
-Поле показывает пространственную проекцию фазового замка, который возник после сворачивания 7D-Супер-Кода Psi_7D в 6D-когерентную тороидальную конфигурацию Psi_coh.
+Первый рендерируемый экран отображает центральный 2D-срез тороидального поля C3.
 
-## RU — Второй рендерируемый экран: 2D-карта манифестированной инертной массы mc^2
+Этот экран соответствует пространственной проекции 6D-тороидального фазового замка.
 
-Второй рендерируемый экран отображает 2D-карту манифестированной инертной массы mc^2.
+Фазово-когерентная конфигурация Psi_coh формируется через оператор тороидального фазового замка.
 
-Этот экран соответствует 3D-слою манифестации.
+После этого рассчитывается поле C3:
 
-Масса проявляется не размытым облаком.
+C3 = |Psi_coh|^3
 
-Она проявляется как локализованные квантованные кластеры в тех узлах, где выполнился критерий устойчивости EDS:
+Поле представляет кубическое нелинейное насыщение, сжатие и задержку.
+
+Оно не является общей эндогенной структурной когерентностью C(t).
+
+Тороидальное распределение размещается в центральной области расчётной сетки.
+
+Рендерируемый срез показывает пространственную геометрию, сформированную после преобразования 7D-Супер-Кода Psi_7D в 6D-фазово-когерентную тороидальную конфигурацию Psi_coh.
+
+## RU — Второй рендерируемый экран: 2D-карта манифестированной массы M(t)
+
+Второй рендерируемый экран отображает центральную 2D-карту поля манифестированной массы M(t).
+
+Этот экран соответствует 3D-слою манифестации локального вычислительного каскада.
+
+Манифестированная масса формируется только в локальных областях расчётной сетки, где выполняется операционная маска удержания.
+
+Общий критерий эндогенной динамической устойчивости:
 
 C(t) > P(t)
 
-Вне этой зоны Континуум остается в состоянии нерезонансного шума.
+Локальная численная маска удержания дополнительно требует, чтобы окно фазового перехода превысило операционный порог:
 
-Поэтому поле массы рендерится не как произвольная плотность.
+eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
 
-Оно рендерится как результат действия условия удержания EDS на поле C^3 и фоновые нерезонансные моды rho_cont.
+Поле C3 участвует в расчёте локальной плотности манифестированной массы, но не определяет общую эндогенную структурную когерентность.
+
+Поле манифестированной массы рассчитывается только внутри удерживаемого контура.
+
+Вне удерживаемого контура mass_field остаётся равным нулю, а фоновые нерезонансные моды rho_cont остаются частью расчётной среды.
 
 ## RU — Логика удержания EDS
 
-Модуль использует условие удержания EDS:
+Модуль использует условие эндогенной динамической устойчивости:
 
 C(t) > P(t)
 
-Это условие означает, что общая эндогенная структурная когерентность C(t) превышает дестабилизирующее давление среды P(t).
+Это условие означает, что общая эндогенная структурная когерентность C(t) превышает дестабилизующее давление P(t).
 
-Только зоны, которые проходят это условие, становятся допустимыми для манифестации массы.
+C_t передаётся как самостоятельный параметр.
 
-EDS mask определяет, где локальный стоп-кадр квази-покоя способен удерживать манифестированный домен.
+Он не рассчитывается как среднее значение, интеграл или иное сведение поля C3.
 
-Именно поэтому поле массы mc^2 появляется только внутри стабильного контура удержания.
+Операционная маска удержания:
+
+eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
+
+Первое условие определяет текущее общесистемное соотношение удержания.
+
+Второе условие определяет локальные пространственные области, в которых окно фазового перехода достигло необходимого операционного порога.
+
+Только области расчётной сетки, удовлетворяющие обоим условиям, становятся доступными для манифестации локального поля массы M(t).
 
 ## RU — Визуальная интерпретация левого экрана
 
 Левый экран:
 
-6D-тороидальный замок C^3
+6D-тороидальное поле C3
 
-Четко визуализируется геометрия тороидального сечения.
+Экран визуализирует пространственную геометрию тороидального сечения.
 
-За счет асимметрии амплитуд края тороидального «бублика» имеют неоднородную плотность.
+Амплитудная асимметрия может формировать неоднородную плотность поля вдоль тороидальной структуры.
 
-Эта неоднородность исключает фазовое вырождение и поддерживает удержание когерентной объемной конфигурации.
+Визуализируемая асимметрия представляет неоднородное пространственное распределение кубического нелинейного насыщения, сжатия и задержки.
+
+Экран не отображает непосредственно C(t).
+
+Он отображает C3.
 
 ## RU — Визуальная интерпретация правого экрана
 
 Правый экран:
 
-3D-манифестация Материи mc^2
+3D-поле манифестированной массы M(t)
 
-Масса проявляется как локализованные квантованные кластеры в тех узлах, где выполнился критерий устойчивости EDS:
+Поле появляется в локализованных областях расчётной сетки, где выполняется операционная маска удержания EDS.
 
-C(t) > P(t)
+Экран демонстрирует различие между удерживаемым манифестированным доменом и фоновыми нерезонансными модами расчётной среды.
 
-Вне этой зоны Континуум остается в состоянии нерезонансного шума.
+Экран не отображает энергию квази-покоя m c^2 как самостоятельное поле.
 
-Это демонстрирует различие между удержанным манифестированным доменом и фоновыми нерезонансными модами.
+Он отображает численно рассчитанное поле манифестированной массы M(t).
 
 ## RU — Основные поля, используемые в модуле
 
-Omega_prev — предыдущее состояние резонансного окна Omega(t).
+Omega_prev
 
-Omega_curr — текущее состояние резонансного окна Omega(t).
+Предыдущее состояние окна фазового перехода Omega(t).
 
-Omega_next — следующее состояние резонансного окна Omega(t).
+Omega_curr
 
-rho_cont — фоновые нерезонансные моды Континуума.
+Текущее состояние окна фазового перехода Omega(t).
 
-J — векторное поле обмена и передачи импульса.
+Omega_next
 
-C3_field — поле кубической когерентности C^3.
+Следующее состояние окна фазового перехода Omega(t).
 
-mass_field — поле манифестированной инертной массы mc^2.
+rho_cont
+
+Фоновые нерезонансные моды Континуума.
+
+J
+
+Локальное векторное поле обмена и передачи импульса.
+
+J сохраняется отдельно от сквозного безмассового канала J_flux:
+
+J ≠ J_flux
+
+C3_field
+
+Пространственное поле кубического нелинейного насыщения, сжатия и задержки.
+
+mass_field
+
+Пространственное поле манифестированной массы M(t).
+
+eds_mask
+
+Булева операционная маска удерживаемых локальных областей.
+
+C_t
+
+Самостоятельная общая эндогенная структурная когерентность.
+
+P_t
+
+Дестабилизующее давление, действующее на текущее локальное состояние.
+
+R_t
+
+Индикатор фазовой синхронизации, рассчитанный из локальной динамики обмена.
+
+R_t не является общей эндогенной структурной когерентностью:
+
+R_t ≠ C(t)
 
 ## RU — Основные методы модуля
 
-step_7d_recursive_inheritance
+### step_7d_recursive_inheritance
 
 Генерирует 7D-Супер-Код Psi_7D через рекурсивный управляющий оператор Phi.
 
-step_6d_phase_lock
+### step_6d_phase_lock
 
-Формирует фазово-когерентную конфигурацию Psi_coh и генерирует поле кубической когерентности C^3.
+Формирует фазово-когерентную конфигурацию Psi_coh и генерирует поле C3.
 
-step_5d_4d_3d_cascade
+### step_5d_4d_3d_cascade
 
-Обновляет резонансное окно Omega(t), проверяет удержание EDS и манифестирует массу mc^2.
+Обновляет окно фазового перехода Omega(t), проверяет самостоятельное соотношение удержания C(t) > P(t), формирует операционную маску EDS и рассчитывает поле манифестированной массы M(t).
 
-step_1d_2d_flux_dynamics
+### step_1d_2d_flux_dynamics
 
-Обновляет вектор потока обмена J и возвращает индикатор 2D-синхронизации R(t).
+Обновляет локальное векторное поле обмена J и возвращает индикатор фазовой синхронизации R_t.
 
-execute_full_cycle
+Локальное векторное поле J не является сквозным безмассовым каналом J_flux.
 
-Запускает полный нисходящий каскад на один такт.
+### execute_full_cycle
 
-visualize_slice
+Запускает один полный такт локального нисходящего вычислительного каскада.
+
+### visualize_slice
 
 Генерирует графический вывод двух центральных 2D-срезов:
 
-• поле тороидальной когерентности C^3;
+1. Тороидальное поле C3.
 
-• поле манифестированной массы mc^2.
+2. Поле манифестированной массы M(t).
 
-## RU — Зависимость
+## RU — Границы визуализационного модуля
+
+Этот модуль визуализирует локальный нисходящий каскад и его центральные пространственные срезы.
+
+Сам по себе он не визуализирует полную сквозную архитектуру:
+
+solar
+→ planetary
+→ bio_planetary
+→ continuum_core
+→ interface_tensor
+→ massless_exchange_channel
+→ wave_genetics
+→ molecular_phase_chemistry
+→ feedback
+
+Динамический интерфейсный тензор T_int и сквозной безмассовый канал J_flux остаются самостоятельными архитектурными слоями.
+
+Их нельзя напрямую выводить из отображаемых полей C3 или J.
+
+Сохраняются обязательные различия:
+
+C(t) ≠ C3
+
+R_t ≠ C(t)
+
+J ≠ J_flux
+
+T_int ≠ M(t)
+
+## RU — Зависимости
 
 Модулю требуются:
 
@@ -402,7 +624,7 @@ numpy
 
 matplotlib
 
-Установка зависимостей:
+Команда установки:
 
 pip install numpy matplotlib
 
@@ -412,10 +634,10 @@ python edk_visual_protocol_module.py
 
 ## RU — Ожидаемый результат
 
-Модуль печатает потактовый статус симуляции и открывает графические окна с двумя рендерируемыми 2D-срезами:
+Модуль печатает потактовый статус симуляции и открывает графические окна с двумя рендерируемыми центральными 2D-срезами:
 
-• левый экран — тороидальная когерентность C^3;
+1. Левый экран — тороидальное поле C3.
 
-• правый экран — манифестированная инертная масса mc^2.
+2. Правый экран — поле манифестированной массы M(t).
 
-Каждый такт обновляет каскад и рендерит текущее состояние среза наблюдения.
+Каждый такт обновляет вычислительный каскад и рендерит текущее состояние среза наблюдения.
