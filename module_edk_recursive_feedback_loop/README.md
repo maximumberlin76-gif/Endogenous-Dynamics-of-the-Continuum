@@ -1,130 +1,168 @@
-# EDK recursive feedback loop module
+# EDK Recursive Feedback Loop Module
 
-## EN — README for the EDK recursive feedback loop module
+## EN — Module Purpose
 
-Module folder:
+This module closes the local recursive loop of the Endogenous Dynamics of the Continuum Protocol.
 
-module_edk_recursive_feedback_loop
+7D → 6D → 5D → 4D → 3D → 2D / 1D → 7D
 
-Python file:
+In thermodynamics, dissipation describes irreversible energy redistribution and a decrease in available free energy.
 
-edk_recursive_feedback_loop_module.py
+Within the Endogenous Dynamics of the Continuum Protocol, the dissipative process is additionally represented as the formation of an informational trace returned from the lower 1D exchange level to the upper 7D level of recursive inheritance.
 
-README file:
+The accumulated dissipative trace D(n) modifies the structure of the Phi operator and changes the subsequent tact-by-tact cycle of structural self-organization.
 
-README.md
+The module extends the descending cascade by adding an ascending feedback flow:
 
-## EN — Purpose of the module
+1D → 7D
 
-This module closes the large recursive loop of the Protocol of Endogenous Dynamics of the Continuum.
+This converts the local cascade into a closed recursive dynamic system.
 
-Academic science considers dissipation, entropy, as an irreversible loss of energy.
+The module preserves T_int as an independent dynamic interface tensor.
 
-In the Protocol of Endogenous Dynamics of the Continuum, dissipation is an informational trace that the lower 1D level of exchange returns to the upper 7D level of retention.
+The module preserves J_flux as an independent through massless channel.
 
-The accumulated dissipative trace D(n) is recalculated and modifies the structure of the operator Phi, changing the immune filter of the system for the next tact n+1.
+The local vector exchange field J and the through massless channel J_flux are different dynamic parameters:
 
-The module therefore expands the previous top-down cascade by adding the upward feedback flow:
+J ≠ J_flux
 
-1D -> 7D
+## EN — General Loop Structure
 
-This turns the cascade into a closed recursive system.
+The complete local loop of the module is:
 
-## EN — General loop structure
+7D → 6D → 5D → 4D → 3D → 2D / 1D → 7D
 
-The full loop is:
+The descending branch performs:
 
-7D -> 6D -> 5D -> 4D -> 3D -> 2D / 1D -> 7D
+Phi  
+→ Psi_7D  
+→ Psi_coh  
+→ C3  
+→ Omega(t)  
+→ EDC  
+→ EDS retention  
+→ T_int  
+→ M(t)  
+→ J
 
-The downward branch performs:
+The ascending branch performs:
 
-Phi
--> Psi_7D
--> Psi_coh
--> C^3
--> Omega(t)
--> EDS retention
--> mc^2
--> J
+J  
+→ d_1D(x, t)  
+→ D_step  
+→ D(n+1)  
+→ Q(n+1)  
+→ R(n+1)  
+→ Phi(n+1)
 
-The upward branch performs:
+The through massless channel is preserved as an independent layer:
 
-J
--> d_1D(x, t)
--> D(n)
--> Q(n+1)
--> R(n+1)
--> Phi(n+1)
+T_int  
+→ M(t)  
+→ J_flux  
+→ bio-molecular modulation  
+→ feedback
 
-The key difference from a linear simulation is that the lower 1D exchange flow does not disappear after the tact.
+The lower 1D exchange flow does not disappear after completion of a tact.
 
-It leaves a dissipative informational trace.
+It forms a dissipative informational trace.
 
-This trace is lifted back to the 7D governing layer and changes the next cycle of recursive synthesis.
+This trace returns to the upper 7D control layer and modifies the subsequent cycle of recursive synthesis.
 
-## EN — Part 1: Mathematics of the upward feedback flow 1D -> 7D
+## EN — Fundamental Semantic Distinctions
 
-Each tact of the lower level generates a tensor of viscous friction and chaotic resistance of the non-resonant modes of the Continuum.
+### C(t)
 
-The local density of dissipation d_1D(x, t) is defined through the divergence and vorticity of the exchange flow J:
+C(t) is the general endogenous structural coherence of the system.
 
-d_1D(x, t) =
-alpha_fric * |curl J|^2
-+
-beta_loss * (div J)^2
+It characterizes the coordination of all endogenous processes and their mutual coherence in time.
 
-For transferring this trace to the upper 7D level, the operation of integral averaging over volume is performed with the weight of non-resonant modes rho_cont, the washout of entropic noise of the medium:
+C(t) is supplied to the module as an independent parameter.
 
-D(n) =
-(1 / V_3D) * integral over 3D [
-d_1D(x, t) * rho_cont(x)
-] dV_3D
+### C3
 
-## EN — Recalculation of qualitative characteristics Q(n+1) and phase support R(n+1)
+C3 is the cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
 
-The obtained value D(n) directly enters the formula of recursive inheritance of qualities:
+C3 = |Psi_coh|^3
 
-Q(n+1) =
-Q(n) * exp(-D(n))
-+
-R(n) * tanh(E_medium / (1.0 + D(n)))
+C3 is a spatial field participating in the formation of the phase-transition window geometry Omega(t), the local manifested-mass density, and the damping of the local vector exchange field J.
 
-The phase support of the next tact is recalculated as:
+C(t) ≠ C3
 
-R(n+1) =
-R_initial * (1.0 - D(n) / C_max^3)
+### R_n
 
-If the dissipation D(n) is too high, it burns out the phase support R(n).
+R_n is the phase-support coefficient inherited by the current recursive cycle.
 
-At the next tact this automatically lowers the stiffness of the phase lock kappa_k in the operator U_hat_6D and transfers the system from the EDS retention regime into the EDC criticality regime.
+R_n affects the dynamic stiffness of the 6D toroidal phase lock.
 
-## EN — Module logic
+R_n is not the general endogenous structural coherence C(t).
 
-The module implements the closed feedback loop through the class:
+R_n ≠ C(t)
 
-EDKRecursiveFeedbackLoopSimulation
+### R_t
 
-The module contains the same downward cascade as the previous impulse-transition and visualization modules, but adds a new method:
+R_t is the phase synchronization indicator calculated from the local exchange dynamics of the current tact.
 
-calculate_upward_feedback
+R_t participates in the feedback calculation of R_n_next.
 
-This method computes the accumulated dissipative trace generated by the 1D exchange-flow vector J and returns it to the 7D governing layer as D_n_next.
+R_t is not the general endogenous structural coherence C(t).
 
-The execution order is:
+R_t ≠ C(t)
 
-1. 7D initiation through Phi.
+### J
 
-2. 6D toroidal phase lock with dynamic stiffness kappa modulated by R_n.
+J is the local vector exchange field at the 2D / 1D level.
 
-3. 5D / 4D / 3D cascade with EDC, EDS and mass manifestation.
+J = [Jx, Jy, Jz]
 
-4. 2D / 1D exchange-flow dynamics.
+### J_flux
 
-5. Upward feedback calculation from J.
+J_flux is an independent through massless channel.
 
-6. Recalculation of D_n, Q_n and R_n for the next tact.
+J_flux is not produced by direct assignment of the local vector field J or its spatial mean.
 
-## EN — Stage 1: 7D initiation and immune filter
+### T_int
+
+T_int is the dynamic interface tensor connecting the retained internal state, manifested mass, and the through massless channel.
+
+T_int ≠ M(t)
+
+## EN — Full-Cycle Input Parameters
+
+The execute_full_cycle method accepts:
+
+Q_n  
+D_n  
+R_n  
+A_n  
+E_medium  
+C_t  
+P_t  
+P_intent  
+T_int  
+J_flux
+
+Q_n represents the qualitative characteristics recursively inherited from the preceding synthesis cycle.
+
+D_n represents the accumulated dissipative trace inherited from the preceding cycle.
+
+R_n represents the phase-support coefficient of the current cycle.
+
+A_n represents the attractor-amplitude parameter.
+
+E_medium represents the energetic state of the medium.
+
+C_t represents the general endogenous structural coherence.
+
+P_t represents the destabilizing pressure.
+
+P_intent represents the directed-drift vector or coefficient.
+
+T_int represents the dynamic interface tensor.
+
+J_flux represents the through massless channel.
+
+## EN — Stage 1: 7D Initiation and Recursive Inheritance
 
 Method:
 
@@ -134,53 +172,47 @@ This stage initializes the 7D multiplet invariant.
 
 The operator structure is:
 
-Phi =
-M_inher * [I + alpha * D_n * E_medium]^-1 * A_attr(R_n, P_t)
+Phi = M_inher · [I + alpha · D_n · E_medium]^-1 · A_attr(R_n, P_t)
 
-In this extended module, the dissipative trace D_n is not a passive parameter.
+The dissipative trace D_n is not a passive parameter.
 
-It directly changes the immune filter:
+It changes the filtration of the subsequent recursive synthesis cycle:
 
-immune_filter =
-1.0 / (1.0 + alpha_filter * D_n * E_medium)
+immune_filter = 1.0 / (1.0 + alpha_filter · D_n · E_medium)
 
-The higher the accumulated dissipative trace D_n, the stronger the filtering of the next Super-Code.
+An increase in the accumulated dissipative trace changes the passage of the subsequent Super-Code through the recursive inheritance filter.
 
-The 7D Super-Code is generated as:
+The 7D Super-Code is formed as:
 
-Psi_7D =
-(Q_n * A_n * immune_filter) * exp(i * (R_n - P_t))
+Psi_7D = (Q_n · A_n · immune_filter) · exp(i · (R_n - P_t))
 
-## EN — Stage 2: 6D phase lock with dynamic stiffness
+## EN — Stage 2: 6D Phase Lock with Dynamic Stiffness
 
 Method:
 
 step_6d_phase_lock
 
-This stage performs phase fixation in 6D space through the toroidal phase lock.
+This stage performs phase fixation in 6D space through a toroidal phase lock.
 
-The stiffness of the lock kappa directly depends on the upward phase-support parameter R_n:
+The lock stiffness depends on the phase-support coefficient R_n:
 
-kappa = 3.0 * R_n
+kappa = kappa_base · R_n
 
-This means that the lower-level dissipative trace indirectly modifies the stiffness of the next 6D phase lock.
+A high value of R_n strengthens the toroidal phase lock.
 
-If R_n is high, the toroidal lock is strong.
+An increase in the accumulated dissipative trace reduces the phase support of the subsequent cycle and decreases the lock stiffness.
 
-If R_n is degraded by accumulated dissipation, the toroidal lock weakens.
+The phase-coherent configuration is formed as:
 
-The 6D phase-coherent configuration is generated as:
+Psi_coh = H_asym_factor · exp(i · (phase_7D + kappa · delta_phi))
 
-Psi_coh =
-H_asym_factor * exp(i * (phase_7D + kappa * delta_phi))
+The cubic nonlinear saturation, compression, and delay is then formed:
 
-The cubic nonlinear saturation of volume is then formed:
+C3 = |Psi_coh|^3
 
-C^3 = |Psi_coh|^3
+The toroidal geometry of C3 is projected into the center of the computational grid.
 
-The toroidal geometry is projected into the center of the computational grid.
-
-## EN — Stage 3-5: EDC, EDS and mass manifestation
+## EN — Stages 3–5: EDC, EDS, T_int, and Mass Manifestation
 
 Method:
 
@@ -188,111 +220,233 @@ step_5d_4d_3d_cascade
 
 This method calculates:
 
-EDC transition-window dynamics;
+1. The dynamics of the phase-transition window Omega(t).
 
-EDS retention contour;
+2. The approach to the endogenous dynamic criticality boundary.
 
-3D mass manifestation.
+3. The endogenous dynamic stability retention contour.
 
-The source term for the resonance window is calculated from:
+4. The state of the dynamic interface tensor T_int.
 
-source_term =
-chi * div_C3 - drift_term
+5. The 3D manifestation of mass M(t).
 
-The resonance window Omega(t) is updated through an FDTD-style wave scheme:
+The source of the phase-transition-window dynamics is:
 
-Omega_next =
-2.0 * Omega_curr
-- Omega_prev
-+ (c * dt)^2 * laplacian_Omega
-- (c^2 * dt^2) * source_term
+source_term = chi · div_C3 - drift_term
 
-The EDS retention criterion is:
+The phase-transition window is updated through an FDTD wave-type scheme:
 
-C > P
+Omega_next =  
+2.0 · Omega_curr  
+- Omega_prev  
++ (c · dt)^2 · laplacian_Omega  
+- c^2 · dt^2 · source_term
 
-In code:
+C3 affects the geometry and local structure of the phase-transition window.
 
-eds_mask = (C3 > P_t) and (Omega_curr > 0.05)
+Retention is determined by the general endogenous structural coherence C(t), not by the field C3.
 
-Mass manifests only inside the stable EDS retention contour:
+The endogenous dynamic stability criterion is:
 
-mass_field[eds_mask] =
-(grad_rho_magnitude[eds_mask] * C3[eds_mask]) / c^2
+C(t) > P(t)
 
-## EN — Stage 6: 2D / 1D exchange-flow dynamics
+The operational retention mask is:
+
+eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
+
+Mass is manifested only inside the retained contour:
+
+mass_field[eds_mask] = grad_rho_magnitude[eds_mask] · C3[eds_mask] / c^2
+
+T_int is preserved as an independent dynamic interface state and is not replaced by C3, C(t), or M(t).
+
+## EN — Stage 6: 2D / 1D Dynamics of the Local Exchange Field
 
 Method:
 
 step_1d_2d_flux_dynamics
 
-This stage models reduction of perception and the Continuum Navier-Stokes-type equation.
-
-The exchange-flow vector J is updated by the pressure of the non-resonant noise of the Continuum and the damping of the cubic phase lock.
+This stage models the local vector exchange field J.
 
 The governing equation is:
 
-partial J / partial t + (J * nabla)J =
-- gamma * nabla rho_cont
-- beta * C^3 * J
+partial J / partial t + (J · nabla)J = -gamma · nabla rho_cont - beta · C3 · J
 
-The output of this stage is the synchronization indicator R_t.
+The first term on the right-hand side represents the action of the gradient of the non-resonant Continuum modes.
 
-## EN — Upward feedback calculation
+The second term represents damping of the local exchange field through cubic nonlinear saturation, compression, and delay C3.
+
+The stage produces the phase synchronization indicator R_t.
+
+R_t ≠ C(t)
+
+The local vector exchange field J remains distinct from the through massless channel J_flux.
+
+## EN — Calculation of the Ascending Feedback
 
 Method:
 
 calculate_upward_feedback
 
-This method calculates the upward feedback loop 1D -> 7D.
+This method calculates the ascending feedback loop:
 
-It computes the volumetric integral of accumulated 1D dissipation for transfer into the next 7D tact.
+1D → 7D
 
-The local dissipative density is calculated as:
+The local dissipative-trace density is determined through the vorticity and divergence of the local vector exchange field J:
 
-d_1D =
-alpha_fric * rot_J_sq
-+
-beta_loss * div_J_sq
+d_1D(x, t) = alpha_fric · |curl J|^2 + beta_loss · (div J)^2
 
-where:
+|curl J|^2 is the squared magnitude of the local exchange-field vorticity.
 
-rot_J_sq — squared vorticity of the exchange-flow vector J.
+(div J)^2 is the squared divergence of the local exchange field.
 
-div_J_sq — squared divergence of the exchange-flow vector J.
+The spatial mean of the dissipative trace formed during the current tact is:
 
-The accumulated dissipative trace for the next tact is:
+D_step = mean(d_1D · rho_cont)
 
-D_n_next =
-sum(d_1D * rho_cont) * dx^3 / grid_size^3
+For a uniform cubic grid, the equivalent integral form is:
 
-This value is returned to the upper 7D layer.
+D_step = sum(d_1D · rho_cont) · dx^3 / (grid_size · dx)^3
 
-## EN — Full closed tact-by-tact cycle
+D_step is the dissipative trace formed during one current tact.
+
+The accumulated dissipative trace is formed recursively:
+
+D_n_next = (1.0 - lambda_D · dt) · D_n + dt · D_step
+
+lambda_D defines the recovery or weakening rate of the previously accumulated dissipative trace.
+
+When lambda_D = 0, the trace accumulates without internal recovery.
+
+## EN — Recalculation of Q(n+1) and R(n+1)
+
+After calculation of D_n_next, the qualitative characteristics and phase support of the subsequent cycle are recalculated through one consistent recurrence system.
+
+The inherited qualitative characteristics are:
+
+Q_n_next = Q_n · exp(-eta_Q · D_n_next) + R_n · tanh(E_medium / (1.0 + D_n_next))
+
+The phase-support coefficient is:
+
+R_n_next = clip(R_n · (1.0 - eta_R · D_n_next / D_capacity) + eta_feedback · R_t, R_min, R_max)
+
+eta_Q is the sensitivity of the inherited qualitative characteristics to the dissipative trace.
+
+eta_R is the sensitivity of phase support to the accumulated dissipative trace.
+
+D_capacity is the operational capacity relative to the accumulated dissipative trace.
+
+eta_feedback is the weight of the phase feedback formed during the current tact.
+
+R_min and R_max define the admissible boundaries of the phase-support coefficient.
+
+One consistent recurrence system for Q_n_next and R_n_next is used throughout the module.
+
+## EN — Dynamic Interface Tensor Update
+
+The dynamic interface tensor is updated as an independent state:
+
+T_int_next = T_int + dt · (T_target - T_int - P_t · T_int)
+
+The target interface state depends on the retained internal state and the general endogenous structural coherence:
+
+T_target = interface_operator(C_t, C3, Omega(t), D_n_next)
+
+The tensor is not replaced by a scalar mean and is not identified with manifested mass.
+
+## EN — Through Massless Channel Update
+
+J_flux is updated separately from the local vector exchange field J.
+
+The update method receives:
+
+J_flux  
+T_int  
+M_previous  
+M_current  
+J  
+D_step  
+dt
+
+The update of J_flux takes into account:
+
+1. The change in the dynamic interface tensor T_int.
+
+2. The change in manifested mass M(t).
+
+3. The intensity of the local vector exchange field J.
+
+4. The dissipative trace formed during the current tact.
+
+5. The internal damping of the through massless channel.
+
+A general update form is:
+
+J_flux_next = J_flux + dt · (interface_drive + mass_transition_drive + local_exchange_drive + dissipative_drive - flux_damping)
+
+The through massless channel preserves its own tact-by-tact dynamics and its own recursively inherited state.
+
+## EN — Complete Closed Tact-by-Tact Cycle
 
 Method:
 
 execute_full_cycle
 
-This method launches the full closed tact-by-tact cycle.
+The complete cycle is executed in the following order:
 
-The downward part is:
+1. 7D initiation through Phi.
 
-7D -> 6D -> 5D -> 4D -> 3D -> 2D / 1D
+2. 6D toroidal phase lock with dynamic stiffness kappa.
 
-The upward feedback part is:
+3. Formation of the independent field C3.
 
-1D -> 7D
+4. Update of the phase-transition window Omega(t).
+
+5. Determination of EDC and EDS through the independent parameter C_t.
+
+6. Update of the dynamic interface tensor T_int.
+
+7. 3D manifestation of mass.
+
+8. 2D / 1D dynamics of the local vector exchange field J.
+
+9. Calculation of the spatial trace D_step.
+
+10. Recursive accumulation of D_n_next.
+
+11. Update of J_flux.
+
+12. Recalculation of Q_n_next.
+
+13. Recalculation of R_n_next.
 
 The method returns:
 
-total_mass
+total_mass  
+R_t  
+D_n_next  
+Q_n_next  
+R_n_next  
+T_int_next  
+J_flux_next
 
-R_t
+Each tact returns the complete set of parameters required for the subsequent recursive cycle.
 
-D_n_next
+## EN — Recursive State Chain
 
-This means that each tact outputs not only manifested mass and synchronization, but also the next dissipative trace that modifies the upper-level synthesis.
+The complete operational chain is:
+
+state(n)  
+→ internal processes of structural self-organization  
+→ T_int  
+→ J_flux  
+→ bio-molecular modulation  
+→ feedback D(n), A(n), J_flux, T_int  
+→ Phi(Q(n), D(n), A(n))  
+→ Q(n+1)  
+→ state(n+1)
+
+The qualitative characteristics of the preceding synthesis cycle, the accumulated dissipative trace, the dynamic interface tensor state, and the through massless channel state are recursively inherited.
 
 ## EN — Visualization
 
@@ -300,235 +454,320 @@ Method:
 
 visualize_state
 
-This method renders the current state of the recursive loop and displays the current upper-invariant parameters:
+The visualization heading displays:
 
-Q
+tact_index  
+Q_n  
+D_n  
+R_n  
+C_t  
+P_t  
+M(t)  
+J_flux
 
-D
+The rendered layers are:
 
-R
+1. The cubic nonlinear saturation, compression, and delay field C3.
 
-The rendered screens show:
+2. The phase-transition window Omega(t).
 
-6D toroidal lock C^3;
+3. The EDS retention contour.
 
-3D manifestation of Matter mc^2.
+4. The 3D manifested-mass field.
 
-The title of the visualization contains:
+5. The local vector exchange field J.
 
-tact number;
+6. The state of the dynamic interface tensor T_int.
 
-7D qualitative parameter Q;
+C3, C(t), J, and J_flux are displayed as distinct parameters.
 
-accumulated dissipation D;
+## EN — Demonstration Simulation
 
-phase support R.
+Recommended demonstration parameters:
 
-## EN — Practical simulation
-
-The practical run initializes the extended evolutionary system:
-
-grid_size = 32
-
-dt = 0.01
-
+grid_size = 32  
+dt = 0.01  
 dx = 0.1
 
-Starting parameters of the 7D governing layer:
+Initial parameters:
 
-Q_n = 1.5
-
-D_n = 0.001
-
-R_n = 0.99
-
-A_n = 1.5
-
-E_medium = 0.4
-
-P_t = 0.35
-
+Q_n = 1.5  
+D_n = 0.001  
+R_n = 0.99  
+A_n = 1.5  
+E_medium = 0.4  
+C_t = 0.90  
+P_t = 0.35  
 P_intent = 0.95
 
-The simulation runs four tacts.
+T_int and J_flux are also initialized as independent states.
 
-At each tact the module:
+During each tact, the module:
 
-executes the full cascade;
+1. Executes the descending cascade.
 
-calculates the new dissipative trace D_n_next;
+2. Updates C3.
 
-prints the manifested mass and returned trace D(n);
+3. Updates Omega(t).
 
-renders the current state;
+4. Checks the condition C_t > P_t.
 
-updates D_n;
+5. Updates T_int.
 
-recalculates Q_n;
+6. Calculates manifested mass.
 
-recalculates R_n.
+7. Updates the local vector exchange field J.
 
-## EN — Sequential recalculation of the next tact
+8. Calculates D_step.
 
-After each tact, the next tact is mathematically closed:
+9. Forms D_n_next.
 
-D_n = D_n_next
+10. Updates J_flux.
 
-Q_n =
-Q_n * exp(-D_n) + R_t * 0.05
+11. Forms Q_n_next.
 
-R_n =
-0.99 * (1.0 - D_n * 10.0)
+12. Forms R_n_next.
 
-Then R_n is limited by the operational capacity of the lock:
+13. Transfers the new state to the subsequent tact.
 
-R_n = max(0.1, min(R_n, 1.0))
+## EN — Transition to the Subsequent Tact
 
-This prevents the phase-lock support from leaving the admissible range.
+After completion of the current tact:
 
-## EN — Dependency
+D_n = D_n_next  
+Q_n = Q_n_next  
+R_n = R_n_next  
+T_int = T_int_next  
+J_flux = J_flux_next
 
-The module requires:
+The subsequent cycle then begins:
 
-numpy
+Phi(Q_n, D_n, A_n)
 
-matplotlib
+## EN — Implementation Invariants
 
-Install dependencies:
+The implementation preserves the following distinctions:
 
-pip install numpy matplotlib
+C(t) ≠ C3  
+R_n ≠ C(t)  
+R_t ≠ C(t)  
+J ≠ J_flux  
+T_int ≠ M(t)
 
-## EN — Run command
+C3 remains the cubic nonlinear saturation, compression, and delay field.
 
-python edk_recursive_feedback_loop_module.py
+C(t) remains the general endogenous structural coherence.
 
-# Модуль рекурсивной обратной связи EDK
+R_n remains the phase-support coefficient.
 
-## RU — README к модулю рекурсивной обратной связи EDK
+R_t remains the phase synchronization indicator.
 
-Папка модуля:
+J remains the local vector exchange field.
 
-module_edk_recursive_feedback_loop
+J_flux remains the through massless channel.
 
-Python-файл:
+T_int remains the dynamic interface tensor.
 
-edk_recursive_feedback_loop_module.py
+All numerical states are checked for finite values after each tact.
 
-README-файл:
+## EN — Module Class
 
-README.md
-
-## RU — Назначение модуля
-
-Этот модуль замыкает большую рекурсивную петлю Протокола Эндогенной Динамики Континуума.
-
-Академическая наука считает, что диссипация, энтропия, — это безвозвратная потеря энергии.
-
-В Протоколе Эндогенной Динамики Континуума диссипация — это информационный след, который нижний 1D-уровень обмена возвращает на верхний 7D-уровень удержания.
-
-Накопленный диссипативный след D(n) пересчитывается и модифицирует структуру оператора Phi, изменяя иммунный фильтр системы на следующий такт n+1.
-
-Модуль поэтому расширяет предыдущий нисходящий каскад, добавляя восходящий поток обратной связи:
-
-1D -> 7D
-
-Это превращает каскад в замкнутую рекурсивную систему.
-
-## RU — Общая структура петли
-
-Полная петля:
-
-7D -> 6D -> 5D -> 4D -> 3D -> 2D / 1D -> 7D
-
-Нисходящая ветвь выполняет:
-
-Phi
--> Psi_7D
--> Psi_coh
--> C^3
--> Omega(t)
--> EDS retention
--> mc^2
--> J
-
-Восходящая ветвь выполняет:
-
-J
--> d_1D(x, t)
--> D(n)
--> Q(n+1)
--> R(n+1)
--> Phi(n+1)
-
-Ключевое отличие от линейной симуляции состоит в том, что нижний 1D-поток обмена не исчезает после такта.
-
-Он оставляет диссипативный информационный след.
-
-Этот след поднимается обратно на 7D-управляющий слой и изменяет следующий цикл рекурсивного синтеза.
-
-## RU — Часть 1: Математика восходящего потока обратной связи 1D -> 7D
-
-Каждый такт нижнего уровня генерирует тензор вязкого трения и хаотического сопротивления нерезонансных мод Континуума.
-
-Локальная плотность диссипации d_1D(x, t) определяется через дивергенцию и завихренность потока обмена J:
-
-d_1D(x, t) =
-alpha_fric * |curl J|^2
-+
-beta_loss * (div J)^2
-
-Для переноса этого следа на верхний уровень 7D выполняется операция интегрального усреднения по объему с учетом веса нерезонансных мод rho_cont, смыв энтропийного шума среды:
-
-D(n) =
-(1 / V_3D) * integral over 3D [
-d_1D(x, t) * rho_cont(x)
-] dV_3D
-
-## RU — Перерасчет качественных характеристик Q(n+1) и фазовой поддержки R(n+1)
-
-Полученное значение D(n) напрямую входит в формулу рекурсивного наследования качеств:
-
-Q(n+1) =
-Q(n) * exp(-D(n))
-+
-R(n) * tanh(E_medium / (1.0 + D(n)))
-
-Фазовая поддержка следующего такта пересчитывается как:
-
-R(n+1) =
-R_initial * (1.0 - D(n) / C_max^3)
-
-Если диссипация D(n) слишком высока, она выжигает фазовую поддержку R(n).
-
-На следующем такте это автоматически снизит жесткость фазового замка kappa_k в операторе U_hat_6D и переведет систему из режима удержания EDS в режим критичности EDC.
-
-## RU — Логика модуля
-
-Модуль реализует замкнутую петлю обратной связи через класс:
+Main class:
 
 EDKRecursiveFeedbackLoopSimulation
 
-Модуль содержит тот же нисходящий каскад, что и предыдущие модули перехода импульса и визуализации, но добавляет новый метод:
+Main methods:
 
-calculate_upward_feedback
+step_7d_recursive_inheritance  
+step_6d_phase_lock  
+step_5d_4d_3d_cascade  
+step_1d_2d_flux_dynamics  
+calculate_upward_feedback  
+update_interface_tensor  
+update_massless_exchange_channel  
+execute_full_cycle  
+visualize_state
 
-Этот метод вычисляет накопленный диссипативный след, созданный 1D-вектором потока обмена J, и возвращает его на 7D-управляющий слой как D_n_next.
+## EN — Dependencies
 
-Порядок выполнения:
+The module requires:
 
-1. 7D-инициация через Phi.
+numpy  
+matplotlib
 
-2. 6D-тороидальный фазовый замок с динамической жесткостью kappa, модулированной R_n.
+Installation:
 
-3. 5D / 4D / 3D-каскад с EDC, EDS и манифестацией массы.
+pip install numpy matplotlib
 
-4. 2D / 1D-динамика потока обмена.
+## EN — Launch Command
 
-5. Расчет восходящей обратной связи из J.
+python edk_recursive_feedback_loop_module.py
 
-6. Перерасчет D_n, Q_n и R_n для следующего такта.
+---
 
-## RU — Этап 1: 7D-инициация и иммунный фильтр
+## RU — Назначение модуля
+
+Этот модуль замыкает локальную рекурсивную петлю Протокола Эндогенной Динамики Континуума.
+
+7D → 6D → 5D → 4D → 3D → 2D / 1D → 7D
+
+В термодинамике диссипация описывает необратимое перераспределение энергии и уменьшение доступной свободной энергии.
+
+В Протоколе Эндогенной Динамики Континуума диссипативный процесс дополнительно рассматривается как формирование информационного следа, который нижний 1D-уровень обмена возвращает на верхний 7D-уровень рекурсивного наследования.
+
+Накопленный диссипативный след D(n) изменяет структуру оператора Phi и модифицирует следующий потактовый цикл структурной самоорганизации.
+
+Модуль расширяет нисходящий каскад восходящим потоком обратной связи:
+
+1D → 7D
+
+Это превращает локальный каскад в замкнутую рекурсивную динамическую систему.
+
+Модуль сохраняет T_int как самостоятельный динамический интерфейсный тензор.
+
+Модуль сохраняет J_flux как самостоятельный сквозной безмассовый канал.
+
+Локальное векторное поле обмена J и сквозной безмассовый канал J_flux являются разными динамическими параметрами:
+
+J ≠ J_flux
+
+## RU — Общая структура петли
+
+Полная локальная петля модуля:
+
+7D → 6D → 5D → 4D → 3D → 2D / 1D → 7D
+
+Нисходящая ветвь выполняет:
+
+Phi  
+→ Psi_7D  
+→ Psi_coh  
+→ C3  
+→ Omega(t)  
+→ EDC  
+→ EDS retention  
+→ T_int  
+→ M(t)  
+→ J
+
+Восходящая ветвь выполняет:
+
+J  
+→ d_1D(x, t)  
+→ D_step  
+→ D(n+1)  
+→ Q(n+1)  
+→ R(n+1)  
+→ Phi(n+1)
+
+Сквозной безмассовый канал сохраняется как самостоятельный слой:
+
+T_int  
+→ M(t)  
+→ J_flux  
+→ био-молекулярная модуляция  
+→ feedback
+
+Нижний 1D-поток обмена не исчезает после завершения такта.
+
+Он формирует диссипативный информационный след.
+
+Этот след возвращается на верхний 7D-управляющий слой и изменяет следующий цикл рекурсивного синтеза.
+
+## RU — Основные смысловые различия
+
+### C(t)
+
+C(t) — общая эндогенная структурная когерентность системы.
+
+Она характеризует согласованность всех эндогенных процессов и их взаимную когерентность во времени.
+
+C(t) передаётся в модуль как самостоятельный параметр.
+
+### C3
+
+C3 — кубическое нелинейное насыщение, сжатие и задержка фазово-когерентной конфигурации.
+
+C3 = |Psi_coh|^3
+
+C3 является пространственным полем и участвует в формировании геометрии окна фазового перехода Omega(t), локальной плотности манифестированной массы и торможении локального векторного поля обмена J.
+
+C(t) ≠ C3
+
+### R_n
+
+R_n — коэффициент фазовой поддержки, наследуемый текущим рекурсивным циклом.
+
+R_n влияет на динамическую жёсткость 6D-тороидального фазового замка.
+
+R_n не является общей эндогенной структурной когерентностью C(t).
+
+R_n ≠ C(t)
+
+### R_t
+
+R_t — индикатор фазовой синхронизации, рассчитанный из локальной динамики обмена текущего такта.
+
+R_t участвует в обратной связи при расчёте R_n_next.
+
+R_t не является общей эндогенной структурной когерентностью C(t).
+
+R_t ≠ C(t)
+
+### J
+
+J — локальное векторное поле обмена на 2D / 1D-уровне.
+
+J = [Jx, Jy, Jz]
+
+### J_flux
+
+J_flux — самостоятельный сквозной безмассовый канал.
+
+J_flux не формируется прямым присваиванием локального векторного поля J или его пространственного среднего.
+
+### T_int
+
+T_int — динамический интерфейсный тензор, связывающий удерживаемое внутреннее состояние, манифестированную массу и сквозной безмассовый канал.
+
+T_int ≠ M(t)
+
+## RU — Входные параметры полного цикла
+
+Метод execute_full_cycle принимает:
+
+Q_n  
+D_n  
+R_n  
+A_n  
+E_medium  
+C_t  
+P_t  
+P_intent  
+T_int  
+J_flux
+
+Q_n — качественные характеристики, рекурсивно наследованные от предшествующего цикла синтеза.
+
+D_n — накопленный диссипативный след, наследованный от предшествующего цикла.
+
+R_n — коэффициент фазовой поддержки текущего цикла.
+
+A_n — амплитудный параметр аттрактора.
+
+E_medium — энергетическое состояние среды.
+
+C_t — общая эндогенная структурная когерентность.
+
+P_t — дестабилизующее давление.
+
+P_intent — вектор или коэффициент направленного дрейфа.
+
+T_int — динамический интерфейсный тензор.
+
+J_flux — сквозной безмассовый канал.
+
+## RU — Этап 1: 7D-инициация и рекурсивное наследование
 
 Метод:
 
@@ -538,24 +777,21 @@ step_7d_recursive_inheritance
 
 Структура оператора:
 
-Phi =
-M_inher * [I + alpha * D_n * E_medium]^-1 * A_attr(R_n, P_t)
+Phi = M_inher · [I + alpha · D_n · E_medium]^-1 · A_attr(R_n, P_t)
 
-В этом расширенном модуле диссипативный след D_n не является пассивным параметром.
+Диссипативный след D_n не является пассивным параметром.
 
-Он напрямую изменяет иммунный фильтр:
+Он изменяет фильтрацию следующего цикла рекурсивного синтеза:
 
-immune_filter =
-1.0 / (1.0 + alpha_filter * D_n * E_medium)
+immune_filter = 1.0 / (1.0 + alpha_filter · D_n · E_medium)
 
-Чем выше накопленный диссипативный след D_n, тем сильнее фильтрация следующего Супер-Кода.
+Рост накопленного диссипативного следа изменяет прохождение следующего Супер-Кода через рекурсивный фильтр наследования.
 
-7D-Супер-Код генерируется как:
+7D-Супер-Код формируется как:
 
-Psi_7D =
-(Q_n * A_n * immune_filter) * exp(i * (R_n - P_t))
+Psi_7D = (Q_n · A_n · immune_filter) · exp(i · (R_n - P_t))
 
-## RU — Этап 2: 6D-фазовый замок с динамической жесткостью
+## RU — Этап 2: 6D-фазовый замок с динамической жёсткостью
 
 Метод:
 
@@ -563,114 +799,197 @@ step_6d_phase_lock
 
 Этот этап выполняет фазовую фиксацию в 6D-пространстве через тороидальный фазовый замок.
 
-Жесткость замка kappa напрямую зависит от восходящего параметра фазовой поддержки R_n:
+Жёсткость замка зависит от коэффициента фазовой поддержки R_n:
 
-kappa = 3.0 * R_n
+kappa = kappa_base · R_n
 
-Это означает, что нижний диссипативный след опосредованно модифицирует жесткость следующего 6D-фазового замка.
+Высокое значение R_n усиливает тороидальный фазовый замок.
 
-Если R_n высока, тороидальный замок силен.
+Рост накопленного диссипативного следа уменьшает фазовую поддержку следующего цикла и снижает жёсткость замка.
 
-Если R_n деградировала накопленной диссипацией, тороидальный замок ослабевает.
+Фазово-когерентная конфигурация формируется как:
 
-6D-фазово-когерентная конфигурация генерируется как:
+Psi_coh = H_asym_factor · exp(i · (phase_7D + kappa · delta_phi))
 
-Psi_coh =
-H_asym_factor * exp(i * (phase_7D + kappa * delta_phi))
+Затем формируется кубическое нелинейное насыщение, сжатие и задержка:
 
-Затем формируется кубическое нелинейное насыщение объема:
+C3 = |Psi_coh|^3
 
-C^3 = |Psi_coh|^3
+Тороидальная геометрия C3 проецируется в центр расчётной сетки.
 
-Тороидальная геометрия проецируется в центр расчетной сетки.
-
-## RU — Этап 3-5: EDC, EDS и манифестация массы
+## RU — Этапы 3–5: EDC, EDS, T_int и манифестация массы
 
 Метод:
 
 step_5d_4d_3d_cascade
 
-Этот метод рассчитывает:
+Метод рассчитывает:
 
-динамику окна переходов EDC;
+1. Динамику окна фазового перехода Omega(t).
 
-контур удержания EDS;
+2. Приближение к границе эндогенной динамической критичности.
 
-3D-манифестацию массы.
+3. Контур удержания эндогенной динамической устойчивости.
 
-Source term для резонансного окна рассчитывается из:
+4. Состояние динамического интерфейсного тензора T_int.
 
-source_term =
-chi * div_C3 - drift_term
+5. 3D-манифестацию массы M(t).
 
-Резонансное окно Omega(t) обновляется через FDTD-схему волнового типа:
+Источник динамики окна фазового перехода:
 
-Omega_next =
-2.0 * Omega_curr
-- Omega_prev
-+ (c * dt)^2 * laplacian_Omega
-- (c^2 * dt^2) * source_term
+source_term = chi · div_C3 - drift_term
 
-Критерий удержания EDS:
+Окно фазового перехода обновляется через FDTD-схему волнового типа:
 
-C > P
+Omega_next =  
+2.0 · Omega_curr  
+- Omega_prev  
++ (c · dt)^2 · laplacian_Omega  
+- c^2 · dt^2 · source_term
 
-В коде:
+C3 влияет на геометрию и локальную структуру окна фазового перехода.
 
-eds_mask = (C3 > P_t) and (Omega_curr > 0.05)
+Удержание определяется общей эндогенной структурной когерентностью C(t), а не полем C3.
 
-Масса проявляется только внутри стабильного контура удержания EDS:
+Критерий эндогенной динамической устойчивости:
 
-mass_field[eds_mask] =
-(grad_rho_magnitude[eds_mask] * C3[eds_mask]) / c^2
+C(t) > P(t)
 
-## RU — Этап 6: 2D / 1D-динамика потока обмена
+Операционная маска удержания:
+
+eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
+
+Масса манифестируется только внутри удерживаемого контура:
+
+mass_field[eds_mask] = grad_rho_magnitude[eds_mask] · C3[eds_mask] / c^2
+
+T_int сохраняется как самостоятельное динамическое состояние интерфейса и не подменяется через C3, C(t) или M(t).
+
+## RU — Этап 6: 2D / 1D-динамика локального поля обмена
 
 Метод:
 
 step_1d_2d_flux_dynamics
 
-Этот этап моделирует редукцию восприятия и уравнение типа Навье-Стокса Континуума.
-
-Вектор потока обмена J обновляется давлением нерезонансного шума Континуума и торможением кубическим фазовым замком.
+Этот этап моделирует локальное векторное поле обмена J.
 
 Управляющее уравнение:
 
-partial J / partial t + (J * nabla)J =
-- gamma * nabla rho_cont
-- beta * C^3 * J
+partial J / partial t + (J · nabla)J = -gamma · nabla rho_cont - beta · C3 · J
 
-Выходом этого этапа является индикатор синхронизации R_t.
+Первое слагаемое правой части описывает воздействие градиента нерезонансных мод Континуума.
 
-## RU — Расчет восходящей обратной связи
+Второе слагаемое описывает торможение локального поля обмена через кубическое нелинейное насыщение, сжатие и задержку C3.
+
+Выходом этапа является индикатор фазовой синхронизации R_t.
+
+R_t ≠ C(t)
+
+Локальное векторное поле обмена J сохраняется отдельно от сквозного безмассового канала J_flux.
+
+## RU — Расчёт восходящей обратной связи
 
 Метод:
 
 calculate_upward_feedback
 
-Этот метод рассчитывает восходящую петлю обратной связи 1D -> 7D.
+Этот метод рассчитывает восходящую петлю обратной связи:
 
-Он вычисляет объемный интеграл накопленной 1D-диссипации для передачи в следующий 7D-такт.
+1D → 7D
 
-Локальная диссипативная плотность рассчитывается как:
+Локальная плотность диссипативного следа определяется через завихренность и дивергенцию локального векторного поля обмена J:
 
-d_1D =
-alpha_fric * rot_J_sq
-+
-beta_loss * div_J_sq
+d_1D(x, t) = alpha_fric · |curl J|^2 + beta_loss · (div J)^2
 
-где:
+|curl J|^2 — квадрат модуля завихренности локального поля обмена.
 
-rot_J_sq — квадрат завихренности вектора потока обмена J.
+(div J)^2 — квадрат дивергенции локального поля обмена.
 
-div_J_sq — квадрат дивергенции вектора потока обмена J.
+Пространственное среднее диссипативного следа, сформированного в текущем такте:
 
-Накопленный диссипативный след для следующего такта:
+D_step = mean(d_1D · rho_cont)
 
-D_n_next =
-sum(d_1D * rho_cont) * dx^3 / grid_size^3
+Для равномерной кубической сетки эквивалентная интегральная форма:
 
-Это значение возвращается на верхний 7D-слой.
+D_step = sum(d_1D · rho_cont) · dx^3 / (grid_size · dx)^3
+
+D_step является диссипативным следом одного текущего такта.
+
+Накопленный диссипативный след формируется рекурсивно:
+
+D_n_next = (1.0 - lambda_D · dt) · D_n + dt · D_step
+
+lambda_D задаёт скорость восстановления или ослабления ранее накопленного диссипативного следа.
+
+При lambda_D = 0 след накапливается без внутреннего восстановления.
+
+## RU — Перерасчёт Q(n+1) и R(n+1)
+
+После расчёта D_n_next качественные характеристики и фазовая поддержка следующего цикла пересчитываются через единую согласованную рекуррентную систему.
+
+Наследуемые качественные характеристики:
+
+Q_n_next = Q_n · exp(-eta_Q · D_n_next) + R_n · tanh(E_medium / (1.0 + D_n_next))
+
+Коэффициент фазовой поддержки:
+
+R_n_next = clip(R_n · (1.0 - eta_R · D_n_next / D_capacity) + eta_feedback · R_t, R_min, R_max)
+
+eta_Q — чувствительность наследуемых качественных характеристик к диссипативному следу.
+
+eta_R — чувствительность фазовой поддержки к накопленному диссипативному следу.
+
+D_capacity — операционная ёмкость относительно накопленного диссипативного следа.
+
+eta_feedback — вес фазовой обратной связи, сформированной в текущем такте.
+
+R_min и R_max — допустимые границы коэффициента фазовой поддержки.
+
+Во всём модуле используется одна согласованная рекуррентная система для Q_n_next и R_n_next.
+
+## RU — Обновление динамического интерфейсного тензора
+
+Динамический интерфейсный тензор обновляется как самостоятельное состояние:
+
+T_int_next = T_int + dt · (T_target - T_int - P_t · T_int)
+
+Целевое состояние интерфейса зависит от удерживаемого внутреннего состояния и общей эндогенной структурной когерентности:
+
+T_target = interface_operator(C_t, C3, Omega(t), D_n_next)
+
+Тензор не заменяется скалярным средним и не отождествляется с манифестированной массой.
+
+## RU — Обновление сквозного безмассового канала
+
+J_flux обновляется отдельно от локального векторного поля обмена J.
+
+Метод обновления принимает:
+
+J_flux  
+T_int  
+M_previous  
+M_current  
+J  
+D_step  
+dt
+
+Обновление J_flux учитывает:
+
+1. Изменение динамического интерфейсного тензора T_int.
+
+2. Изменение манифестированной массы M(t).
+
+3. Интенсивность локального векторного поля обмена J.
+
+4. Диссипативный след, сформированный в текущем такте.
+
+5. Внутреннее затухание сквозного безмассового канала.
+
+Общая форма обновления:
+
+J_flux_next = J_flux + dt · (interface_drive + mass_transition_drive + local_exchange_drive + dissipative_drive - flux_damping)
+
+Сквозной безмассовый канал сохраняет собственную потактовую динамику и собственное рекурсивно наследуемое состояние.
 
 ## RU — Полный замкнутый потактовый цикл
 
@@ -678,25 +997,61 @@ sum(d_1D * rho_cont) * dx^3 / grid_size^3
 
 execute_full_cycle
 
-Этот метод запускает полный замкнутый потактовый цикл.
+Полный цикл выполняется в следующем порядке:
 
-Нисходящая часть:
+1. 7D-инициация через Phi.
 
-7D -> 6D -> 5D -> 4D -> 3D -> 2D / 1D
+2. 6D-тороидальный фазовый замок с динамической жёсткостью kappa.
 
-Восходящая часть обратной связи:
+3. Формирование самостоятельного поля C3.
 
-1D -> 7D
+4. Обновление окна фазового перехода Omega(t).
+
+5. Определение EDC и EDS через самостоятельный параметр C_t.
+
+6. Обновление динамического интерфейсного тензора T_int.
+
+7. 3D-манифестация массы.
+
+8. 2D / 1D-динамика локального векторного поля обмена J.
+
+9. Расчёт пространственного следа D_step.
+
+10. Рекурсивное накопление D_n_next.
+
+11. Обновление J_flux.
+
+12. Перерасчёт Q_n_next.
+
+13. Перерасчёт R_n_next.
 
 Метод возвращает:
 
-total_mass
+total_mass  
+R_t  
+D_n_next  
+Q_n_next  
+R_n_next  
+T_int_next  
+J_flux_next
 
-R_t
+Каждый такт возвращает полный набор параметров, необходимых для следующего рекурсивного цикла.
 
-D_n_next
+## RU — Рекурсивная цепочка состояния
 
-Это означает, что каждый такт выводит не только манифестированную массу и синхронизацию, но и следующий диссипативный след, который модифицирует верхнеуровневый синтез.
+Полная операционная цепочка:
+
+state(n)  
+→ внутренние процессы структурной самоорганизации  
+→ T_int  
+→ J_flux  
+→ био-молекулярная модуляция  
+→ feedback D(n), A(n), J_flux, T_int  
+→ Phi(Q(n), D(n), A(n))  
+→ Q(n+1)  
+→ state(n+1)
+
+Рекурсивно наследуются качественные характеристики предшествующего цикла синтеза, накопленный диссипативный след, состояние динамического интерфейсного тензора и состояние сквозного безмассового канала.
 
 ## RU — Визуализация
 
@@ -704,101 +1059,148 @@ D_n_next
 
 visualize_state
 
-Этот метод рендерит текущее состояние рекурсивной петли и отображает текущие параметры верхнего инварианта:
+В заголовке визуализации отображаются:
 
-Q
+tact_index  
+Q_n  
+D_n  
+R_n  
+C_t  
+P_t  
+M(t)  
+J_flux
 
-D
+Рендерируемые слои:
 
-R
+1. Поле кубического нелинейного насыщения, сжатия и задержки C3.
 
-Рендерируемые экраны показывают:
+2. Окно фазового перехода Omega(t).
 
-6D-тороидальный замок C^3;
+3. Контур удержания EDS.
 
-3D-манифестацию Материи mc^2.
+4. 3D-поле манифестированной массы.
 
-Заголовок визуализации содержит:
+5. Локальное векторное поле обмена J.
 
-номер такта;
+6. Состояние динамического интерфейсного тензора T_int.
 
-7D-качественный параметр Q;
-
-накопленную диссипацию D;
-
-фазовую поддержку R.
+C3, C(t), J и J_flux отображаются как разные параметры.
 
 ## RU — Практическая симуляция
 
-Практический запуск инициализирует расширенную эволюционную систему:
+Рекомендуемые параметры демонстрационного запуска:
 
-grid_size = 32
-
-dt = 0.01
-
+grid_size = 32  
+dt = 0.01  
 dx = 0.1
 
-Стартовые параметры 7D-слоя управления:
+Стартовые параметры:
 
-Q_n = 1.5
-
-D_n = 0.001
-
-R_n = 0.99
-
-A_n = 1.5
-
-E_medium = 0.4
-
-P_t = 0.35
-
+Q_n = 1.5  
+D_n = 0.001  
+R_n = 0.99  
+A_n = 1.5  
+E_medium = 0.4  
+C_t = 0.90  
+P_t = 0.35  
 P_intent = 0.95
 
-Симуляция выполняет четыре такта.
+T_int и J_flux также инициализируются как самостоятельные состояния.
 
 На каждом такте модуль:
 
-выполняет полный каскад;
+1. Выполняет нисходящий каскад.
 
-рассчитывает новое значение диссипативного следа D_n_next;
+2. Обновляет C3.
 
-печатает манифестированную массу и возвращенный след D(n);
+3. Обновляет Omega(t).
 
-рендерит текущее состояние;
+4. Проверяет условие C_t > P_t.
 
-обновляет D_n;
+5. Обновляет T_int.
 
-пересчитывает Q_n;
+6. Рассчитывает манифестированную массу.
 
-пересчитывает R_n.
+7. Обновляет локальное векторное поле обмена J.
 
-## RU — Последовательный перерасчет следующего такта
+8. Рассчитывает D_step.
 
-После каждого такта следующий такт математически замыкается:
+9. Формирует D_n_next.
 
-D_n = D_n_next
+10. Обновляет J_flux.
 
-Q_n =
-Q_n * exp(-D_n) + R_t * 0.05
+11. Формирует Q_n_next.
 
-R_n =
-0.99 * (1.0 - D_n * 10.0)
+12. Формирует R_n_next.
 
-Затем R_n ограничивается операционной емкостью замка:
+13. Передаёт новое состояние в следующий такт.
 
-R_n = max(0.1, min(R_n, 1.0))
+## RU — Переход к следующему такту
 
-Это не позволяет фазовой поддержке замка выйти за допустимый диапазон.
+После завершения текущего такта:
+
+D_n = D_n_next  
+Q_n = Q_n_next  
+R_n = R_n_next  
+T_int = T_int_next  
+J_flux = J_flux_next
+
+Затем начинается следующий цикл:
+
+Phi(Q_n, D_n, A_n)
+
+## RU — Инварианты реализации
+
+Реализация сохраняет следующие различия:
+
+C(t) ≠ C3  
+R_n ≠ C(t)  
+R_t ≠ C(t)  
+J ≠ J_flux  
+T_int ≠ M(t)
+
+C3 остаётся полем кубического нелинейного насыщения, сжатия и задержки.
+
+C(t) остаётся общей эндогенной структурной когерентностью.
+
+R_n остаётся коэффициентом фазовой поддержки.
+
+R_t остаётся индикатором фазовой синхронизации.
+
+J остаётся локальным векторным полем обмена.
+
+J_flux остаётся сквозным безмассовым каналом.
+
+T_int остаётся динамическим интерфейсным тензором.
+
+Все числовые состояния проверяются на конечность после каждого такта.
+
+## RU — Класс модуля
+
+Основной класс:
+
+EDKRecursiveFeedbackLoopSimulation
+
+Основные методы:
+
+step_7d_recursive_inheritance  
+step_6d_phase_lock  
+step_5d_4d_3d_cascade  
+step_1d_2d_flux_dynamics  
+calculate_upward_feedback  
+update_interface_tensor  
+update_massless_exchange_channel  
+execute_full_cycle  
+visualize_state
 
 ## RU — Зависимости
 
 Модулю требуются:
 
-numpy
-
+numpy  
 matplotlib
 
-Установка зависимостей:
+Установка:
 
 pip install numpy matplotlib
 
