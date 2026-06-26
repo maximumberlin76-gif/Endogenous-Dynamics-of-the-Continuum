@@ -1,626 +1,845 @@
-# Marnov U_6D / C3 Engineering Visual Simulator
+# Marnov Protocol U_6D / C3 Engineering Visualizer
 
-## Engineering Visualization of Tact-by-Tact Phase Retention and Interface Bifurcation
+## EN — Engineering Visualization of Tact-by-Tact Phase Locking and Local Interface Transition
 
-The `MarnovCubicPotentialVisualizer` module implements an engineering visual simulator for:
+The `MarnovCubicPotentialVisualizer` module implements an engineering visual simulator of:
 
 - tact-by-tact phase-mismatch dynamics;
-- three-plane phase-space trajectories;
+- the trajectory of a three-plane phase-state space;
 - the tensor-product multiplet operator `U_6D`;
 - the normalized phase-lock amplitude;
-- the cubic retention potential `C3`;
-- the EDS retention criterion at an interface-density barrier.
+- the local representation of `C3`;
+- the local transition between `C3` and the cubic-dissipation level `P_cubic`;
+- the independent system-level relation between `C(t)` and `P(t)`.
 
-The module combines temporal phase dynamics with spatial analysis of a transition through an interface barrier.
+The module combines temporal phase dynamics with spatial analysis of an interface barrier.
 
-## Module File
+The module preserves the mandatory distinctions:
+
+C(t) ≠ C3
+
+P(t) ≠ P_cubic
+
+R(n) ≠ C(t)
+
+The local equality:
+
+C3 = P_cubic
+
+is a local cubic-transition boundary.
+
+It is not the system-level EDS / EDC boundary.
+
+The system-level relation is determined independently through:
+
+C(t) > P(t) — Endogenous Dynamic Stability
+
+C(t) = P(t) — Endogenous Dynamic Criticality
+
+C(t) < P(t) — degradation drift
+
+## EN — Module File
 
 `module_edk_visual_protocol/marnov_cubic_potential_visualizer.py`
 
-## Dependencies
+## EN — README File
+
+`module_edk_visual_protocol/README_EN_RU.md`
+
+## EN — Dependencies
+
+The module requires:
 
 - `numpy>=1.26.0`
 - `matplotlib>=3.8.0`
 
-## Installation
+## EN — Installation
 
-    pip install -r requirements.txt
+`pip install numpy matplotlib`
 
-## Launch
+## EN — Launch
 
-    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+`python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py`
 
-## Core Operational Chain
+## EN — Main Operational Architecture
 
-    three orthogonal 2D phase planes
-    → pair-lock operators L_k
-    → tensor-product operator U_6D
-    → normalized phase-lock amplitude
-    → cubic retention potential C3
-    → comparison with environmental dissipation P
-    → retention domain C3 > P
-    → bifurcation boundary C3 = P
-    → breakdown domain C3 <= P
+The module contains two separate operational relations.
 
-## Pair-Lock Operator
+Local multiplet and interface relation:
 
-Each two-dimensional phase plane is represented by one complex `2 × 2` pair-lock operator.
+three orthogonal two-dimensional phase planes  
+→ pair-lock operators `L_k`  
+→ tensor-product operator `U_6D`  
+→ normalized phase-lock amplitude  
+→ local representation of `C3`  
+→ comparison with `P_cubic`  
+→ local `C3`-dominance domain  
+→ local transition boundary `C3 = P_cubic`  
+→ local cubic-dissipation-dominance domain
+
+Independent system-level relation:
+
+C(t) and P(t)  
+→ C(t) > P(t): Endogenous Dynamic Stability  
+→ C(t) = P(t): Endogenous Dynamic Criticality  
+→ C(t) < P(t): degradation drift
+
+The local relation between `C3` and `P_cubic` must not be used as a replacement for the system-level relation between `C(t)` and `P(t)`.
+
+## EN — Pair-Lock Operator
+
+Each two-dimensional phase plane is represented by one complex pair-lock operator with dimension `2 × 2`.
 
 The local phase angle is:
 
-    phase_angle =
-    kappa · sin(delta_phi)
+`phase_angle = kappa · sin(delta_phi)`
 
 The two counter-directed channels use opposite phase directions:
 
-    phase_operator =
-    [
-        exp(+i · phase_angle)    0
-        0                        exp(-i · phase_angle)
-    ]
+`phase_operator = [[exp(+i · phase_angle), 0], [0, exp(-i · phase_angle)]]`
 
 The micro-asymmetry operator is:
 
-    asymmetry_operator =
-    [
-         cos(epsilon)    sin(epsilon)
-        -sin(epsilon)    cos(epsilon)
-    ]
+`asymmetry_operator = [[cos(epsilon), sin(epsilon)], [-sin(epsilon), cos(epsilon)]]`
 
 The complete pair-lock operator is:
 
-    L_k =
-    sqrt(R)
-    · phase_operator
-    · asymmetry_operator
+`L_k = sqrt(R) · phase_operator · asymmetry_operator`
 
 Where:
 
-- `R` is the local coherence-support parameter;
-- `kappa` is the local phase-lock strength;
+- `R` is the local phase-support coefficient;
+- `kappa` is the local nonlinear phase-lock strength;
 - `epsilon` is the micro-asymmetry angle;
 - `delta_phi` is the phase difference between counter-directed channels.
 
-## Multiplet Operator U_6D
+The coefficient `R` is a local phase-support parameter.
+
+It is not the general endogenous structural coherence `C(t)`.
+
+The multiplier `sqrt(R)` changes the amplitude of the pair-lock operator and not only its complex phase.
+
+## EN — Multiplet Operator U_6D
 
 Three orthogonal pair-lock operators are contracted through the Kronecker product:
 
-    U_6D =
-    L_1 ⊗ L_2 ⊗ L_3
+`U_6D = L_1 ⊗ L_2 ⊗ L_3`
 
 Each `L_k` is a `2 × 2` matrix.
 
-The resulting multiplet operator is therefore:
+The resulting multiplet operator is:
 
-    U_6D = complex 8 × 8 matrix
+`U_6D = complex matrix 8 × 8`
 
 The name `U_6D` describes a multiplet assembled from three orthogonal two-dimensional phase planes.
 
 The current numerical implementation does not use six independent spatial coordinates.
 
-## Normalized Phase-Lock Amplitude
+The designation `U_6D` therefore identifies the model layer and the construction of the multiplet operator, not a six-coordinate spatial grid.
 
-The phase-lock amplitude is calculated as:
+## EN — Normalized Phase-Lock Amplitude
 
-    lock_amplitude =
-    abs(Tr(U_6D))
-    / dimension(U_6D)
+The normalized phase-lock amplitude is calculated as:
+
+`lock_amplitude = abs(Tr(U_6D)) / dimension(U_6D)`
 
 For the current operator:
 
-    lock_amplitude =
-    abs(Tr(U_6D))
-    / 8
+`lock_amplitude = abs(Tr(U_6D)) / 8`
 
-Normalization allows the retained phase-lock amplitude to be compared across different simulation tacts and interface positions.
+Normalization makes it possible to compare the phase-lock amplitude:
 
-## Cubic Retention Potential C3
+- between different simulation tacts;
+- between different interface coordinates;
+- between different local phase-support values.
 
-The cubic retention potential is:
+The normalized lock amplitude is an indicator of the current multiplet phase-lock state.
 
-    C3 =
-    psi_amplitude^2
-    · lock_amplitude^3
+It is not the general endogenous structural coherence `C(t)`.
 
-The cubic exponent makes `C3` more sensitive to reductions in the retained phase-lock amplitude.
+## EN — Local Representation of C3
 
-The operational chain is:
+`C3` is defined within the EDK architecture as cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
 
-    decrease of lock_amplitude
-    → stronger relative decrease of C3
-    → approach to the EDS critical boundary
+The current visualizer represents the cubic amplitude component of `C3` through:
 
-## Environmental Dissipation P
+`C3 = (psi_amplitude · lock_amplitude)^3`
 
-The environmental dissipation level is:
+The cubic relation increases the sensitivity of the local `C3` profile to a reduction in the normalized phase-lock amplitude.
 
-    P =
-    dissipation_coefficient
-    · psi_amplitude^3
+The local operational chain is:
 
-The EDS conditions are:
+reduction of `lock_amplitude`  
+→ stronger relative reduction of `C3`  
+→ approach to the local `C3 / P_cubic` transition boundary
 
-    C3 > P
-    → retained dynamic contour
+The current visualizer does not implement a separate temporal delay kernel for `C3`.
 
-    C3 = P
-    → bifurcation boundary
+It visualizes the cubic nonlinear amplitude component used by the local interface model.
 
-    C3 <= P
-    → breakdown of the retained contour
+`C3` is not the general endogenous structural coherence:
 
-## Tact-by-Tact Phase Dynamics
+C(t) ≠ C3
 
-The temporal simulation begins from three phase differences:
+## EN — Local Cubic-Dissipation Level P_cubic
 
-    current_phi =
-    [
-         0.8,
-        -0.7,
-         0.5
-    ]
+The local cubic-dissipation level is calculated as:
+
+`P_cubic = dissipation_coefficient · psi_amplitude^3`
+
+`P_cubic` is a local comparison level used by the interface visualization.
+
+It is not the system-level destabilizing pressure `P(t)`:
+
+P(t) ≠ P_cubic
+
+The local relations are:
+
+C3 > P_cubic  
+→ local C3 dominance
+
+C3 = P_cubic  
+→ local cubic-transition boundary
+
+C3 < P_cubic  
+→ local cubic-dissipation dominance
+
+These relations describe the local interface profile only.
+
+They do not independently determine Endogenous Dynamic Stability or Endogenous Dynamic Criticality.
+
+## EN — Independent System-Level EDS / EDC Relation
+
+The module receives the independent parameters:
+
+- `C_t` — general endogenous structural coherence `C(t)`;
+- `P_t` — destabilizing pressure `P(t)`.
+
+The system-level regime is classified through:
+
+C(t) > P(t)  
+→ Endogenous Dynamic Stability
+
+C(t) = P(t)  
+→ Endogenous Dynamic Criticality
+
+C(t) < P(t)  
+→ degradation drift
+
+The method `classify_system_regime()` performs this classification independently from the local `C3` profile.
+
+The system-level relation must not be derived from:
+
+- the normalized trace of `U_6D`;
+- the phase-support coefficient `R`;
+- the local `C3` profile;
+- the local cubic-dissipation level `P_cubic`.
+
+## EN — Tact-by-Tact Phase Dynamics
+
+The temporal simulation begins with three phase differences:
+
+`current_phi = [0.8, -0.7, 0.5]`
 
 The nonlinear restoring increment is:
 
-    restoring_increment =
-    -gamma
-    · sin(current_phi)
-    · dt
+`restoring_increment = -gamma · sin(current_phi) · dt`
 
 The external dissipative-noise increment is:
 
-    noise_increment =
-    noise_strength
-    · sqrt(dt)
-    · normal_random_vector
+`noise_increment = noise_strength · sqrt(dt) · normal_random_vector`
 
 The phase state is updated as:
 
-    current_phi(t + dt) =
-    current_phi(t)
-    + restoring_increment
-    + noise_increment
+`current_phi(t + dt) = current_phi(t) + restoring_increment + noise_increment`
 
-Each subsequent tact inherits the phase state produced by the preceding tact.
+Each subsequent tact inherits the phase state formed by the preceding tact.
 
-The expected result is not an ideal static zero state.
+This is the recursive inheritance of the preceding phase state within the temporal numerical process.
 
-The expected result is a fluctuating dynamically retained domain near the phase attractor.
+The expected result is not an ideally static zero state.
 
-## Interface-Density Barrier
+The expected result is a fluctuating dynamically retained region near the phase attractor.
 
-The spatial support profile is:
+The stochastic increment is scaled by `sqrt(dt)` so that changing the tact duration does not incorrectly rescale the noise process.
 
-    R(X) =
-    R_base
-    - barrier_depth
-    · exp(
-        -((X - barrier_center) / barrier_width)^2
-    )
+## EN — Interface Barrier
+
+The spatial phase-support profile is:
+
+`R(X) = R_base - barrier_depth · exp(-((X - barrier_center) / barrier_width)^2)`
 
 Outside the barrier:
 
-    R(X) ≈ R_base
+`R(X) ≈ R_base`
 
 Inside the barrier:
 
-    R(X) decreases
+`R(X)` decreases
 
 After the barrier:
 
-    R(X) recovers
+`R(X)` recovers
+
+The profile is constrained to the interval:
+
+`0 ≤ R(X) ≤ 1`
 
 The local phase-lock strength is:
 
-    kappa_local =
-    alpha_lock
-    · R(X)
+`kappa_local = alpha_lock · R(X)`
 
-For every spatial coordinate, the module recalculates:
+For each spatial coordinate, the module recalculates:
 
-    R(X)
-    → L_k(X)
-    → U_6D(X)
-    → lock_amplitude(X)
-    → C3(X)
+`R(X) → L_k(X) → U_6D(X) → lock_amplitude(X) → C3(X)`
 
-## Bifurcation Coordinates
+The local `C3` profile is then compared with the independent local cubic-dissipation profile:
 
-The module detects locations where:
+`P_cubic(X)`
 
-    C3(X) - P(X)
+In the current implementation, `P_cubic(X)` is spatially constant unless the model is extended with a variable dissipation profile.
 
-changes sign.
+## EN — Local Transition Coordinates
 
-The crossing coordinate is estimated through linear interpolation between neighboring spatial samples.
+The module determines coordinates where:
 
-The resulting points represent the numerical boundary:
+`C3(X) - P_cubic(X) = 0`
 
-    C3 = P
+The transition-point detector retains:
 
-## Engineering Visualizations
+- exact equality samples;
+- sign-changing intervals between neighboring samples.
 
-The module generates four graphs.
+For a sign-changing interval, the transition coordinate is estimated through linear interpolation.
 
-### 1. Tact-by-Tact Phase-Mismatch Dynamics
+The resulting coordinates represent the local numerical boundary:
 
-Displays:
+`C3 = P_cubic`
+
+They are local cubic-transition coordinates.
+
+They must not be identified as the system-level EDC boundary:
+
+`C(t) = P(t)`
+
+The previous field name `bifurcation_points` is retained only as a backward-compatible alias.
+
+The operational field name is:
+
+`cubic_transition_points`
+
+## EN — Engineering Visualizations
+
+The module generates four engineering graphs.
+
+### EN — 1. Tact-by-Tact Phase-Mismatch Dynamics
+
+The graph displays:
 
 - `delta_phi_1(t)`;
 - `delta_phi_2(t)`;
 - `delta_phi_3(t)`.
 
-The graph shows the interaction between nonlinear restoring dynamics and external dissipative noise.
+It shows the interaction between:
 
-### 2. Three-Plane Phase-Space Trajectory
+- nonlinear restoring dynamics;
+- external dissipative phase noise;
+- recursive inheritance of the preceding phase state.
 
-Displays the trajectory:
+### EN — 2. Three-Plane Phase-State-Space Trajectory
 
-    delta_phi_1
-    delta_phi_2
-    delta_phi_3
+The graph displays the trajectory:
 
-The graph marks the initial state, intermediate trajectory, and final state.
+`delta_phi_1, delta_phi_2, delta_phi_3`
 
-This is a state-space graph, not a graph of ordinary physical coordinates.
+It shows:
 
-### 3. U_6D Lock Amplitude and C3 Potential
+- the initial state;
+- the intermediate trajectory;
+- the final state.
 
-Displays:
+This is the phase-state space of the numerical system.
 
-    normalized abs(Tr(U_6D))
+It is not a space of ordinary physical coordinates.
+
+### EN — 3. U_6D Lock Amplitude and C3
+
+The graph displays:
+
+`normalized abs(Tr(U_6D))`
 
 and:
 
-    C3
+`C3`
 
-The normalized trace describes the retained multiplet phase-lock amplitude.
+The normalized trace represents the current multiplet phase-lock amplitude.
 
-The cubic potential describes its nonlinear retention capacity.
+The `C3` curve represents the local cubic nonlinear amplitude used by the visualizer.
 
-### 4. EDS Criterion Across the Interface Barrier
+Neither quantity is the general endogenous structural coherence `C(t)`.
 
-Displays:
+### EN — 4. Local C3 / P_cubic Interface Transition
 
-    C3(X)
-    P(X)
+The graph displays:
 
-The graph separates:
+`C3(X)`
 
-    retention domain:
-    C3 > P
+and:
 
-    breakdown domain:
-    C3 <= P
+`P_cubic(X)`
 
-Vertical markers show the approximate bifurcation coordinates:
+Local `C3`-dominance domain:
 
-    C3 = P
+`C3 > P_cubic`
 
-## Correction of the Original Trace Construction
+Local cubic-dissipation-dominance domain:
+
+`C3 < P_cubic`
+
+Vertical markers show the approximate local transition coordinates:
+
+`C3 = P_cubic`
+
+The graphical block separately displays the independent system-level values:
+
+- `C(t)`;
+- `P(t)`;
+- the classified system regime.
+
+## EN — Correction of the Original Trace Construction
 
 The original construction used one common complex multiplier:
 
-    L_k =
-    exp(i · phase_angle)
-    · H_asym
+`L_k = exp(i · phase_angle) · H_asym`
 
 A common phase multiplier changes the phase of the trace but does not necessarily change:
 
-    abs(Tr(L_k))
+`abs(Tr(L_k))`
 
-The same problem propagates into:
+The same limitation propagates into:
 
-    abs(Tr(U_6D))
+`abs(Tr(U_6D))`
 
 The corrected module uses:
 
-- opposite phase directions `exp(+i · phase_angle)` and `exp(-i · phase_angle)`;
-- a separate support amplitude `sqrt(R)`.
+- counter-directed phase directions `exp(+i · phase_angle)` and `exp(-i · phase_angle)`;
+- the independent phase-support amplitude `sqrt(R)`.
 
 The absolute trace can therefore respond to:
 
 - phase mismatch;
-- local coupling strength;
-- coherence support;
-- interface-barrier depth.
+- local nonlinear coupling strength;
+- the phase-support coefficient;
+- the depth of the interface barrier.
 
-## Dimensional Interpretation
+## EN — Dimensional Interpretation
 
 The current module explicitly implements:
 
 - three phase differences;
-- three `2 × 2` pair-lock operators;
-- one complex `8 × 8` tensor-product operator;
+- three pair-lock operators `2 × 2`;
+- one complex tensor-product operator `8 × 8`;
 - one temporal coordinate;
-- one spatial interface coordinate.
+- one spatial interface coordinate;
+- one independent system-level pair `C(t)` and `P(t)`.
 
-The labels `2D`, `4D`, `5D`, `6D`, and `7D` are model-layer designations unless corresponding independent mathematical coordinates are implemented directly.
+The designations `2D`, `4D`, `5D`, `6D`, and `7D` identify model layers when the corresponding independent mathematical coordinates are not directly implemented.
 
-## Core Invariant
+The module must not be interpreted as a direct numerical realization of six or seven independent spatial coordinates.
 
-    phase-lock retention =
-    a tact-by-tact dynamically retained multiplet state
-    in which the cubic potential generated by coupled phase planes
-    remains greater than environmental dissipation
-    inside the open nonlinear dissipative dynamic Continuum
+## EN — Main Invariants
 
-Operational condition:
+Local multiplet invariant:
 
-    C3 > P
+`tact-by-tact phase-lock retention is represented by a dynamically evolving multiplet state whose normalized phase-lock amplitude forms the local C3 profile`
 
-Critical boundary:
+Local interface relation:
 
-    C3 = P
+C3 > P_cubic  
+→ local C3 dominance
 
-Breakdown condition:
+C3 = P_cubic  
+→ local cubic-transition boundary
 
-    C3 <= P
+C3 < P_cubic  
+→ local cubic-dissipation dominance
 
-## Main Class
+System-level relation:
+
+C(t) > P(t)  
+→ Endogenous Dynamic Stability
+
+C(t) = P(t)  
+→ Endogenous Dynamic Criticality
+
+C(t) < P(t)  
+→ degradation drift
+
+Mandatory distinctions:
+
+C(t) ≠ C3
+
+P(t) ≠ P_cubic
+
+R(n) ≠ C(t)
+
+The local interface relation and the system-level relation are not interchangeable.
+
+## EN — Main Class
 
 `MarnovCubicPotentialVisualizer`
 
-## Main Methods
+## EN — Main Methods
 
-- `build_pair_lock()` — builds one complex `2 × 2` pair-lock operator.
-- `calculate_u_6d()` — contracts three pair locks into the `8 × 8` multiplet operator.
+- `set_system_state()` — sets the independent system-level parameters `C(t)` and `P(t)`.
+- `classify_system_regime()` — classifies the independent system-level EDS / EDC relation.
+- `build_pair_lock()` — forms one complex pair-lock operator `2 × 2`.
+- `calculate_u_6d()` — contracts three pair-lock operators into one multiplet operator `8 × 8`.
 - `calculate_lock_amplitude()` — calculates the normalized absolute trace.
-- `calculate_cubic_potential()` — calculates the cubic retention potential `C3`.
+- `calculate_cubic_potential()` — calculates the local representation of `C3`.
+- `calculate_cubic_dissipation_level()` — calculates the local cubic-dissipation level `P_cubic`.
 - `simulate_temporal_dynamics()` — simulates tact-by-tact phase dynamics.
-- `calculate_interface_profile()` — calculates the interface-retention profile.
+- `calculate_interface_profile()` — calculates the local interface profile.
 - `visualize_engineering_data()` — generates four engineering graphs.
-- `run_visual_simulation()` — runs the complete simulation.
+- `run_visual_simulation()` — executes the complete simulation and visualization.
 
 ---
 
 # Инженерный визуальный симулятор U_6D / C3 Протокола Марнова
 
-## Инженерная визуализация потактового фазового удержания и интерфейсной бифуркации
+## RU — Инженерная визуализация потактового фазового удержания и локального интерфейсного перехода
 
 Модуль `MarnovCubicPotentialVisualizer` реализует инженерный визуальный симулятор:
 
 - потактовой динамики фазового рассогласования;
-- траектории трёхплоскостного фазового пространства;
+- траектории трёхплоскостного фазового пространства состояний;
 - тензорно-произведённого мультиплетного оператора `U_6D`;
 - нормированной амплитуды фазового замка;
-- кубического потенциала удержания `C3`;
-- критерия EDS при прохождении барьера плотности на границе раздела сред.
+- локального представления `C3`;
+- локального перехода между `C3` и уровнем кубической диссипации `P_cubic`;
+- самостоятельного общесистемного соотношения между `C(t)` и `P(t)`.
 
 Модуль объединяет временную фазовую динамику и пространственный анализ перехода через интерфейсный барьер.
 
-## Файл модуля
+Модуль сохраняет обязательные различия:
+
+C(t) ≠ C3
+
+P(t) ≠ P_cubic
+
+R(n) ≠ C(t)
+
+Локальное равенство:
+
+C3 = P_cubic
+
+является локальной границей кубического перехода.
+
+Оно не является общесистемной границей EDS / EDC.
+
+Общесистемное соотношение определяется самостоятельно:
+
+C(t) > P(t) — эндогенная динамическая устойчивость
+
+C(t) = P(t) — эндогенная динамическая критичность
+
+C(t) < P(t) — дрейф деградации
+
+## RU — Файл модуля
 
 `module_edk_visual_protocol/marnov_cubic_potential_visualizer.py`
 
-## Зависимости
+## RU — Файл README
+
+`module_edk_visual_protocol/README_EN_RU.md`
+
+## RU — Зависимости
+
+Модулю требуются:
 
 - `numpy>=1.26.0`
 - `matplotlib>=3.8.0`
 
-## Установка
+## RU — Установка
 
-    pip install -r requirements.txt
+`pip install numpy matplotlib`
 
-## Запуск
+## RU — Запуск
 
-    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+`python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py`
 
-## Основная операционная цепочка
+## RU — Основная операционная архитектура
 
-    три ортогональные двумерные фазовые плоскости
-    → операторы парного замка L_k
-    → тензорно-произведённый оператор U_6D
-    → нормированная амплитуда фазового замка
-    → кубический потенциал удержания C3
-    → сравнение с диссипацией среды P
-    → область удержания C3 > P
-    → граница бифуркации C3 = P
-    → область срыва C3 <= P
+Модуль содержит два отдельных операционных соотношения.
 
-## Оператор парного замка
+Локальная мультиплетная и интерфейсная цепочка:
+
+три ортогональные двумерные фазовые плоскости  
+→ операторы парного замка `L_k`  
+→ тензорно-произведённый оператор `U_6D`  
+→ нормированная амплитуда фазового замка  
+→ локальное представление `C3`  
+→ сравнение с `P_cubic`  
+→ локальная область доминирования `C3`  
+→ локальная граница перехода `C3 = P_cubic`  
+→ локальная область доминирования кубической диссипации
+
+Самостоятельное общесистемное соотношение:
+
+C(t) и P(t)  
+→ C(t) > P(t): эндогенная динамическая устойчивость  
+→ C(t) = P(t): эндогенная динамическая критичность  
+→ C(t) < P(t): дрейф деградации
+
+Локальное соотношение между `C3` и `P_cubic` не должно использоваться как замена общесистемного соотношения между `C(t)` и `P(t)`.
+
+## RU — Оператор парного замка
 
 Каждая двумерная фазовая плоскость представлена одним комплексным оператором парного замка размерностью `2 × 2`.
 
 Локальный фазовый угол:
 
-    phase_angle =
-    kappa · sin(delta_phi)
+`phase_angle = kappa · sin(delta_phi)`
 
 Два встречных канала используют противоположные фазовые направления:
 
-    phase_operator =
-    [
-        exp(+i · phase_angle)    0
-        0                        exp(-i · phase_angle)
-    ]
+`phase_operator = [[exp(+i · phase_angle), 0], [0, exp(-i · phase_angle)]]`
 
 Оператор микроасимметрии:
 
-    asymmetry_operator =
-    [
-         cos(epsilon)    sin(epsilon)
-        -sin(epsilon)    cos(epsilon)
-    ]
+`asymmetry_operator = [[cos(epsilon), sin(epsilon)], [-sin(epsilon), cos(epsilon)]]`
 
 Полный оператор парного замка:
 
-    L_k =
-    sqrt(R)
-    · phase_operator
-    · asymmetry_operator
+`L_k = sqrt(R) · phase_operator · asymmetry_operator`
 
 Где:
 
-- `R` — локальный параметр поддержки когерентности;
-- `kappa` — локальная сила фазового замка;
+- `R` — локальный коэффициент фазовой поддержки;
+- `kappa` — локальная сила нелинейного фазового замка;
 - `epsilon` — угол микроасимметрии;
 - `delta_phi` — разность фаз встречных каналов.
 
+Коэффициент `R` является локальным параметром фазовой поддержки.
+
+Он не является общей эндогенной структурной когерентностью `C(t)`.
+
 Множитель `sqrt(R)` изменяет амплитуду оператора парного замка, а не только его комплексную фазу.
 
-## Мультиплетный оператор U_6D
+## RU — Мультиплетный оператор U_6D
 
 Три ортогональных оператора парного замка сворачиваются через произведение Кронекера:
 
-    U_6D =
-    L_1 ⊗ L_2 ⊗ L_3
+`U_6D = L_1 ⊗ L_2 ⊗ L_3`
 
 Каждый `L_k` является матрицей `2 × 2`.
 
 Результирующий мультиплетный оператор:
 
-    U_6D = комплексная матрица 8 × 8
+`U_6D = комплексная матрица 8 × 8`
 
 Название `U_6D` описывает мультиплет, собранный из трёх ортогональных двумерных фазовых плоскостей.
 
 Текущая численная реализация не использует шесть независимых пространственных координат.
 
-## Нормированная амплитуда фазового замка
+Поэтому обозначение `U_6D` определяет модельный слой и конструкцию мультиплетного оператора, а не шестикоординатную пространственную сетку.
 
-Амплитуда фазового замка рассчитывается как:
+## RU — Нормированная амплитуда фазового замка
 
-    lock_amplitude =
-    abs(Tr(U_6D))
-    / dimension(U_6D)
+Нормированная амплитуда фазового замка рассчитывается как:
+
+`lock_amplitude = abs(Tr(U_6D)) / dimension(U_6D)`
 
 Для текущего оператора:
 
-    lock_amplitude =
-    abs(Tr(U_6D))
-    / 8
+`lock_amplitude = abs(Tr(U_6D)) / 8`
 
-Нормирование позволяет сравнивать удерживаемую амплитуду фазового замка на различных тактах симуляции и в различных точках интерфейса.
+Нормирование позволяет сравнивать амплитуду фазового замка:
 
-## Кубический потенциал удержания C3
+- между различными тактами симуляции;
+- между различными координатами интерфейса;
+- между различными локальными значениями фазовой поддержки.
 
-Кубический потенциал удержания:
+Нормированная амплитуда замка является индикатором текущего мультиплетного фазового состояния.
 
-    C3 =
-    psi_amplitude^2
-    · lock_amplitude^3
+Она не является общей эндогенной структурной когерентностью `C(t)`.
 
-Кубическая степень повышает чувствительность `C3` к снижению удерживаемой амплитуды фазового замка.
+## RU — Локальное представление C3
 
-Операционная цепочка:
+`C3` определяется в архитектуре EDK как кубическое нелинейное насыщение, сжатие и задержка фазово-когерентной конфигурации.
 
-    снижение lock_amplitude
-    → более сильное относительное снижение C3
-    → приближение к критической границе EDS
+Текущий визуализатор представляет кубическую амплитудную составляющую `C3` через:
 
-## Диссипация среды P
+`C3 = (psi_amplitude · lock_amplitude)^3`
 
-Уровень диссипации среды:
+Кубическое соотношение повышает чувствительность локального профиля `C3` к снижению нормированной амплитуды фазового замка.
 
-    P =
-    dissipation_coefficient
-    · psi_amplitude^3
+Локальная операционная цепочка:
 
-Условия EDS:
+снижение `lock_amplitude`  
+→ более сильное относительное снижение `C3`  
+→ приближение к локальной границе перехода `C3 / P_cubic`
 
-    C3 > P
-    → динамический контур удерживается
+Текущий визуализатор не реализует отдельное временное ядро задержки `C3`.
 
-    C3 = P
-    → граница бифуркации
+Он визуализирует кубическую нелинейную амплитудную составляющую, используемую локальной интерфейсной моделью.
 
-    C3 <= P
-    → срыв удерживаемого контура
+`C3` не является общей эндогенной структурной когерентностью:
 
-## Потактовая фазовая динамика
+C(t) ≠ C3
+
+## RU — Локальный уровень кубической диссипации P_cubic
+
+Локальный уровень кубической диссипации рассчитывается как:
+
+`P_cubic = dissipation_coefficient · psi_amplitude^3`
+
+`P_cubic` является локальным уровнем сравнения, используемым интерфейсной визуализацией.
+
+Он не является общесистемным дестабилизующим давлением `P(t)`:
+
+P(t) ≠ P_cubic
+
+Локальные соотношения:
+
+C3 > P_cubic  
+→ локальное доминирование C3
+
+C3 = P_cubic  
+→ локальная граница кубического перехода
+
+C3 < P_cubic  
+→ локальное доминирование кубической диссипации
+
+Эти соотношения описывают только локальный интерфейсный профиль.
+
+Они не определяют самостоятельно эндогенную динамическую устойчивость или эндогенную динамическую критичность.
+
+## RU — Самостоятельное общесистемное соотношение EDS / EDC
+
+Модуль принимает самостоятельные параметры:
+
+- `C_t` — общая эндогенная структурная когерентность `C(t)`;
+- `P_t` — дестабилизующее давление `P(t)`.
+
+Общесистемный режим классифицируется через:
+
+C(t) > P(t)  
+→ эндогенная динамическая устойчивость
+
+C(t) = P(t)  
+→ эндогенная динамическая критичность
+
+C(t) < P(t)  
+→ дрейф деградации
+
+Метод `classify_system_regime()` выполняет эту классификацию независимо от локального профиля `C3`.
+
+Общесистемное соотношение нельзя выводить непосредственно из:
+
+- нормированного следа `U_6D`;
+- коэффициента фазовой поддержки `R`;
+- локального профиля `C3`;
+- локального уровня кубической диссипации `P_cubic`.
+
+## RU — Потактовая фазовая динамика
 
 Временная симуляция начинается с трёх разностей фаз:
 
-    current_phi =
-    [
-         0.8,
-        -0.7,
-         0.5
-    ]
+`current_phi = [0.8, -0.7, 0.5]`
 
 Нелинейное возвращающее приращение:
 
-    restoring_increment =
-    -gamma
-    · sin(current_phi)
-    · dt
+`restoring_increment = -gamma · sin(current_phi) · dt`
 
-Приращение внешнего диссипативного шума:
+Приращение внешнего диссипативного фазового шума:
 
-    noise_increment =
-    noise_strength
-    · sqrt(dt)
-    · normal_random_vector
+`noise_increment = noise_strength · sqrt(dt) · normal_random_vector`
 
 Обновление фазового состояния:
 
-    current_phi(t + dt) =
-    current_phi(t)
-    + restoring_increment
-    + noise_increment
+`current_phi(t + dt) = current_phi(t) + restoring_increment + noise_increment`
 
 Каждый последующий такт наследует фазовое состояние, сформированное предшествующим тактом.
 
-Ожидаемый результат не является идеальным статичным нулевым состоянием.
+Это представляет рекурсивное наследование предшествующего фазового состояния внутри временного численного процесса.
+
+Ожидаемый результат не является идеально статичным нулевым состоянием.
 
 Ожидаемый результат — флуктуирующая динамически удерживаемая область вблизи фазового аттрактора.
 
-## Интерфейсный барьер плотности
+Стохастическое приращение масштабируется через `sqrt(dt)`, чтобы изменение длительности такта не приводило к некорректному масштабированию шумового процесса.
 
-Пространственный профиль поддержки:
+## RU — Интерфейсный барьер
 
-    R(X) =
-    R_base
-    - barrier_depth
-    · exp(
-        -((X - barrier_center) / barrier_width)^2
-    )
+Пространственный профиль фазовой поддержки:
+
+`R(X) = R_base - barrier_depth · exp(-((X - barrier_center) / barrier_width)^2)`
 
 Вне барьера:
 
-    R(X) ≈ R_base
+`R(X) ≈ R_base`
 
 Внутри барьера:
 
-    R(X) снижается
+`R(X)` снижается
 
 После барьера:
 
-    R(X) восстанавливается
+`R(X)` восстанавливается
+
+Профиль ограничивается интервалом:
+
+`0 ≤ R(X) ≤ 1`
 
 Локальная сила фазового замка:
 
-    kappa_local =
-    alpha_lock
-    · R(X)
+`kappa_local = alpha_lock · R(X)`
 
 Для каждой пространственной координаты модуль заново рассчитывает:
 
-    R(X)
-    → L_k(X)
-    → U_6D(X)
-    → lock_amplitude(X)
-    → C3(X)
+`R(X) → L_k(X) → U_6D(X) → lock_amplitude(X) → C3(X)`
 
-## Координаты бифуркации
+После этого локальный профиль `C3` сравнивается с самостоятельным локальным профилем кубической диссипации:
 
-Модуль определяет точки, где выражение:
+`P_cubic(X)`
 
-    C3(X) - P(X)
+В текущей реализации `P_cubic(X)` является пространственно постоянным, если модель не расширена переменным профилем диссипации.
 
-меняет знак.
+## RU — Координаты локального перехода
 
-Координата пересечения оценивается линейной интерполяцией между соседними пространственными отсчётами.
+Модуль определяет координаты, в которых:
 
-Полученные точки представляют численную границу:
+`C3(X) - P_cubic(X) = 0`
 
-    C3 = P
+Механизм определения точек перехода сохраняет:
 
-## Инженерные визуализации
+- отсчёты с точным равенством;
+- интервалы со сменой знака между соседними отсчётами.
 
-Модуль формирует четыре графика.
+Для интервала со сменой знака координата перехода оценивается линейной интерполяцией.
 
-### 1. Потактовая динамика фазового рассогласования
+Полученные координаты представляют локальную численную границу:
+
+`C3 = P_cubic`
+
+Они являются координатами локального кубического перехода.
+
+Их нельзя отождествлять с общесистемной границей EDC:
+
+`C(t) = P(t)`
+
+Предыдущее имя поля `bifurcation_points` сохранено только как обратно совместимый псевдоним.
+
+Операционное имя поля:
+
+`cubic_transition_points`
+
+## RU — Инженерные визуализации
+
+Модуль формирует четыре инженерных графика.
+
+### RU — 1. Потактовая динамика фазового рассогласования
 
 Отображаются:
 
@@ -628,82 +847,99 @@ Breakdown condition:
 - `delta_phi_2(t)`;
 - `delta_phi_3(t)`.
 
-График показывает взаимодействие нелинейной возвращающей динамики и внешнего диссипативного шума.
+График показывает взаимодействие:
 
-### 2. Траектория трёхплоскостного фазового пространства
+- нелинейной возвращающей динамики;
+- внешнего диссипативного фазового шума;
+- рекурсивного наследования предшествующего фазового состояния.
+
+### RU — 2. Траектория трёхплоскостного фазового пространства состояний
 
 Отображается траектория:
 
-    delta_phi_1
-    delta_phi_2
-    delta_phi_3
+`delta_phi_1, delta_phi_2, delta_phi_3`
 
-График показывает начальное состояние, промежуточную траекторию и конечное состояние.
+График показывает:
 
-Это пространство состояний системы, а не пространство обычных физических координат.
+- начальное состояние;
+- промежуточную траекторию;
+- конечное состояние.
 
-### 3. Амплитуда замка U_6D и потенциал C3
+Это фазовое пространство состояний численной системы.
+
+Оно не является пространством обычных физических координат.
+
+### RU — 3. Амплитуда замка U_6D и C3
 
 Отображаются:
 
-    normalized abs(Tr(U_6D))
+`normalized abs(Tr(U_6D))`
 
 и:
 
-    C3
+`C3`
 
-Нормированный след описывает удерживаемую амплитуду мультиплетного фазового замка.
+Нормированный след представляет текущую амплитуду мультиплетного фазового замка.
 
-Кубический потенциал описывает его нелинейную способность удержания.
+Кривая `C3` представляет локальную кубическую нелинейную амплитуду, используемую визуализатором.
 
-### 4. Критерий EDS на интерфейсном барьере
+Ни одна из этих величин не является общей эндогенной структурной когерентностью `C(t)`.
+
+### RU — 4. Локальный интерфейсный переход C3 / P_cubic
 
 Отображаются:
 
-    C3(X)
-    P(X)
+`C3(X)`
 
-Область удержания:
+и:
 
-    C3 > P
+`P_cubic(X)`
 
-Область срыва:
+Локальная область доминирования `C3`:
 
-    C3 <= P
+`C3 > P_cubic`
 
-Вертикальные маркеры показывают приближённые координаты бифуркации:
+Локальная область доминирования кубической диссипации:
 
-    C3 = P
+`C3 < P_cubic`
 
-## Исправление исходной конструкции следа
+Вертикальные маркеры показывают приближённые координаты локального перехода:
+
+`C3 = P_cubic`
+
+В графическом блоке отдельно отображаются самостоятельные общесистемные значения:
+
+- `C(t)`;
+- `P(t)`;
+- классифицированный общесистемный режим.
+
+## RU — Исправление исходной конструкции следа
 
 Исходная конструкция использовала один общий комплексный множитель:
 
-    L_k =
-    exp(i · phase_angle)
-    · H_asym
+`L_k = exp(i · phase_angle) · H_asym`
 
 Общий фазовый множитель изменяет фазу следа, но не обязательно изменяет:
 
-    abs(Tr(L_k))
+`abs(Tr(L_k))`
 
-Та же проблема переходила в:
+Та же проблема переходит в:
 
-    abs(Tr(U_6D))
+`abs(Tr(U_6D))`
 
 Исправленный модуль использует:
 
 - встречные фазовые направления `exp(+i · phase_angle)` и `exp(-i · phase_angle)`;
-- отдельную амплитуду поддержки `sqrt(R)`.
+- самостоятельную амплитуду фазовой поддержки `sqrt(R)`.
 
-Теперь абсолютный след реагирует на:
+Теперь абсолютный след может реагировать на:
 
 - фазовое рассогласование;
-- локальную силу сопряжения;
-- поддержку когерентности;
+- локальную силу нелинейного сопряжения;
+- коэффициент фазовой поддержки;
 - глубину интерфейсного барьера.
 
-## Размерностная интерпретация
+## RU — Размерностная интерпретация
 
 Текущий модуль явно реализует:
 
@@ -711,42 +947,65 @@ Breakdown condition:
 - три оператора парного замка `2 × 2`;
 - один комплексный тензорно-произведённый оператор `8 × 8`;
 - одну временную координату;
-- одну пространственную координату интерфейса.
+- одну пространственную координату интерфейса;
+- одну самостоятельную общесистемную пару `C(t)` и `P(t)`.
 
-Обозначения `2D`, `4D`, `5D`, `6D` и `7D` являются обозначениями модельных слоёв, если соответствующие независимые математические координаты не реализованы непосредственно.
+Обозначения `2D`, `4D`, `5D`, `6D` и `7D` определяют модельные слои, если соответствующие независимые математические координаты не реализованы непосредственно.
 
-## Основной инвариант
+Модуль нельзя интерпретировать как прямую численную реализацию шести или семи независимых пространственных координат.
 
-    удержание фазового замка =
-    потактово динамически удерживаемое мультиплетное состояние,
-    в котором кубический потенциал сопряжённых фазовых плоскостей
-    остаётся выше диссипации среды
-    внутри открытого нелинейного диссипативного динамического Континуума
+## RU — Основные инварианты
 
-Условие удержания:
+Локальный мультиплетный инвариант:
 
-    C3 > P
+`потактовое удержание фазового замка представлено динамически изменяющимся мультиплетным состоянием, нормированная амплитуда фазового замка которого формирует локальный профиль C3`
 
-Критическая граница:
+Локальное интерфейсное соотношение:
 
-    C3 = P
+C3 > P_cubic  
+→ локальное доминирование C3
 
-Условие срыва:
+C3 = P_cubic  
+→ локальная граница кубического перехода
 
-    C3 <= P
+C3 < P_cubic  
+→ локальное доминирование кубической диссипации
 
-## Основной класс
+Общесистемное соотношение:
+
+C(t) > P(t)  
+→ эндогенная динамическая устойчивость
+
+C(t) = P(t)  
+→ эндогенная динамическая критичность
+
+C(t) < P(t)  
+→ дрейф деградации
+
+Обязательные различия:
+
+C(t) ≠ C3
+
+P(t) ≠ P_cubic
+
+R(n) ≠ C(t)
+
+Локальное интерфейсное соотношение и общесистемное соотношение не являются взаимозаменяемыми.
+
+## RU — Основной класс
 
 `MarnovCubicPotentialVisualizer`
 
-## Основные методы
+## RU — Основные методы
 
-- `build_pair_lock()` — формирует комплексный оператор парного замка `2 × 2`.
-- `calculate_u_6d()` — сворачивает три парных замка в мультиплетный оператор `8 × 8`.
+- `set_system_state()` — задаёт самостоятельные общесистемные параметры `C(t)` и `P(t)`.
+- `classify_system_regime()` — классифицирует самостоятельное общесистемное соотношение EDS / EDC.
+- `build_pair_lock()` — формирует один комплексный оператор парного замка `2 × 2`.
+- `calculate_u_6d()` — сворачивает три оператора парного замка в один мультиплетный оператор `8 × 8`.
 - `calculate_lock_amplitude()` — рассчитывает нормированный абсолютный след.
-- `calculate_cubic_potential()` — рассчитывает кубический потенциал `C3`.
+- `calculate_cubic_potential()` — рассчитывает локальное представление `C3`.
+- `calculate_cubic_dissipation_level()` — рассчитывает локальный уровень кубической диссипации `P_cubic`.
 - `simulate_temporal_dynamics()` — моделирует потактовую фазовую динамику.
-- `calculate_interface_profile()` — рассчитывает профиль прохождения интерфейсного барьера.
+- `calculate_interface_profile()` — рассчитывает локальный интерфейсный профиль.
 - `visualize_engineering_data()` — формирует четыре инженерных графика.
-- `run_visual_simulation()` — запускает полную симуляцию.
-
+- `run_visual_simulation()` — запускает полную симуляцию и визуализацию.
