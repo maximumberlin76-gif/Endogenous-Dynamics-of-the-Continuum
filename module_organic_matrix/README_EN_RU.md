@@ -1,43 +1,67 @@
 # Marnov Organic Matrix Generator
 
-## Three-Dimensional Recursive Growth of an Organic Matrix in an Asymmetric C3 Retention Field
+## EN — README for the Organic Matrix Module
+
+Module directory:
+
+`module_organic_matrix`
+
+Python file:
+
+`marnov_organic_matrix_generator.py`
+
+README file:
+
+`README_EN_RU.md`
+
+Main class:
+
+`MarnovOrganicMatrixGenerator`
+
+## EN — Module Purpose
 
 The `MarnovOrganicMatrixGenerator` module implements a conceptual numerical model of recursive tact-by-tact growth of a three-dimensional organic-density matrix.
 
-The model begins with a central initiation point and an asymmetric toroidal cubic-retention field `C3`.
+The module starts from a central initiation point and develops a spatial density field through an asymmetric toroidal cubic-retention field `C3`.
 
-The organic-density field develops through the interaction of:
+The organic-density field evolves through the interaction of:
 
-- a central initiation point;
-- an asymmetric toroidal retention field;
+- central initiation;
+- asymmetric toroidal `C3` retention;
 - nonlinear spatial diffusion;
 - density-limited local growth;
 - nonlinear saturation;
 - recursive phase-shifted branching;
-- an organic manifestation layer.
+- diagnostic organic manifestation.
 
-The module is a numerical experimental model. It does not simulate a complete living organism and does not by itself prove a physical theory of life.
+The module produces the field:
 
-## File
+`bio_density`
+
+The module also calculates:
+
+`organic_appearance_index`
+
+## EN — File
 
 `module_organic_matrix/marnov_organic_matrix_generator.py`
 
-## Dependencies
+## EN — Dependencies
 
 - `numpy>=1.26.0`
 - `matplotlib>=3.8.0`
 
-## Installation
+## EN — Installation
 
 Run from the repository root:
 
     pip install -r requirements.txt
 
-## Launch
+## EN — Launch
 
     python module_organic_matrix/marnov_organic_matrix_generator.py
 
-## Core Operational Chain
+## EN — Core Operational Chain
 
     central initiation point
     → asymmetric toroidal C3 field
@@ -48,7 +72,7 @@ Run from the repository root:
     → bio_density
     → organic_appearance_index
 
-## 1. Central Initiation Point
+## EN — 1. Central Initiation Point
 
 The initial state contains one active central cell:
 
@@ -61,13 +85,11 @@ This cell functions as:
 - a trigger of spatial density propagation;
 - a local anchor of the developing organic matrix.
 
-The resulting structure is not generated exclusively by the central cell.
+The distributed `C3` field forms additional spatial regions of retention and local density growth around the toroidal core.
 
-The distributed `C3` field also creates spatial regions of retention and local density growth around the toroidal core.
+## EN — 2. Asymmetric Toroidal C3 Field
 
-## 2. Asymmetric Toroidal C3 Field
-
-The method `generate_asymmetric_c3_field()` generates the three-dimensional toroidal retention field.
+The method `generate_asymmetric_c3_field()` generates the three-dimensional toroidal cubic-retention field.
 
 The radial distance in the horizontal plane is:
 
@@ -106,36 +128,34 @@ The resulting field is:
     asymmetry_factor
     · toroidal_envelope
 
-The parameter `epsilon` breaks the ideal rotational symmetry of the torus and creates unequal retention intensity across angular and vertical regions.
+The parameter `epsilon` breaks ideal rotational symmetry and creates unequal retention intensity across angular and vertical regions.
 
-The default value is:
+Default value:
 
     epsilon = 0.236068
 
-Within this module, the value is used as a numerical coefficient of persistent micro-asymmetry associated with the golden-ratio remainder.
+Within this module, this value acts as a numerical coefficient of persistent micro-asymmetry associated with the golden-ratio remainder.
 
-Its use does not by itself establish a universal biological constant.
-
-## 3. Dimensional Scope
+## EN — 3. Implemented Numerical Domain
 
 The module calculates a scalar field on a three-dimensional grid:
 
     grid_size × grid_size × grid_size
 
-The implemented numerical domain is therefore three-dimensional.
+The field `C3` is the operational cubic-retention field used by the model.
 
-The name `C3` identifies the cubic-retention field used by the model.
+The field `bio_density` is the evolving organic-density matrix.
 
-The current code does not directly implement:
+The numerical domain contains:
 
-- six independent spatial or phase coordinates;
-- a six-dimensional state array;
-- a six-dimensional tensor;
-- an explicit projection from a six-dimensional phase space into three-dimensional observation space.
+- x-axis spatial projection;
+- y-axis spatial projection;
+- z-axis spatial projection;
+- local density state;
+- toroidal retention intensity;
+- recursive branching modulation.
 
-A strict `6D` implementation would require these additional mathematical structures.
-
-## 4. Recursive Tact-by-Tact Growth
+## EN — 4. Recursive Tact-by-Tact Growth
 
 The method `grow_organic_matrix()` executes a sequence of discrete growth tacts.
 
@@ -160,7 +180,7 @@ The recursive operational chain is:
     → updated bio_density
     → next tact
 
-## 5. Three-Dimensional Discrete Laplacian
+## EN — 5. Three-Dimensional Discrete Laplacian
 
 The spatial Laplacian is calculated by central finite differences along all three axes:
 
@@ -173,13 +193,13 @@ The spatial Laplacian is calculated by central finite differences along all thre
     )
     / dx^2
 
-The implementation uses `numpy.roll`, producing periodic boundary conditions.
+The implementation uses `numpy.roll`.
 
-The numerical grid is therefore treated as spatially closed across opposing boundaries. Density leaving one boundary can mathematically re-enter through the opposite boundary.
+This produces periodic boundary conditions and treats the numerical grid as spatially closed across opposing boundaries.
 
-## 6. Numerical Stability
+## EN — 6. Numerical Stability
 
-The explicit three-dimensional diffusion scheme must satisfy:
+The explicit three-dimensional diffusion scheme uses the stability condition:
 
     diffusion_coefficient · dt / dx^2 ≤ 1 / 6
 
@@ -190,17 +210,13 @@ The time step is calculated automatically:
     · dx^2
     / (6 · diffusion_coefficient)
 
-This prevents artificial numerical instability under the original parameter combination:
+This keeps the explicit diffusion step inside the stable operational range.
 
-    dt = 0.1
-    diffusion_coefficient = 0.15
-    dx = 0.05
+Density is clipped after the stabilized update:
 
-Clipping the density into the interval from `0` to `1` is not used as a substitute for numerical stability.
+    0 ≤ bio_density ≤ 1
 
-The diffusion step is stabilized before clipping is applied.
-
-## 7. Organic-Matrix Evolution Equation
+## EN — 7. Organic-Matrix Evolution Equation
 
 The density evolution is calculated as:
 
@@ -238,13 +254,13 @@ After each tact:
 
     0 ≤ bio_density ≤ 1
 
-## 8. Nonlinear Saturation
+## EN — 8. Nonlinear Saturation
 
 The factor `1 - bio_density` reduces local growth as the corresponding spatial region approaches complete density saturation.
 
-The term `bio_density^2` additionally suppresses excessive local density accumulation.
+The term `bio_density^2` suppresses excessive local density accumulation.
 
-The organic matrix emerges from competition between:
+The organic matrix develops through competition between:
 
 - spatial diffusion;
 - local retention;
@@ -255,7 +271,7 @@ The organic matrix emerges from competition between:
 
 Nonlinear saturation is implemented as a separate load-bearing term of the evolution equation.
 
-## 9. Recursive Phase-Shifted Branching
+## EN — 9. Recursive Phase-Shifted Branching
 
 The branching field is:
 
@@ -275,7 +291,7 @@ The phase increment is:
 
 The phase changes at every tact.
 
-The same angular growth configuration is therefore not reproduced identically in consecutive cycles.
+The angular growth configuration therefore shifts between consecutive cycles.
 
 The causal chain is:
 
@@ -285,11 +301,11 @@ The causal chain is:
     → inherited density modified by the new distribution
     → next density configuration
 
-This mechanism implements recursive morphological variation while preserving the qualitative characteristics inherited from previous growth tacts.
+This mechanism implements recursive morphological variation while preserving qualitative characteristics inherited from previous growth tacts.
 
-## 10. Organic Manifestation Layer
+## EN — 10. Organic Manifestation Layer
 
-The module calculates the parameter:
+The module calculates:
 
     organic_appearance_index
 
@@ -329,9 +345,9 @@ The organic manifestation index is:
     · (1 + branching_contrast)
     · (1 + toroidal_retention)
 
-## 11. Manifestation Regimes
+## EN — 11. Manifestation Regimes
 
-The module reports one of three operational regimes.
+The module reports one of three operational manifestation regimes.
 
 ### STABLE ORGANIC MATRIX MANIFESTATION
 
@@ -339,15 +355,15 @@ The organic-density matrix has reached a comparatively strong retained manifesta
 
 ### PARTIAL ORGANIC MATRIX MANIFESTATION
 
-The organic-density field is spatially distributed but has not reached the stable manifestation threshold.
+The organic-density field is spatially distributed and remains below the stable manifestation threshold.
 
 ### WEAK OR EMERGING ORGANIC MATRIX MANIFESTATION
 
 The organic-density field remains weak, localized, or at an early stage of development.
 
-These values are internal diagnostic thresholds of the simulation. They are not experimentally established biological constants.
+These values are internal diagnostic thresholds of the simulation.
 
-## 12. Visual Output
+## EN — 12. Visual Output
 
 The method `visualize_organic_slice()` displays two central slices of the three-dimensional density matrix.
 
@@ -361,7 +377,7 @@ The horizontal `XY` slice can display:
 - regions of stronger and weaker local growth;
 - diffusion-smoothed boundaries.
 
-The ideal circular symmetry is broken by `epsilon` and by the recursive tact-dependent phase shift.
+The circular symmetry is modified by `epsilon` and by the recursive tact-dependent phase shift.
 
 ### XZ Slice
 
@@ -372,48 +388,43 @@ The vertical `XZ` slice can display:
 - elongated regions of increased density;
 - nonuniform folds and branch-like structures.
 
-With only fifteen growth tacts, the system remains at an early stage of development.
+A larger number of growth tacts or a different parameter regime can produce more pronounced spatial morphology.
 
-More pronounced spatial morphology requires a larger number of tacts or a different parameter regime.
-
-## 13. Scope of the Term Fractal
+## EN — 13. Fractal-Like Density Structure
 
 The module produces a recursive asymmetric fractal-like density structure.
 
-Recursive branching alone does not mathematically prove that the resulting field is a fractal.
+In this module, the term `fractal-like` describes:
 
-A strict fractal analysis would require additional measurements, including:
+- recursive phase-shifted branching;
+- asymmetric spatial modulation;
+- inherited local density traces;
+- tact-by-tact morphological variation;
+- nonuniform density channels produced by the evolving field.
 
-- box-counting dimension;
-- correlation dimension;
-- scale dependence of occupied cells;
-- persistence of the measured dimension across multiple spatial scales;
-- comparison between successive growth stages.
-
-The technically accurate description of the current output is:
+The technically accurate output name is:
 
     recursive asymmetric fractal-like organic matrix
 
-## 14. J_flux Limitation
+## EN — 14. Density-Channel Layer
 
-The conceptual EDK architecture connects structural channels with the massless flow channel `J_flux`.
-
-The current organic-matrix module does not explicitly calculate a vector `J_flux` field.
-
-The visible density channels are currently generated through:
+The density-channel layer is formed through:
 
 - gradients of `bio_density`;
 - asymmetric `C3` retention;
 - recursive branching modulation;
-- nonlinear diffusion.
+- nonlinear diffusion;
+- local saturation boundaries.
 
-An explicit flow layer could later be defined as:
+These density channels can be used as an organic-matrix interface for higher architectural layers of the EDK framework.
 
-    J_flux =
+A future explicit flow layer can use the operational form:
+
+    J_density_proxy =
     -diffusion_coefficient · grad(bio_density)
     + directed_retention_flux(C3)
 
-That extension would allow separate visualization of:
+This extension can provide separate visualization of:
 
 - flow direction;
 - flow magnitude;
@@ -422,13 +433,9 @@ That extension would allow separate visualization of:
 - dissipation zones;
 - density redistribution through the organic matrix.
 
-Until this layer is implemented, the density channels must not be presented as a directly calculated `J_flux` vector field.
+## EN — 15. Core Balance
 
-## 15. Core Invariant
-
-The organic matrix in this module is not generated by absolute symmetry or unlimited growth.
-
-It is generated by the dynamic balance:
+The organic matrix is generated through the dynamic balance:
 
     spatial diffusion
     + asymmetric toroidal C3 retention
@@ -447,7 +454,7 @@ The core invariant is:
     and tact-by-tact phase-shifted branching
     inside the open nonlinear dissipative dynamic Continuum
 
-## 16. Position in the EDK Architecture
+## EN — 16. Position in the EDK Architecture
 
     framework_core
     → C(t)
@@ -466,18 +473,18 @@ The module occupies the architectural layer between molecular phase chemistry an
 
 It translates local phase and molecular conditions into a spatially distributed three-dimensional organic-density matrix.
 
-## 17. Main Class
+## EN — 17. Main Class
 
 `MarnovOrganicMatrixGenerator`
 
-## 18. Main Methods
+## EN — 18. Main Methods
 
 - `generate_asymmetric_c3_field()` — generates the asymmetric toroidal cubic-retention field.
 - `grow_organic_matrix()` — executes recursive tact-by-tact evolution of the biological-density matrix.
 - `calculate_organic_appearance()` — returns the manifestation index and structural diagnostic parameters.
 - `visualize_organic_slice()` — displays central `XY` and `XZ` slices of the generated matrix.
 
-## 19. Example
+## EN — 19. Example
 
     from module_organic_matrix.marnov_organic_matrix_generator import (
         MarnovOrganicMatrixGenerator,
@@ -508,44 +515,68 @@ It translates local phase and molecular conditions into a spatially distributed 
 
 # Генератор органической матрицы Марнова
 
-## Трёхмерный рекурсивный рост органической матрицы в асимметричном поле удержания C3
+## RU — README к модулю органической матрицы
 
-Модуль `MarnovOrganicMatrixGenerator` реализует концептуальную численную модель рекурсивного потактового роста трёхмерной матрицы биологической плотности.
+Папка модуля:
 
-Модель начинается с центральной точки инициации и асимметричного тороидального поля кубического удержания `C3`.
+`module_organic_matrix`
+
+Python-файл:
+
+`marnov_organic_matrix_generator.py`
+
+README-файл:
+
+`README_EN_RU.md`
+
+Основной класс:
+
+`MarnovOrganicMatrixGenerator`
+
+## RU — Назначение модуля
+
+Модуль `MarnovOrganicMatrixGenerator` реализует концептуальную численную модель рекурсивного потактового роста трёхмерной матрицы органической плотности.
+
+Модуль начинает расчёт с центральной точки инициации и развивает пространственное поле плотности через асимметричное тороидальное поле кубического удержания `C3`.
 
 Поле органической плотности развивается через взаимодействие:
 
-- центральной точки инициации;
-- асимметричного тороидального поля удержания;
+- центральной инициации;
+- асимметричного тороидального удержания `C3`;
 - нелинейной пространственной диффузии;
 - локального роста с ограниченной вместимостью;
 - нелинейного насыщения;
 - рекурсивного фазово-смещённого ветвления;
-- слоя проявленности органической матрицы.
+- диагностической органической проявленности.
 
-Модуль является численной экспериментальной моделью. Он не моделирует полный живой организм и сам по себе не доказывает физическую теорию жизни.
+Модуль формирует поле:
 
-## Файл
+`bio_density`
+
+Модуль также рассчитывает:
+
+`organic_appearance_index`
+
+## RU — Файл
 
 `module_organic_matrix/marnov_organic_matrix_generator.py`
 
-## Зависимости
+## RU — Зависимости
 
 - `numpy>=1.26.0`
 - `matplotlib>=3.8.0`
 
-## Установка
+## RU — Установка
 
 Запуск из корневой папки репозитория:
 
     pip install -r requirements.txt
 
-## Запуск модуля
+## RU — Запуск модуля
 
     python module_organic_matrix/marnov_organic_matrix_generator.py
 
-## Основная операционная цепочка
+## RU — Основная операционная цепочка
 
     центральная точка инициации
     → асимметричное тороидальное поле C3
@@ -556,7 +587,7 @@ It translates local phase and molecular conditions into a spatially distributed 
     → bio_density
     → organic_appearance_index
 
-## 1. Центральная точка инициации
+## RU — 1. Центральная точка инициации
 
 Начальное состояние содержит одну активную центральную ячейку:
 
@@ -569,13 +600,11 @@ It translates local phase and molecular conditions into a spatially distributed 
 - точки запуска пространственного распространения плотности;
 - локального якоря формирующейся органической матрицы.
 
-Конечная структура не формируется исключительно центральной ячейкой.
+Распределённое поле `C3` формирует дополнительные пространственные области удержания и локального роста плотности вокруг тороидального ядра.
 
-Распределённое поле `C3` также создаёт пространственные области удержания и локального роста плотности вокруг тороидального ядра.
+## RU — 2. Асимметричное тороидальное поле C3
 
-## 2. Асимметричное тороидальное поле C3
-
-Метод `generate_asymmetric_c3_field()` формирует трёхмерное тороидальное поле удержания.
+Метод `generate_asymmetric_c3_field()` формирует трёхмерное тороидальное поле кубического удержания.
 
 Радиальное расстояние в горизонтальной плоскости:
 
@@ -614,36 +643,34 @@ It translates local phase and molecular conditions into a spatially distributed 
     asymmetry_factor
     · toroidal_envelope
 
-Параметр `epsilon` нарушает идеальную вращательную симметрию тора и создаёт неодинаковую интенсивность удержания в различных угловых и вертикальных областях.
+Параметр `epsilon` нарушает идеальную вращательную симметрию и создаёт неодинаковую интенсивность удержания в различных угловых и вертикальных областях.
 
 Значение по умолчанию:
 
     epsilon = 0.236068
 
-Внутри данного модуля это значение используется как численный коэффициент устойчивой микроасимметрии, связанный с остатком золотого отношения.
+Внутри данного модуля это значение работает как численный коэффициент устойчивой микроасимметрии, связанный с остатком золотого отношения.
 
-Само его использование не устанавливает универсальную биологическую константу.
-
-## 3. Размерностная область модели
+## RU — 3. Реализованная численная область
 
 Модуль рассчитывает скалярное поле на трёхмерной сетке:
 
     grid_size × grid_size × grid_size
 
-Следовательно, реализованная численная область является трёхмерной.
+Поле `C3` является операционным полем кубического удержания, используемым моделью.
 
-Название `C3` обозначает используемое моделью поле кубического удержания.
+Поле `bio_density` является развивающейся матрицей органической плотности.
 
-Текущий код напрямую не реализует:
+Численная область содержит:
 
-- шесть независимых пространственных или фазовых координат;
-- шестимерный массив состояния;
-- шестимерный тензор;
-- явную проекцию шестимерного фазового пространства в трёхмерное пространство наблюдения.
+- пространственную проекцию по оси x;
+- пространственную проекцию по оси y;
+- пространственную проекцию по оси z;
+- локальное состояние плотности;
+- интенсивность тороидального удержания;
+- рекурсивную модуляцию ветвления.
 
-Строгая реализация `6D` потребовала бы добавления этих математических структур.
-
-## 4. Рекурсивный потактовый рост
+## RU — 4. Рекурсивный потактовый рост
 
 Метод `grow_organic_matrix()` выполняет последовательность дискретных тактов роста.
 
@@ -668,7 +695,7 @@ It translates local phase and molecular conditions into a spatially distributed 
     → обновлённое состояние bio_density
     → следующий такт
 
-## 5. Трёхмерный дискретный Лапласиан
+## RU — 5. Трёхмерный дискретный Лапласиан
 
 Пространственный Лапласиан рассчитывается методом центральных конечных разностей по всем трём осям:
 
@@ -681,34 +708,30 @@ It translates local phase and molecular conditions into a spatially distributed 
     )
     / dx^2
 
-Реализация использует `numpy.roll`, создавая периодические граничные условия.
+Реализация использует `numpy.roll`.
 
-Численная сетка рассматривается как пространственно замкнутая по противоположным границам. Плотность, выходящая через одну границу, математически может вернуться через противоположную.
+Это создаёт периодические граничные условия и рассматривает численную сетку как пространственно замкнутую по противоположным границам.
 
-## 6. Численная устойчивость
+## RU — 6. Численная устойчивость
 
-Явная трёхмерная диффузионная схема должна удовлетворять условию:
+Явная трёхмерная диффузионная схема использует условие устойчивости:
 
     diffusion_coefficient · dt / dx^2 ≤ 1 / 6
 
-Поэтому временной шаг рассчитывается автоматически:
+Временной шаг рассчитывается автоматически:
 
     dt =
     cfl_safety
     · dx^2
     / (6 · diffusion_coefficient)
 
-Это предотвращает искусственную численную неустойчивость при исходном сочетании параметров:
+Это удерживает явный диффузионный шаг внутри устойчивого операционного диапазона.
 
-    dt = 0.1
-    diffusion_coefficient = 0.15
-    dx = 0.05
+Плотность ограничивается после стабилизированного обновления:
 
-Ограничение плотности интервалом от `0` до `1` не используется как замена численной устойчивости.
+    0 ≤ bio_density ≤ 1
 
-Диффузионный шаг стабилизируется до применения ограничения значений.
-
-## 7. Уравнение эволюции органической матрицы
+## RU — 7. Уравнение эволюции органической матрицы
 
 Динамика плотности рассчитывается как:
 
@@ -746,13 +769,13 @@ It translates local phase and molecular conditions into a spatially distributed 
 
     0 ≤ bio_density ≤ 1
 
-## 8. Нелинейное насыщение
+## RU — 8. Нелинейное насыщение
 
 Множитель `1 - bio_density` снижает локальный рост по мере приближения соответствующей пространственной области к полному насыщению плотности.
 
-Член `bio_density^2` дополнительно подавляет чрезмерное локальное накопление плотности.
+Член `bio_density^2` подавляет чрезмерное локальное накопление плотности.
 
-Органическая матрица формируется через конкуренцию между:
+Органическая матрица развивается через конкуренцию между:
 
 - пространственной диффузией;
 - локальным удержанием;
@@ -763,7 +786,7 @@ It translates local phase and molecular conditions into a spatially distributed 
 
 Нелинейное насыщение реализовано как самостоятельный несущий элемент уравнения эволюции.
 
-## 9. Рекурсивное фазово-смещённое ветвление
+## RU — 9. Рекурсивное фазово-смещённое ветвление
 
 Поле ветвления:
 
@@ -783,7 +806,7 @@ It translates local phase and molecular conditions into a spatially distributed 
 
 Фаза изменяется на каждом такте.
 
-Поэтому одна и та же угловая конфигурация роста не воспроизводится тождественно в последовательных циклах.
+Угловая конфигурация роста поэтому смещается между последовательными циклами.
 
 Причинная цепочка:
 
@@ -795,9 +818,9 @@ It translates local phase and molecular conditions into a spatially distributed 
 
 Этот механизм реализует рекурсивную изменчивость морфологии при сохранении качественных характеристик, унаследованных от предыдущих тактов роста.
 
-## 10. Слой проявленности органической матрицы
+## RU — 10. Слой проявленности органической матрицы
 
-Модуль рассчитывает параметр:
+Модуль рассчитывает:
 
     organic_appearance_index
 
@@ -837,9 +860,9 @@ It translates local phase and molecular conditions into a spatially distributed 
     · (1 + branching_contrast)
     · (1 + toroidal_retention)
 
-## 11. Режимы проявленности
+## RU — 11. Режимы проявленности
 
-Модуль возвращает один из трёх операционных режимов.
+Модуль возвращает один из трёх операционных режимов проявленности.
 
 ### STABLE ORGANIC MATRIX MANIFESTATION
 
@@ -847,15 +870,15 @@ It translates local phase and molecular conditions into a spatially distributed 
 
 ### PARTIAL ORGANIC MATRIX MANIFESTATION
 
-Поле органической плотности пространственно распределено, но ещё не достигло порога устойчивой проявленности.
+Поле органической плотности пространственно распределено и остаётся ниже порога устойчивой проявленности.
 
 ### WEAK OR EMERGING ORGANIC MATRIX MANIFESTATION
 
 Поле органической плотности остаётся слабым, локализованным или находится на раннем этапе формирования.
 
-Эти значения являются внутренними диагностическими порогами симуляции. Они не являются экспериментально установленными биологическими константами.
+Эти значения являются внутренними диагностическими порогами симуляции.
 
-## 12. Визуальный результат
+## RU — 12. Визуальный результат
 
 Метод `visualize_organic_slice()` отображает два центральных среза трёхмерной матрицы плотности.
 
@@ -869,7 +892,7 @@ It translates local phase and molecular conditions into a spatially distributed 
 - области усиленного и ослабленного локального роста;
 - сглаженные диффузией границы.
 
-Идеальная круговая симметрия нарушается параметром `epsilon` и рекурсивным фазовым сдвигом, зависящим от текущего такта.
+Круговая симметрия модифицируется параметром `epsilon` и рекурсивным фазовым сдвигом, зависящим от текущего такта.
 
 ### Срез XZ
 
@@ -880,63 +903,54 @@ It translates local phase and molecular conditions into a spatially distributed 
 - вытянутые области повышенной плотности;
 - неоднородные складки и ветвеподобные структуры.
 
-При пятнадцати тактах роста система остаётся на ранней стадии развития.
+Большее количество тактов роста или другой режим параметров может сформировать более выраженную пространственную морфологию.
 
-Более выраженная пространственная морфология потребует большего количества тактов или другого режима параметров.
-
-## 13. Область применимости термина «фрактальный»
+## RU — 13. Фракталоподобная структура плотности
 
 Модуль формирует рекурсивную асимметричную фракталоподобную структуру плотности.
 
-Однако само наличие рекурсивного ветвления математически не доказывает фрактальность полученного поля.
+В данном модуле термин `фракталоподобная` описывает:
 
-Строгий фрактальный анализ потребует дополнительных измерений:
+- рекурсивное фазово-смещённое ветвление;
+- асимметричную пространственную модуляцию;
+- унаследованные локальные следы плотности;
+- потактовую морфологическую изменчивость;
+- неоднородные каналы плотности, сформированные развивающимся полем.
 
-- box-counting dimension;
-- correlation dimension;
-- зависимости количества занятых ячеек от масштаба;
-- сохранения измеренной размерности на нескольких пространственных масштабах;
-- сравнения последовательных стадий роста.
-
-Технически корректное определение текущего результата:
+Технически корректное имя результата:
 
     рекурсивная асимметричная фракталоподобная органическая матрица
 
-## 14. Ограничение слоя J_flux
+## RU — 14. Слой каналов плотности
 
-Концептуальная архитектура EDK связывает формирующиеся структурные каналы со сквозным безмассовым каналом `J_flux`.
-
-Текущий модуль органической матрицы не рассчитывает явное векторное поле `J_flux`.
-
-Наблюдаемые каналы сейчас формируются через:
+Слой каналов плотности формируется через:
 
 - градиенты `bio_density`;
 - асимметричное удержание `C3`;
 - рекурсивную модуляцию ветвления;
-- нелинейную диффузию.
+- нелинейную диффузию;
+- локальные границы насыщения.
 
-Явный слой потока может быть определён в дальнейшем как:
+Эти каналы плотности могут использоваться как интерфейс органической матрицы для более высоких архитектурных слоёв EDK.
 
-    J_flux =
+Будущий явный слой потока может использовать операционную форму:
+
+    J_density_proxy =
     -diffusion_coefficient · grad(bio_density)
     + directed_retention_flux(C3)
 
-Такое расширение позволит отдельно визуализировать:
+Это расширение может обеспечить отдельную визуализацию:
 
-- направление потока;
-- модуль потока;
-- дивергенцию;
-- зоны накопления;
-- зоны диссипации;
-- перераспределение плотности внутри органической матрицы.
+- направления потока;
+- модуля потока;
+- дивергенции;
+- зон накопления;
+- зон диссипации;
+- перераспределения плотности внутри органической матрицы.
 
-До реализации этого слоя каналы плотности нельзя представлять как непосредственно рассчитанное векторное поле `J_flux`.
+## RU — 15. Основной баланс
 
-## 15. Основной инвариант
-
-Органическая матрица в данном модуле формируется не абсолютной симметрией и не неограниченным ростом.
-
-Она формируется динамическим балансом:
+Органическая матрица формируется через динамический баланс:
 
     пространственная диффузия
     + асимметричное тороидальное удержание C3
@@ -955,7 +969,7 @@ It translates local phase and molecular conditions into a spatially distributed 
     и потактового фазово-смещённого ветвления
     внутри открытого нелинейного диссипативного динамического Континуума
 
-## 16. Место в архитектуре EDK
+## RU — 16. Место в архитектуре EDK
 
     framework_core
     → C(t)
@@ -974,18 +988,18 @@ It translates local phase and molecular conditions into a spatially distributed 
 
 Он переводит локальные фазовые и молекулярные условия в пространственно распределённую трёхмерную матрицу органической плотности.
 
-## 17. Основной класс
+## RU — 17. Основной класс
 
 `MarnovOrganicMatrixGenerator`
 
-## 18. Основные методы
+## RU — 18. Основные методы
 
 - `generate_asymmetric_c3_field()` — формирует асимметричное тороидальное поле кубического удержания.
 - `grow_organic_matrix()` — выполняет рекурсивную потактовую эволюцию матрицы биологической плотности.
 - `calculate_organic_appearance()` — возвращает индекс проявленности и структурные диагностические параметры.
 - `visualize_organic_slice()` — отображает центральные срезы `XY` и `XZ` сформированной матрицы.
 
-## 19. Пример использования
+## RU — 19. Пример использования
 
     from module_organic_matrix.marnov_organic_matrix_generator import (
         MarnovOrganicMatrixGenerator,
@@ -1011,4 +1025,3 @@ It translates local phase and molecular conditions into a spatially distributed 
     print(state)
 
     generator.visualize_organic_slice()
-
