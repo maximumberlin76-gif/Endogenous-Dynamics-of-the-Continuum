@@ -1,375 +1,344 @@
 # Metric Bridge Solver
 
-## Dynamic Interface-Balance Solver for the 4D ↔ 2D/1D Coupling Layer
+## EN — Dynamic Solver for the 4D ↔ 2D/1D Interface Balance Layer
 
-## English Version
+Module directory:
 
-The `MetricBridgeSolver` implements the numerical solver layer associated with the interface projection-balance formalism.
+`module_metric_bridge_solver`
 
-It converts the mathematical relation:
+Python file:
 
-    partial_mu T^{mu nu}
-    =
-    G_int^{nu}_{lambda}
-    · R_J^{lambda}
+`metric_bridge.py`
+
+README file:
+
+`README_EN_RU.md`
+
+Main class:
+
+`MetricBridgeSolver`
+
+## EN — Module Purpose
+
+`MetricBridgeSolver` implements the numerical solver layer associated with the interface projection-balance formalism of EDK.
+
+It translates the mathematical relation:
+
+`partial_mu T^{mu nu} = G_int^{nu}_{lambda} · R_J^{lambda}`
 
 into a tact-by-tact computational procedure.
 
 The solver calculates:
 
-- the exchange-flow residual `R_J`;
-- the tact-by-tact acceleration of `J_flux`;
-- the projection of the internal residual through `G_int`;
-- the current EDS / EDC regime;
-- a model-specific local metric-deformation proxy.
+- exchange-flow residual `R_J`;
+- tact-by-tact change of the exchange-flow channel `partial_t J_flux`;
+- projection of the internal residual through `G_int`;
+- current EDS / EDC dynamic regime;
+- model proxy of local metric deformation.
 
-The solver is part of the mathematical core of EDK.
+The solver implements the EDK interface layer for exchange-flow residual calculation, interface projection, and local metric-deformation proxy update.
 
-It is not a numerical solution of the Einstein field equations.
+## EN — File
 
-## File
+`module_metric_bridge_solver/metric_bridge.py`
 
-    core/solvers/metric_bridge.py
+## EN — Dependency
 
-## Dependency
+`numpy>=1.26.0`
 
-    numpy>=1.26.0
+## EN — Main Operational Chain
 
-## Core Operational Chain
+`J_flux → spatial Jacobian grad_J_flux → convective transport → background-mode gradient → cubic retention C3 → exchange-flow residual R_J → interface projection G_int → projected residual → EDS / EDC regime classification → retained metric or metric-deformation proxy`
 
-    J_flux
-    → spatial Jacobian grad_J_flux
-    → convective transport
-    → background-mode gradient
-    → cubic retention C3
-    → exchange-flow residual R_J
-    → interface projection G_int
-    → projected residual
-    → EDS / EDC regime classification
-    → retained metric or metric-deformation proxy
-
-## 1. Exchange-Flow Residual
+## EN — 1. Exchange-Flow Residual
 
 The exchange-flow residual is defined as:
 
-    R_J =
-    partial_t J_flux
-    + (J_flux · grad)J_flux
-    + gamma · grad rho_cont
-    + beta · C3 · J_flux
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
 The solver separates this expression into four numerical components:
 
-    temporal_term
+`temporal_term`
 
-    convective_term
+`convective_term`
 
-    continuum_gradient_term
+`continuum_gradient_term`
 
-    cubic_retention_term
+`cubic_retention_term`
 
-The complete residual is:
+The full residual is:
 
-    residual =
-    temporal_term
-    + convective_term
-    + continuum_gradient_term
-    + cubic_retention_term
+`residual = temporal_term + convective_term + continuum_gradient_term + cubic_retention_term`
 
-## 2. Jacobian Convention
+## EN — 2. Jacobian Convention
 
 The spatial Jacobian of the exchange-flow channel is defined as:
 
-    grad_j_flux[i, j] =
-    partial J_flux[i]
-    / partial x[j]
+`grad_j_flux[i, j] = partial J_flux[i] / partial x[j]`
 
-Under this convention, the convective term is:
+With this convention, the convective term is calculated as:
 
-    (J_flux · grad)J_flux =
-    grad_j_flux @ j_flux
+`(J_flux · grad)J_flux = grad_j_flux @ j_flux`
 
-The matrix-vector product must not be replaced by a scalar dot product between `J_flux` and the full Jacobian.
+The implemented convention uses matrix-vector multiplication between the Jacobian and the local `J_flux` vector.
 
-## 3. Exchange-Flow Evolution
+## EN — 3. Exchange-Flow Evolution
 
-When the local residual is balanced:
+Under local residual balance:
 
-    R_J = 0
+`R_J = 0`
 
 the tact-by-tact evolution of the exchange-flow channel is:
 
-    partial_t J_flux =
-    -(J_flux · grad)J_flux
-    - gamma · grad rho_cont
-    - beta · C3 · J_flux
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
 
 The method:
 
-    calculate_exchange_flow_acceleration()
+`calculate_exchange_flow_acceleration()`
 
-returns this flow-evolution vector.
+returns this exchange-flow evolution vector.
 
-The negative signs appear because the equation is solved for:
+The negative signs appear because the equation is resolved with respect to:
 
-    partial_t J_flux
+`partial_t J_flux`
 
-while the corresponding terms have positive signs inside the residual operator.
+while the corresponding components have positive signs inside the residual operator.
 
-## 4. Cubic Retention and Structural Coherence
+## EN — 4. Cubic Retention and General Endogenous Structural Coherence
 
-The solver distinguishes between:
+The solver separates:
 
-    C(t)
+`C(t)`
 
 and:
 
-    C3
+`C3`
 
 `C(t)` is the general endogenous structural coherence of the system.
 
 `C3` is the cubic retention potential associated with the retained phase-lock state.
 
-The cubic-retention contribution is:
+The cubic retention contribution is:
 
-    beta · C3 · J_flux
+`beta · C3 · J_flux`
 
-A high retained `C3` suppresses uncontrolled exchange-flow growth.
+A higher retained value of `C3` increases the damping contribution acting on uncontrolled exchange-flow growth.
 
-A reduction of `C3` weakens this retention contribution and allows the exchange-flow residual to grow under external pressure and spatial nonuniformity.
+A lower retained value of `C3` weakens this retention contribution and allows the exchange-flow residual to increase under destabilizing pressure and spatial inhomogeneity.
 
-## 5. Background Non-Resonant Modes
+## EN — 5. Background Non-Resonant Modes
 
 The parameter:
 
-    rho_cont
+`rho_cont`
 
-represents the density distribution of background non-resonant modes of the Continuum.
+represents the distribution density of background non-resonant Continuum modes.
 
 The vector:
 
-    grad rho_cont
+`grad rho_cont`
 
 describes the local gradient of this distribution.
 
 The corresponding residual component is:
 
-    gamma · grad rho_cont
+`gamma · grad rho_cont`
 
-The flow-evolution form contains:
+The exchange-flow evolution form contains:
 
-    -gamma · grad rho_cont
+`-gamma · grad rho_cont`
 
-which acts as a directed environmental redistribution term.
+This term acts as a directed redistribution component of the medium.
 
-## 6. Interface Projection Operator
+## EN — 6. Interface Projection Operator
 
 The method:
 
-    project_interface_residual()
+`project_interface_residual()`
 
 implements:
 
-    projected_residual =
-    G_int @ R_J
+`projected_residual = G_int @ R_J`
 
-The projection operator must have the shape:
+The projection operator has the shape:
 
-    target_dimension × flow_dimension
+`target_dimension × flow_dimension`
 
-The internal residual must have the shape:
+The internal residual has the shape:
 
-    flow_dimension
+`flow_dimension`
 
 The resulting projected vector has the shape:
 
-    target_dimension
+`target_dimension`
 
 For a four-component target layer:
 
-    G_int shape =
-    4 × flow_dimension
+`shape of G_int = 4 × flow_dimension`
 
-The operator therefore maps the internal exchange-flow dynamics into the selected projected energy-momentum or metric layer.
+The operator maps the internal exchange-flow dynamics into the selected projected energy-momentum or metric layer.
 
-## 7. Dynamic Regime Classification
+## EN — 7. Dynamic Regime Classification
 
-The solver classifies the system through the comparison:
+The solver classifies the system through comparison of:
 
-    C(t) versus P(t)
+`C(t)` and `P(t)`
+
+Where:
+
+`C(t)` is the general endogenous structural coherence.
+
+`P(t)` is the destabilizing pressure.
 
 The method:
 
-    classify_dynamic_regime()
+`classify_dynamic_regime()`
 
 returns one of three states.
 
 ### EDS_RETENTION
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
-The endogenous structural coherence exceeds external pressure.
+The general endogenous structural coherence exceeds the destabilizing pressure.
 
 The retained interface remains dynamically supported.
 
 ### EDC_CRITICAL_BOUNDARY
 
-    C(t) ≈ P(t)
+`C(t) ≈ P(t)`
 
-The system is located at the critical boundary within the configured numerical tolerance.
+The system is located on the critical boundary within the configured numerical tolerance.
 
 ### INVERSE_DISSIPATIVE_CASCADE
 
-    C(t) < P(t)
+`C(t) < P(t)`
 
-External pressure exceeds endogenous structural coherence.
+The destabilizing pressure exceeds the general endogenous structural coherence.
 
 The system enters a degradation and redistribution regime.
 
-## 8. Metric Tensor and Energy-Momentum Tensor
+## EN — 8. Metric Tensor and Energy-Momentum Tensor
 
-The solver keeps two different objects separate:
+The solver separates two objects:
 
-    g_mu_nu
+`g_mu_nu`
 
 and:
 
-    T^{mu nu}
+`T^{mu nu}`
 
-`g_mu_nu` is the local metric tensor or the metric-state proxy used by the numerical solver.
+`g_mu_nu` is the local metric tensor or metric-state proxy used by the numerical solver.
 
 `T^{mu nu}` is the local energy-momentum tensor.
 
-They are not interchangeable.
+The interface-balance formalism works with:
 
-The interface-balance formalism uses:
+`partial_mu T^{mu nu}`
 
-    partial_mu T^{mu nu}
+The metric-deformation proxy method updates:
 
-The numerical deformation method updates:
+`g_mu_nu`
 
-    g_mu_nu
-
-The method does not replace the energy-momentum tensor with the metric tensor.
-
-## 9. Metric-Deformation Proxy
+## EN — 9. Metric-Deformation Proxy
 
 The method:
 
-    recompute_4d_metric()
+`recompute_4d_metric()`
 
 uses:
 
-- the current metric `g_mu_nu`;
-- the internal exchange-flow residual `R_J`;
-- the interface projection operator `G_int`;
-- endogenous structural coherence `C(t)`;
-- external pressure `P(t)`;
-- metric plasticity coefficient `chi`.
+- current metric `g_mu_nu`;
+- internal exchange-flow residual `R_J`;
+- interface projection operator `G_int`;
+- general endogenous structural coherence `C(t)`;
+- destabilizing pressure `P(t)`;
+- metric plasticity coefficient `chi`;
+- tact duration `dt`.
 
 In the retained regime:
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
-the deformation is:
+the deformation contribution is:
 
-    delta_g_mu_nu = 0
+`delta_g_mu_nu = 0`
 
 and:
 
-    updated_metric = g_mu_nu
+`updated_metric = g_mu_nu`
 
 At criticality or during the inverse dissipative cascade:
 
-    C(t) <= P(t)
+`C(t) <= P(t)`
 
-the deformation proxy is:
+the deformation proxy is calculated as:
 
-    delta_g_mu_nu =
-    chi
-    · severity
-    · outer(projected_residual, projected_residual)
-    · dt
+`delta_g_mu_nu = chi · severity · outer(projected_residual, projected_residual) · dt`
 
 The updated metric is:
 
-    updated_metric =
-    g_mu_nu
-    + delta_g_mu_nu
+`updated_metric = g_mu_nu + delta_g_mu_nu`
 
-The outer product produces a symmetric second-order deformation contribution.
+The outer product creates a symmetric second-order deformation contribution.
 
-The implementation additionally symmetrizes the result numerically:
+The implementation additionally performs numerical symmetrization:
 
-    delta_g_mu_nu =
-    0.5
-    · (
-        delta_g_mu_nu
-        + transpose(delta_g_mu_nu)
-    )
+`delta_g_mu_nu = 0.5 · (delta_g_mu_nu + transpose(delta_g_mu_nu))`
 
-## 10. Deformation Severity
+## EN — 10. Deformation Severity
 
 In the retained regime:
 
-    deformation_severity = 0
+`deformation_severity = 0`
 
 At the EDC critical boundary:
 
-    deformation_severity = 1
+`deformation_severity = 1`
 
 During the inverse dissipative cascade:
 
-    deformation_severity =
-    1
-    + (
-        P(t) - C(t)
-    )
-    / pressure_scale
+`deformation_severity = 1 + (P(t) - C(t)) / pressure_scale`
 
 where:
 
-    pressure_scale =
-    max(
-        abs(P(t)),
-        critical_tolerance
-    )
+`pressure_scale = max(abs(P(t)), critical_tolerance)`
 
-The severity parameter increases as external pressure exceeds endogenous structural coherence.
+The severity parameter increases as destabilizing pressure exceeds the general endogenous structural coherence.
 
-## 11. Numerical Validation
+## EN — 11. Numerical Validation
 
 The solver validates:
 
-- non-negative coefficients `gamma`, `beta`, and `chi`;
-- positive numerical tolerance;
-- finite vector and matrix values;
-- one-dimensional vector inputs;
-- square Jacobian and metric matrices;
-- matching dimensions between `J_flux`, `grad_J_flux`, and `grad rho_cont`;
-- matching dimensions between the projected residual and `g_mu_nu`;
-- non-negative `C3`;
-- positive tact duration `dt`.
+- non-negativity of `gamma`, `beta`, and `chi`;
+- positivity of the numerical tolerance;
+- finite values of vectors and matrices;
+- one-dimensional input vectors;
+- square shape of the Jacobian and metric matrix;
+- dimensional consistency of `J_flux`, `grad_J_flux`, and `grad rho_cont`;
+- dimensional consistency of the projected residual and `g_mu_nu`;
+- non-negativity of `C3`;
+- positivity of tact duration `dt`.
 
 Dimension mismatches raise explicit `ValueError` exceptions.
 
-## 12. Main Class
+## EN — 12. Main Class
 
-    MetricBridgeSolver
+`MetricBridgeSolver`
 
-## 13. Main Methods
+## EN — 13. Main Methods
 
 ### calculate_interface_residual()
 
-Calculates the complete exchange-flow residual and returns all individual components.
+Calculates the full exchange-flow residual and returns all separate components.
 
 ### calculate_exchange_flow_acceleration()
 
 Calculates:
 
-    partial_t J_flux
+`partial_t J_flux`
 
-from the balanced flow-evolution equation.
+from the balanced exchange-flow evolution equation.
 
 ### project_interface_residual()
 
@@ -377,228 +346,172 @@ Maps the internal exchange-flow residual through the interface projection operat
 
 ### classify_dynamic_regime()
 
-Classifies the current EDS / EDC state through:
+Classifies the current EDS / EDC state through comparison of:
 
-    C(t) versus P(t)
+`C(t)` and `P(t)`
 
 ### recompute_4d_metric()
 
 Preserves the metric in the retained regime or calculates the local metric-deformation proxy at criticality and during the inverse dissipative cascade.
 
-## 14. Example Operational Sequence
+## EN — 14. Example Operational Sequence
 
-    solver initialization
-    → define J_flux
-    → define grad_J_flux
-    → define grad_rho_cont
-    → define C3
-    → calculate partial_t J_flux
-    → calculate balanced residual R_J
-    → define G_int
-    → project R_J
-    → compare C(t) and P(t)
-    → preserve or deform g_mu_nu
+`solver initialization → define J_flux → define grad_J_flux → define grad_rho_cont → define C3 → calculate partial_t J_flux → calculate balanced residual R_J → define G_int → project R_J → compare C(t) and P(t) → preserve or deform g_mu_nu`
 
-## 15. Core Invariant
+## EN — 15. Core Invariant
 
-The metric bridge does not impose a permanently zero interface divergence.
+The metric bridge calculates the nonlinear interface-exchange residual at each recursive tact.
 
-Instead, it calculates the nonlinear residual at every recursive tact.
+Core invariant:
 
-The core invariant is:
+`retained interface state = dynamically maintained balance between exchange-flow evolution, nonlinear convective transport, background-mode gradients, cubic retention, interface projection, general endogenous structural coherence, and destabilizing pressure`
 
-    retained interface state =
-    a dynamically maintained balance
-    between exchange-flow evolution,
-    nonlinear convective transport,
-    background-mode gradients,
-    cubic retention,
-    interface projection,
-    endogenous structural coherence,
-    and external pressure
+Full computational chain:
 
-The full computational chain is:
+`C(t) > P(t) → interface retained → metric preserved`
 
-    C(t) > P(t)
-    → retained interface
-    → metric preserved
+`C(t) ≈ P(t) → EDC critical boundary → projected residual activates deformation proxy`
 
-    C(t) ≈ P(t)
-    → EDC critical boundary
-    → projected residual activates deformation proxy
+`C(t) < P(t) → inverse dissipative cascade → deformation severity grows → redistribution through J_flux`
 
-    C(t) < P(t)
-    → inverse dissipative cascade
-    → growing deformation severity
-    → redistribution through J_flux
+## EN — 16. Scientific Scope
 
-## 16. Scientific Scope
+The implemented metric update is a model proxy for local metric deformation inside the EDK interface-balance layer.
 
-The metric update implemented by this solver is a model-specific deformation proxy.
+A full relativistic extension requires:
 
-It is not:
-
-- a derivation of general relativity;
-- a numerical solution of the Einstein field equations;
-- an experimentally validated spacetime metric;
-- proof that a projected residual physically curves spacetime.
-
-A complete relativistic implementation would additionally require:
-
-- a defined spacetime manifold;
+- definition of the spacetime manifold;
 - metric signature and coordinate system;
 - Christoffel symbols;
 - covariant derivatives;
 - curvature tensors;
 - field equations;
-- boundary and initial conditions;
+- initial and boundary conditions;
 - dimensional calibration of all coefficients.
 
-## 17. Position in the EDK Architecture
+## EN — 17. Position in the EDK Architecture
 
-    U_6D
-    → A_lock
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
-    → MetricBridgeSolver
-    → R_J
-    → G_int
-    → projected residual
-    → retained metric or deformation proxy
+`U_6D → A_lock → C3 → T_int → M(t) → J_flux → MetricBridgeSolver → R_J → G_int → projected residual → retained metric or deformation proxy`
 
-The solver connects the mathematical interface-balance formalism with the executable numerical layer of the EDK repository.
+The solver connects the mathematical formalism of interface balance with the executable numerical layer of the EDK repository.
 
 ---
 
 # Решатель метрического моста
 
-## Динамический решатель интерфейсного баланса слоя 4D ↔ 2D/1D
+## RU — Динамический решатель интерфейсного баланса слоя 4D ↔ 2D/1D
 
-## Русская версия
+Папка модуля:
 
-`MetricBridgeSolver` реализует численный слой решателя, связанный с формализмом интерфейсного проекционного баланса.
+`module_metric_bridge_solver`
+
+Python-файл:
+
+`metric_bridge.py`
+
+README-файл:
+
+`README_EN_RU.md`
+
+Основной класс:
+
+`MetricBridgeSolver`
+
+## RU — Назначение модуля
+
+`MetricBridgeSolver` реализует численный слой решателя, связанный с формализмом интерфейсного проекционного баланса EDK.
 
 Он переводит математическое соотношение:
 
-    partial_mu T^{mu nu}
-    =
-    G_int^{nu}_{lambda}
-    · R_J^{lambda}
+`partial_mu T^{mu nu} = G_int^{nu}_{lambda} · R_J^{lambda}`
 
 в потактовую вычислительную процедуру.
 
 Решатель рассчитывает:
 
 - остаток потока обмена `R_J`;
-- потактовое ускорение `J_flux`;
+- потактовое изменение канала потока обмена `partial_t J_flux`;
 - проекцию внутреннего остатка через `G_int`;
-- текущий режим EDS / EDC;
+- текущий динамический режим EDS / EDC;
 - модельный прокси-параметр локальной деформации метрики.
 
-Решатель относится к математическому ядру EDK.
+Решатель реализует модельный интерфейсный слой EDK для расчёта остатка обменного потока, интерфейсной проекции и прокси-деформации локальной метрики.
 
-Он не является численным решением уравнений поля Эйнштейна.
+## RU — Файл
 
-## Файл
+`module_metric_bridge_solver/metric_bridge.py`
 
-    core/solvers/metric_bridge.py
+## RU — Зависимость
 
-## Зависимость
+`numpy>=1.26.0`
 
-    numpy>=1.26.0
+## RU — Основная операционная цепочка
 
-## Основная операционная цепочка
+`J_flux → пространственный Якобиан grad_J_flux → конвективный перенос → градиент фоновых мод → кубическое удержание C3 → остаток потока обмена R_J → интерфейсная проекция G_int → проецируемый остаток → классификация режима EDS / EDC → удерживаемая метрика или прокси деформации метрики`
 
-    J_flux
-    → пространственный Якобиан grad_J_flux
-    → конвективный перенос
-    → градиент фоновых мод
-    → кубическое удержание C3
-    → остаток потока обмена R_J
-    → интерфейсная проекция G_int
-    → проецируемый остаток
-    → классификация режима EDS / EDC
-    → удерживаемая метрика или прокси деформации метрики
-
-## 1. Остаток потока обмена
+## RU — 1. Остаток потока обмена
 
 Остаток потока обмена определяется как:
 
-    R_J =
-    partial_t J_flux
-    + (J_flux · grad)J_flux
-    + gamma · grad rho_cont
-    + beta · C3 · J_flux
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
 Решатель разделяет это выражение на четыре численных компонента:
 
-    temporal_term
+`temporal_term`
 
-    convective_term
+`convective_term`
 
-    continuum_gradient_term
+`continuum_gradient_term`
 
-    cubic_retention_term
+`cubic_retention_term`
 
 Полный остаток:
 
-    residual =
-    temporal_term
-    + convective_term
-    + continuum_gradient_term
-    + cubic_retention_term
+`residual = temporal_term + convective_term + continuum_gradient_term + cubic_retention_term`
 
-## 2. Соглашение для Якобиана
+## RU — 2. Соглашение для Якобиана
 
 Пространственный Якобиан канала потока обмена определяется как:
 
-    grad_j_flux[i, j] =
-    partial J_flux[i]
-    / partial x[j]
+`grad_j_flux[i, j] = partial J_flux[i] / partial x[j]`
 
 При данном соглашении конвективный член рассчитывается как:
 
-    (J_flux · grad)J_flux =
-    grad_j_flux @ j_flux
+`(J_flux · grad)J_flux = grad_j_flux @ j_flux`
 
-Матрично-векторное произведение нельзя заменять скалярным произведением между `J_flux` и полной матрицей Якобиана.
+Реализованное соглашение использует матрично-векторное произведение между Якобианом и локальным вектором `J_flux`.
 
-## 3. Эволюция потока обмена
+## RU — 3. Эволюция потока обмена
 
 При локальном балансе остатка:
 
-    R_J = 0
+`R_J = 0`
 
 потактовая эволюция канала потока обмена имеет вид:
 
-    partial_t J_flux =
-    -(J_flux · grad)J_flux
-    - gamma · grad rho_cont
-    - beta · C3 · J_flux
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
 
 Метод:
 
-    calculate_exchange_flow_acceleration()
+`calculate_exchange_flow_acceleration()`
 
 возвращает данный вектор эволюции потока.
 
 Отрицательные знаки появляются потому, что уравнение разрешено относительно:
 
-    partial_t J_flux
+`partial_t J_flux`
 
 тогда как соответствующие члены имеют положительные знаки внутри остаточного оператора.
 
-## 4. Кубическое удержание и структурная когерентность
+## RU — 4. Кубическое удержание и общая эндогенная структурная когерентность
 
 Решатель различает:
 
-    C(t)
+`C(t)`
 
 и:
 
-    C3
+`C3`
 
 `C(t)` — общая эндогенная структурная когерентность системы.
 
@@ -606,131 +519,131 @@ The solver connects the mathematical interface-balance formalism with the execut
 
 Вклад кубического удержания:
 
-    beta · C3 · J_flux
+`beta · C3 · J_flux`
 
-Высокое удерживаемое значение `C3` подавляет неконтролируемый рост потока обмена.
+Более высокое удерживаемое значение `C3` усиливает демпфирующий вклад, действующий на неконтролируемый рост потока обмена.
 
-Снижение `C3` ослабляет данный вклад удержания и позволяет остатку потока обмена возрастать под воздействием внешнего давления и пространственной неоднородности.
+Более низкое удерживаемое значение `C3` ослабляет данный вклад удержания и позволяет остатку потока обмена возрастать под воздействием дестабилизующего давления и пространственной неоднородности.
 
-## 5. Фоновые нерезонансные моды
+## RU — 5. Фоновые нерезонансные моды
 
 Параметр:
 
-    rho_cont
+`rho_cont`
 
 представляет плотность распределения фоновых нерезонансных мод Континуума.
 
 Вектор:
 
-    grad rho_cont
+`grad rho_cont`
 
 описывает локальный градиент данного распределения.
 
 Соответствующий компонент остатка:
 
-    gamma · grad rho_cont
+`gamma · grad rho_cont`
 
 Форма эволюции потока содержит:
 
-    -gamma · grad rho_cont
+`-gamma · grad rho_cont`
 
-который действует как направленный член перераспределения среды.
+Этот член действует как направленный компонент перераспределения среды.
 
-## 6. Оператор интерфейсной проекции
+## RU — 6. Оператор интерфейсной проекции
 
 Метод:
 
-    project_interface_residual()
+`project_interface_residual()`
 
 реализует:
 
-    projected_residual =
-    G_int @ R_J
+`projected_residual = G_int @ R_J`
 
-Оператор проекции должен иметь форму:
+Оператор проекции имеет форму:
 
-    target_dimension × flow_dimension
+`target_dimension × flow_dimension`
 
-Внутренний остаток должен иметь форму:
+Внутренний остаток имеет форму:
 
-    flow_dimension
+`flow_dimension`
 
 Полученный проецируемый вектор имеет форму:
 
-    target_dimension
+`target_dimension`
 
 Для четырёхкомпонентного целевого слоя:
 
-    форма G_int =
-    4 × flow_dimension
+`форма G_int = 4 × flow_dimension`
 
-Следовательно, оператор отображает внутреннюю динамику потока обмена в выбранный проецируемый слой энергии-импульса или метрики.
+Оператор отображает внутреннюю динамику потока обмена в выбранный проецируемый слой энергии-импульса или метрики.
 
-## 7. Классификация динамического режима
+## RU — 7. Классификация динамического режима
 
 Решатель классифицирует систему через сравнение:
 
-    C(t) и P(t)
+`C(t)` и `P(t)`
+
+Где:
+
+`C(t)` — общая эндогенная структурная когерентность.
+
+`P(t)` — дестабилизующее давление.
 
 Метод:
 
-    classify_dynamic_regime()
+`classify_dynamic_regime()`
 
 возвращает одно из трёх состояний.
 
 ### EDS_RETENTION
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
-Эндогенная структурная когерентность превышает внешнее давление.
+Общая эндогенная структурная когерентность превышает дестабилизующее давление.
 
 Удерживаемый интерфейс остаётся динамически поддерживаемым.
 
 ### EDC_CRITICAL_BOUNDARY
 
-    C(t) ≈ P(t)
+`C(t) ≈ P(t)`
 
 Система находится на критической границе в пределах заданного численного допуска.
 
 ### INVERSE_DISSIPATIVE_CASCADE
 
-    C(t) < P(t)
+`C(t) < P(t)`
 
-Внешнее давление превышает эндогенную структурную когерентность.
+Дестабилизующее давление превышает общую эндогенную структурную когерентность.
 
 Система входит в режим деградации и перераспределения.
 
-## 8. Метрический тензор и тензор энергии-импульса
+## RU — 8. Метрический тензор и тензор энергии-импульса
 
-Решатель разделяет два различных объекта:
+Решатель разделяет два объекта:
 
-    g_mu_nu
+`g_mu_nu`
 
 и:
 
-    T^{mu nu}
+`T^{mu nu}`
 
 `g_mu_nu` — локальный метрический тензор или прокси состояния метрики, используемый численным решателем.
 
 `T^{mu nu}` — локальный тензор энергии-импульса.
 
-Они не являются взаимозаменяемыми.
+Формализм интерфейсного баланса работает с:
 
-Формализм интерфейсного баланса использует:
+`partial_mu T^{mu nu}`
 
-    partial_mu T^{mu nu}
+Метод прокси-деформации метрики обновляет:
 
-Численный метод деформации обновляет:
+`g_mu_nu`
 
-    g_mu_nu
-
-Метод не заменяет тензор энергии-импульса метрическим тензором.
-
-## 9. Прокси деформации метрики
+## RU — 9. Прокси деформации метрики
 
 Метод:
 
-    recompute_4d_metric()
+`recompute_4d_metric()`
 
 использует:
 
@@ -738,80 +651,61 @@ The solver connects the mathematical interface-balance formalism with the execut
 - внутренний остаток потока обмена `R_J`;
 - оператор интерфейсной проекции `G_int`;
 - общую эндогенную структурную когерентность `C(t)`;
-- внешнее давление `P(t)`;
-- коэффициент пластичности метрики `chi`.
+- дестабилизующее давление `P(t)`;
+- коэффициент пластичности метрики `chi`;
+- длительность такта `dt`.
 
 В режиме удержания:
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
 деформация равна:
 
-    delta_g_mu_nu = 0
+`delta_g_mu_nu = 0`
 
 и:
 
-    updated_metric = g_mu_nu
+`updated_metric = g_mu_nu`
 
-В состоянии критичности или инверсного диссипативного каскада:
+В состоянии критичности или во время инверсного диссипативного каскада:
 
-    C(t) <= P(t)
+`C(t) <= P(t)`
 
 прокси деформации рассчитывается как:
 
-    delta_g_mu_nu =
-    chi
-    · severity
-    · outer(projected_residual, projected_residual)
-    · dt
+`delta_g_mu_nu = chi · severity · outer(projected_residual, projected_residual) · dt`
 
 Обновлённая метрика:
 
-    updated_metric =
-    g_mu_nu
-    + delta_g_mu_nu
+`updated_metric = g_mu_nu + delta_g_mu_nu`
 
 Внешнее произведение создаёт симметричный вклад деформации второго порядка.
 
 Реализация дополнительно выполняет численную симметризацию:
 
-    delta_g_mu_nu =
-    0.5
-    · (
-        delta_g_mu_nu
-        + transpose(delta_g_mu_nu)
-    )
+`delta_g_mu_nu = 0.5 · (delta_g_mu_nu + transpose(delta_g_mu_nu))`
 
-## 10. Интенсивность деформации
+## RU — 10. Интенсивность деформации
 
 В режиме удержания:
 
-    deformation_severity = 0
+`deformation_severity = 0`
 
 На критической границе EDC:
 
-    deformation_severity = 1
+`deformation_severity = 1`
 
 Во время инверсного диссипативного каскада:
 
-    deformation_severity =
-    1
-    + (
-        P(t) - C(t)
-    )
-    / pressure_scale
+`deformation_severity = 1 + (P(t) - C(t)) / pressure_scale`
 
 где:
 
-    pressure_scale =
-    max(
-        abs(P(t)),
-        critical_tolerance
-    )
+`pressure_scale = max(abs(P(t)), critical_tolerance)`
 
-Параметр интенсивности возрастает по мере превышения внешним давлением эндогенной структурной когерентности.
+Параметр интенсивности возрастает по мере превышения дестабилизующим давлением общей эндогенной структурной когерентности.
 
-## 11. Численная проверка
+## RU — 11. Численная проверка
 
 Решатель проверяет:
 
@@ -827,11 +721,11 @@ The solver connects the mathematical interface-balance formalism with the execut
 
 При несовпадении размерностей формируются явные исключения `ValueError`.
 
-## 12. Основной класс
+## RU — 12. Основной класс
 
-    MetricBridgeSolver
+`MetricBridgeSolver`
 
-## 13. Основные методы
+## RU — 13. Основные методы
 
 ### calculate_interface_residual()
 
@@ -841,7 +735,7 @@ The solver connects the mathematical interface-balance formalism with the execut
 
 Рассчитывает:
 
-    partial_t J_flux
+`partial_t J_flux`
 
 из сбалансированного уравнения эволюции потока.
 
@@ -853,71 +747,37 @@ The solver connects the mathematical interface-balance formalism with the execut
 
 Классифицирует текущее состояние EDS / EDC через сравнение:
 
-    C(t) и P(t)
+`C(t)` и `P(t)`
 
 ### recompute_4d_metric()
 
 Сохраняет метрику в режиме удержания или рассчитывает прокси локальной деформации метрики при критичности и во время инверсного диссипативного каскада.
 
-## 14. Пример операционной последовательности
+## RU — 14. Пример операционной последовательности
 
-    инициализация решателя
-    → определение J_flux
-    → определение grad_J_flux
-    → определение grad_rho_cont
-    → определение C3
-    → расчёт partial_t J_flux
-    → расчёт сбалансированного остатка R_J
-    → определение G_int
-    → проекция R_J
-    → сравнение C(t) и P(t)
-    → сохранение или деформация g_mu_nu
+`инициализация решателя → определение J_flux → определение grad_J_flux → определение grad_rho_cont → определение C3 → расчёт partial_t J_flux → расчёт сбалансированного остатка R_J → определение G_int → проекция R_J → сравнение C(t) и P(t) → сохранение или деформация g_mu_nu`
 
-## 15. Основной инвариант
+## RU — 15. Основной инвариант
 
-Метрический мост не задаёт постоянно нулевую интерфейсную дивергенцию.
-
-Вместо этого он вычисляет нелинейный остаток на каждом рекурсивном такте.
+Метрический мост вычисляет нелинейный остаток интерфейсного обмена на каждом рекурсивном такте.
 
 Основной инвариант:
 
-    удерживаемое интерфейсное состояние =
-    динамически поддерживаемый баланс
-    между эволюцией потока обмена,
-    нелинейным конвективным переносом,
-    градиентами фоновых мод,
-    кубическим удержанием,
-    интерфейсной проекцией,
-    эндогенной структурной когерентностью
-    и внешним давлением
+`удерживаемое интерфейсное состояние = динамически поддерживаемый баланс между эволюцией потока обмена, нелинейным конвективным переносом, градиентами фоновых мод, кубическим удержанием, интерфейсной проекцией, общей эндогенной структурной когерентностью и дестабилизующим давлением`
 
 Полная вычислительная цепочка:
 
-    C(t) > P(t)
-    → интерфейс удерживается
-    → метрика сохраняется
+`C(t) > P(t) → интерфейс удерживается → метрика сохраняется`
 
-    C(t) ≈ P(t)
-    → критическая граница EDC
-    → проецируемый остаток активирует прокси деформации
+`C(t) ≈ P(t) → критическая граница EDC → проецируемый остаток активирует прокси деформации`
 
-    C(t) < P(t)
-    → инверсный диссипативный каскад
-    → рост интенсивности деформации
-    → перераспределение через J_flux
+`C(t) < P(t) → инверсный диссипативный каскад → рост интенсивности деформации → перераспределение через J_flux`
 
-## 16. Научная область применимости
+## RU — 16. Научная область применимости
 
-Реализованное решателем обновление метрики является модельным прокси деформации.
+Реализованное обновление метрики является модельным прокси локальной деформации метрики внутри слоя интерфейсного баланса EDK.
 
-Оно не является:
-
-- выводом общей теории относительности;
-- численным решением уравнений поля Эйнштейна;
-- экспериментально подтверждённой метрикой пространства-времени;
-- доказательством того, что проецируемый остаток физически искривляет пространство-время.
-
-Полная релятивистская реализация дополнительно потребовала бы:
+Полная релятивистская реализация требует:
 
 - определения многообразия пространства-времени;
 - сигнатуры метрики и системы координат;
@@ -928,18 +788,8 @@ The solver connects the mathematical interface-balance formalism with the execut
 - начальных и граничных условий;
 - размерностной калибровки всех коэффициентов.
 
-## 17. Место в архитектуре EDK
+## RU — 17. Место в архитектуре EDK
 
-    U_6D
-    → A_lock
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
-    → MetricBridgeSolver
-    → R_J
-    → G_int
-    → проецируемый остаток
-    → удерживаемая метрика или прокси деформации
+`U_6D → A_lock → C3 → T_int → M(t) → J_flux → MetricBridgeSolver → R_J → G_int → проецируемый остаток → удерживаемая метрика или прокси деформации`
 
 Решатель соединяет математический формализм интерфейсного баланса с исполняемым численным слоем репозитория EDK.
