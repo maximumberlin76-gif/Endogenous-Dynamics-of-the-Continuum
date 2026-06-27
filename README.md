@@ -1,20 +1,41 @@
 # Endogenous Dynamics of the Continuum (EDK)
 
-## Theorem-Algorithmic Matrix of the Open Nonlinear Dissipative Dynamic Continuum
+## Theorem-Algorithmic Framework for Open Nonlinear Dissipative Dynamic Systems
+
+Endogenous Dynamics of the Continuum (EDK) is a theorem-algorithmic framework in which Space-Time Matter is described as diverse forms, levels, and transitional states of structural self-organization within the observed Continuum.
+
+The framework studies endogenous and exogenous dynamics of structural self-organization, dynamic retention, resonance-window phase transitions, recursive synthesis, recursive inheritance of qualitative characteristics, bifurcation drift, degradation, redistribution, demanifestation, and return into background non-resonant Continuum modes.
+
+Author:
+
+`Maksym Marnov`
+
+Repository:
+
+`Endogenous-Dynamics-of-the-Continuum`
 
 ## EN — Repository Status and Purpose
 
-This repository presents the current theorem-algorithmic matrix of **Endogenous Dynamics of the Continuum (EDK)**.
+This repository contains the current theorem-algorithmic framework of Endogenous Dynamics of the Continuum.
 
-The work describes the endogenous and exogenous dynamics of different forms, levels, and transitional states of structural self-organization of Matter of Space Time within the observed Continuum.
+The repository combines:
 
-The repository is dedicated to the formalization and numerical investigation of:
+- theorem-descriptive layer;
+- controlled terminology layer;
+- mathematical-formal layer;
+- executable Python modules;
+- engineering visualization protocols;
+- cross-scale coupling of quantum-phase, interface, mass, exchange-flow, biological, molecular, organic, planetary, stellar, galactic, and Continuum-level processes.
+
+The subject of analysis is the dynamic process of structural self-organization inside open nonlinear dissipative dynamic systems.
+
+The repository describes:
 
 - structural self-organization;
 - dynamic retention;
-- endogenous dynamic stability;
-- endogenous dynamic criticality;
-- resonance-window formation;
+- Endogenous Dynamic Stability, EDS;
+- Endogenous Dynamic Criticality, EDC;
+- formation of a resonance-window phase transition;
 - phase transitions;
 - recursive synthesis;
 - recursive inheritance of qualitative characteristics;
@@ -22,120 +43,74 @@ The repository is dedicated to the formalization and numerical investigation of:
 - degradation;
 - redistribution;
 - demanifestation;
-- return into the background non-resonant modes of the Continuum.
+- return into background non-resonant Continuum modes.
 
-The repository combines:
-
-- a theorem-descriptive layer;
-- a mathematical-formal layer;
-- a numerical-algorithmic layer;
-- executable Python modules;
-- engineering visualization protocols;
-- through-scale coupling between quantum-phase, interface, mass, exchange-flow, biological, molecular, organic, planetary, stellar, galactic, and Continuum-level processes.
-
-The repository does not present isolated static objects as the primary subject of analysis.
-
-It describes dynamic processes of structural self-organization, retention, degradation, phase transition, demanifestation, and recursive inheritance inside open nonlinear dissipative dynamic systems.
-
-The primary class of applicability is:
-
-    open nonlinear dissipative dynamic systems
-
-The repository presents an open theorem-algorithmic architecture intended for:
-
-- formalization of EDK invariants;
-- numerical testing of operational consequences;
-- comparison of retention, criticality, and degradation states;
-- analysis of recursive tact-by-tact dynamics;
-- development of modular simulation layers;
-- engineering visualization of phase and interface processes;
-- preparation of reproducible computational experiments;
-- further verification, correction, and expansion of the mathematical apparatus.
-
-The current repository includes:
-
-- the theorem corpus;
-- the mathematical formalism;
-- the operational definitions;
-- numerical algorithms;
-- interface and metric-bridge solvers;
-- through-scale simulation modules;
-- controlled transition and demanifestation protocols;
-- engineering visualization layers;
-- bilingual English and Russian documentation.
-
-The Russian semantic layer is the control source of the work.
-
-The English layer preserves the same semantic structure, operational definitions, causal relations, and scope of applicability.
-
----
+The English layer follows the same semantic structure, scientific terminology, operational definitions, causal relations, and scope as the Russian control layer.
 
 ## EN — Core Invariants and Operational Parameters
 
-The EDK theorem-algorithmic framework is based on the following interconnected invariants and operational parameters.
+The EDK framework is built on the following interconnected invariants and operational parameters.
 
 ### General Endogenous Structural Coherence
 
 `C(t)` is the general endogenous structural coherence of the system.
 
-It characterizes the dynamic compatibility, mutual coherence, and retained interrelation of all endogenous structural processes of the system over time.
+It characterizes dynamic compatibility, mutual coherence, and retained interrelation of all endogenous structural processes of the system in time.
 
-`C(t)` is not identical to phase synchronization, the observable order parameter `R(t)`, regeneration, external geometric symmetry, or the cubic retention potential `C3`.
+Controlled distinctions:
 
-Phase synchronization means agreement of phases while amplitudes may remain dynamically chaotic.
+`phase synchronization ≠ phase coherence`
+
+`R(t) ≠ C(t)`
+
+`C(t) ≠ C3`
+
+Phase synchronization means phase agreement while amplitudes can remain dynamically chaotic.
 
 Phase coherence means dynamic agreement of both phases and amplitudes.
 
-Therefore:
+### Destabilizing Pressure
 
-    phase synchronization ≠ phase coherence
+`P(t)` is the destabilizing pressure acting on a retained dynamic structure through external and internal perturbing factors.
 
-    R(t) ≠ C(t)
+Central condition of dynamic retention:
 
-    C(t) ≠ C3
+`C(t) > P(t)`
 
-### Destabilizing Environmental Pressure
+Boundary of Endogenous Dynamic Criticality:
 
-`P(t)` is the destabilizing pressure exerted on the retained dynamic structure by external and internal perturbing factors.
+`C(t) ≈ P(t)`
 
-The central condition of dynamic retention is:
+Degradation condition:
 
-    C(t) > P(t)
-
-The boundary of endogenous dynamic criticality is:
-
-    C(t) ≈ P(t)
-
-The degradation condition is:
-
-    C(t) < P(t)
+`C(t) < P(t)`
 
 ### Structural Balance and Accumulated Positive Structural Work
 
-The formal structural balance is:
+Formal structural balance:
 
-    Δ(t) = S(t) − P(t) − D(t)
+`Delta(t) = S(t) − P(t) − D(t)`
 
 Where:
 
-- `S(t)` is the instantaneous intensity of synthesis of positive structural work over time;
-- `P(t)` is destabilizing environmental pressure;
+- `S(t)` is the instantaneous intensity of positive structural-work synthesis in time;
+- `P(t)` is the destabilizing pressure;
 - `D(t)` is dissipation and irreversible structural loss;
-- `Δ(t)` is the formal balance of structural existence.
+- `Delta(t)` is the formal balance of structural existence.
 
-The accumulated positive structural work is:
+Accumulated positive structural work:
 
-    W_S(T) = ∫₀ᵀ S(t) dt
+`W_S(T) = integral from 0 to T of S(t) dt`
 
-Accumulated positive structural work contributes to the formation of a retained attractor, but real dynamic stability requires preservation of:
+Accumulated positive structural work supports formation of a retained attractor, while dynamic stability requires preservation of:
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
 ### Regeneration
 
-Regeneration is the continuous endogenous process of restoring and maintaining structural integrity and coherence.
+Regeneration is a continuous endogenous process of restoring and maintaining structural integrity and coherence.
 
-Regeneration supports `C(t)`, but regeneration is not identical to `C(t)`.
+Regeneration supports `C(t)`.
 
 Loss of coherence between endogenous structural processes reduces regenerative capacity.
 
@@ -143,17 +118,23 @@ Loss of coherence between endogenous structural processes reduces regenerative c
 
 `C3` is the cubic nonlinear potential of volumetric retention associated with nonlinear saturation and retention of a three-dimensional dynamic form.
 
-`C3` is an operational volumetric parameter and must not be confused with the general endogenous structural coherence `C(t)`.
+Controlled distinction:
 
-### Resonance-Window Geometry and Retained Operational Domain
+`C(t) ≠ C3`
 
-`Omega(t)` is the admissible operational domain of states within which a resonance window of phase transition may form.
+`C(t)` describes general endogenous structural coherence.
 
-A resonance window may be positive or negative.
+`C3` describes local cubic volumetric retention.
+
+### Resonance-Window Phase Transition and Retained Operational Domain
+
+`Omega(t)` is the admissible operational domain of states inside which a resonance-window phase transition can form.
+
+A resonance-window phase transition can be positive or negative.
 
 Its sign and qualitative characteristics depend on the direction and qualitative characteristics of endogenous dynamic drift.
 
-`Omega_ret` is the retained operational domain formed when the synthesis cycle and the qualitative characteristics of the dynamically stabilized state remain recursively retained.
+`Omega_ret` is the retained operational domain formed when the synthesis cycle and qualitative characteristics of a dynamically stabilized state remain recursively retained.
 
 ### Retention Threshold
 
@@ -161,17 +142,17 @@ Its sign and qualitative characteristics depend on the direction and qualitative
 
 `Theta_crit` is the critical retention threshold.
 
-The retention condition is:
+Retention condition:
 
-    Theta_N >= Theta_crit
+`Theta_N >= Theta_crit`
 
 ### Recursive Inheritance Operator
 
 `Phi` is the operator of recursive inheritance, dynamic retention, and structural integrity.
 
-The recursive relation is:
+Recursive relation:
 
-    Q(n+1) = Phi(Q(n), D(n), A(n))
+`Q(n+1) = Phi(Q(n), D(n), A(n))`
 
 Where:
 
@@ -179,270 +160,129 @@ Where:
 - `D(n)` is the dissipative trace inherited by cycle `n`;
 - `A(n)` is the dynamic asymmetry inherited by cycle `n`.
 
-Recursive inheritance is not simple repetition.
-
-Each subsequent cycle inherits the transformed qualitative characteristics of the preceding cycle under the current endogenous and exogenous conditions.
+Recursive inheritance transforms qualitative characteristics of the preceding cycle under current endogenous and exogenous conditions.
 
 ### Internal Multiplet Retention
 
-`U_6D` is the internal toroidal multiplet-retention potential.
+`U_6D` is the internal toroidal multiplet retention potential.
 
-`Psi_coh` is the phase-coherent configuration formed through the six-dimensional folding layer.
+`Psi_coh` is the phase-coherent configuration formed by the six-dimensional convolution layer.
 
-The operational transition is:
+Operational transition:
 
-    Phi → U_6D → Psi_coh → C3
+`Phi → U_6D → Psi_coh → C3`
 
 ### Dynamic Interface and Manifested Mass Anchor
 
-`T_int` is the dynamic interface tensor connecting the internal multiplet structure, phase coherence, volumetric retention, manifested mass configuration, and the exchange-flow channel.
+`T_int` is the dynamic interface tensor connecting internal multiplet structure, phase coherence, volumetric retention, manifested mass configuration, and exchange-flow channel.
 
 `M(t)` is the time-dependent manifested mass anchor of a locally retained dynamic form.
 
-Mass is treated as a characteristic of a locally retained dynamic form rather than as an isolated static substance.
+Mass is treated as a characteristic of a locally retained dynamic form.
 
-### Through-Scale Massless Exchange-Flow Channel
+Controlled distinction:
 
-`J_flux` is the mandatory through-scale massless exchange-flow channel of phase transfer, structural influence, exchange, dissipation, redistribution, and interface feedback.
+`T_int ≠ M(t)`
 
-The direct chain is:
+### Through Massless Exchange-Flow Channel
 
-    multiplet phase layers
-    → Phi
-    → phase coherence
-    → C(t)
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
+`J_flux` is the through massless exchange-flow channel enabling phase transfer, structural influence, exchange, dissipation, redistribution, and interface feedback.
 
-The reverse chain is:
+Main forward chain:
 
-    loss of C(t)
-    → degradation of C3
-    → degradation of T_int
-    → reduction or demanifestation of M(t)
-    → redistribution through J_flux
-    → return into background non-resonant modes
+`multiplet of phase layers → Phi → phase coherence → C(t) → T_int → M(t) → J_flux → biological and molecular modulation`
 
-Without `J_flux`, the complete chain of manifestation, retention, exchange, dissipation, demanifestation, and return cannot be formally closed.
+Main reverse chain:
+
+`loss of C(t) → degradation of T_int → reduction or demanifestation of M(t) → redistribution through J_flux → return into background non-resonant modes`
+
+`C3` acts as the cubic volumetric retention node of the process.
+
+`J_flux` closes the chain of manifestation, retention, exchange, dissipation, demanifestation, and return.
 
 ### Background Non-Resonant Modes
 
-`rho_cont` is the density of background non-resonant modes of the Continuum.
+`rho_cont` is the density of background non-resonant Continuum modes.
 
-`grad rho_cont` represents the spatial variation of this density and may influence exchange-flow acceleration, interface deformation, redistribution of impulse, and resonance-window geometry.
+`grad rho_cont` represents spatial variation of this density and can affect exchange-flow acceleration, interface deformation, impulse redistribution, and resonance-window phase-transition geometry.
 
 ### Exchange-Flow Residual and Interface Projection
 
 `R_J` is the exchange-flow residual:
 
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
 `G_int` is the interface projection operator:
 
-    projected interface response = G_int R_J
+`projected_interface_response = G_int R_J`
 
-This relation connects exchange-flow imbalance with dynamic-interface correction, redistribution, or degradation.
+This relation connects exchange-flow imbalance with correction, redistribution, or degradation of the dynamic interface.
 
 ### Observable Order Parameter
 
-`R(t)` is the observable order parameter of phase synchronization in a reduced sensor-fixed projection.
+`R(t)` is the observable phase synchronization order parameter in a reduced sensory-fixed projection.
 
-`R(t)` does not establish phase-amplitude coherence of the complete system and is not equivalent to `C(t)`.
+Controlled distinction:
 
-A high value of `R(t)` may coexist with degradation of the general endogenous structural coherence `C(t)`.
+`R(t) ≠ C(t)`
 
----
+A high value of `R(t)` can coexist with degradation of general endogenous structural coherence `C(t)`.
 
-## EN — Through-Scale Operational Chain
+## EN — Cross-Scale Operational Chain
 
-The EDK theorem-algorithmic framework describes a continuous operational chain connecting endogenous dynamic stability, endogenous dynamic criticality, resonance-window formation, structural synthesis, dynamic retention, recursive inheritance of qualitative characteristics, endogenous bifurcation drift, degradation, demanifestation, and return into the background non-resonant modes of the Continuum.
+The EDK framework describes a continuous operational chain connecting Endogenous Dynamic Stability, Endogenous Dynamic Criticality, formation of a resonance-window phase transition, structural synthesis, dynamic retention, recursive inheritance of qualitative characteristics, endogenous bifurcation drift, degradation, demanifestation, and return into background non-resonant Continuum modes.
 
-This chain is not a sequence of isolated static objects.
+### Main Recursive Operational Chain
 
-It represents recursive tact-by-tact phase transitions between diverse forms, levels, and transitional states of structural self-organization of Matter of Space Time within the Continuum.
+`Endogenous Dynamic Stability EDS → preservation or compression of C(t) > P(t) → approach to the stability boundary C(t) ≈ P(t) → Endogenous Dynamic Criticality EDC → possibility or compression of resonance-window phase-transition formation → accumulated positive structural work → formation of the synthesis cycle of the resonance-window phase transition → retention of the synthesis cycle → retained operational domain Omega_ret → recursive inheritance of qualitative characteristics → endogenous bifurcation drift → configuration of subsequent resonance-window phase transitions → subsequent synthesis cycle`
 
-### Core Recursive Operational Chain
+Each subsequent cycle inherits transformed qualitative characteristics of the preceding cycle.
 
-    Endogenous Dynamic Stability (EDS)
-    → preservation or compression of C(t) > P(t)
-    → approach to the stability boundary C(t) ≈ P(t)
-    → Endogenous Dynamic Criticality (EDC)
-    → possibility or compression of resonance-window formation
-    → accumulation of positive structural work
-    → formation of the synthesis cycle of the resonance-window phase transition
-    → retention of the synthesis cycle
-    → formation of the retained operational domain Omega_ret
-    → recursive inheritance of qualitative characteristics
-    → endogenous bifurcation drift
-    → configuration of subsequent resonance windows
-    → subsequent synthesis cycle
+### Forward Chain of Manifestation and Retention
 
-The operational chain does not terminate after one synthesis cycle.
-
-Each subsequent cycle inherits the transformed qualitative characteristics of the preceding cycle.
-
-### Direct Manifestation and Retention Chain
-
-    multiplet phase layers
-    → Phi
-    → phase coherence
-    → C(t)
-    → Omega(t)
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
-    → wave-genetic modulation
-    → molecular phase chemistry
-    → organic-matrix manifestation
-    → planetary and environmental modulation
-    → recursively retained structural form
-
-The direct chain describes the transition from internal multiplet phase relations to a dynamically retained manifested form.
+`multiplet of phase layers → Phi → phase coherence → C(t) → Omega(t) → C3 → T_int → M(t) → J_flux → wave-genetic modulation → molecular phase chemistry → organic matrix manifestation → planetary and environmental modulation → recursively retained structural form`
 
 Dynamic retention depends on the coupled relation between:
 
-    Phi
-    Omega(t)
-    C(t)
-    P(t)
-    C3
-    T_int
-    M(t)
-    J_flux
-    rho_cont
+`Phi Omega(t) C(t) P(t) C3 T_int M(t) J_flux rho_cont`
 
-No single parameter independently guarantees dynamic retention.
+### Reverse Chain of Demanifestation
 
-### Reverse Demanifestation Chain
+`increase of destabilizing pressure P(t) → compression of C(t) > P(t) → approach to C(t) ≈ P(t) → Endogenous Dynamic Criticality → loss of retained phase coherence → destabilization of C3 → degradation of T_int → reduction or demanifestation of M(t) → redistribution through J_flux → exchange-flow residual R_J → projection through G_int → interface deformation → dissipation and redistribution → return into background non-resonant modes rho_cont`
 
-    growth of destabilizing environmental pressure P(t)
-    → reduction of the relation C(t) > P(t)
-    → approach to C(t) ≈ P(t)
-    → Endogenous Dynamic Criticality
-    → loss of retained phase coherence
-    → reduction or destabilization of C3
-    → degradation of T_int
-    → reduction or demanifestation of M(t)
-    → redistribution through J_flux
-    → formation of the exchange-flow residual R_J
-    → projection through G_int
-    → interface deformation
-    → dissipation and redistribution
-    → return into background non-resonant modes rho_cont
+Demanifestation is treated as a phase transition from a locally retained manifested configuration into redistributed exchange flow, dissipative traces, and background non-resonant Continuum modes.
 
-Demanifestation is not treated as disappearance into an abstract void.
+### Positive Resonance-Window Phase-Transition Chain
 
-It is treated as a phase transition from a locally retained manifested configuration into redistributed exchange flow, dissipative traces, and background non-resonant modes of the Continuum.
+`C(t) > P(t) → accumulated positive structural work → preservation of T_int → retention of M(t) → controlled exchange through J_flux → formation of a positive resonance-window phase transition → synthesis → increased structural complexity → formation or strengthening of Omega_ret → recursive inheritance of constructive qualitative characteristics`
 
-### Positive Resonance-Window Chain
+### Negative Resonance-Window Phase-Transition Chain
 
-    C(t) > P(t)
-    → accumulation of positive structural work
-    → preservation of T_int
-    → retention of M(t)
-    → controlled exchange through J_flux
-    → formation of a positive resonance window
-    → synthesis
-    → increase of structural complexity
-    → formation or strengthening of Omega_ret
-    → recursive inheritance of constructive qualitative characteristics
-
-### Negative Resonance-Window Chain
-
-    C(t) < P(t)
-    → loss of regenerative capacity
-    → degradation of T_int
-    → uncontrolled redistribution through J_flux
-    → formation of a negative resonance window
-    → decomposition
-    → reduction of structural complexity
-    → degradation of Omega_ret
-    → recursive inheritance of destructive qualitative characteristics
-
-A resonance window is not automatically constructive.
-
-Its sign depends on whether endogenous dynamic drift supports synthesis and dynamic retention or degradation and structural simplification.
+`C(t) < P(t) → loss of regenerative capacity → degradation of T_int → uncontrolled redistribution through J_flux → formation of a negative resonance-window phase transition → decay → reduced structural complexity → degradation of Omega_ret → recursive inheritance of destructive qualitative characteristics`
 
 ### Interface Projection Chain
 
-    J_flux
-    → temporal change of J_flux
-    → convective transport of J_flux
-    → influence of grad rho_cont
-    → influence of C3
-    → exchange-flow residual R_J
-    → interface projection operator G_int
-    → projected interface response
-    → retained interface correction or interface degradation
-    → metric-bridge response
-
-The exchange-flow residual is:
-
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
-
-The projected interface response is:
-
-    projected interface response = G_int R_J
+`J_flux → temporal change of J_flux → convective transport of J_flux → influence of grad rho_cont → influence of C3 → exchange-flow residual R_J → interface projection operator G_int → projected interface response → correction or degradation of the retained interface → metric bridge response`
 
 ### Recursive Closure
 
-    retained state of cycle Q(n)
-    → endogenous and exogenous parameter drift
-    → change of C(t), P(t), C3, T_int, and J_flux
-    → formation or deformation of Omega(t)
-    → synthesis, retention, redistribution, degradation, or demanifestation
-    → inheritance of transformed qualitative characteristics
-    → formation of cycle Q(n+1)
+`retained state of cycle Q(n) → endogenous and exogenous parameter drift → change of C(t), P(t), C3, T_int, and J_flux → formation or deformation of Omega(t) → synthesis, retention, redistribution, degradation, or demanifestation → inheritance of transformed qualitative characteristics → formation of cycle Q(n+1)`
 
-The subsequent cycle is not an independent restart.
+Formal recursive closure:
 
-It is the recursive continuation of the preceding dynamic process:
-
-    Q(n+1) =
-        F(
-            Q(n),
-            C(t),
-            P(t),
-            C3,
-            T_int,
-            J_flux,
-            Omega(t),
-            rho_cont
-        )
-
----
+`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
 
 ## EN — Mathematical Formalism
 
 The mathematical formalism of EDK is organized as a continuous dimensional cascade from the recursive inheritance layer of the dynamic process to the minimal directed exchange-flow output.
 
-The dimensional levels `7D` through `1D` are operational levels of the theorem-algorithmic cascade.
+The dimensional levels from `7D` to `1D` are operational levels of the theorem-algorithmic cascade.
 
-They define successive reductions of one continuous volumetric dynamic process and must not be interpreted as isolated static objects or as mutually independent systems.
+They define sequential reductions of one continuous volumetric dynamic process.
 
-The complete cascade is:
+Full cascade:
 
-    Phi(Q(n), D(n), A(n))
-    → U_6D
-    → Psi_coh
-    → C3
-    → Omega(t)
-    → Theta_N
-    → T_int
-    → E_medium
-    → M(t)
-    → J_flux
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3 → Omega(t) → Theta_N → T_int → E_medium → M(t) → J_flux`
 
 Where:
 
@@ -450,433 +290,209 @@ Where:
 - `D(n)` is the dissipative trace inherited by cycle `n`;
 - `A(n)` is the dynamic asymmetry inherited by cycle `n`;
 - `Phi` is the operator of recursive inheritance, dynamic retention, and structural integrity;
-- `U_6D` is the internal toroidal multiplet-retention potential;
-- `Psi_coh` is the phase-coherent state produced by the six-dimensional folding layer;
-- `C3` is the cubic nonlinear potential of volumetric retention;
-- `Omega(t)` is the admissible operational domain of resonance-window formation;
+- `U_6D` is the internal toroidal multiplet retention potential;
+- `Psi_coh` is the phase-coherent state formed by the six-dimensional convolution layer;
+- `C3` is the cubic nonlinear volumetric retention potential;
+- `Omega(t)` is the admissible operational domain of resonance-window phase-transition formation;
 - `Theta_N` is the accumulated operational retention capacity of the current cycle;
 - `T_int` is the dynamic interface tensor;
-- `E_medium` is the energy of the locally retained form under the current conditions of the medium;
+- `E_medium` is the energy of a locally retained form in current medium conditions;
 - `M(t)` is the manifested mass anchor;
-- `J_flux` is the mandatory through-scale massless exchange-flow channel.
+- `J_flux` is the through massless exchange-flow channel.
 
-## EN — Definition of the 7D to 1D Cascade
+## EN — Operational Cascade from 7D to 1D
 
 ### 7D — Recursive Inheritance and Super-Code Layer
 
-The `7D` level is the recursive inheritance layer of the complete dynamic process.
+`7D` is the layer of recursive inheritance of the full dynamic process.
 
-Its semantic subject is not a manifested object.
+Its semantic subject is the complete inherited configuration of qualitative characteristics, dissipative traces, dynamic asymmetries, and phase-transition conditions.
 
-Its semantic subject is the complete inherited configuration of qualitative characteristics, dissipative traces, dynamic asymmetries, and transition conditions that determine the possible continuation of the system.
+Core relation:
 
-The primary relation is:
+`Q(n+1) = Phi(Q(n), D(n), A(n))`
 
-    Q(n+1) = Phi(Q(n), D(n), A(n))
+Functions:
 
-Where:
+- preservation of causal continuity between cycles;
+- transfer of qualitative characteristics through recursive tact-by-tact evolution;
+- inclusion of dissipative trace as an active component of the next state;
+- preservation of dynamic asymmetry as a source of drift and phase transition;
+- configuration of possible synthesis, retention, degradation, or demanifestation.
 
-- `Q(n)` contains the qualitative characteristics inherited from the preceding cycle;
-- `D(n)` contains the accumulated dissipative trace;
-- `A(n)` contains the inherited dynamic asymmetry;
-- `Phi` transforms the inherited configuration into the conditions of the subsequent cycle.
+Output:
 
-The `7D` level performs the following functions:
+`Phi(Q(n), D(n), A(n)) → U_6D`
 
-- preserves the causal continuity between preceding and subsequent cycles;
-- transfers qualitative characteristics across recursive tact-by-tact evolution;
-- includes the dissipative trace as an active component of the subsequent state;
-- preserves dynamic asymmetry as the source of drift and phase transition;
-- determines the initial conditions of the lower-dimensional cascade;
-- configures the possible direction of synthesis, retention, degradation, or demanifestation.
+### 6D — Toroidal Phase-Coherent Convolution Layer
 
-The output of the `7D` level is not a finished manifested structure.
+`6D` is the layer of toroidal projection and phase-coherent convolution.
 
-It is the recursively transformed state entering the six-dimensional phase-coherent folding layer:
+Core operator:
 
-    Phi(Q(n), D(n), A(n)) → U_6D
+`U_6D`
 
-### 6D — Toroidal Phase-Coherent Folding Layer
+Operational transition:
 
-The `6D` level is the layer of toroidal projection and phase-coherent folding.
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3`
 
-Its semantic subject is the internal multiplet architecture of the dynamic process before reduction into a manifested three-dimensional form or a directed output channel.
+Functions:
 
-The central operator of this level is:
+- convolution of the recursively inherited multiplet configuration into a coupled phase structure;
+- retention of internal toroidal connectivity;
+- formation of the phase-coherent state `Psi_coh`;
+- preparation of the cubic volumetric retention potential `C3`;
+- transfer of inherited qualitative characteristics into the resonance-window and bifurcation layer.
 
-    U_6D
+### 5D — Bifurcation Choice and Resonance-Window Phase-Transition Layer
 
-`U_6D` receives the recursively inherited configuration generated by `Phi` and performs phase-coherent folding of the internal multiplet structure.
+`5D` is the layer of endogenous bifurcation choice and formation of a resonance-window phase transition.
 
-The operational transition is:
+Core operational domain:
 
-    Phi(Q(n), D(n), A(n))
-    → U_6D
-    → Psi_coh
-    → C3
+`Omega(t)`
 
-Where:
+Input conditions:
 
-- `U_6D` is the internal toroidal multiplet-retention potential;
-- `Psi_coh` is the resulting phase-coherent configuration;
-- `C3` is the cubic nonlinear potential generated through volumetric phase-coherent retention.
+- phase-coherent state `Psi_coh`;
+- cubic retention potential `C3`;
+- inherited qualitative characteristics `Q(n)`;
+- dissipative trace `D(n)`;
+- dynamic asymmetry `A(n)`;
+- current relation between `C(t)` and `P(t)`;
+- gradient of background non-resonant modes `grad rho_cont`.
 
-The `6D` level performs the following functions:
+Operational chain:
 
-- folds the recursively inherited multiplet configuration into a coupled phase structure;
-- retains internal toroidal connectivity;
-- forms the phase-coherent state `Psi_coh`;
-- prepares the cubic volumetric retention potential `C3`;
-- transfers the inherited qualitative characteristics of the `7D` level into the resonance-window and bifurcation layer;
-- preserves the internal multidirectional structure before its lower-dimensional projection.
+`Psi_coh → C3 → Omega(t) → formation of a positive or negative resonance-window phase transition → selection of the subsequent phase-transition trajectory`
 
-The `6D` level must not be reduced to a simple geometric torus.
+### 4D — Topological Monolith of Space-Time Matter
 
-It represents a dynamic phase-coherent folding process through which the inherited multiplet structure becomes capable of volumetric retention.
+`4D` is the time-developed topological monolith of Space-Time Matter.
 
-### 5D — Bifurcation Choice and Resonance-Window Layer
+It describes the continuous dynamic process through which the selected phase-transition trajectory is retained, transformed, redistributed, or degraded in time.
 
-The `5D` level is the layer of endogenous bifurcation choice and resonance-window formation.
+Core elements:
 
-Its semantic subject is the changing set of admissible phase-transition trajectories available to the system under the current endogenous and exogenous conditions.
+`Omega(t) Theta_N T_int C(t) P(t) C3 J_flux`
 
-The central operational domain is:
+Retention condition:
 
-    Omega(t)
+`C(t) > P(t)`
 
-`Omega(t)` defines the admissible domain within which a resonance window of phase transition may form.
+`Theta_N >= Theta_crit`
 
-The `5D` level receives:
+`T_int remains dynamically retained`
 
-- the phase-coherent state `Psi_coh`;
-- the cubic retention potential `C3`;
-- the inherited qualitative characteristics `Q(n)`;
-- the dissipative trace `D(n)`;
-- the dynamic asymmetry `A(n)`;
-- the current relation between `C(t)` and `P(t)`;
-- the density gradient of background non-resonant modes `grad rho_cont`.
+`J_flux remains inside the admissible exchange-flow configuration`
 
-The operational chain is:
+Output:
 
-    Psi_coh
-    → C3
-    → Omega(t)
-    → positive or negative resonance-window formation
-    → selection of the subsequent phase-transition trajectory
-
-The positive dynamic condition is:
-
-    C(t) > P(t)
-
-The critical boundary is:
-
-    C(t) ≈ P(t)
-
-The degradation condition is:
-
-    C(t) < P(t)
-
-The retention threshold is:
-
-    Theta_N >= Theta_crit
-
-The `5D` level performs the following functions:
-
-- forms the admissible geometry of the resonance window;
-- determines whether the available window supports synthesis or degradation;
-- transforms inherited asymmetry into endogenous bifurcation drift;
-- determines the direction of the subsequent phase transition;
-- connects the internal phase-coherent folding layer with the four-dimensional topological process;
-- configures the conditions under which a retained operational domain `Omega_ret` may form.
-
-A resonance window is not automatically positive.
-
-Its sign depends on the direction and qualitative characteristics of endogenous dynamic drift.
-
-### 4D — Topological Monolith of Matter of Space Time
-
-The `4D` level is the time-resolved topological monolith of Matter of Space Time.
-
-Its semantic subject is the continuous dynamic process through which the selected phase-transition trajectory becomes retained, transformed, redistributed, or degraded over time.
-
-The `4D` level is not a static three-dimensional form supplemented by an external clock.
-
-It is the continuous topological evolution of the complete retained configuration through tact-by-tact inheritance.
-
-The principal elements of this level are:
-
-    Omega(t)
-    Theta_N
-    T_int
-    C(t)
-    P(t)
-    C3
-    J_flux
-
-The `4D` level performs the following functions:
-
-- carries the selected resonance-window trajectory through time;
-- preserves or degrades the dynamic interface tensor `T_int`;
-- connects the internal phase-coherent architecture with the manifested layer;
-- distributes changes in `C(t)`, `P(t)`, and `C3` across the retained configuration;
-- transfers interface imbalance into `J_flux`;
-- preserves the inherited qualitative characteristics between consecutive tacts;
-- determines whether the system remains within `Omega_ret`.
-
-The four-dimensional retention condition requires the coupled preservation of:
-
-    C(t) > P(t)
-
-    Theta_N >= Theta_crit
-
-    T_int remains dynamically retained
-
-    J_flux remains within the admissible exchange-flow configuration
-
-The output of the `4D` level is the dynamically retained interface configuration entering the three-dimensional manifestation layer.
+`4D retained interface configuration → 3D manifestation layer`
 
 ### 3D — Manifestation and Local Quasi-Rest Layer
 
-The `3D` level is the layer of volumetric manifestation and local quasi-rest.
+`3D` is the layer of volumetric manifestation and local quasi-rest.
 
-Its semantic subject is the locally retained three-dimensional form generated by the preceding recursive, phase-coherent, resonance-window, and interface processes.
+Local relativistic invariant:
 
-The local relativistic invariant is:
+`E_rest = m c^2`
 
-    E_rest = m c^2
+Expanded medium relation:
 
-This relation describes the local energy of quasi-rest of the manifested form.
+`E_medium = E_rest Phi(Omega(t), C(t), rho_cont, grad M, phase, resonance, T_int, J_flux)`
 
-It does not describe the complete process of structural self-organization, dynamic retention, interaction with the medium, or recursive inheritance.
+Manifested mass anchor:
 
-The extended energy relation is:
+`M(t)`
 
-    E_medium = E_rest Phi(
-        Omega(t),
-        C(t),
-        rho_cont,
-        grad M,
-        phase,
-        resonance,
-        T_int,
-        J_flux
-    )
+Functions:
 
-Where:
-
-- `E_rest` is the local relativistic invariant of quasi-rest;
-- `Phi` describes the dynamic conditions of existence, retention, inheritance, and structural integrity;
-- `Omega(t)` defines the admissible phase-transition domain;
-- `C(t)` defines the general endogenous structural coherence;
-- `rho_cont` defines the density of background non-resonant modes;
-- `grad M` defines the gradient of the manifested mass configuration;
-- `phase` defines the current phase characteristics;
-- `resonance` defines the current resonance-window configuration;
-- `T_int` defines the dynamic manifestation interface;
-- `J_flux` defines the through-scale massless exchange-flow channel.
-
-The manifested mass anchor is:
-
-    M(t)
-
-`M(t)` is not treated as an isolated static substance.
-
-It is the time-dependent characteristic of a locally retained dynamic form.
-
-The `3D` level performs the following functions:
-
-- manifests the cubic volumetric configuration generated through `C3`;
-- retains a local mass anchor `M(t)`;
-- separates the local quasi-rest invariant from the complete dynamic process;
-- connects volumetric manifestation with the dynamic interface `T_int`;
-- transfers retained structural influence into `J_flux`;
-- provides the volumetric process observed through lower-dimensional instrumental slices.
+- manifestation of the cubic volumetric configuration formed through `C3`;
+- retention of the local mass anchor `M(t)`;
+- connection of volumetric manifestation with the dynamic interface `T_int`;
+- transfer of retained structural influence into `J_flux`;
+- provision of a volumetric process observed through lower-dimensional instrumental slices.
 
 ### 2D — Instrumental and Perceptual Projection Layer
 
-The `2D` level is the instrumental reduction of the volumetric dynamic process to a sensor-fixed observational slice.
+`2D` is the instrumental reduction of the volumetric dynamic process into a sensory-fixed observational slice.
 
-Its semantic subject is not the complete three-dimensional or four-dimensional process.
+Operational order parameter:
 
-Its semantic subject is the trace registered by an observation interface that reduces the volumetric process to a two-dimensional perceptual or instrumental projection.
+`R(t)`
 
-The operational order parameter of this layer is:
+`R(t)` describes the degree of observed phase ordering or phase synchronization in a registered two-dimensional trace.
 
-    R(t)
+Controlled distinction:
 
-`R(t)` describes the degree of observable phase ordering or phase synchronization in the registered two-dimensional trace.
+`R(t) ≠ C(t)`
 
-Phase synchronization means agreement of phases while amplitudes may remain dynamically chaotic.
+Functions:
 
-Phase coherence means dynamic agreement of both phases and amplitudes.
-
-Therefore:
-
-    phase synchronization ≠ phase coherence
-
-`R(t)` must not be identified with `C(t)`.
-
-The distinction is:
-
-    R(t)
-    → observable ordering or phase synchronization of the reduced sensor-fixed trace
-
-    C(t)
-    → general endogenous structural coherence of the complete open dynamic system
-
-A high value of `R(t)` may coexist with degradation of the complete endogenous structural coherence.
-
-A low value of `R(t)` may also result from incomplete projection, observational limitation, or loss of access to internal volumetric relations.
-
-The `2D` level performs the following functions:
-
-- projects the volumetric process onto a sensor-fixed observational plane;
-- registers a reduced phase trace;
-- calculates or visualizes the order parameter `R(t)`;
-- provides an instrumental representation of coherence-related processes;
-- separates observable phase synchronization from the complete endogenous structural coherence;
-- prepares the reduced trace for directional one-dimensional extraction.
-
-The `2D` level is therefore an observational slice of the process and not the process itself.
+- projection of volumetric process onto a sensory-fixed observational plane;
+- registration of a reduced phase trace;
+- computation or visualization of the order parameter `R(t)`;
+- separation of observable phase synchronization from general endogenous structural coherence;
+- preparation of the reduced trace for directed one-dimensional extraction.
 
 ### 1D — Directed Impulse and Exchange-Flow Layer
 
-The `1D` level is the minimal directed impulse and exchange-flow representation of the complete volumetric process.
+`1D` is the minimal directed representation of impulse and exchange flow of the full volumetric process.
 
-Its semantic subject is the directed transfer of impulse, phase influence, structural influence, dissipation, and exchange through a minimal operational vector.
+Core variable:
 
-The principal variable is:
+`J_flux`
 
-    J_flux
+Directed impulse can also be represented in reduced form as:
 
-The directed impulse may also be represented in reduced form as:
+`J`
 
-    J
+Controlled distinction:
 
-The transition into the one-dimensional layer is:
+`J ≠ J_flux`
 
-    U_6D
-    → C3
-    → controlled opening
-    → impulse transition
-    → directed output
-    → J_flux
+Transition into the one-dimensional layer:
 
-The exchange-flow residual is:
+`U_6D → C3 → controlled disclosure → impulse transition → directed output → J_flux`
 
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
+Exchange-flow residual:
 
-The left side:
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
-    R_J
+For locally balanced exchange-flow state:
 
-represents the unbalanced residual of the exchange-flow dynamics at the considered tact.
-
-The right side contains:
-
-- `partial_t J_flux` — temporal change of the exchange-flow channel;
-- `(J_flux · grad)J_flux` — convective transport of the exchange flow;
-- `gamma grad rho_cont` — influence of the gradient of background non-resonant modes;
-- `beta C3 J_flux` — contribution of cubic volumetric retention to the directed exchange flow.
-
-For a locally balanced exchange-flow state:
-
-    R_J = 0
+`R_J = 0`
 
 Therefore:
 
-    partial_t J_flux =
-        -(J_flux · grad)J_flux
-        - gamma grad rho_cont
-        - beta C3 J_flux
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
 
-The `1D` level performs the following functions:
+Interface projection:
 
-- extracts a directed exchange vector from the volumetric process;
-- transfers impulse and structural influence between retained and background modes;
-- carries the output of controlled impulse transitions;
-- connects the manifested mass anchor with redistribution and demanifestation;
-- provides the input for interface projection through `G_int`;
-- closes the direct and reverse operational chains of EDK.
-
-The interface projection is:
-
-    projected interface response = G_int R_J
-
-The `1D` output therefore does not exist separately from the preceding levels.
-
-It is the minimal directed expression of the complete recursive, phase-coherent, volumetric, interface, and manifestation process.
+`projected_interface_response = G_int R_J`
 
 ## EN — Dimensional Reduction and Causal Continuity
 
-The complete reduction is:
+Complete reduction:
 
-    7D recursive inheritance
-    → 6D toroidal phase-coherent folding
-    → 5D bifurcation choice and resonance-window formation
-    → 4D tact-by-tact topological evolution
-    → 3D volumetric manifestation and local quasi-rest
-    → 2D sensor-fixed observational projection
-    → 1D directed impulse and exchange-flow output
+`7D — recursive inheritance → 6D — toroidal phase-coherent convolution → 5D — bifurcation choice and resonance-window phase-transition formation → 4D — tact-by-tact topological evolution → 3D — volumetric manifestation and local quasi-rest → 2D — sensory-fixed observational projection → 1D — directed impulse and exchange-flow output`
 
-Each subsequent level inherits the qualitative characteristics and constraints of the preceding level.
+Each subsequent level inherits qualitative characteristics and constraints of the preceding level.
 
-No lower-dimensional level is a complete replacement for the preceding volumetric process.
+Reduction preserves causal continuity:
 
-The reduction preserves causal continuity:
+`recursive inheritance → phase-coherent convolution → resonance-window phase-transition choice → topological retention → volumetric manifestation → instrumental projection → directed exchange`
 
-    recursive inheritance
-    → phase-coherent folding
-    → resonance-window selection
-    → topological retention
-    → volumetric manifestation
-    → instrumental projection
-    → directed exchange
+Reverse chain:
 
-The reverse chain is:
-
-    exchange-flow imbalance
-    → interface projection
-    → degradation of T_int
-    → loss of M(t)
-    → deformation of Omega(t)
-    → loss of phase-coherent folding
-    → transformation of the inherited state Q(n+1)
-
-The `7D` to `1D` cascade therefore forms a closed theorem-algorithmic process of recursive inheritance, manifestation, observation, exchange, redistribution, degradation, and subsequent dynamic continuation.
-
----
+`exchange-flow imbalance → interface projection → degradation of T_int → loss of M(t) → deformation of Omega(t) → loss of phase-coherent convolution → transformation of inherited state Q(n+1)`
 
 ## EN — Repository Structure and Documentation Map
 
 The repository is organized as a layered theorem-algorithmic framework.
 
-The directory structure separates:
-
-- the theorem-descriptive corpus;
-- the controlled terminology layer;
-- the mathematical-formal layer;
-- the executable algorithmic modules;
-- the phase-coupling layer;
-- the system orchestration layer;
-- the citation, licensing, and release metadata.
-
-These layers remain functionally distinct while preserving one continuous causal and operational chain:
-
-    theorem-descriptive definitions
-    → controlled terminology
-    → mathematical formalization
-    → numerical algorithms
-    → executable modules
-    → through-scale coupling
-    → system orchestration
-    → testable operational output
-
-### Root Repository Structure
+Root structure:
 
     Endogenous-Dynamics-of-the-Continuum/
     │
@@ -884,9 +500,11 @@ These layers remain functionally distinct while preserving one continuous causal
     ├── glossary/
     ├── mathematical_formalism/
     │
+    ├── module_edk_continuum_simulation/
     ├── module_edk_impulse_transition/
     ├── module_edk_visual_protocol/
     ├── module_framework_core/
+    ├── module_marnov_protocol_reverse_decoding/
     ├── module_metric_bridge_solver/
     ├── module_molecular_phase_chemistry/
     ├── module_organic_matrix/
@@ -902,352 +520,222 @@ These layers remain functionally distinct while preserving one continuous causal
     ├── LICENSE.md
     └── README.md
 
-Additional modules already present in the current repository branch retain their existing names and functional boundaries.
-
-They must not be renamed, merged, or removed without a separate structural decision.
-
 ### Theorem-Descriptive Corpus
 
-The theorem-descriptive corpus is located in:
+Path:
 
-    EDK_theorem_framework_EN_RU/
+`EDK_theorem_framework_EN_RU/`
 
-The current chapter structure includes:
+Chapter format:
 
-    chapter_01/
-    chapter_02/
-    chapter_03/
-    chapter_04/
-    chapter_05/
-    chapter_06/
-    chapter_07/
-    chapter_08/
-    chapter_09/
-    chapter_10/
+`chapter_XX/chapter_XX_EN_RU.md`
 
-Each chapter directory contains the corresponding bilingual chapter file:
+Language order inside chapter files:
 
-    chapter_XX/chapter_XX_EN_RU.md
-
-The language order inside each bilingual file is:
-
-    complete English layer
-    → complete Russian layer
-
-The theorem-descriptive corpus establishes the semantic subjects, scientific terms, causal relations, operational definitions, and applicability boundaries that must be preserved by the mathematical and executable layers.
+`full English layer → full Russian layer`
 
 ### Controlled Terminology Layer
 
-The controlled terminology layer is located in:
+Path:
 
-    glossary/
+`glossary/`
 
-The glossary preserves the definitions and scopes of the principal EDK terms, variables, operators, and relations.
+The glossary preserves definitions and scope of the core EDK terms, variables, operators, and relations.
 
-The same scientific term must preserve the same semantic subject and scope of applicability throughout:
+### Mathematical Formalism Layer
 
-- the theorem-descriptive corpus;
-- the mathematical formalism;
-- the executable code;
-- the module documentation;
-- the root README.
+Path:
 
-### Mathematical-Formal Layer
+`mathematical_formalism/`
 
-The mathematical apparatus is located in:
+Recommended reading order:
 
-    mathematical_formalism/
-
-The current file structure includes:
-
-    mathematical_formalism/
-    │
-    ├── README.md
-    ├── 01_full_cascade_7D_to_1D_EN_RU.md
-    ├── 02_stage_formulas_7D_1D_EN_RU.md
-    ├── 03_closing_equations_EN_RU.md
-    ├── 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md
-    ├── 05_numerical_algorithm_FDTD_EN_RU.md
-    ├── 06_tensor_matrix_dynamic_interface_EN_RU.md
-    ├── 07_fractal_morphogenesis_biomatrix_EN_RU.md
-    ├── 08_toroidal_operator_U6D_EN_RU.md
-    ├── 09_impulse_transition_algorithm_7D_EN_RU.md
-    ├── poynting_vector_transition_EN_RU.md
-    ├── interface_projection_balance_formalism_4D_2D_1D_EN_RU.md
-    └── appendix_black_luminous_sphere_dissipation.md
-
-The mathematical files must be read as interconnected layers of one theorem-algorithmic process rather than as independent constructions.
-
-The recommended reading order is:
-
-    README.md
-    → 01_full_cascade_7D_to_1D_EN_RU.md
-    → 02_stage_formulas_7D_1D_EN_RU.md
-    → 03_closing_equations_EN_RU.md
-    → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md
-    → 05_numerical_algorithm_FDTD_EN_RU.md
-    → 06_tensor_matrix_dynamic_interface_EN_RU.md
-    → 07_fractal_morphogenesis_biomatrix_EN_RU.md
-    → 08_toroidal_operator_U6D_EN_RU.md
-    → 09_impulse_transition_algorithm_7D_EN_RU.md
-    → poynting_vector_transition_EN_RU.md
-    → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md
-    → appendix_black_luminous_sphere_dissipation.md
+`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
 
 ### Executable Algorithmic Layer
 
-The executable modules are organized according to their functional roles:
+Core executable modules:
 
-    module_framework_core/
-    → module_solar_synthesis/
-    → module_wave_genetics/
-    → module_molecular_phase_chemistry/
-    → module_planetary_resonance/
-    → module_organic_matrix/
-    → module_edk_visual_protocol/
-    → module_edk_impulse_transition/
-    → module_metric_bridge_solver/
-    → continuum_core_engine.py
+`module_framework_core/`
 
-The causal order and the software dependency order must not be conflated.
+`module_solar_synthesis/`
 
-A process may act earlier in the physical or theoretical causal chain while its executable implementation depends on outputs calculated by several software layers.
+`module_wave_genetics/`
 
-### Structural Integrity Rule
+`module_molecular_phase_chemistry/`
 
-Each directory and file must retain one clearly defined functional role.
+`module_planetary_resonance/`
 
-The repository must not create duplicate semantic layers under different names.
+`module_organic_matrix/`
 
-The governing structural rule is:
+`module_edk_visual_protocol/`
 
-    one directory
-    → one functional layer
+`module_edk_impulse_transition/`
 
-    one executable file
-    → one concrete computational mechanism
+`module_metric_bridge_solver/`
 
-    one module README
-    → one complete description of the corresponding functional layer
+`module_marnov_protocol_reverse_decoding/`
 
-The root `README.md` provides the scientific and architectural map of the repository.
+`module_edk_continuum_simulation/`
 
-Complete theorem descriptions, mathematical derivations, numerical algorithms, module-specific inputs, outputs, and implementation details remain in their corresponding specialized files.
+`continuum_core_engine.py`
 
----
+The causal architecture and executable dependency order are documented separately.
+
+A process can appear earlier in the theoretical causal chain while its executable implementation depends on values calculated by another program layer.
 
 ## EN — Executable Module Architecture
-
-The executable layer implements the numerical and operational mechanisms of the EDK theorem-algorithmic framework without replacing the theorem-descriptive and mathematical-formal layers.
-
-The principal functional order is:
-
-    module_framework_core
-    → module_solar_synthesis
-    → module_wave_genetics
-    → module_molecular_phase_chemistry
-    → module_planetary_resonance
-    → module_organic_matrix
-    → module_edk_visual_protocol
-    → module_edk_impulse_transition
-    → module_metric_bridge_solver
-    → continuum_core_engine
-
-The causal order and the software dependency order must not be conflated.
 
 ### Framework Core
 
 Path:
 
-    module_framework_core/
+`module_framework_core/`
 
-Function:
+Functions:
 
 - shared state variables;
-- common numerical structures;
+- shared numerical structures;
 - operational parameter containers;
 - base update procedures;
 - dynamic-state classification;
 - common interfaces for dependent modules.
 
-The framework core preserves:
+Preserved variables and operators:
 
-    Phi
-    Omega(t)
-    Omega_ret
-    C(t)
-    P(t)
-    C3
-    Theta_N
-    Theta_crit
-    T_int
-    M(t)
-    J_flux
-    rho_cont
-    R_J
-    G_int
-    R(t)
+`Phi Omega(t) Omega_ret C(t) P(t) C3 Theta_N Theta_crit T_int M(t) J_flux rho_cont R_J G_int R(t)`
 
-The framework core is the common software dependency layer.
+### Continuum Simulation
 
-It does not replace the scientific definitions from which these variables and operators are derived.
+Path:
+
+`module_edk_continuum_simulation/`
+
+Functions:
+
+- tact-by-tact simulation of phase-layer dynamics;
+- calculation of phase synchronization indicators;
+- support of manifested mass and exchange-flow proxy variables;
+- bridge layer for wave-genetic and downstream modules.
 
 ### Solar Synthesis
 
 Path:
 
-    module_solar_synthesis/
+`module_solar_synthesis/`
 
-Function:
+Main file:
 
-- solar forcing;
-- ionospheric modulation;
-- planetary-medium modulation;
-- environmental-pressure modulation;
-- macrolevel input for the planetary resonance layer.
+`module_solar_synthesis/solar_synthesis_resonator.py`
 
 Operational chain:
 
-    solar forcing
-    → ionospheric modulation
-    → planetary-medium forcing
+`external forcing → plasma-amplitude dynamics → phase synchronization indicator R_t → independent C(t) → P(t) → Omega(t) → positive structural work → accumulated dissipation → macro_light_flux → appearance_index → planetary layer`
+
+Controlled distinctions:
+
+`R_t ≠ C(t)`
+
+`macro_light_flux ≠ J_flux`
 
 Primary output:
 
-    solar forcing configuration
+`macro_light_flux`
 
 ### Wave Genetics
 
 Path:
 
-    module_wave_genetics/
+`module_wave_genetics/`
 
-Function:
+Functions:
 
 - reception of `J_flux`;
-- biophoton-signal generation;
+- formation of biophoton signal;
 - biological modulation;
-- DNA-associated oscillator dynamics;
+- DNA-related oscillator dynamics;
 - medium-memory response;
 - reconstruction of biological signals.
 
 Operational chain:
 
-    J_flux
-    → biophoton signal
-    → biological modulation
-    → medium-memory response
-
-Primary outputs:
-
-    modulated biological signal
-    medium-memory state
+`J_flux → biophoton signal → biological modulation → medium-memory response`
 
 ### Molecular Phase Chemistry
 
 Path:
 
-    module_molecular_phase_chemistry/
+`module_molecular_phase_chemistry/`
 
 Dependencies:
 
-    module_framework_core
-    module_wave_genetics
+`module_framework_core`
 
-Function:
+`module_wave_genetics`
+
+Functions:
 
 - molecular phase relations;
 - medium-memory influence;
 - formation of the molecular binding matrix;
 - coherence-dependent molecular stabilization;
-- degradation of molecular coupling under destabilizing environmental pressure;
-- recursive inheritance of molecular configuration parameters.
+- degradation of molecular coupling under destabilizing pressure;
+- recursive inheritance of molecular-configuration parameters.
 
 Operational chain:
 
-    biophoton_signal
-    → medium_memory_tensor
-    → binding_matrix
-
-Primary output:
-
-    binding_matrix
-
-The molecular phase-chemistry layer remains dynamically coupled to:
-
-    C(t)
-    P(t)
-    C3
-    T_int
-    J_flux
+`biophoton_signal → medium_memory_tensor → binding_matrix`
 
 ### Planetary Resonance
 
 Path:
 
-    module_planetary_resonance/
+`module_planetary_resonance/`
 
-Executable file:
+Main file:
 
-    module_planetary_resonance/schumann_planetary_resonator.py
+`module_planetary_resonance/schumann_planetary_resonator.py`
 
 Dependencies:
 
-    module_framework_core
-    module_solar_synthesis
-    module_wave_genetics
-    module_molecular_phase_chemistry
+`module_framework_core`
 
-Function:
+`module_solar_synthesis`
 
-- Earth–ionosphere resonator dynamics;
-- ionospheric deformation;
-- active fundamental-frequency calculation;
+`module_wave_genetics`
+
+`module_molecular_phase_chemistry`
+
+Functions:
+
+- Earth-ionosphere resonator dynamics;
+- ionosphere distortion;
+- active fundamental frequency calculation;
 - planetary phase;
 - planetary forcing;
 - planetary appearance index;
 - calculation of `r_geo`;
 - modulation of biological and molecular layers.
 
-Complete operational chain:
+Operational chain:
 
-    solar_flux
-    → ionosphere_distortion
-    → active_fundamental
-    → planetary_phase
-    → planetary_forcing_value
-    → planetary_appearance_index
-    → r_geo
-    → stabilized DNA signal
-    → molecular phase chemistry
-
-Reduced operational chain:
-
-    Schumann forcing
-    → r_geo
-    → stabilization or destabilization of the coupled cascade
-
-The planetary field does not replace local general endogenous structural coherence `C(t)`.
-
-It modifies the environmental and phase-coupling conditions under which the local system attempts to preserve:
-
-    C(t) > P(t)
+`solar_flux → ionosphere_distortion → active_fundamental → planetary_phase → planetary_forcing_value → planetary_appearance_index → r_geo → stabilized DNA signal → molecular phase chemistry`
 
 ### Organic Matrix
 
 Path:
 
-    module_organic_matrix/
+`module_organic_matrix/`
 
-Executable file:
+Main file:
 
-    module_organic_matrix/marnov_organic_matrix_generator.py
+`module_organic_matrix/marnov_organic_matrix_generator.py`
 
 Documentation:
 
-    module_organic_matrix/README_EN_RU.md
+`module_organic_matrix/README_EN_RU.md`
 
-Function:
+Functions:
 
 - nonlinear volumetric retention;
 - asymmetric field development;
@@ -1255,223 +743,162 @@ Function:
 - diffusion;
 - branching;
 - saturation;
-- appearance-index calculation;
-- manifestation of the organic structural matrix.
+- organic appearance-index calculation;
+- manifestation of an organic structural matrix.
 
 Operational chain:
 
-    J_flux
-    → wave-genetic modulation
-    → medium-memory tensor
-    → molecular binding matrix
-    → fractal morphogenesis
-    → organic-matrix manifestation
+`J_flux → wave-genetic modulation → medium-memory tensor → molecular binding matrix → fractal-like morphogenesis → organic matrix manifestation`
 
-Primary outputs:
-
-    spatial manifestation field
-    appearance index
-    branching profile
-    saturation profile
-    recursive growth state
-
-The organic matrix is treated as a dynamically retained process of structural self-organization, not as an isolated static biological object.
-
-### EDK Engineering Visual Protocol
+### EDK Visual Protocol
 
 Path:
 
-    module_edk_visual_protocol/
+`module_edk_visual_protocol/`
 
-Executable file:
+Main file:
 
-    module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+`module_edk_visual_protocol/marnov_cubic_potential_visualizer.py`
 
 Documentation:
 
-    module_edk_visual_protocol/README_EN_RU.md
+`module_edk_visual_protocol/README_EN_RU.md`
 
-Function:
+Functions:
 
 - visualization of `U_6D`;
 - visualization of `C3`;
 - phase-configuration diagnostics;
-- amplitude-lock diagnostics;
+- lock-amplitude diagnostics;
 - dynamic-interface profile;
-- bifurcation-point detection;
-- visualization of the approach to the critical boundary;
-- visualization of the transition between retention and destabilization.
-
-Primary outputs:
-
-    engineering diagnostic plots
-    bifurcation markers
-    interface profile
-    volumetric-retention profile
-
-The visual protocol does not replace the mathematical definitions of the visualized variables and operators.
+- bifurcation-marker detection;
+- visualization of approach to the critical boundary;
+- visualization of phase transition between retention and destabilization.
 
 ### EDK Impulse Transition
 
 Path:
 
-    module_edk_impulse_transition/
+`module_edk_impulse_transition/`
 
-Executable file:
+Main file:
 
-    module_edk_impulse_transition/poynting_flux_transition.py
+`module_edk_impulse_transition/poynting_flux_transition.py`
 
 Documentation:
 
-    module_edk_impulse_transition/README_EN_RU.md
+`module_edk_impulse_transition/README_EN_RU.md`
 
-Function:
+Functions:
 
-- controlled opening of the internally retained configuration;
+- controlled disclosure of an internally retained configuration;
 - impulse transition;
 - reduction into a directed output channel;
 - formation of the directed exchange-flow output.
 
 Operational chain:
 
-    U_6D
-    → C3
-    → controlled opening
-    → impulse transition
-    → directed output flux
-    → J_flux
+`U_6D → C3 → controlled disclosure → impulse transition → directed output flow → J_flux`
 
-The module preserves the distinction between:
+Controlled distinction:
 
-    S_EM = E × H
-
-as the physical electromagnetic Poynting vector, and:
-
-    S_1D
-
-as the reduced directed-output proxy of the algorithmic transition layer.
+`S_EM ≠ S_1D`
 
 Primary output:
 
-    J_flux
+`J_flux`
 
 ### Metric Bridge Solver
 
 Path:
 
-    module_metric_bridge_solver/
+`module_metric_bridge_solver/`
 
-Executable file:
+Main file:
 
-    module_metric_bridge_solver/metric_bridge.py
+`module_metric_bridge_solver/metric_bridge.py`
 
 Documentation:
 
-    module_metric_bridge_solver/README_EN_RU.md
+`module_metric_bridge_solver/README_EN_RU.md`
 
 Inputs:
 
-    J_flux
-    partial_t J_flux
-    grad J_flux
-    grad rho_cont
-    C3
-    G_int
-    C(t)
-    P(t)
-    g_mu_nu
+`J_flux partial_t J_flux grad J_flux grad rho_cont C3 G_int C(t) P(t) g_mu_nu`
 
-Function:
+Functions:
 
-- calculation of the exchange-flow residual `R_J`;
+- calculation of exchange-flow residual `R_J`;
 - calculation of exchange-flow acceleration;
 - projection through `G_int`;
-- calculation of the projected interface response;
-- classification of the EDS, EDC, or degradation state;
-- calculation of the model-specific metric-deformation proxy.
+- calculation of projected interface response;
+- classification of EDS, EDC, or degradation state;
+- calculation of a model-specific metric-deformation proxy.
 
 Exchange-flow residual:
 
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
 Interface projection:
 
-    projected interface response = G_int R_J
+`projected_interface_response = G_int R_J`
 
-The module preserves the distinction between:
-
-    g_mu_nu
-    → metric tensor
-
-    T_int
-    → dynamic interface tensor
-
-    T^{mu nu}
-    → stress-energy representation
-
-    R_J
-    → exchange-flow residual
-
-    G_int
-    → interface projection operator
-
-The metric-deformation output is a model-specific numerical proxy.
-
-It is not presented as a complete solution of the Einstein field equations.
-
-### Phase-Coupling Layer
+### Marnov Protocol Reverse Decoding
 
 Path:
 
-    phase_coupling/
+`module_marnov_protocol_reverse_decoding/`
 
-Function:
+Main file:
+
+`module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py`
+
+Documentation:
+
+`module_marnov_protocol_reverse_decoding/README_EN_RU.md`
+
+Functions:
+
+- deterministic byte-to-phase encoding;
+- deterministic collision-free 3D address generation;
+- sparse 3D complex payload construction;
+- nonlinear phase-lock transformation;
+- reverse reconstruction through 256-candidate phase matching;
+- optional UTF-8 text reconstruction;
+- full text and byte-cycle verification.
+
+Operational chain:
+
+`byte sequence → byte-to-phase mapping → sparse 3D complex payload → nonlinear phase-lock transformation → locked payload → 256-candidate phase matching → reconstructed bytes → optional UTF-8 text`
+
+### Phase Coupling Layer
+
+Path:
+
+`phase_coupling/`
+
+Functions:
 
 - coupling of endogenous phase processes;
-- resonance-window formation;
-- retained-domain dynamics;
-- dynamic-interface coupling;
+- formation of resonance-window phase transitions;
+- dynamics of retained operational domains;
+- coupling of dynamic interfaces;
 - recursive inheritance;
 - exchange-flow redistribution.
 
-Each phase-coupling mechanism must identify:
+Controlled distinction:
 
-- which phase modes are coupled;
-- which endogenous structural processes participate;
-- whether only phases are synchronized;
-- whether both phases and amplitudes remain dynamically coherent;
-- the role of `Omega_ret`;
-- the function of the coupling in retention, phase transition, or degradation.
-
-The controlled distinction is:
-
-    phase synchronization
-    → agreement of phases while amplitudes may remain dynamically chaotic
-
-    phase coherence
-    → dynamic agreement of both phases and amplitudes
-
-Therefore:
-
-    phase synchronization ≠ phase coherence
-
-Phase synchronization may act as a local mechanism or operational indicator.
-
-It is not identical to the general endogenous structural coherence `C(t)`.
+`phase synchronization ≠ phase coherence`
 
 ### Continuum Core Engine
 
 System orchestrator:
 
-    continuum_core_engine.py
+`continuum_core_engine.py`
 
-Function:
+Functions:
 
-- assembly of the executable modules;
+- assembly of executable modules;
 - coordination of module inputs and outputs;
 - tact-by-tact numerical updates;
 - evaluation of dynamic-retention conditions;
@@ -1481,56 +908,21 @@ Function:
 - cross-scale feedback;
 - recursive inheritance of qualitative characteristics.
 
-System assembly:
+System cycle:
 
-    module_framework_core
-    → module_solar_synthesis
-    → module_wave_genetics
-    → module_molecular_phase_chemistry
-    → module_planetary_resonance
-    → module_organic_matrix
-    → module_edk_visual_protocol
-    → module_edk_impulse_transition
-    → module_metric_bridge_solver
-    → recursive system feedback
+`state Q(n) → update of shared operational parameters → solar and planetary modulation → wave-genetic modulation → molecular phase chemistry → organic matrix manifestation → visual diagnostics → controlled impulse transition → exchange-flow residual → interface projection → dynamic-state classification → recursive feedback → state Q(n+1)`
 
-System-level cycle:
+## EN — Installation and Run
 
-    state Q(n)
-    → update of shared operational parameters
-    → solar and planetary modulation
-    → wave-genetic modulation
-    → molecular phase chemistry
-    → organic-matrix manifestation
-    → visual diagnostics
-    → controlled impulse transition
-    → exchange-flow residual
-    → interface projection
-    → dynamic-state classification
-    → recursive feedback
-    → state Q(n+1)
-
-The orchestrator does not erase the functional boundaries of the individual modules.
-
-Each module preserves its own semantic subject, inputs, outputs, mathematical relations, functional role, and scope of applicability.
-
----
-
-## EN — Installation and Launch
-
-The repository must be executed from the root directory so that the module paths and shared imports remain available to the complete EDK architecture.
-
-### Repository Acquisition
+The repository is intended to be run from the root directory.
 
 Clone the repository:
 
     git clone https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum.git
 
-Enter the repository directory:
+Enter the repository:
 
     cd Endogenous-Dynamics-of-the-Continuum
-
-### Python Environment
 
 Create a virtual environment:
 
@@ -1544,310 +936,221 @@ Activate the environment on Linux or macOS:
 
     source .venv/bin/activate
 
-When the operating system uses `python3` instead of `python`, replace the command accordingly.
-
-### Dependency Installation
-
-Install the dependencies defined in `requirements.txt`:
+Install dependencies:
 
     python -m pip install --upgrade pip
     python -m pip install -r requirements.txt
 
-The current dependency set is:
+Current dependency set:
 
     numpy>=1.26.0
     matplotlib>=3.8.0
 
-Additional dependencies must be added only when they are actually required by an executable module.
+Run selected modules from the repository root:
 
-### Repository Root Requirement
-
-All executable files must be launched from:
-
-    Endogenous-Dynamics-of-the-Continuum/
-
-Running a module from its internal directory may break shared imports and module dependencies.
-
-### Individual Module Launch
-
-Organic-matrix module:
-
-    python module_organic_matrix/marnov_organic_matrix_generator.py
-
-EDK engineering visual protocol:
-
-    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
-
-EDK impulse-transition module:
-
-    python module_edk_impulse_transition/poynting_flux_transition.py
-
-Metric-bridge solver:
-
-    python module_metric_bridge_solver/metric_bridge.py
-
-Planetary-resonance module:
-
+    python module_solar_synthesis/solar_synthesis_resonator.py
+    python module_wave_genetics/wave_genetics_dna_oscillator.py
+    python module_molecular_phase_chemistry/molecular_phase_chemistry.py
     python module_planetary_resonance/schumann_planetary_resonator.py
+    python module_organic_matrix/marnov_organic_matrix_generator.py
+    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+    python module_edk_impulse_transition/poynting_flux_transition.py
+    python module_metric_bridge_solver/metric_bridge.py
+    python module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py
 
-### Complete System Launch
-
-After the individual modules have been verified, launch the system orchestrator:
+Run the full system orchestrator:
 
     python continuum_core_engine.py
 
-The complete executable chain is:
+## EN — Operational Integrity Control
 
-    module_framework_core
-    → module_solar_synthesis
-    → module_wave_genetics
-    → module_molecular_phase_chemistry
-    → module_planetary_resonance
-    → module_organic_matrix
-    → module_edk_visual_protocol
-    → module_edk_impulse_transition
-    → module_metric_bridge_solver
-    → continuum_core_engine
+The implementation preserves the following controlled distinctions:
 
-### Operational Integrity Control
+`phase synchronization ≠ phase coherence`
 
-The implementation must preserve the controlled distinctions:
+`R(t) ≠ C(t)`
 
-    phase synchronization ≠ phase coherence
+`C(t) ≠ C3`
 
-    R(t) ≠ C(t)
+`T_int ≠ M(t)`
 
-    C(t) ≠ C3
+`J ≠ J_flux`
 
-    T_int ≠ M(t)
+`macro_light_flux ≠ J_flux`
 
-    J_flux ≠ material mass transfer
+`S_1D ≠ full physical electromagnetic Poynting vector`
 
-    S_1D ≠ complete physical electromagnetic Poynting vector
+`metric response proxy ≠ complete relativistic metric implementation`
 
-    metric-response proxy ≠ complete solution of the Einstein field equations
+Retained state:
 
-The retained state is:
+`C(t) > P(t)`
 
-    C(t) > P(t)
+Endogenous Dynamic Criticality boundary:
 
-The boundary of endogenous dynamic criticality is:
+`C(t) ≈ P(t)`
 
-    C(t) ≈ P(t)
+Degradation state:
 
-The degradation state is:
+`C(t) < P(t)`
 
-    C(t) < P(t)
+Forward chain:
 
-The complete direct chain must remain preserved:
+`Phi → phase coherence → C(t) → T_int → M(t) → J_flux`
 
-    Phi
-    → phase coherence
-    → C(t)
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
+Reverse chain:
 
-The complete reverse chain must also remain preserved:
+`loss of C(t) → degradation of T_int → reduction or demanifestation of M(t) → redistribution through J_flux → return into background non-resonant modes rho_cont`
 
-    loss of C(t)
-    → degradation of C3
-    → degradation of T_int
-    → reduction or demanifestation of M(t)
-    → redistribution through J_flux
-    → return into background non-resonant modes rho_cont
+Recursive update:
 
-The subsequent state must inherit the transformed qualitative characteristics of the preceding state:
+`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
 
-    Q(n+1) =
-        F(
-            Q(n),
-            C(t),
-            P(t),
-            C3,
-            T_int,
-            J_flux,
-            Omega(t),
-            rho_cont
-        )
+## EN — Scope of Application
 
-The recursive update must not reset the system as an independent initial state after each cycle.
+The framework applies to open nonlinear dissipative dynamic systems in which structural self-organization is maintained through recursive dynamic balancing of phase coherence, interface retention, exchange flow, dissipative trace, and tact-by-tact inheritance of qualitative characteristics.
 
----
+The cross-scale scope includes diverse forms, levels, and transitional states of structural self-organization of Space-Time Matter:
 
-## EN — Scope of Applicability
+- quantum states and quantum multipletness;
+- elementary structures;
+- atomic nuclei;
+- atoms;
+- molecular forms;
+- stellar macroresonators;
+- stellar-planetary systems;
+- galactic domains;
+- collapse, demanifestation, and recycling regions;
+- local Continuum domains with phase-energy coupling, volumetric restructuring, resonance-window phase transitions, and dissipative impulse redistribution;
+- algorithmic model layers where `C(t)`, `P(t)`, `Phi`, `Omega(t)`, `T_int`, `J_flux`, and related operators are tested as formal invariants of the theorem-algorithmic framework.
 
-The theorem applies to open nonlinear dissipative dynamic systems in which the process of structural self-organization of diverse forms, levels, and transitional states of Matter of Space Time is retained not through static equilibrium, but through recursive dynamic balancing of phase coherence, cubic saturation of volume, exchange flow, dissipative trace, and recursive tact-by-tact inheritance of qualitative characteristics.
+## EN — Verifiable Consequences
 
-The through-scale scope of applicability covers diverse forms, levels, and transitional states of structural self-organization of Matter of Space Time: from quantum multipletness, elementary structures, atomic nuclei, atoms, and molecular forms to stellar-planetary systems, galactic domains, and macrostructures of the Continuum.
+The framework defines the following operationally verifiable consequences:
 
-The primary scope of applicability includes:
-
-- the microlevel of structural self-organization of Matter of Space Time: quantum states, quantum multipletness, elementary structures, atomic nuclei, atoms, and molecular forms, levels, and transitional states;
-
-- atomic nuclei as ultra-dense dynamic processes of structural self-organization retained through internal coherence, phase coupling, and binding energy;
-
-- molecular structures as phase-coupled configurations of atomic and molecular oscillators retained through medium memory, binding matrices, and coherence-support processes;
-
-- stars as volumetric plasma macroresonators;
-
-- stellar-planetary systems as local volumetric configurations of phase-energy coupling;
-
-- galactic domains as networks of stellar macroresonators;
-
-- domains of collapse, demanifestation, and recycling of diverse forms and levels of structural self-organization of Matter of Space Time;
-
-- local domains of the Continuum in which phase-energy coupling, volumetric restructuring, resonance windows of phase transitions, and dissipative redistribution of impulse are observed;
-
-- algorithmic model layers in which `C(t)`, `P(t)`, `Phi`, `Omega(t)`, `T_int`, `J_flux`, and the related operators are tested as formal invariants of the theorem-algorithmic framework.
-
-The theorem does not describe isolated static objects.
-
-It describes dynamic processes of structural self-organization, retention, degradation, transition, and recursive inheritance within the open nonlinear dissipative dynamic structure of the Continuum observed by us.
-
----
-
-## EN — Testable Consequences
-
-The theorem assumes the following testable consequences:
-
-- volumetric distribution of impulse;
-
-- dependence of dynamic stability on cubic nonlinear saturation of volume `C^3`;
-
-- transition of the system toward endogenous dynamic criticality when `C(t)` approaches `P(t)`;
-
-- change in the geometry of `Omega(t)` when phase-coherent retention changes;
-
-- existence of the dynamic manifestation interface `T_int`;
-
-- separation of the manifested-mass gradient into tangential and normal contours;
-
-- nullification of the normal mass discontinuity when phase coherence is lost;
-
-- degradation of the dynamic manifestation interface under the influence of destabilizing environmental pressure `P(t)`;
-
+- volumetric impulse distribution;
+- dependence of dynamic stability on cubic nonlinear volumetric saturation `C3`;
+- transition toward Endogenous Dynamic Criticality when `C(t)` approaches `P(t)`;
+- change of `Omega(t)` geometry when phase-coherent retention changes;
+- existence of a dynamic manifestation interface `T_int`;
+- separation of manifested mass gradient into tangential and normal contours;
+- normal mass-discontinuity cancellation during loss of phase coherence;
+- degradation of the dynamic manifestation interface under destabilizing pressure `P(t)`;
 - transition from retention to demanifestation when the condition `C(t) > P(t)` is violated;
-
-- connection of macroscopic anomalies of the medium with `grad rho_cont`;
-
-- tact-by-tact reduction of the observed “flight” of the photon;
-
+- relation of macroscopic medium anomalies to `grad rho_cont`;
+- tact-by-tact reduction of the observed photon “flight”;
 - distinction between resonance, dissonance, partial phase synchronization, phase coherence, and coherent resonance coupling;
-
-- dependence of the subsequent cycle `Q(n+1)` on the qualitative characteristics inherited from the preceding cycle `Q(n)`;
-
-- formation of resonance windows of phase transitions within the admissible operational domain of states `Omega(t)`;
-
+- dependence of the subsequent cycle `Q(n+1)` on qualitative characteristics inherited from the preceding cycle `Q(n)`;
+- formation of resonance-window phase transitions inside the admissible operational domain `Omega(t)`;
 - distinction between the observable phase synchronization parameter `R(t)` and the general endogenous structural coherence `C(t)`;
-
-- stabilization or degradation of the algorithmic cascade depending on the relation between `C(t)`, `P(t)`, `T_int`, `J_flux`, and the configuration supporting the coherence of the system.
-
-These consequences establish an operational bridge between the theorem-descriptive layer, the mathematical-formal layer, and the algorithmic modular layer of the repository.
-
----
+- stabilization or degradation of the algorithmic cascade depending on the relation between `C(t)`, `P(t)`, `T_int`, `J_flux`, and the system coherence-supporting configuration.
 
 ## EN — License
 
 The textual, theorem-algorithmic, mathematical, and descriptive part of this publication is intended for distribution under the Creative Commons Attribution 4.0 International license, CC BY 4.0.
 
-The repository contains not only descriptive and theorem-formal materials, but also executable algorithmic modules.
+The repository also contains executable algorithmic modules.
 
-Therefore, the licensing status of the executable program code is fixed separately in `LICENSE.md` or in a dedicated code-licensing section, if required.
+The licensing status of executable software code is fixed separately in:
 
-Use, citation, translation, distribution, and adaptation of the textual and theorem-formal part are permitted provided that authorship is correctly attributed.
+`LICENSE.md`
+
+Use, citation, translation, distribution, and adaptation of the textual and theorem-formal part are permitted with proper attribution.
 
 Author:
 
-Maksym Marnov
+`Maksym Marnov`
 
 Work:
 
-Endogenous Dynamics of the Continuum
+`Endogenous Dynamics of the Continuum`
 
 License:
 
-Creative Commons Attribution 4.0 International, CC BY 4.0
-
----
+`Creative Commons Attribution 4.0 International, CC BY 4.0`
 
 ## EN — Citation
 
-Until a DOI is issued through Zenodo, this repository should be cited as an open publication by the author.
+Before assignment of a DOI through Zenodo, cite this repository as an open author publication.
 
-After the GitHub release is archived through Zenodo, the DOI will be added to this section and to `CITATION.cff`.
+After GitHub release archiving through Zenodo, the DOI will be added to this section and to:
 
-Recommended citation before DOI issuance:
+`CITATION.cff`
 
-Marnov, Maksym. Endogenous Dynamics of the Continuum (EDK): A Theorem-Algorithmic Framework within an Open Nonlinear Dynamic System, where Matter of Space Time is Considered as Diverse Forms, Levels, and Transitional States of Structural Self-Organization of the Continuum. GitHub repository release, 2026.
+Recommended citation before DOI assignment:
+
+Marnov, Maksym. Endogenous Dynamics of the Continuum (EDK): A theorem-algorithmic framework for open nonlinear dissipative dynamic systems in which Space-Time Matter is considered as diverse forms, levels, and transitional states of structural self-organization of the Continuum. GitHub repository release, 2026.
 
 Citation file:
 
-    CITATION.cff
+`CITATION.cff`
 
 Author:
 
-Maksym Marnov
+`Maksym Marnov`
 
-Recommended reference title:
+Recommended work title:
 
-Endogenous Dynamics of the Continuum (EDK)
+`Endogenous Dynamics of the Continuum (EDK)`
 
 Publication type:
 
-Theorem-algorithmic framework
+`Theorem-algorithmic framework`
 
 ---
 
 # Эндогенная динамика Континуума (EDK)
 
-## Теоремно-алгоритмический фреймворк в рамках открытой нелинейной динамической системы, где Материя Пространства Времени рассматривается как разнообразные формы, уровни и переходные состояния структурной самоорганизации Континуума
+## Теоремно-алгоритмический фреймворк для открытых нелинейных диссипативных динамических систем
+
+Эндогенная динамика Континуума (EDK) — это теоремно-алгоритмический фреймворк, в котором Материя Пространства Времени описывается как разнообразные формы, уровни и переходные состояния структурной самоорганизации внутри наблюдаемого Континуума.
+
+Фреймворк исследует эндогенную и экзогенную динамику структурной самоорганизации, динамического удержания, резонансных окон фазовых переходов, рекурсивного синтеза, рекурсивного наследования качественных характеристик, бифуркационного дрейфа, деградации, перераспределения, деманифестации и возврата в фоновые нерезонансные моды Континуума.
+
+Автор:
+
+`Maksym Marnov`
+
+Репозиторий:
+
+`Endogenous-Dynamics-of-the-Continuum`
 
 ## RU — Статус и назначение репозитория
 
-Данный репозиторий представляет текущий теоремно-алгоритмический фреймворк Эндогенной динамики Континуума (EDK).
-
-Работа описывает эндогенную и экзогенную динамику разнообразных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени в наблюдаемом Континууме.
-
-Репозиторий предназначен для формализации и численного исследования:
-
-- структурной самоорганизации;
-- динамического удержания;
-- эндогенной динамической устойчивости;
-- эндогенной динамической критичности;
-- формирования резонансного окна фазового перехода;
-- фазовых переходов;
-- рекурсивного синтеза;
-- рекурсивного наследования качественных характеристик;
-- эндогенного бифуркационного дрейфа;
-- деградации;
-- перераспределения;
-- деманифестации;
-- возврата в фоновые нерезонансные моды Континуума.
+Данный репозиторий содержит текущий теоремно-алгоритмический фреймворк Эндогенной динамики Континуума.
 
 Репозиторий объединяет:
 
 - теоремно-описательный слой;
+- контролируемый терминологический слой;
 - математико-формальный слой;
-- численно-алгоритмический слой;
 - исполняемые Python-модули;
 - инженерные протоколы визуализации;
-- сквозное сопряжение квантово-фазовых, интерфейсных, массовых, обменных, биологических, молекулярных, органических, планетарных, звёздных, галактических процессов и процессов уровня Континуума.
+- сквозное межмасштабное сопряжение квантово-фазовых, интерфейсных, массовых, обменных, биологических, молекулярных, органических, планетарных, звёздных, галактических процессов и процессов уровня Континуума.
 
-Репозиторий не рассматривает изолированные статические объекты как первичный субъект анализа.
+Субъект анализа — динамический процесс структурной самоорганизации внутри открытых нелинейных диссипативных динамических систем.
 
-Он описывает динамические процессы структурной самоорганизации, удержания, деградации, фазового перехода, деманифестации и рекурсивного наследования внутри открытых нелинейных динамических систем.
+Репозиторий описывает:
 
-Русский смысловой слой является контрольным источником работы.
+- структурную самоорганизацию;
+- динамическое удержание;
+- эндогенную динамическую устойчивость, EDS;
+- эндогенную динамическую критичность, EDC;
+- формирование резонансного окна фазового перехода;
+- фазовые переходы;
+- рекурсивный синтез;
+- рекурсивное наследование качественных характеристик;
+- эндогенный бифуркационный дрейф;
+- деградацию;
+- перераспределение;
+- деманифестацию;
+- возврат в фоновые нерезонансные моды Континуума.
 
-Английский слой сохраняет ту же смысловую структуру, научные термины, операционные определения, причинные связи и область применимости.
-
----
+Английский слой сохраняет ту же смысловую структуру, научную терминологию, операционные определения, причинные связи и область применимости, что и русский контрольный слой.
 
 ## RU — Основные инварианты и операционные параметры
 
-Теоремно-алгоритмический фреймворк EDK основан на следующих взаимосвязанных инвариантах и операционных параметрах.
+Фреймворк EDK основан на следующих взаимосвязанных инвариантах и операционных параметрах.
 
 ### Общая эндогенная структурная когерентность
 
@@ -1855,62 +1158,60 @@ Theorem-algorithmic framework
 
 Она характеризует динамическую совместимость, взаимную когерентность и удерживаемую взаимосвязь всех эндогенных структурных процессов системы во времени.
 
-`C(t)` не тождественна фазовой синхронизации, наблюдаемому параметру порядка `R(t)`, регенерации, внешней геометрической симметрии или кубическому потенциалу удержания `C3`.
+Контролируемые различия:
+
+`фазовая синхронизация ≠ фазовая когерентность`
+
+`R(t) ≠ C(t)`
+
+`C(t) ≠ C3`
 
 Фазовая синхронизация означает согласование фаз при возможном сохранении динамической хаотичности амплитуд.
 
 Фазовая когерентность означает динамическую согласованность и фаз, и амплитуд.
 
-Следовательно:
+### Дестабилизирующее давление
 
-    фазовая синхронизация ≠ фазовая когерентность
-
-    R(t) ≠ C(t)
-
-    C(t) ≠ C3
-
-### Дестабилизирующее давление среды
-
-`P(t)` — дестабилизирующее давление, оказываемое на удерживаемую динамическую структуру внешними и внутренними возмущающими факторами.
+`P(t)` — дестабилизирующее давление, действующее на удерживаемую динамическую структуру через внешние и внутренние возмущающие факторы.
 
 Центральное условие динамического удержания:
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
 Граница эндогенной динамической критичности:
 
-    C(t) ≈ P(t)
+`C(t) ≈ P(t)`
 
 Условие деградации:
 
-    C(t) < P(t)
+`C(t) < P(t)`
 
 ### Структурный баланс и накопленная положительная структурная работа
 
 Формальный структурный баланс:
 
-    Δ(t) = S(t) − P(t) − D(t)
+`Delta(t) = S(t) − P(t) − D(t)`
 
 Где:
 
 - `S(t)` — мгновенная интенсивность синтеза положительной структурной работы во времени;
-- `P(t)` — дестабилизирующее давление среды;
+- `P(t)` — дестабилизирующее давление;
 - `D(t)` — диссипация и необратимая структурная потеря;
-- `Δ(t)` — формальный баланс структурного существования.
+- `Delta(t)` — формальный баланс структурного существования.
 
 Накопленная положительная структурная работа:
 
-    W_S(T) = ∫₀ᵀ S(t) dt
+`W_S(T) = integral from 0 to T of S(t) dt`
 
-Накопленная положительная структурная работа способствует формированию удерживаемого аттрактора, однако реальная динамическая устойчивость требует сохранения условия:
+Накопленная положительная структурная работа поддерживает формирование удерживаемого аттрактора, при этом динамическая устойчивость требует сохранения условия:
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
 ### Регенерация
 
 Регенерация — непрерывный эндогенный процесс восстановления и поддержания структурной целостности и когерентности.
 
-Регенерация поддерживает `C(t)`, но не тождественна `C(t)`.
+Регенерация поддерживает `C(t)`.
 
 Потеря когерентности между эндогенными структурными процессами снижает регенеративную способность.
 
@@ -1918,9 +1219,15 @@ Theorem-algorithmic framework
 
 `C3` — кубический нелинейный потенциал объёмного удержания, связанный с нелинейным насыщением и удержанием трёхмерной динамической формы.
 
-`C3` является операционным объёмным параметром и не должен смешиваться с общей эндогенной структурной когерентностью `C(t)`.
+Контролируемое различие:
 
-### Геометрия резонансного окна фазового перехода и удерживаемая операционная область
+`C(t) ≠ C3`
+
+`C(t)` описывает общую эндогенную структурную когерентность.
+
+`C3` описывает локальное кубическое объёмное удержание.
+
+### Резонансное окно фазового перехода и удерживаемая операционная область
 
 `Omega(t)` — допустимая операционная область состояний, внутри которой может сформироваться резонансное окно фазового перехода.
 
@@ -1938,7 +1245,7 @@ Theorem-algorithmic framework
 
 Условие удержания:
 
-    Theta_N >= Theta_crit
+`Theta_N >= Theta_crit`
 
 ### Оператор рекурсивного наследования
 
@@ -1946,7 +1253,7 @@ Theorem-algorithmic framework
 
 Рекурсивное отношение:
 
-    Q(n+1) = Phi(Q(n), D(n), A(n))
+`Q(n+1) = Phi(Q(n), D(n), A(n))`
 
 Где:
 
@@ -1954,9 +1261,7 @@ Theorem-algorithmic framework
 - `D(n)` — диссипативный след, унаследованный циклом `n`;
 - `A(n)` — динамическая асимметрия, унаследованная циклом `n`.
 
-Рекурсивное наследование не является простым повторением.
-
-Каждый последующий цикл наследует преобразованные качественные характеристики предшествующего цикла в текущих эндогенных и экзогенных условиях.
+Рекурсивное наследование преобразует качественные характеристики предшествующего цикла в текущих эндогенных и экзогенных условиях.
 
 ### Внутреннее мультиплетное удержание
 
@@ -1966,7 +1271,7 @@ Theorem-algorithmic framework
 
 Операционный переход:
 
-    Phi → U_6D → Psi_coh → C3
+`Phi → U_6D → Psi_coh → C3`
 
 ### Динамический интерфейс и проявленный массовый якорь
 
@@ -1974,33 +1279,27 @@ Theorem-algorithmic framework
 
 `M(t)` — зависящий от времени проявленный массовый якорь локально удерживаемой динамической формы.
 
-Масса рассматривается как характеристика локально удерживаемой динамической формы, а не как изолированная статическая субстанция.
+Масса рассматривается как характеристика локально удерживаемой динамической формы.
+
+Контролируемое различие:
+
+`T_int ≠ M(t)`
 
 ### Сквозной безмассовый канал потока обмена
 
-`J_flux` — обязательный сквозной безмассовый канал потока обмена, обеспечивающий фазовый перенос, структурное влияние, обмен, диссипацию, перераспределение и интерфейсную обратную связь.
+`J_flux` — сквозной безмассовый канал потока обмена, обеспечивающий фазовый перенос, структурное влияние, обмен, диссипацию, перераспределение и интерфейсную обратную связь.
 
-Прямая цепочка:
+Основная прямая цепочка:
 
-    мультиплет фазовых слоёв
-    → Phi
-    → фазовая когерентность
-    → C(t)
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
+`мультиплет фазовых слоёв → Phi → фазовая когерентность → C(t) → T_int → M(t) → J_flux → биологическая и молекулярная модуляция`
 
-Обратная цепочка:
+Основная обратная цепочка:
 
-    потеря C(t)
-    → деградация C3
-    → деградация T_int
-    → снижение или деманифестация M(t)
-    → перераспределение через J_flux
-    → возврат в фоновые нерезонансные моды
+`потеря C(t) → деградация T_int → снижение или деманифестация M(t) → перераспределение через J_flux → возврат в фоновые нерезонансные моды`
 
-Без `J_flux` полная цепочка проявления, удержания, обмена, диссипации, деманифестации и возврата не может быть формально замкнута.
+`C3` действует как кубический узел объёмного удержания процесса.
+
+`J_flux` замыкает цепочку проявления, удержания, обмена, диссипации, деманифестации и возврата.
 
 ### Фоновые нерезонансные моды
 
@@ -2012,15 +1311,11 @@ Theorem-algorithmic framework
 
 `R_J` — остаток потока обмена:
 
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
 `G_int` — оператор интерфейсной проекции:
 
-    проецируемый интерфейсный отклик = G_int R_J
+`projected_interface_response = G_int R_J`
 
 Это отношение соединяет несбалансированность потока обмена с коррекцией, перераспределением или деградацией динамического интерфейса.
 
@@ -2028,175 +1323,55 @@ Theorem-algorithmic framework
 
 `R(t)` — наблюдаемый параметр порядка фазовой синхронизации в редуцированной сенсорно фиксированной проекции.
 
-`R(t)` не устанавливает фазово-амплитудную когерентность полной системы и не является эквивалентом `C(t)`.
+Контролируемое различие:
+
+`R(t) ≠ C(t)`
 
 Высокое значение `R(t)` может сосуществовать с деградацией общей эндогенной структурной когерентности `C(t)`.
 
----
-
 ## RU — Сквозная операционная цепочка
 
-Теоремно-алгоритмический фреймворк EDK описывает непрерывную операционную цепочку, соединяющую эндогенную динамическую устойчивость, эндогенную динамическую критичность, формирование резонансного окна фазового перехода, структурный синтез, динамическое удержание, рекурсивное наследование качественных характеристик, эндогенный бифуркационный дрейф, деградацию, деманифестацию и возврат в фоновые нерезонансные моды Континуума.
-
-Данная цепочка не является последовательностью изолированных статических объектов.
-
-Она представляет рекурсивные потактовые фазовые переходы между разнообразными формами, уровнями и переходными состояниями структурной самоорганизации Материи Пространства Времени в Континууме.
+Фреймворк EDK описывает непрерывную операционную цепочку, соединяющую эндогенную динамическую устойчивость, эндогенную динамическую критичность, формирование резонансного окна фазового перехода, структурный синтез, динамическое удержание, рекурсивное наследование качественных характеристик, эндогенный бифуркационный дрейф, деградацию, деманифестацию и возврат в фоновые нерезонансные моды Континуума.
 
 ### Основная рекурсивная операционная цепочка
 
-    Эндогенная динамическая устойчивость EDS
-    → сохранение или сжатие условия C(t) > P(t)
-    → приближение к границе устойчивости C(t) ≈ P(t)
-    → эндогенная динамическая критичность EDC
-    → возможность или сжатие формирования резонансного окна фазового перехода
-    → накопление положительной структурной работы
-    → формирование цикла синтеза резонансного окна фазового перехода
-    → удержание цикла синтеза
-    → формирование удерживаемой операционной области Omega_ret
-    → рекурсивное наследование качественных характеристик
-    → эндогенный бифуркационный дрейф
-    → конфигурация последующих резонансных окон фазовых переходов
-    → последующий цикл синтеза
-
-Операционная цепочка не завершается после одного цикла синтеза.
+`Эндогенная динамическая устойчивость EDS → сохранение или сжатие условия C(t) > P(t) → приближение к границе устойчивости C(t) ≈ P(t) → эндогенная динамическая критичность EDC → возможность или сжатие формирования резонансного окна фазового перехода → накопление положительной структурной работы → формирование цикла синтеза резонансного окна фазового перехода → удержание цикла синтеза → формирование удерживаемой операционной области Omega_ret → рекурсивное наследование качественных характеристик → эндогенный бифуркационный дрейф → конфигурация последующих резонансных окон фазовых переходов → последующий цикл синтеза`
 
 Каждый последующий цикл наследует преобразованные качественные характеристики предшествующего цикла.
 
 ### Прямая цепочка проявления и удержания
 
-    мультиплет фазовых слоёв
-    → Phi
-    → фазовая когерентность
-    → C(t)
-    → Omega(t)
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
-    → волново-генетическая модуляция
-    → молекулярная фазовая химия
-    → проявление органической матрицы
-    → планетарная модуляция и модуляция среды
-    → рекурсивно удерживаемая структурная форма
-
-Прямая цепочка описывает переход от внутренних мультиплетных фазовых отношений к динамически удерживаемой проявленной форме.
+`мультиплет фазовых слоёв → Phi → фазовая когерентность → C(t) → Omega(t) → C3 → T_int → M(t) → J_flux → волново-генетическая модуляция → молекулярная фазовая химия → проявление органической матрицы → планетарная и средовая модуляция → рекурсивно удерживаемая структурная форма`
 
 Динамическое удержание зависит от сопряжённого отношения между:
 
-    Phi
-    Omega(t)
-    C(t)
-    P(t)
-    C3
-    T_int
-    M(t)
-    J_flux
-    rho_cont
-
-Ни один отдельный параметр не гарантирует динамическое удержание самостоятельно.
+`Phi Omega(t) C(t) P(t) C3 T_int M(t) J_flux rho_cont`
 
 ### Обратная цепочка деманифестации
 
-    рост дестабилизирующего давления среды P(t)
-    → уменьшение отношения C(t) > P(t)
-    → приближение к C(t) ≈ P(t)
-    → эндогенная динамическая критичность
-    → потеря удерживаемой фазовой когерентности
-    → снижение или дестабилизация C3
-    → деградация T_int
-    → снижение или деманифестация M(t)
-    → перераспределение через J_flux
-    → формирование остатка потока обмена R_J
-    → проекция через G_int
-    → деформация интерфейса
-    → диссипация и перераспределение
-    → возврат в фоновые нерезонансные моды rho_cont
+`рост дестабилизирующего давления P(t) → сжатие условия C(t) > P(t) → приближение к C(t) ≈ P(t) → эндогенная динамическая критичность → потеря удерживаемой фазовой когерентности → дестабилизация C3 → деградация T_int → снижение или деманифестация M(t) → перераспределение через J_flux → остаток потока обмена R_J → проекция через G_int → деформация интерфейса → диссипация и перераспределение → возврат в фоновые нерезонансные моды rho_cont`
 
-Деманифестация не рассматривается как исчезновение в абстрактной пустоте.
-
-Она рассматривается как фазовый переход из локально удерживаемой проявленной конфигурации в перераспределённый поток обмена, диссипативные следы и фоновые нерезонансные моды Континуума.
+Деманифестация рассматривается как фазовый переход из локально удерживаемой проявленной конфигурации в перераспределённый поток обмена, диссипативные следы и фоновые нерезонансные моды Континуума.
 
 ### Цепочка положительного резонансного окна фазового перехода
 
-    C(t) > P(t)
-    → накопление положительной структурной работы
-    → сохранение T_int
-    → удержание M(t)
-    → управляемый обмен через J_flux
-    → формирование положительного резонансного окна фазового перехода
-    → синтез
-    → увеличение структурной сложности
-    → формирование или укрепление Omega_ret
-    → рекурсивное наследование созидательных качественных характеристик
+`C(t) > P(t) → накопление положительной структурной работы → сохранение T_int → удержание M(t) → управляемый обмен через J_flux → формирование положительного резонансного окна фазового перехода → синтез → увеличение структурной сложности → формирование или укрепление Omega_ret → рекурсивное наследование созидательных качественных характеристик`
 
 ### Цепочка отрицательного резонансного окна фазового перехода
 
-    C(t) < P(t)
-    → потеря регенеративной способности
-    → деградация T_int
-    → неуправляемое перераспределение через J_flux
-    → формирование отрицательного резонансного окна фазового перехода
-    → распад
-    → снижение структурной сложности
-    → деградация Omega_ret
-    → рекурсивное наследование разрушительных качественных характеристик
-
-Резонансное окно фазового перехода не является автоматически созидательным.
-
-Его знак зависит от того, поддерживает ли эндогенный динамический дрейф синтез и динамическое удержание либо деградацию и структурное упрощение.
+`C(t) < P(t) → потеря регенеративной способности → деградация T_int → неуправляемое перераспределение через J_flux → формирование отрицательного резонансного окна фазового перехода → распад → снижение структурной сложности → деградация Omega_ret → рекурсивное наследование разрушительных качественных характеристик`
 
 ### Цепочка интерфейсной проекции
 
-    J_flux
-    → временное изменение J_flux
-    → конвективный перенос J_flux
-    → влияние grad rho_cont
-    → влияние C3
-    → остаток потока обмена R_J
-    → оператор интерфейсной проекции G_int
-    → проецируемый интерфейсный отклик
-    → коррекция удерживаемого интерфейса или деградация интерфейса
-    → отклик метрического моста
-
-Остаток потока обмена:
-
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
-
-Проецируемый интерфейсный отклик:
-
-    проецируемый интерфейсный отклик = G_int R_J
+`J_flux → временное изменение J_flux → конвективный перенос J_flux → влияние grad rho_cont → влияние C3 → остаток потока обмена R_J → оператор интерфейсной проекции G_int → проецируемый интерфейсный отклик → коррекция или деградация удерживаемого интерфейса → отклик метрического моста`
 
 ### Рекурсивное замыкание
 
-    удерживаемое состояние цикла Q(n)
-    → эндогенный и экзогенный дрейф параметров
-    → изменение C(t), P(t), C3, T_int и J_flux
-    → формирование или деформация Omega(t)
-    → синтез, удержание, перераспределение, деградация или деманифестация
-    → наследование преобразованных качественных характеристик
-    → формирование цикла Q(n+1)
+`удерживаемое состояние цикла Q(n) → эндогенный и экзогенный дрейф параметров → изменение C(t), P(t), C3, T_int и J_flux → формирование или деформация Omega(t) → синтез, удержание, перераспределение, деградация или деманифестация → наследование преобразованных качественных характеристик → формирование цикла Q(n+1)`
 
-Последующий цикл не является независимым перезапуском.
+Формальное рекурсивное замыкание:
 
-Он является рекурсивным продолжением предшествующего динамического процесса:
-
-    Q(n+1) =
-        F(
-            Q(n),
-            C(t),
-            P(t),
-            C3,
-            T_int,
-            J_flux,
-            Omega(t),
-            rho_cont
-        )
-
----
+`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
 
 ## RU — Математический формализм
 
@@ -2204,20 +1379,11 @@ Theorem-algorithmic framework
 
 Размерностные уровни от `7D` до `1D` являются операционными уровнями теоремно-алгоритмического каскада.
 
-Они определяют последовательные редукции одного непрерывного объёмного динамического процесса и не должны интерпретироваться как изолированные статические объекты или как взаимно независимые системы.
+Они определяют последовательные редукции одного непрерывного объёмного динамического процесса.
 
 Полный каскад:
 
-    Phi(Q(n), D(n), A(n))
-    → U_6D
-    → Psi_coh
-    → C3
-    → Omega(t)
-    → Theta_N
-    → T_int
-    → E_medium
-    → M(t)
-    → J_flux
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3 → Omega(t) → Theta_N → T_int → E_medium → M(t) → J_flux`
 
 Где:
 
@@ -2233,425 +1399,201 @@ Theorem-algorithmic framework
 - `T_int` — динамический интерфейсный тензор;
 - `E_medium` — энергия локально удерживаемой формы в текущих условиях среды;
 - `M(t)` — проявленный массовый якорь;
-- `J_flux` — обязательный сквозной безмассовый канал потока обмена.
+- `J_flux` — сквозной безмассовый канал потока обмена.
 
-## RU — Определение каскада от 7D до 1D
+## RU — Операционный каскад от 7D до 1D
 
 ### 7D — Слой рекурсивного наследования и супер-кода
 
-Уровень `7D` является слоем рекурсивного наследования полного динамического процесса.
+`7D` — слой рекурсивного наследования полного динамического процесса.
 
-Его смысловым субъектом является не проявленный объект.
-
-Его смысловым субъектом является полная наследуемая конфигурация качественных характеристик, диссипативных следов, динамических асимметрий и условий фазового перехода, определяющих возможное продолжение системы.
+Его смысловой субъект — полная наследуемая конфигурация качественных характеристик, диссипативных следов, динамических асимметрий и условий фазового перехода.
 
 Основное отношение:
 
-    Q(n+1) = Phi(Q(n), D(n), A(n))
+`Q(n+1) = Phi(Q(n), D(n), A(n))`
 
-Где:
+Функции:
 
-- `Q(n)` содержит качественные характеристики, унаследованные от предшествующего цикла;
-- `D(n)` содержит накопленный диссипативный след;
-- `A(n)` содержит унаследованную динамическую асимметрию;
-- `Phi` преобразует наследуемую конфигурацию в условия последующего цикла.
+- сохранение причинной непрерывности между циклами;
+- перенос качественных характеристик через рекурсивную потактовую эволюцию;
+- включение диссипативного следа как активного компонента последующего состояния;
+- сохранение динамической асимметрии как источника дрейфа и фазового перехода;
+- конфигурация возможного синтеза, удержания, деградации или деманифестации.
 
-Уровень `7D` выполняет следующие функции:
+Выход:
 
-- сохраняет причинную непрерывность между предшествующим и последующим циклами;
-- переносит качественные характеристики через рекурсивную потактовую эволюцию;
-- включает диссипативный след как активный компонент последующего состояния;
-- сохраняет динамическую асимметрию как источник дрейфа и фазового перехода;
-- определяет начальные условия нижележащего размерностного каскада;
-- конфигурирует возможное направление синтеза, удержания, деградации или деманифестации.
-
-Выход уровня `7D` не является завершённой проявленной структурой.
-
-Он является рекурсивно преобразованным состоянием, входящим в шестимерный слой фазово-когерентной свёртки:
-
-    Phi(Q(n), D(n), A(n)) → U_6D
+`Phi(Q(n), D(n), A(n)) → U_6D`
 
 ### 6D — Слой тороидальной фазово-когерентной свёртки
 
-Уровень `6D` является слоем тороидальной проекции и фазово-когерентной свёртки.
+`6D` — слой тороидальной проекции и фазово-когерентной свёртки.
 
-Его смысловым субъектом является внутренняя мультиплетная архитектура динамического процесса до редукции в проявленную трёхмерную форму или в направленный выходной канал.
+Основной оператор:
 
-Центральный оператор данного уровня:
-
-    U_6D
-
-`U_6D` принимает рекурсивно унаследованную конфигурацию, сформированную оператором `Phi`, и выполняет фазово-когерентную свёртку внутренней мультиплетной структуры.
+`U_6D`
 
 Операционный переход:
 
-    Phi(Q(n), D(n), A(n))
-    → U_6D
-    → Psi_coh
-    → C3
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3`
 
-Где:
+Функции:
 
-- `U_6D` — внутренний тороидальный мультиплетный потенциал удержания;
-- `Psi_coh` — результирующая фазово-когерентная конфигурация;
-- `C3` — кубический нелинейный потенциал, формируемый через объёмное фазово-когерентное удержание.
-
-Уровень `6D` выполняет следующие функции:
-
-- сворачивает рекурсивно унаследованную мультиплетную конфигурацию в сопряжённую фазовую структуру;
-- удерживает внутреннюю тороидальную связность;
-- формирует фазово-когерентное состояние `Psi_coh`;
-- подготавливает кубический объёмный потенциал удержания `C3`;
-- переносит унаследованные качественные характеристики уровня `7D` в слой резонансного окна фазового перехода и бифуркации;
-- сохраняет внутреннюю разнонаправленную структуру до её низкоразмерной проекции.
-
-Уровень `6D` не должен сводиться к простому геометрическому тору.
-
-Он представляет динамический процесс фазово-когерентной свёртки, через который унаследованная мультиплетная структура приобретает способность к объёмному удержанию.
+- свёртка рекурсивно унаследованной мультиплетной конфигурации в сопряжённую фазовую структуру;
+- удержание внутренней тороидальной связности;
+- формирование фазово-когерентного состояния `Psi_coh`;
+- подготовка кубического объёмного потенциала удержания `C3`;
+- перенос унаследованных качественных характеристик в слой резонансного окна фазового перехода и бифуркации.
 
 ### 5D — Слой бифуркационного выбора и резонансного окна фазового перехода
 
-Уровень `5D` является слоем эндогенного бифуркационного выбора и формирования резонансного окна фазового перехода.
+`5D` — слой эндогенного бифуркационного выбора и формирования резонансного окна фазового перехода.
 
-Его смысловым субъектом является изменяющаяся совокупность допустимых траекторий фазового перехода, доступных системе в текущих эндогенных и экзогенных условиях.
+Основная операционная область:
 
-Центральная операционная область:
+`Omega(t)`
 
-    Omega(t)
-
-`Omega(t)` определяет допустимую область, внутри которой может сформироваться резонансное окно фазового перехода.
-
-Уровень `5D` принимает:
+Входные условия:
 
 - фазово-когерентное состояние `Psi_coh`;
 - кубический потенциал удержания `C3`;
 - унаследованные качественные характеристики `Q(n)`;
 - диссипативный след `D(n)`;
-- динамическую асимметрию `A(n)`;
+- динамическая асимметрия `A(n)`;
 - текущее отношение между `C(t)` и `P(t)`;
-- градиент плотности фоновых нерезонансных мод `grad rho_cont`.
+- градиент фоновых нерезонансных мод `grad rho_cont`.
 
 Операционная цепочка:
 
-    Psi_coh
-    → C3
-    → Omega(t)
-    → формирование положительного или отрицательного резонансного окна фазового перехода
-    → выбор последующей траектории фазового перехода
-
-Положительное динамическое условие:
-
-    C(t) > P(t)
-
-Критическая граница:
-
-    C(t) ≈ P(t)
-
-Условие деградации:
-
-    C(t) < P(t)
-
-Порог удержания:
-
-    Theta_N >= Theta_crit
-
-Уровень `5D` выполняет следующие функции:
-
-- формирует допустимую геометрию резонансного окна фазового перехода;
-- определяет, поддерживает ли доступное окно синтез или деградацию;
-- преобразует унаследованную асимметрию в эндогенный бифуркационный дрейф;
-- определяет направление последующего фазового перехода;
-- соединяет внутренний слой фазово-когерентной свёртки с четырёхмерным топологическим процессом;
-- конфигурирует условия, при которых может сформироваться удерживаемая операционная область `Omega_ret`.
-
-Резонансное окно фазового перехода не является автоматически положительным.
-
-Его знак зависит от направления и качественных характеристик эндогенного динамического дрейфа.
+`Psi_coh → C3 → Omega(t) → формирование положительного или отрицательного резонансного окна фазового перехода → выбор последующей траектории фазового перехода`
 
 ### 4D — Топологический монолит Материи Пространства Времени
 
-Уровень `4D` является развёрнутым во времени топологическим монолитом Материи Пространства Времени.
+`4D` — развёрнутый во времени топологический монолит Материи Пространства Времени.
 
-Его смысловым субъектом является непрерывный динамический процесс, посредством которого выбранная траектория фазового перехода удерживается, преобразуется, перераспределяется или деградирует во времени.
+Он описывает непрерывный динамический процесс, через который выбранная траектория фазового перехода удерживается, преобразуется, перераспределяется или деградирует во времени.
 
-Уровень `4D` не является статической трёхмерной формой, дополненной внешними часами.
+Основные элементы:
 
-Он является непрерывной топологической эволюцией полной удерживаемой конфигурации через потактовое наследование.
+`Omega(t) Theta_N T_int C(t) P(t) C3 J_flux`
 
-Основные элементы данного уровня:
+Условия удержания:
 
-    Omega(t)
-    Theta_N
-    T_int
-    C(t)
-    P(t)
-    C3
-    J_flux
+`C(t) > P(t)`
 
-Уровень `4D` выполняет следующие функции:
+`Theta_N >= Theta_crit`
 
-- переносит выбранную траекторию резонансного окна фазового перехода во времени;
-- сохраняет или деградирует динамический интерфейсный тензор `T_int`;
-- соединяет внутреннюю фазово-когерентную архитектуру с проявленным слоем;
-- распределяет изменения `C(t)`, `P(t)` и `C3` по удерживаемой конфигурации;
-- передаёт интерфейсную несбалансированность в `J_flux`;
-- сохраняет унаследованные качественные характеристики между последовательными тактами;
-- определяет, остаётся ли система внутри `Omega_ret`.
+`T_int остаётся динамически удерживаемым`
 
-Условие четырёхмерного удержания требует сопряжённого сохранения:
+`J_flux остаётся внутри допустимой конфигурации потока обмена`
 
-    C(t) > P(t)
+Выход:
 
-    Theta_N >= Theta_crit
-
-    T_int остаётся динамически удерживаемым
-
-    J_flux остаётся внутри допустимой конфигурации потока обмена
-
-Выход уровня `4D` является динамически удерживаемой интерфейсной конфигурацией, входящей в трёхмерный слой проявления.
+`4D удерживаемая интерфейсная конфигурация → 3D слой проявления`
 
 ### 3D — Слой проявления и локального квази-покоя
 
-Уровень `3D` является слоем объёмного проявления и локального квази-покоя.
-
-Его смысловым субъектом является локально удерживаемая трёхмерная форма, сформированная предшествующими процессами рекурсивного наследования, фазово-когерентной свёртки, формирования резонансного окна фазового перехода и динамического интерфейсного удержания.
+`3D` — слой объёмного проявления и локального квази-покоя.
 
 Локальный релятивистский инвариант:
 
-    E_rest = m c^2
+`E_rest = m c^2`
 
-Данное отношение описывает локальную энергию квази-покоя проявленной формы.
+Расширенное средовое отношение:
 
-Оно не описывает полный процесс структурной самоорганизации, динамического удержания, взаимодействия со средой или рекурсивного наследования.
-
-Расширенное энергетическое отношение:
-
-    E_medium = E_rest Phi(
-        Omega(t),
-        C(t),
-        rho_cont,
-        grad M,
-        phase,
-        resonance,
-        T_int,
-        J_flux
-    )
-
-Где:
-
-- `E_rest` — локальный релятивистский инвариант квази-покоя;
-- `Phi` описывает динамические условия существования, удержания, наследования и структурной целостности;
-- `Omega(t)` определяет допустимую область фазового перехода;
-- `C(t)` определяет общую эндогенную структурную когерентность;
-- `rho_cont` определяет плотность фоновых нерезонансных мод;
-- `grad M` определяет градиент конфигурации проявленной массы;
-- `phase` определяет текущие фазовые характеристики;
-- `resonance` определяет текущую конфигурацию резонансного окна фазового перехода;
-- `T_int` определяет динамический интерфейс проявления;
-- `J_flux` определяет сквозной безмассовый канал потока обмена.
+`E_medium = E_rest Phi(Omega(t), C(t), rho_cont, grad M, phase, resonance, T_int, J_flux)`
 
 Проявленный массовый якорь:
 
-    M(t)
+`M(t)`
 
-`M(t)` не рассматривается как изолированная статическая субстанция.
+Функции:
 
-Он является зависящей от времени характеристикой локально удерживаемой динамической формы.
-
-Уровень `3D` выполняет следующие функции:
-
-- проявляет кубическую объёмную конфигурацию, сформированную через `C3`;
-- удерживает локальный массовый якорь `M(t)`;
-- отделяет локальный инвариант квази-покоя от полного динамического процесса;
-- соединяет объёмное проявление с динамическим интерфейсом `T_int`;
-- передаёт удерживаемое структурное влияние в `J_flux`;
-- предоставляет объёмный процесс, наблюдаемый через низкоразмерные инструментальные срезы.
+- проявление кубической объёмной конфигурации, сформированной через `C3`;
+- удержание локального массового якоря `M(t)`;
+- соединение объёмного проявления с динамическим интерфейсом `T_int`;
+- передача удерживаемого структурного влияния в `J_flux`;
+- предоставление объёмного процесса, наблюдаемого через низкоразмерные инструментальные срезы.
 
 ### 2D — Слой инструментальной и перцептивной проекции
 
-Уровень `2D` является инструментальной редукцией объёмного динамического процесса в сенсорно фиксированный наблюдательный срез.
+`2D` — инструментальная редукция объёмного динамического процесса в сенсорно фиксированный наблюдательный срез.
 
-Его смысловым субъектом не является полный трёхмерный или четырёхмерный процесс.
+Операционный параметр порядка:
 
-Его смысловым субъектом является след, регистрируемый интерфейсом наблюдения, который редуцирует объёмный процесс в двумерную перцептивную или инструментальную проекцию.
-
-Операционный параметр порядка данного слоя:
-
-    R(t)
+`R(t)`
 
 `R(t)` описывает степень наблюдаемой фазовой упорядоченности или фазовой синхронизации в зарегистрированном двумерном следе.
 
-Фазовая синхронизация означает согласование фаз при возможном сохранении динамической хаотичности амплитуд.
+Контролируемое различие:
 
-Фазовая когерентность означает динамическую согласованность и фаз, и амплитуд.
+`R(t) ≠ C(t)`
 
-Следовательно:
+Функции:
 
-    фазовая синхронизация ≠ фазовая когерентность
-
-`R(t)` не должен отождествляться с `C(t)`.
-
-Различие:
-
-    R(t)
-    → наблюдаемая упорядоченность или фазовая синхронизация редуцированного сенсорно фиксированного следа
-
-    C(t)
-    → общая эндогенная структурная когерентность полной открытой динамической системы
-
-Высокое значение `R(t)` может сосуществовать с деградацией полной эндогенной структурной когерентности.
-
-Низкое значение `R(t)` также может быть следствием неполной проекции, ограниченности наблюдения или утраты доступа к внутренним объёмным отношениям.
-
-Уровень `2D` выполняет следующие функции:
-
-- проецирует объёмный процесс на сенсорно фиксированную наблюдательную плоскость;
-- регистрирует редуцированный фазовый след;
-- вычисляет или визуализирует параметр порядка `R(t)`;
-- предоставляет инструментальное представление процессов, связанных с когерентностью;
-- отделяет наблюдаемую фазовую синхронизацию от полной эндогенной структурной когерентности;
-- подготавливает редуцированный след к направленному одномерному извлечению.
-
-Уровень `2D` является наблюдательным срезом процесса, а не самим процессом.
+- проекция объёмного процесса на сенсорно фиксированную наблюдательную плоскость;
+- регистрация редуцированного фазового следа;
+- вычисление или визуализация параметра порядка `R(t)`;
+- отделение наблюдаемой фазовой синхронизации от общей эндогенной структурной когерентности;
+- подготовка редуцированного следа к направленному одномерному извлечению.
 
 ### 1D — Слой направленного импульса и потока обмена
 
-Уровень `1D` является минимальным направленным представлением импульса и потока обмена полного объёмного процесса.
-
-Его смысловым субъектом является направленный перенос импульса, фазового влияния, структурного влияния, диссипации и обмена через минимальный операционный вектор.
+`1D` — минимальное направленное представление импульса и потока обмена полного объёмного процесса.
 
 Основная переменная:
 
-    J_flux
+`J_flux`
 
 Направленный импульс также может быть представлен в редуцированной форме как:
 
-    J
+`J`
+
+Контролируемое различие:
+
+`J ≠ J_flux`
 
 Переход в одномерный слой:
 
-    U_6D
-    → C3
-    → управляемое раскрытие
-    → импульсный переход
-    → направленный выход
-    → J_flux
+`U_6D → C3 → управляемое раскрытие → импульсный переход → направленный выход → J_flux`
 
 Остаток потока обмена:
 
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
-
-Левая часть:
-
-    R_J
-
-представляет несбалансированный остаток динамики потока обмена на рассматриваемом такте.
-
-Правая часть содержит:
-
-- `partial_t J_flux` — временное изменение канала потока обмена;
-- `(J_flux · grad)J_flux` — конвективный перенос потока обмена;
-- `gamma grad rho_cont` — влияние градиента фоновых нерезонансных мод;
-- `beta C3 J_flux` — вклад кубического объёмного удержания в направленный поток обмена.
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
 Для локально сбалансированного состояния потока обмена:
 
-    R_J = 0
+`R_J = 0`
 
 Следовательно:
 
-    partial_t J_flux =
-        -(J_flux · grad)J_flux
-        - gamma grad rho_cont
-        - beta C3 J_flux
-
-Уровень `1D` выполняет следующие функции:
-
-- извлекает направленный вектор обмена из объёмного процесса;
-- переносит импульс и структурное влияние между удерживаемыми и фоновыми модами;
-- переносит выход управляемых импульсных переходов;
-- соединяет проявленный массовый якорь с перераспределением и деманифестацией;
-- предоставляет вход для интерфейсной проекции через `G_int`;
-- замыкает прямую и обратную операционные цепочки EDK.
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
 
 Интерфейсная проекция:
 
-    проецируемый интерфейсный отклик = G_int R_J
-
-Выход уровня `1D` не существует отдельно от предшествующих уровней.
-
-Он является минимальным направленным выражением полного рекурсивного, фазово-когерентного, объёмного, интерфейсного и проявленного процесса.
+`projected_interface_response = G_int R_J`
 
 ## RU — Размерностная редукция и причинная непрерывность
 
 Полная редукция:
 
-    7D — рекурсивное наследование
-    → 6D — тороидальная фазово-когерентная свёртка
-    → 5D — бифуркационный выбор и формирование резонансного окна фазового перехода
-    → 4D — потактовая топологическая эволюция
-    → 3D — объёмное проявление и локальный квази-покой
-    → 2D — сенсорно фиксированная наблюдательная проекция
-    → 1D — направленный импульс и выход потока обмена
+`7D — рекурсивное наследование → 6D — тороидальная фазово-когерентная свёртка → 5D — бифуркационный выбор и формирование резонансного окна фазового перехода → 4D — потактовая топологическая эволюция → 3D — объёмное проявление и локальный квази-покой → 2D — сенсорно фиксированная наблюдательная проекция → 1D — направленный импульс и выход потока обмена`
 
 Каждый последующий уровень наследует качественные характеристики и ограничения предшествующего уровня.
 
-Ни один низкоразмерный уровень не является полной заменой предшествующего объёмного процесса.
-
 Редукция сохраняет причинную непрерывность:
 
-    рекурсивное наследование
-    → фазово-когерентная свёртка
-    → выбор резонансного окна фазового перехода
-    → топологическое удержание
-    → объёмное проявление
-    → инструментальная проекция
-    → направленный обмен
+`рекурсивное наследование → фазово-когерентная свёртка → выбор резонансного окна фазового перехода → топологическое удержание → объёмное проявление → инструментальная проекция → направленный обмен`
 
 Обратная цепочка:
 
-    несбалансированность потока обмена
-    → интерфейсная проекция
-    → деградация T_int
-    → потеря M(t)
-    → деформация Omega(t)
-    → потеря фазово-когерентной свёртки
-    → преобразование унаследованного состояния Q(n+1)
-
-Каскад от `7D` до `1D` формирует замкнутый теоремно-алгоритмический процесс рекурсивного наследования, проявления, наблюдения, обмена, перераспределения, деградации и последующего динамического продолжения.
-
----
+`несбалансированность потока обмена → интерфейсная проекция → деградация T_int → потеря M(t) → деформация Omega(t) → потеря фазово-когерентной свёртки → преобразование унаследованного состояния Q(n+1)`
 
 ## RU — Структура репозитория и карта документации
 
 Репозиторий организован как послойный теоремно-алгоритмический фреймворк.
 
-Структура папок разделяет:
-
-- теоремно-описательный корпус;
-- контролируемый терминологический слой;
-- математико-формальный слой;
-- исполняемые алгоритмические модули;
-- слой фазового сопряжения;
-- слой системной оркестрации;
-- метаданные цитирования, лицензирования и релиза.
-
-Эти слои остаются функционально различимыми, сохраняя одну непрерывную причинную и операционную цепочку:
-
-    теоремно-описательные определения
-    → контролируемая терминология
-    → математическая формализация
-    → численные алгоритмы
-    → исполняемые модули
-    → сквозное межмасштабное сопряжение
-    → системная оркестрация
-    → проверяемый операционный выход
-
-### Корневая структура репозитория
+Корневая структура:
 
     Endogenous-Dynamics-of-the-Continuum/
     │
@@ -2659,9 +1601,11 @@ Theorem-algorithmic framework
     ├── glossary/
     ├── mathematical_formalism/
     │
+    ├── module_edk_continuum_simulation/
     ├── module_edk_impulse_transition/
     ├── module_edk_visual_protocol/
     ├── module_framework_core/
+    ├── module_marnov_protocol_reverse_decoding/
     ├── module_metric_bridge_solver/
     ├── module_molecular_phase_chemistry/
     ├── module_organic_matrix/
@@ -2677,165 +1621,77 @@ Theorem-algorithmic framework
     ├── LICENSE.md
     └── README.md
 
-Дополнительные модули, уже присутствующие в текущей ветке репозитория, сохраняют существующие названия и функциональные границы.
-
-Они не должны переименовываться, объединяться или удаляться без отдельного структурного решения.
-
 ### Теоремно-описательный корпус
 
-Теоремно-описательный корпус расположен в:
+Путь:
 
-    EDK_theorem_framework_EN_RU/
+`EDK_theorem_framework_EN_RU/`
 
-Текущая структура глав включает:
+Формат главы:
 
-    chapter_01/
-    chapter_02/
-    chapter_03/
-    chapter_04/
-    chapter_05/
-    chapter_06/
-    chapter_07/
-    chapter_08/
-    chapter_09/
-    chapter_10/
+`chapter_XX/chapter_XX_EN_RU.md`
 
-Каждая папка главы содержит соответствующий двуязычный файл:
+Порядок языковых слоёв внутри файлов глав:
 
-    chapter_XX/chapter_XX_EN_RU.md
-
-Порядок языковых слоёв внутри каждого двуязычного файла:
-
-    полный английский слой
-    → полный русский слой
-
-Теоремно-описательный корпус устанавливает смысловые субъекты, научные термины, причинные отношения, операционные определения и границы применимости, которые должны сохраняться математическим и исполняемым слоями.
+`полный английский слой → полный русский слой`
 
 ### Контролируемый терминологический слой
 
-Контролируемый терминологический слой расположен в:
+Путь:
 
-    glossary/
+`glossary/`
 
 Глоссарий сохраняет определения и области применимости основных терминов, переменных, операторов и отношений EDK.
 
-Один и тот же научный термин должен сохранять один и тот же смысловой субъект и одну и ту же область применимости во всех слоях:
-
-- теоремно-описательном корпусе;
-- математическом формализме;
-- исполняемом коде;
-- документации модулей;
-- корневом README.
-
 ### Математико-формальный слой
 
-Математический аппарат расположен в:
+Путь:
 
-    mathematical_formalism/
-
-Текущая структура файлов включает:
-
-    mathematical_formalism/
-    │
-    ├── README.md
-    ├── 01_full_cascade_7D_to_1D_EN_RU.md
-    ├── 02_stage_formulas_7D_1D_EN_RU.md
-    ├── 03_closing_equations_EN_RU.md
-    ├── 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md
-    ├── 05_numerical_algorithm_FDTD_EN_RU.md
-    ├── 06_tensor_matrix_dynamic_interface_EN_RU.md
-    ├── 07_fractal_morphogenesis_biomatrix_EN_RU.md
-    ├── 08_toroidal_operator_U6D_EN_RU.md
-    ├── 09_impulse_transition_algorithm_7D_EN_RU.md
-    ├── poynting_vector_transition_EN_RU.md
-    ├── interface_projection_balance_formalism_4D_2D_1D_EN_RU.md
-    └── appendix_black_luminous_sphere_dissipation.md
-
-Файлы математического аппарата должны рассматриваться как взаимосвязанные слои одного теоремно-алгоритмического процесса, а не как независимые конструкции.
+`mathematical_formalism/`
 
 Рекомендуемый порядок чтения:
 
-    README.md
-    → 01_full_cascade_7D_to_1D_EN_RU.md
-    → 02_stage_formulas_7D_1D_EN_RU.md
-    → 03_closing_equations_EN_RU.md
-    → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md
-    → 05_numerical_algorithm_FDTD_EN_RU.md
-    → 06_tensor_matrix_dynamic_interface_EN_RU.md
-    → 07_fractal_morphogenesis_biomatrix_EN_RU.md
-    → 08_toroidal_operator_U6D_EN_RU.md
-    → 09_impulse_transition_algorithm_7D_EN_RU.md
-    → poynting_vector_transition_EN_RU.md
-    → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md
-    → appendix_black_luminous_sphere_dissipation.md
+`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
 
 ### Исполняемый алгоритмический слой
 
-Исполняемые модули организованы в соответствии с их функциональными ролями:
+Основные исполняемые модули:
 
-    module_framework_core/
-    → module_solar_synthesis/
-    → module_wave_genetics/
-    → module_molecular_phase_chemistry/
-    → module_planetary_resonance/
-    → module_organic_matrix/
-    → module_edk_visual_protocol/
-    → module_edk_impulse_transition/
-    → module_metric_bridge_solver/
-    → continuum_core_engine.py
+`module_framework_core/`
 
-Причинный порядок и порядок программных зависимостей не должны смешиваться.
+`module_solar_synthesis/`
 
-Процесс может действовать раньше в физической или теоретической причинной цепочке, тогда как его исполняемая реализация может зависеть от выходов, вычисленных несколькими программными слоями.
+`module_wave_genetics/`
 
-### Правило структурной целостности
+`module_molecular_phase_chemistry/`
 
-Каждая папка и каждый файл должны сохранять одну ясно определённую функциональную роль.
+`module_planetary_resonance/`
 
-Репозиторий не должен создавать дублирующие смысловые слои под различными названиями.
+`module_organic_matrix/`
 
-Основное структурное правило:
+`module_edk_visual_protocol/`
 
-    одна папка
-    → один функциональный слой
+`module_edk_impulse_transition/`
 
-    один исполняемый файл
-    → один конкретный вычислительный механизм
+`module_metric_bridge_solver/`
 
-    один README модуля
-    → одно полное описание соответствующего функционального слоя
+`module_marnov_protocol_reverse_decoding/`
 
-Корневой `README.md` предоставляет научную и архитектурную карту репозитория.
+`module_edk_continuum_simulation/`
 
-Полные описания теорем, математические выводы, численные алгоритмы, входные и выходные параметры модулей и детали реализации остаются в соответствующих специализированных файлах.
+`continuum_core_engine.py`
 
+Причинная архитектура и порядок программных зависимостей документируются отдельно.
 
----
+Процесс может находиться раньше в теоретической причинной цепочке, тогда как его исполняемая реализация может зависеть от значений, рассчитанных другим программным слоем.
 
 ## RU — Архитектура исполняемых модулей
-
-Исполняемый слой реализует численные и операционные механизмы теоремно-алгоритмического фреймворка EDK, не заменяя теоремно-описательный и математико-формальный слои.
-
-Основной функциональный порядок:
-
-    module_framework_core
-    → module_solar_synthesis
-    → module_wave_genetics
-    → module_molecular_phase_chemistry
-    → module_planetary_resonance
-    → module_organic_matrix
-    → module_edk_visual_protocol
-    → module_edk_impulse_transition
-    → module_metric_bridge_solver
-    → continuum_core_engine
-
-Причинный порядок и порядок программных зависимостей не должны смешиваться.
 
 ### Ядро фреймворка
 
 Путь:
 
-    module_framework_core/
+`module_framework_core/`
 
 Функции:
 
@@ -2846,57 +1702,52 @@ Theorem-algorithmic framework
 - классификация динамического состояния;
 - общие интерфейсы зависимых модулей.
 
-Ядро фреймворка сохраняет:
+Сохраняемые переменные и операторы:
 
-    Phi
-    Omega(t)
-    Omega_ret
-    C(t)
-    P(t)
-    C3
-    Theta_N
-    Theta_crit
-    T_int
-    M(t)
-    J_flux
-    rho_cont
-    R_J
-    G_int
-    R(t)
+`Phi Omega(t) Omega_ret C(t) P(t) C3 Theta_N Theta_crit T_int M(t) J_flux rho_cont R_J G_int R(t)`
 
-Ядро фреймворка является общим слоем программных зависимостей.
+### Симуляция Континуума
 
-Оно не заменяет научные определения, из которых выводятся данные переменные и операторы.
+Путь:
+
+`module_edk_continuum_simulation/`
+
+Функции:
+
+- потактовая симуляция динамики фазовых слоёв;
+- расчёт индикаторов фазовой синхронизации;
+- поддержка переменных проявленной массы и прокси потока обмена;
+- мостовой слой для волново-генетических и последующих модулей.
 
 ### Солнечный синтез
 
 Путь:
 
-    module_solar_synthesis/
+`module_solar_synthesis/`
 
-Функции:
+Основной файл:
 
-- солнечное воздействие;
-- ионосферная модуляция;
-- модуляция планетарной среды;
-- модуляция дестабилизирующего давления среды;
-- формирование входа макроуровня для слоя планетарного резонанса.
+`module_solar_synthesis/solar_synthesis_resonator.py`
 
 Операционная цепочка:
 
-    солнечное воздействие
-    → ионосферная модуляция
-    → воздействие планетарной среды
+`external forcing → plasma-amplitude dynamics → phase synchronization indicator R_t → independent C(t) → P(t) → Omega(t) → positive structural work → accumulated dissipation → macro_light_flux → appearance_index → planetary layer`
+
+Контролируемые различия:
+
+`R_t ≠ C(t)`
+
+`macro_light_flux ≠ J_flux`
 
 Основной выход:
 
-    конфигурация солнечного воздействия
+`macro_light_flux`
 
 ### Волновая генетика
 
 Путь:
 
-    module_wave_genetics/
+`module_wave_genetics/`
 
 Функции:
 
@@ -2909,26 +1760,19 @@ Theorem-algorithmic framework
 
 Операционная цепочка:
 
-    J_flux
-    → биофотонный сигнал
-    → биологическая модуляция
-    → отклик памяти среды
-
-Основные выходы:
-
-    модулированный биологический сигнал
-    состояние памяти среды
+`J_flux → biophoton signal → biological modulation → medium-memory response`
 
 ### Молекулярная фазовая химия
 
 Путь:
 
-    module_molecular_phase_chemistry/
+`module_molecular_phase_chemistry/`
 
 Зависимости:
 
-    module_framework_core
-    module_wave_genetics
+`module_framework_core`
+
+`module_wave_genetics`
 
 Функции:
 
@@ -2936,43 +1780,32 @@ Theorem-algorithmic framework
 - влияние памяти среды;
 - формирование молекулярной матрицы связей;
 - когерентно-зависимая молекулярная стабилизация;
-- деградация молекулярного сопряжения под воздействием дестабилизирующего давления среды;
+- деградация молекулярного сопряжения под воздействием дестабилизирующего давления;
 - рекурсивное наследование параметров молекулярной конфигурации.
 
 Операционная цепочка:
 
-    biophoton_signal
-    → medium_memory_tensor
-    → binding_matrix
-
-Основной выход:
-
-    binding_matrix
-
-Слой молекулярной фазовой химии остаётся динамически сопряжённым с:
-
-    C(t)
-    P(t)
-    C3
-    T_int
-    J_flux
+`biophoton_signal → medium_memory_tensor → binding_matrix`
 
 ### Планетарный резонанс
 
 Путь:
 
-    module_planetary_resonance/
+`module_planetary_resonance/`
 
-Исполняемый файл:
+Основной файл:
 
-    module_planetary_resonance/schumann_planetary_resonator.py
+`module_planetary_resonance/schumann_planetary_resonator.py`
 
 Зависимости:
 
-    module_framework_core
-    module_solar_synthesis
-    module_wave_genetics
-    module_molecular_phase_chemistry
+`module_framework_core`
+
+`module_solar_synthesis`
+
+`module_wave_genetics`
+
+`module_molecular_phase_chemistry`
 
 Функции:
 
@@ -2985,43 +1818,23 @@ Theorem-algorithmic framework
 - вычисление `r_geo`;
 - модуляция биологического и молекулярного слоёв.
 
-Полная операционная цепочка:
+Операционная цепочка:
 
-    solar_flux
-    → ionosphere_distortion
-    → active_fundamental
-    → planetary_phase
-    → planetary_forcing_value
-    → planetary_appearance_index
-    → r_geo
-    → stabilized DNA signal
-    → molecular phase chemistry
-
-Редуцированная операционная цепочка:
-
-    Schumann forcing
-    → r_geo
-    → стабилизация или дестабилизация сопряжённого каскада
-
-Планетарное поле не заменяет локальную общую эндогенную структурную когерентность `C(t)`.
-
-Оно изменяет условия среды и фазового сопряжения, внутри которых локальная система пытается сохранять:
-
-    C(t) > P(t)
+`solar_flux → ionosphere_distortion → active_fundamental → planetary_phase → planetary_forcing_value → planetary_appearance_index → r_geo → stabilized DNA signal → molecular phase chemistry`
 
 ### Органическая матрица
 
 Путь:
 
-    module_organic_matrix/
+`module_organic_matrix/`
 
-Исполняемый файл:
+Основной файл:
 
-    module_organic_matrix/marnov_organic_matrix_generator.py
+`module_organic_matrix/marnov_organic_matrix_generator.py`
 
 Документация:
 
-    module_organic_matrix/README_EN_RU.md
+`module_organic_matrix/README_EN_RU.md`
 
 Функции:
 
@@ -3031,41 +1844,26 @@ Theorem-algorithmic framework
 - диффузия;
 - ветвление;
 - насыщение;
-- вычисление индекса проявления;
+- вычисление индекса органической проявленности;
 - проявление органической структурной матрицы.
 
 Операционная цепочка:
 
-    J_flux
-    → волново-генетическая модуляция
-    → тензор памяти среды
-    → молекулярная матрица связей
-    → фрактальный морфогенез
-    → проявление органической матрицы
-
-Основные выходы:
-
-    пространственное поле проявления
-    индекс проявления
-    профиль ветвления
-    профиль насыщения
-    состояние рекурсивного роста
-
-Органическая матрица рассматривается как динамически удерживаемый процесс структурной самоорганизации, а не как изолированный статический биологический объект.
+`J_flux → wave-genetic modulation → medium-memory tensor → molecular binding matrix → fractal-like morphogenesis → organic matrix manifestation`
 
 ### Инженерный визуальный протокол EDK
 
 Путь:
 
-    module_edk_visual_protocol/
+`module_edk_visual_protocol/`
 
-Исполняемый файл:
+Основной файл:
 
-    module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+`module_edk_visual_protocol/marnov_cubic_potential_visualizer.py`
 
 Документация:
 
-    module_edk_visual_protocol/README_EN_RU.md
+`module_edk_visual_protocol/README_EN_RU.md`
 
 Функции:
 
@@ -3074,32 +1872,23 @@ Theorem-algorithmic framework
 - диагностика фазовой конфигурации;
 - диагностика амплитуды захвата;
 - профиль динамического интерфейса;
-- обнаружение точек бифуркации;
+- обнаружение маркеров бифуркации;
 - визуализация приближения к критической границе;
 - визуализация фазового перехода между удержанием и дестабилизацией.
-
-Основные выходы:
-
-    инженерные диагностические графики
-    маркеры бифуркации
-    профиль интерфейса
-    профиль объёмного удержания
-
-Визуальный протокол не заменяет математические определения визуализируемых переменных и операторов.
 
 ### Импульсный переход EDK
 
 Путь:
 
-    module_edk_impulse_transition/
+`module_edk_impulse_transition/`
 
-Исполняемый файл:
+Основной файл:
 
-    module_edk_impulse_transition/poynting_flux_transition.py
+`module_edk_impulse_transition/poynting_flux_transition.py`
 
 Документация:
 
-    module_edk_impulse_transition/README_EN_RU.md
+`module_edk_impulse_transition/README_EN_RU.md`
 
 Функции:
 
@@ -3110,52 +1899,33 @@ Theorem-algorithmic framework
 
 Операционная цепочка:
 
-    U_6D
-    → C3
-    → управляемое раскрытие
-    → импульсный переход
-    → направленный выходной поток
-    → J_flux
+`U_6D → C3 → controlled disclosure → impulse transition → directed output flow → J_flux`
 
-Модуль сохраняет различие между:
+Контролируемое различие:
 
-    S_EM = E × H
-
-как физическим электромагнитным вектором Пойнтинга и:
-
-    S_1D
-
-как редуцированным прокси направленного выхода алгоритмического слоя перехода.
+`S_EM ≠ S_1D`
 
 Основной выход:
 
-    J_flux
+`J_flux`
 
 ### Решатель метрического моста
 
 Путь:
 
-    module_metric_bridge_solver/
+`module_metric_bridge_solver/`
 
-Исполняемый файл:
+Основной файл:
 
-    module_metric_bridge_solver/metric_bridge.py
+`module_metric_bridge_solver/metric_bridge.py`
 
 Документация:
 
-    module_metric_bridge_solver/README_EN_RU.md
+`module_metric_bridge_solver/README_EN_RU.md`
 
 Входы:
 
-    J_flux
-    partial_t J_flux
-    grad J_flux
-    grad rho_cont
-    C3
-    G_int
-    C(t)
-    P(t)
-    g_mu_nu
+`J_flux partial_t J_flux grad J_flux grad rho_cont C3 G_int C(t) P(t) g_mu_nu`
 
 Функции:
 
@@ -3168,82 +1938,64 @@ Theorem-algorithmic framework
 
 Остаток потока обмена:
 
-    R_J =
-        partial_t J_flux
-        + (J_flux · grad)J_flux
-        + gamma grad rho_cont
-        + beta C3 J_flux
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
 Интерфейсная проекция:
 
-    проецируемый интерфейсный отклик = G_int R_J
+`projected_interface_response = G_int R_J`
 
-Модуль сохраняет различие между:
+### Протокол обратного декодирования Марнова
 
-    g_mu_nu
-    → метрический тензор
+Путь:
 
-    T_int
-    → динамический интерфейсный тензор
+`module_marnov_protocol_reverse_decoding/`
 
-    T^{mu nu}
-    → представление тензора энергии-импульса
+Основной файл:
 
-    R_J
-    → остаток потока обмена
+`module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py`
 
-    G_int
-    → оператор интерфейсной проекции
+Документация:
 
-Выход метрической деформации является модельно-специфическим численным прокси.
+`module_marnov_protocol_reverse_decoding/README_EN_RU.md`
 
-Он не представлен как полное решение полевых уравнений Эйнштейна.
+Функции:
+
+- детерминированное кодирование байта в фазу;
+- детерминированная генерация трёхмерного адреса без коллизий;
+- построение разреженной трёхмерной комплексной полезной нагрузки;
+- нелинейное фазово-замковое преобразование;
+- обратное восстановление через сопоставление 256 фазовых кандидатов;
+- опциональное восстановление UTF-8 текста;
+- полная проверка текстового и байтового цикла.
+
+Операционная цепочка:
+
+`byte sequence → byte-to-phase mapping → sparse 3D complex payload → nonlinear phase-lock transformation → locked payload → 256-candidate phase matching → reconstructed bytes → optional UTF-8 text`
 
 ### Слой фазового сопряжения
 
 Путь:
 
-    phase_coupling/
+`phase_coupling/`
 
 Функции:
 
 - сопряжение эндогенных фазовых процессов;
-- формирование резонансного окна фазового перехода;
-- динамика удерживаемой операционной области;
-- сопряжение динамического интерфейса;
+- формирование резонансных окон фазовых переходов;
+- динамика удерживаемых операционных областей;
+- сопряжение динамических интерфейсов;
 - рекурсивное наследование;
 - перераспределение потока обмена.
 
-Каждый механизм фазового сопряжения должен определять:
-
-- какие фазовые моды сопрягаются;
-- какие эндогенные структурные процессы участвуют;
-- синхронизируются ли только фазы;
-- сохраняется ли динамическая когерентность и фаз, и амплитуд;
-- роль `Omega_ret`;
-- функцию сопряжения в удержании, фазовом переходе или деградации.
-
 Контролируемое различие:
 
-    фазовая синхронизация
-    → согласование фаз при возможном сохранении динамической хаотичности амплитуд
-
-    фазовая когерентность
-    → динамическая согласованность и фаз, и амплитуд
-
-Следовательно:
-
-    фазовая синхронизация ≠ фазовая когерентность
-
-Фазовая синхронизация может действовать как локальный механизм или операционный индикатор.
-
-Она не тождественна общей эндогенной структурной когерентности `C(t)`.
+`фазовая синхронизация ≠ фазовая когерентность`
 
 ### Ядро Континуума
 
 Системный оркестратор:
 
-    continuum_core_engine.py
+`continuum_core_engine.py`
 
 Функции:
 
@@ -3257,46 +2009,13 @@ Theorem-algorithmic framework
 - межмасштабная обратная связь;
 - рекурсивное наследование качественных характеристик.
 
-Системная сборка:
-
-    module_framework_core
-    → module_solar_synthesis
-    → module_wave_genetics
-    → module_molecular_phase_chemistry
-    → module_planetary_resonance
-    → module_organic_matrix
-    → module_edk_visual_protocol
-    → module_edk_impulse_transition
-    → module_metric_bridge_solver
-    → рекурсивная системная обратная связь
-
 Системный цикл:
 
-    состояние Q(n)
-    → обновление общих операционных параметров
-    → солнечная и планетарная модуляция
-    → волново-генетическая модуляция
-    → молекулярная фазовая химия
-    → проявление органической матрицы
-    → визуальная диагностика
-    → управляемый импульсный переход
-    → остаток потока обмена
-    → интерфейсная проекция
-    → классификация динамического состояния
-    → рекурсивная обратная связь
-    → состояние Q(n+1)
-
-Оркестратор не устраняет функциональные границы отдельных модулей.
-
-Каждый модуль сохраняет собственный смысловой субъект, входные и выходные параметры, математические отношения, функциональную роль и область применимости.
-
----
+`состояние Q(n) → обновление общих операционных параметров → солнечная и планетарная модуляция → волново-генетическая модуляция → молекулярная фазовая химия → проявление органической матрицы → визуальная диагностика → управляемый импульсный переход → остаток потока обмена → интерфейсная проекция → классификация динамического состояния → рекурсивная обратная связь → состояние Q(n+1)`
 
 ## RU — Установка и запуск
 
-Репозиторий должен запускаться из корневой папки, чтобы пути модулей и общие импорты оставались доступными для полной архитектуры EDK.
-
-### Получение репозитория
+Репозиторий рассчитан на запуск из корневой папки.
 
 Клонировать репозиторий:
 
@@ -3305,8 +2024,6 @@ Theorem-algorithmic framework
 Перейти в папку репозитория:
 
     cd Endogenous-Dynamics-of-the-Continuum
-
-### Среда Python
 
 Создать виртуальную среду:
 
@@ -3320,11 +2037,7 @@ Theorem-algorithmic framework
 
     source .venv/bin/activate
 
-Если операционная система использует команду `python3` вместо `python`, необходимо заменить команду соответствующим образом.
-
-### Установка зависимостей
-
-Установить зависимости, определённые в `requirements.txt`:
+Установить зависимости:
 
     python -m pip install --upgrade pip
     python -m pip install -r requirements.txt
@@ -3334,243 +2047,153 @@ Theorem-algorithmic framework
     numpy>=1.26.0
     matplotlib>=3.8.0
 
-Дополнительные зависимости должны добавляться только тогда, когда они действительно требуются исполняемому модулю.
+Запуск отдельных модулей из корня репозитория:
 
-### Требование запуска из корневой папки
-
-Все исполняемые файлы должны запускаться из:
-
-    Endogenous-Dynamics-of-the-Continuum/
-
-Запуск модуля из его внутренней папки может нарушить общие импорты и зависимости модулей.
-
-### Запуск отдельных модулей
-
-Модуль органической матрицы:
-
-    python module_organic_matrix/marnov_organic_matrix_generator.py
-
-Инженерный визуальный протокол EDK:
-
-    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
-
-Модуль импульсного перехода EDK:
-
-    python module_edk_impulse_transition/poynting_flux_transition.py
-
-Решатель метрического моста:
-
-    python module_metric_bridge_solver/metric_bridge.py
-
-Модуль планетарного резонанса:
-
+    python module_solar_synthesis/solar_synthesis_resonator.py
+    python module_wave_genetics/wave_genetics_dna_oscillator.py
+    python module_molecular_phase_chemistry/molecular_phase_chemistry.py
     python module_planetary_resonance/schumann_planetary_resonator.py
+    python module_organic_matrix/marnov_organic_matrix_generator.py
+    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+    python module_edk_impulse_transition/poynting_flux_transition.py
+    python module_metric_bridge_solver/metric_bridge.py
+    python module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py
 
-### Запуск полной системы
-
-После проверки отдельных модулей запустить системный оркестратор:
+Запуск полного системного оркестратора:
 
     python continuum_core_engine.py
 
-Полная исполняемая цепочка:
+## RU — Контроль операционной целостности
 
-    module_framework_core
-    → module_solar_synthesis
-    → module_wave_genetics
-    → module_molecular_phase_chemistry
-    → module_planetary_resonance
-    → module_organic_matrix
-    → module_edk_visual_protocol
-    → module_edk_impulse_transition
-    → module_metric_bridge_solver
-    → continuum_core_engine
+Реализация сохраняет следующие контролируемые различия:
 
-### Контроль операционной целостности
+`фазовая синхронизация ≠ фазовая когерентность`
 
-Реализация должна сохранять контролируемые различия:
+`R(t) ≠ C(t)`
 
-    фазовая синхронизация ≠ фазовая когерентность
+`C(t) ≠ C3`
 
-    R(t) ≠ C(t)
+`T_int ≠ M(t)`
 
-    C(t) ≠ C3
+`J ≠ J_flux`
 
-    T_int ≠ M(t)
+`macro_light_flux ≠ J_flux`
 
-    J_flux ≠ материальный перенос массы
+`S_1D ≠ полный физический электромагнитный вектор Пойнтинга`
 
-    S_1D ≠ полный физический электромагнитный вектор Пойнтинга
-
-    прокси метрического отклика ≠ полное решение полевых уравнений Эйнштейна
+`прокси метрического отклика ≠ полная релятивистская метрическая реализация`
 
 Удерживаемое состояние:
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
 Граница эндогенной динамической критичности:
 
-    C(t) ≈ P(t)
+`C(t) ≈ P(t)`
 
 Состояние деградации:
 
-    C(t) < P(t)
+`C(t) < P(t)`
 
-Полная прямая цепочка должна сохраняться:
+Прямая цепочка:
 
-    Phi
-    → фазовая когерентность
-    → C(t)
-    → C3
-    → T_int
-    → M(t)
-    → J_flux
+`Phi → фазовая когерентность → C(t) → T_int → M(t) → J_flux`
 
-Полная обратная цепочка также должна сохраняться:
+Обратная цепочка:
 
-    потеря C(t)
-    → деградация C3
-    → деградация T_int
-    → снижение или деманифестация M(t)
-    → перераспределение через J_flux
-    → возврат в фоновые нерезонансные моды rho_cont
+`потеря C(t) → деградация T_int → снижение или деманифестация M(t) → перераспределение через J_flux → возврат в фоновые нерезонансные моды rho_cont`
 
-Последующее состояние должно наследовать преобразованные качественные характеристики предшествующего состояния:
+Рекурсивное обновление:
 
-    Q(n+1) =
-        F(
-            Q(n),
-            C(t),
-            P(t),
-            C3,
-            T_int,
-            J_flux,
-            Omega(t),
-            rho_cont
-        )
-
-Рекурсивное обновление не должно сбрасывать систему в независимое начальное состояние после каждого цикла.
-
----
+`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
 
 ## RU — Область применимости
 
-Теорема применима к открытым нелинейным диссипативным динамическим системам, в которых процесс структурной самоорганизации разнообразных форм, уровней и переходных состояний Материи Пространства Времени удерживается не посредством статического равновесия, а посредством рекурсивного динамического уравновешивания фазовой когерентности, кубического насыщения объёма, потока обмена, диссипативного следа и рекурсивного потактового наследования качественных характеристик.
+Фреймворк применяется к открытым нелинейным диссипативным динамическим системам, в которых структурная самоорганизация удерживается через рекурсивное динамическое уравновешивание фазовой когерентности, интерфейсного удержания, потока обмена, диссипативного следа и потактового наследования качественных характеристик.
 
-Сквозной масштаб применимости охватывает разнообразные формы, уровни и переходные состояния структурной самоорганизации Материи Пространства Времени: от квантовой мультиплетности, элементарных структур, атомных ядер, атомов и молекулярных форм до звёздно-планетарных систем, галактических доменов и макроструктур Континуума.
+Сквозной масштаб применимости охватывает разнообразные формы, уровни и переходные состояния структурной самоорганизации Материи Пространства Времени:
 
-Основная область применимости включает:
-
-- микроуровень структурной самоорганизации Материи Пространства Времени: квантовые состояния, квантовую мультиплетность, элементарные структуры, атомные ядра, атомы, молекулярные формы, уровни и переходные состояния;
-
-- атомные ядра как сверхплотные динамические процессы структурной самоорганизации, удерживаемые посредством внутренней когерентности, фазового сопряжения и энергии связи;
-
-- молекулярные структуры как фазово-сопряжённые конфигурации атомарных и молекулярных осцилляторов, удерживаемые посредством памяти среды, матриц связей и процессов поддержки когерентности;
-
-- звёзды как объёмные плазменные макрорезонаторы;
-
-- звёздно-планетарные системы как локальные объёмные конфигурации фазово-энергетического сопряжения;
-
-- галактические домены как сети звёздных макрорезонаторов;
-
-- области коллапса, деманифестации и ресайклинга разнообразных форм и уровней структурной самоорганизации Материи Пространства Времени;
-
-- локальные области Континуума, в которых наблюдаются фазово-энергетическое сопряжение, объёмная перестройка, резонансные окна фазовых переходов и диссипативное перераспределение импульса;
-
+- квантовые состояния и квантовую мультиплетность;
+- элементарные структуры;
+- атомные ядра;
+- атомы;
+- молекулярные формы;
+- звёздные макрорезонаторы;
+- звёздно-планетарные системы;
+- галактические домены;
+- области коллапса, деманифестации и ресайклинга;
+- локальные домены Континуума с фазово-энергетическим сопряжением, объёмной перестройкой, резонансными окнами фазовых переходов и диссипативным перераспределением импульса;
 - алгоритмические модельные слои, в которых `C(t)`, `P(t)`, `Phi`, `Omega(t)`, `T_int`, `J_flux` и связанные операторы проверяются как формальные инварианты теоремно-алгоритмического фреймворка.
-
-Теорема не описывает изолированные статические объекты.
-
-Она описывает динамические процессы структурной самоорганизации, удержания, деградации, перехода и рекурсивного наследования внутри открытой нелинейной диссипативной динамической структуры наблюдаемого нами Континуума.
-
----
 
 ## RU — Проверяемые следствия
 
-Теорема предполагает следующие проверяемые следствия:
+Фреймворк определяет следующие операционно проверяемые следствия:
 
 - объёмное распределение импульса;
-
-- зависимость динамической устойчивости от кубического нелинейного насыщения объёма `C^3`;
-
-- переход системы к эндогенной динамической критичности при приближении `C(t)` к `P(t)`;
-
+- зависимость динамической устойчивости от кубического нелинейного насыщения объёма `C3`;
+- переход к эндогенной динамической критичности при приближении `C(t)` к `P(t)`;
 - изменение геометрии `Omega(t)` при изменении фазово-когерентного удержания;
-
 - существование динамического интерфейса проявления `T_int`;
-
 - разделение градиента проявленной массы на тангенциальный и нормальный контуры;
-
 - обнуление нормального разрыва массы при потере фазовой когерентности;
-
-- деградация динамического интерфейса проявления под воздействием дестабилизирующего давления среды `P(t)`;
-
+- деградация динамического интерфейса проявления под воздействием дестабилизирующего давления `P(t)`;
 - переход от удержания к деманифестации при нарушении условия `C(t) > P(t)`;
-
 - связь макроскопических аномалий среды с `grad rho_cont`;
-
 - потактовая редукция наблюдаемого «полёта» фотона;
-
 - различие между резонансом, диссонансом, частичной фазовой синхронизацией, фазовой когерентностью и когерентным резонансным сопряжением;
-
 - зависимость последующего цикла `Q(n+1)` от качественных характеристик, унаследованных от предшествующего цикла `Q(n)`;
-
-- формирование резонансных окон фазовых переходов внутри допустимой операционной области состояний `Omega(t)`;
-
+- формирование резонансных окон фазовых переходов внутри допустимой операционной области `Omega(t)`;
 - различие между наблюдаемым параметром фазовой синхронизации `R(t)` и общей эндогенной структурной когерентностью `C(t)`;
-
 - стабилизация или деградация алгоритмического каскада в зависимости от отношения между `C(t)`, `P(t)`, `T_int`, `J_flux` и конфигурацией, поддерживающей когерентность системы.
-
-Эти следствия устанавливают операционный мост между теоремно-описательным слоем, математико-формальным слоем и алгоритмическим модульным слоем репозитория.
-
----
 
 ## RU — Лицензия
 
 Текстовая, теоремно-алгоритмическая, математическая и описательная часть данной публикации предназначена для распространения на условиях лицензии Creative Commons Attribution 4.0 International, CC BY 4.0.
 
-Репозиторий содержит не только описательные и теоремно-формальные материалы, но и исполняемые алгоритмические модули.
+Репозиторий также содержит исполняемые алгоритмические модули.
 
-Поэтому лицензионный статус исполняемого программного кода фиксируется отдельно в `LICENSE.md` или в специальном разделе лицензирования программного кода, если это требуется.
+Лицензионный статус исполняемого программного кода фиксируется отдельно в:
+
+`LICENSE.md`
 
 Использование, цитирование, перевод, распространение и адаптация текстовой и теоремно-формальной части разрешены при условии корректного указания авторства.
 
 Автор:
 
-Maksym Marnov
+`Maksym Marnov`
 
 Работа:
 
-Эндогенная динамика Континуума
+`Endogenous Dynamics of the Continuum`
 
 Лицензия:
 
-Creative Commons Attribution 4.0 International, CC BY 4.0
-
----
+`Creative Commons Attribution 4.0 International, CC BY 4.0`
 
 ## RU — Цитирование
 
 До присвоения DOI через Zenodo данный репозиторий следует цитировать как открытую авторскую публикацию.
 
-После архивирования релиза GitHub через Zenodo DOI будет добавлен в данный раздел и в файл `CITATION.cff`.
+После архивирования релиза GitHub через Zenodo DOI будет добавлен в данный раздел и в файл:
+
+`CITATION.cff`
 
 Рекомендуемое цитирование до присвоения DOI:
 
-Marnov, Maksym. Эндогенная динамика Континуума (EDK): Теоремно-алгоритмический фреймворк в рамках открытой нелинейной динамической системы, где Материя Пространства Времени рассматривается как разнообразные формы, уровни и переходные состояния структурной самоорганизации Континуума. Релиз репозитория GitHub, 2026.
+Marnov, Maksym. Эндогенная динамика Континуума (EDK): теоремно-алгоритмический фреймворк для открытых нелинейных диссипативных динамических систем, в которых Материя Пространства Времени рассматривается как разнообразные формы, уровни и переходные состояния структурной самоорганизации Континуума. Релиз репозитория GitHub, 2026.
 
 Файл цитирования:
 
-    CITATION.cff
+`CITATION.cff`
 
 Автор:
 
-Maksym Marnov
+`Maksym Marnov`
 
 Рекомендуемое название работы:
 
-Эндогенная динамика Континуума (EDK)
+`Эндогенная динамика Континуума (EDK)`
 
 Тип публикации:
 
-Теоремно-алгоритмический фреймворк
-
+`Теоремно-алгоритмический фреймворк`
