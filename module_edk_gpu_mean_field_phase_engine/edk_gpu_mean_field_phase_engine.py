@@ -7,7 +7,7 @@ import os
 import tempfile
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, Mapping
 
 import numpy as np
 
@@ -53,6 +53,30 @@ class MeanFieldPhaseConfig:
                 "num_domains must be at least 2."
             )
 
+        finite_fields = {
+            "coupling_strength_k": self.coupling_strength_k,
+            "sakaguchi_phase_lag_alpha": self.sakaguchi_phase_lag_alpha,
+            "natural_frequency_mean": self.natural_frequency_mean,
+            "natural_frequency_std": self.natural_frequency_std,
+            "external_forcing_phase": self.external_forcing_phase,
+            "phase_noise_strength": self.phase_noise_strength,
+            "amplitude_growth_rate": self.amplitude_growth_rate,
+            "amplitude_saturation_rate": self.amplitude_saturation_rate,
+            "amplitude_noise_strength": self.amplitude_noise_strength,
+            "amplitude_minimum": self.amplitude_minimum,
+            "amplitude_maximum": self.amplitude_maximum,
+            "initial_amplitude_minimum": self.initial_amplitude_minimum,
+            "initial_amplitude_maximum": self.initial_amplitude_maximum,
+        }
+
+        for name, value in finite_fields.items():
+            if not math.isfinite(
+                float(value)
+            ):
+                raise ValueError(
+                    f"{name} must be finite."
+                )
+
         if self.natural_frequency_std < 0.0:
             raise ValueError(
                 "natural_frequency_std must be non-negative."
@@ -80,35 +104,22 @@ class MeanFieldPhaseConfig:
 
         if self.amplitude_maximum <= self.amplitude_minimum:
             raise ValueError(
-                "amplitude_maximum must be greater than "
-                "amplitude_minimum."
+                "amplitude_maximum must be greater than amplitude_minimum."
             )
 
-        if (
-            self.initial_amplitude_minimum
-            < self.amplitude_minimum
-        ):
+        if self.initial_amplitude_minimum < self.amplitude_minimum:
             raise ValueError(
-                "initial_amplitude_minimum must not be smaller "
-                "than amplitude_minimum."
+                "initial_amplitude_minimum must not be smaller than amplitude_minimum."
             )
 
-        if (
-            self.initial_amplitude_maximum
-            > self.amplitude_maximum
-        ):
+        if self.initial_amplitude_maximum > self.amplitude_maximum:
             raise ValueError(
-                "initial_amplitude_maximum must not exceed "
-                "amplitude_maximum."
+                "initial_amplitude_maximum must not exceed amplitude_maximum."
             )
 
-        if (
-            self.initial_amplitude_maximum
-            <= self.initial_amplitude_minimum
-        ):
+        if self.initial_amplitude_maximum <= self.initial_amplitude_minimum:
             raise ValueError(
-                "initial_amplitude_maximum must be greater than "
-                "initial_amplitude_minimum."
+                "initial_amplitude_maximum must be greater than initial_amplitude_minimum."
             )
 
         if self.dtype not in {
@@ -132,6 +143,86 @@ class MeanFieldPhaseConfig:
             raise ValueError(
                 "device_id must be non-negative."
             )
+
+
+def _json_safe(
+    value: Any,
+) -> Any:
+    if value is None:
+        return None
+
+    if isinstance(
+        value,
+        Mapping,
+    ):
+        return {
+            str(key): _json_safe(item)
+            for key, item in value.items()
+        }
+
+    if isinstance(
+        value,
+        (
+            list,
+            tuple,
+            set,
+        ),
+    ):
+        return [
+            _json_safe(item)
+            for item in value
+        ]
+
+    if isinstance(
+        value,
+        np.ndarray,
+    ):
+        if value.ndim == 0:
+            return _json_safe(
+                value.item()
+            )
+
+        return {
+            "__array__": True,
+            "dtype": str(value.dtype),
+            "shape": list(value.shape),
+        }
+
+    if isinstance(
+        value,
+        np.generic,
+    ):
+        return _json_safe(
+            value.item()
+        )
+
+    if isinstance(
+        value,
+        Path,
+    ):
+        return str(value)
+
+    if isinstance(
+        value,
+        complex,
+    ):
+        return {
+            "real": float(value.real),
+            "imag": float(value.imag),
+        }
+
+    if isinstance(
+        value,
+        (
+            str,
+            int,
+            float,
+            bool,
+        ),
+    ):
+        return value
+
+    return repr(value)
 
 
 class _BackendRandom:
@@ -197,8 +288,8 @@ class EDKGPUMeanFieldPhaseEngine:
     The engine uses the exact Kuramoto-Sakaguchi
     mean-field identity.
 
-    State-memory complexity: O(N)
-    Computational complexity per tact: O(N)
+    State-memory complexity: O(N).
+    Computational complexity per tact: O(N).
 
     The engine does not construct an N x N
     phase-difference matrix.
@@ -219,6 +310,7 @@ class EDKGPUMeanFieldPhaseEngine:
         (
             self.xp,
             self.backend_name,
+            self.backend_library,
             self.using_gpu,
             self.active_device_id,
         ) = self._select_backend(
@@ -241,7 +333,10 @@ class EDKGPUMeanFieldPhaseEngine:
             using_gpu=self.using_gpu,
         )
 
-        self.N = self.config.num_domains
+        self.N = int(
+            self.config.num_domains
+        )
+
         self.K = float(
             self.config.coupling_strength_k
         )
@@ -293,7 +388,6 @@ class EDKGPUMeanFieldPhaseEngine:
 
         self.R_t_phase_order = 0.0
         self.global_mean_phase = 0.0
-
         self.phase_amplitude_order_proxy = 0.0
 
         self.mean_phase_velocity = 0.0
@@ -307,24 +401,26 @@ class EDKGPUMeanFieldPhaseEngine:
         self.coupling_energy_proxy = 0.0
 
         self.external_forcing_density = 0.0
-
         self.external_forcing_phase = float(
             self.config.external_forcing_phase
         )
 
         self.simulation_time = 0.0
         self.tact_index = 0
+        self.step_index = 0
 
         self._refresh_diagnostics()
+        self._validate_numerical_state()
 
     @staticmethod
     def _select_backend(
         backend: BackendMode,
         device_id: int,
-    ) -> tuple[Any, str, bool, int | None]:
+    ) -> tuple[Any, str, str, bool, int | None]:
         if backend == "cpu":
             return (
                 np,
+                "cpu",
                 "numpy",
                 False,
                 None,
@@ -333,12 +429,12 @@ class EDKGPUMeanFieldPhaseEngine:
         if _cupy is None:
             if backend == "gpu":
                 raise RuntimeError(
-                    "GPU backend requested, but CuPy "
-                    "could not be imported."
+                    "GPU backend requested, but CuPy could not be imported."
                 )
 
             return (
                 np,
+                "cpu",
                 "numpy",
                 False,
                 None,
@@ -356,9 +452,7 @@ class EDKGPUMeanFieldPhaseEngine:
 
             if device_id >= device_count:
                 raise RuntimeError(
-                    f"device_id={device_id} is outside the "
-                    f"available CUDA device range "
-                    f"0..{device_count - 1}."
+                    f"device_id={device_id} is outside the available CUDA device range 0..{device_count - 1}."
                 )
 
             _cupy.cuda.Device(
@@ -367,6 +461,7 @@ class EDKGPUMeanFieldPhaseEngine:
 
             return (
                 _cupy,
+                "gpu",
                 "cupy",
                 True,
                 device_id,
@@ -375,12 +470,12 @@ class EDKGPUMeanFieldPhaseEngine:
         except Exception as exc:
             if backend == "gpu":
                 raise RuntimeError(
-                    "GPU backend requested, but CUDA "
-                    "initialization failed."
+                    "GPU backend requested, but CUDA initialization failed."
                 ) from exc
 
             return (
                 np,
+                "cpu",
                 "numpy",
                 False,
                 None,
@@ -414,6 +509,107 @@ class EDKGPUMeanFieldPhaseEngine:
             array
         )
 
+    def _finite_array(
+        self,
+        array: Any,
+    ) -> bool:
+        return bool(
+            self._scalar(
+                self.xp.all(
+                    self.xp.isfinite(
+                        array
+                    )
+                )
+            )
+        )
+
+    def _validate_numerical_state(
+        self,
+    ) -> None:
+        arrays = {
+            "phases": self.phases,
+            "amplitudes": self.amplitudes,
+            "natural_frequencies": self.natural_frequencies,
+            "phase_velocity": self.phase_velocity,
+            "amplitude_velocity": self.amplitude_velocity,
+            "phase_noise_increment": self.phase_noise_increment,
+            "amplitude_noise_increment": self.amplitude_noise_increment,
+        }
+
+        for name, array in arrays.items():
+            if not self._finite_array(
+                array
+            ):
+                raise FloatingPointError(
+                    f"Non-finite values detected in {name}."
+                )
+
+        phase_min = self._scalar(
+            self.xp.min(
+                self.phases
+            )
+        )
+
+        phase_max = self._scalar(
+            self.xp.max(
+                self.phases
+            )
+        )
+
+        if (
+            phase_min < -math.pi - 1.0e-6
+            or phase_max >= math.pi + 1.0e-6
+        ):
+            raise FloatingPointError(
+                "Phase wrapping left [-pi, pi)."
+            )
+
+        amplitude_min = self._scalar(
+            self.xp.min(
+                self.amplitudes
+            )
+        )
+
+        amplitude_max = self._scalar(
+            self.xp.max(
+                self.amplitudes
+            )
+        )
+
+        if amplitude_min < self.config.amplitude_minimum - 1.0e-6:
+            raise FloatingPointError(
+                "Amplitude minimum bound was violated."
+            )
+
+        if amplitude_max > self.config.amplitude_maximum + 1.0e-6:
+            raise FloatingPointError(
+                "Amplitude maximum bound was violated."
+            )
+
+        scalar_diagnostics = (
+            self.R_t_phase_order,
+            self.global_mean_phase,
+            self.phase_amplitude_order_proxy,
+            self.mean_phase_velocity,
+            self.phase_velocity_dispersion,
+            self.mean_amplitude,
+            self.amplitude_dispersion,
+            self.minimum_amplitude,
+            self.maximum_amplitude,
+            self.coupling_energy_proxy,
+            self.external_forcing_density,
+            self.external_forcing_phase,
+            self.simulation_time,
+        )
+
+        for value in scalar_diagnostics:
+            if not math.isfinite(
+                float(value)
+            ):
+                raise FloatingPointError(
+                    "Non-finite scalar diagnostic detected."
+                )
+
     def _calculate_order_parameter(
         self,
     ) -> tuple[Any, Any, Any]:
@@ -429,8 +625,12 @@ class EDKGPUMeanFieldPhaseEngine:
             unit_phasors
         )
 
-        R_t = self.xp.abs(
-            complex_order_parameter
+        R_t = self.xp.clip(
+            self.xp.abs(
+                complex_order_parameter
+            ),
+            0.0,
+            1.0,
         )
 
         mean_phase = self.xp.angle(
@@ -481,8 +681,12 @@ class EDKGPUMeanFieldPhaseEngine:
             )
         )
 
-        return self.xp.abs(
-            normalized_weighted_order
+        return self.xp.clip(
+            self.xp.abs(
+                normalized_weighted_order
+            ),
+            0.0,
+            1.0,
         )
 
     def _refresh_diagnostics(
@@ -498,12 +702,16 @@ class EDKGPUMeanFieldPhaseEngine:
             self._calculate_phase_amplitude_order_proxy()
         )
 
-        coupling_energy = self.xp.mean(
-            self.xp.cos(
-                mean_phase
-                - self.phases
-                - self.alpha
-            )
+        coupling_energy = self.xp.clip(
+            self.xp.mean(
+                self.xp.cos(
+                    mean_phase
+                    - self.phases
+                    - self.alpha
+                )
+            ),
+            -1.0,
+            1.0,
         )
 
         self.R_t_phase_order = self._scalar(
@@ -527,7 +735,7 @@ class EDKGPUMeanFieldPhaseEngine:
         )
 
         self.phase_velocity_dispersion = self._scalar(
-            self.xp.var(
+            self.xp.std(
                 self.phase_velocity
             )
         )
@@ -539,7 +747,7 @@ class EDKGPUMeanFieldPhaseEngine:
         )
 
         self.amplitude_dispersion = self._scalar(
-            self.xp.var(
+            self.xp.std(
                 self.amplitudes
             )
         )
@@ -766,8 +974,10 @@ class EDKGPUMeanFieldPhaseEngine:
         )
 
         self.tact_index += 1
+        self.step_index = self.tact_index
 
         self._refresh_diagnostics()
+        self._validate_numerical_state()
 
         return self.get_metrics()
 
@@ -775,63 +985,27 @@ class EDKGPUMeanFieldPhaseEngine:
         self,
     ) -> dict[str, float | int | str | None]:
         return {
-            "R_t_phase_order": (
-                self.R_t_phase_order
-            ),
-            "global_mean_phase": (
-                self.global_mean_phase
-            ),
-            "phase_amplitude_order_proxy": (
-                self.phase_amplitude_order_proxy
-            ),
-            "mean_phase_velocity": (
-                self.mean_phase_velocity
-            ),
-            "phase_velocity_dispersion": (
-                self.phase_velocity_dispersion
-            ),
-            "mean_amplitude": (
-                self.mean_amplitude
-            ),
-            "amplitude_dispersion": (
-                self.amplitude_dispersion
-            ),
-            "minimum_amplitude": (
-                self.minimum_amplitude
-            ),
-            "maximum_amplitude": (
-                self.maximum_amplitude
-            ),
-            "coupling_energy_proxy": (
-                self.coupling_energy_proxy
-            ),
-            "external_forcing_density": (
-                self.external_forcing_density
-            ),
-            "external_forcing_phase": (
-                self.external_forcing_phase
-            ),
-            "coupling_strength_k": (
-                self.K
-            ),
-            "sakaguchi_phase_lag_alpha": (
-                self.alpha
-            ),
-            "active_domains": (
-                self.N
-            ),
-            "backend_name": (
-                self.backend_name
-            ),
-            "device_id": (
-                self.active_device_id
-            ),
-            "simulation_time": (
-                self.simulation_time
-            ),
-            "tact_index": (
-                self.tact_index
-            ),
+            "R_t_phase_order": self.R_t_phase_order,
+            "global_mean_phase": self.global_mean_phase,
+            "phase_amplitude_order_proxy": self.phase_amplitude_order_proxy,
+            "mean_phase_velocity": self.mean_phase_velocity,
+            "phase_velocity_dispersion": self.phase_velocity_dispersion,
+            "mean_amplitude": self.mean_amplitude,
+            "amplitude_dispersion": self.amplitude_dispersion,
+            "minimum_amplitude": self.minimum_amplitude,
+            "maximum_amplitude": self.maximum_amplitude,
+            "coupling_energy_proxy": self.coupling_energy_proxy,
+            "external_forcing_density": self.external_forcing_density,
+            "external_forcing_phase": self.external_forcing_phase,
+            "coupling_strength_k": self.K,
+            "sakaguchi_phase_lag_alpha": self.alpha,
+            "active_domains": self.N,
+            "backend_name": self.backend_name,
+            "backend_library": self.backend_library,
+            "device_id": self.active_device_id,
+            "simulation_time": self.simulation_time,
+            "tact_index": self.tact_index,
+            "step": self.step_index,
         }
 
     def export_field_snapshot(
@@ -901,10 +1075,17 @@ class EDKGPUMeanFieldLogger:
                 delete=False,
             ) as temporary_file:
                 json.dump(
-                    payload,
+                    _json_safe(
+                        payload
+                    ),
                     temporary_file,
                     ensure_ascii=False,
                     indent=2,
+                    sort_keys=True,
+                )
+
+                temporary_file.write(
+                    "\n"
                 )
 
                 temporary_file.flush()
@@ -971,41 +1152,57 @@ class EDKGPUMeanFieldLogger:
             ):
                 temporary_path.unlink()
 
-    def log_step(
+    def log_tact(
         self,
-        step_id: int,
+        tact_id: int,
         engine: EDKGPUMeanFieldPhaseEngine,
         include_field: bool = False,
     ) -> tuple[Path, Path | None]:
-        if step_id < 0:
+        tact = int(
+            tact_id
+        )
+
+        if tact < 0:
             raise ValueError(
-                "step_id must be non-negative."
+                "tact_id must be non-negative."
+            )
+
+        if tact != int(
+            engine.tact_index
+        ):
+            raise ValueError(
+                "tact_id must match engine.tact_index."
             )
 
         metrics_path = (
             self.output_dir
-            / f"gpu_mean_field_step_{step_id:06d}.json"
+            / f"gpu_mean_field_tact_{tact:06d}.json"
+        )
+
+        compatibility_path = (
+            self.output_dir
+            / f"gpu_mean_field_step_{tact:06d}.json"
         )
 
         field_path = (
             self.output_dir
-            / f"gpu_mean_field_field_{step_id:06d}.npz"
+            / f"gpu_mean_field_field_{tact:06d}.npz"
             if include_field
             else None
         )
 
         payload = {
-            "step": int(
-                step_id
+            "tact": tact,
+            "step": tact,
+            "tact_index": tact,
+            "simulation_time": float(
+                engine.simulation_time
             ),
-            "module": (
-                "module_edk_gpu_mean_field_phase_engine"
-            ),
-            "engine_class": (
-                "EDKGPUMeanFieldPhaseEngine"
-            ),
+            "module": "module_edk_gpu_mean_field_phase_engine",
+            "engine_class": "EDKGPUMeanFieldPhaseEngine",
             "backend": {
                 "name": engine.backend_name,
+                "library": engine.backend_library,
                 "using_gpu": engine.using_gpu,
                 "device_id": engine.active_device_id,
             },
@@ -1020,6 +1217,11 @@ class EDKGPUMeanFieldLogger:
             payload,
         )
 
+        self._atomic_json_write(
+            compatibility_path,
+            payload,
+        )
+
         if field_path is not None:
             self._atomic_npz_write(
                 field_path,
@@ -1029,6 +1231,25 @@ class EDKGPUMeanFieldLogger:
         return (
             metrics_path,
             field_path,
+        )
+
+    def log_step(
+        self,
+        step_id: int,
+        engine: EDKGPUMeanFieldPhaseEngine,
+        include_field: bool = False,
+    ) -> tuple[Path, Path | None]:
+        """
+        Compatibility alias for older scripts and tests.
+
+        Internally this represents one tact of the
+        GPU mean-field phase engine.
+        """
+
+        return self.log_tact(
+            tact_id=step_id,
+            engine=engine,
+            include_field=include_field,
         )
 
 
@@ -1062,9 +1283,15 @@ def _build_argument_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "--tacts",
+        type=int,
+        default=None,
+    )
+
+    parser.add_argument(
         "--steps",
         type=int,
-        default=5,
+        default=None,
     )
 
     parser.add_argument(
@@ -1136,9 +1363,27 @@ def main() -> None:
     parser = _build_argument_parser()
     args = parser.parse_args()
 
-    if args.steps < 1:
+    total_tacts = (
+        args.tacts
+        if args.tacts is not None
+        else args.steps
+        if args.steps is not None
+        else 5
+    )
+
+    if total_tacts < 1:
         raise ValueError(
-            "steps must be at least 1."
+            "tacts must be at least 1."
+        )
+
+    if (
+        not math.isfinite(
+            args.dt
+        )
+        or args.dt <= 0.0
+    ):
+        raise ValueError(
+            "dt must be a positive finite value."
         )
 
     if args.log_every < 0:
@@ -1154,12 +1399,8 @@ def main() -> None:
     config = MeanFieldPhaseConfig(
         num_domains=args.num_domains,
         coupling_strength_k=args.coupling,
-        sakaguchi_phase_lag_alpha=(
-            args.phase_lag
-        ),
-        external_forcing_phase=(
-            args.forcing_phase
-        ),
+        sakaguchi_phase_lag_alpha=args.phase_lag,
+        external_forcing_phase=args.forcing_phase,
         seed=args.seed,
         dtype=args.dtype,
         backend=args.backend,
@@ -1180,48 +1421,43 @@ def main() -> None:
 
     print(
         f"backend={engine.backend_name} "
+        f"backend_library={engine.backend_library} "
         f"device_id={engine.active_device_id} "
         f"domains={engine.N}"
     )
 
     for _ in range(
-        args.steps
+        total_tacts
     ):
         metrics = engine.process_micro_interval(
-            external_forcing_density=(
-                args.forcing
-            ),
-            external_forcing_phase=(
-                args.forcing_phase
-            ),
+            external_forcing_density=args.forcing,
+            external_forcing_phase=args.forcing_phase,
             dt=args.dt,
         )
 
-        step_id = int(
+        tact = int(
             metrics["tact_index"]
         )
 
         should_log = (
             args.log_every > 0
-            and step_id % args.log_every == 0
+            and tact % args.log_every == 0
         )
 
         should_export_field = (
             args.field_every > 0
-            and step_id % args.field_every == 0
+            and tact % args.field_every == 0
         )
 
         if should_log or should_export_field:
-            logger.log_step(
-                step_id=step_id,
+            logger.log_tact(
+                tact_id=tact,
                 engine=engine,
-                include_field=(
-                    should_export_field
-                ),
+                include_field=should_export_field,
             )
 
         print(
-            f"[tact {step_id}] "
+            f"[tact {tact}] "
             f"R(t)="
             f"{metrics['R_t_phase_order']:.6f} "
             f"phase_amplitude_proxy="
