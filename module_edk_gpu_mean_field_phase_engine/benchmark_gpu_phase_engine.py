@@ -4,10 +4,12 @@ import argparse
 import json
 import math
 import os
+import sys
 import tempfile
 import time
+from dataclasses import asdict
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 import numpy as np
 
@@ -17,10 +19,104 @@ try:
         MeanFieldPhaseConfig,
     )
 except ImportError:
-    from edk_gpu_mean_field_phase_engine import (
-        EDKGPUMeanFieldPhaseEngine,
-        MeanFieldPhaseConfig,
-    )
+    try:
+        from edk_gpu_mean_field_phase_engine import (
+            EDKGPUMeanFieldPhaseEngine,
+            MeanFieldPhaseConfig,
+        )
+    except ImportError:
+        repo_root = Path(__file__).resolve().parents[1]
+
+        if str(repo_root) not in sys.path:
+            sys.path.insert(
+                0,
+                str(repo_root),
+            )
+
+        from module_edk_gpu_mean_field_phase_engine.edk_gpu_mean_field_phase_engine import (
+            EDKGPUMeanFieldPhaseEngine,
+            MeanFieldPhaseConfig,
+        )
+
+
+def _json_safe(
+    value: Any,
+) -> Any:
+    if value is None:
+        return None
+
+    if isinstance(
+        value,
+        Mapping,
+    ):
+        return {
+            str(key): _json_safe(item)
+            for key, item in value.items()
+        }
+
+    if isinstance(
+        value,
+        (
+            list,
+            tuple,
+            set,
+        ),
+    ):
+        return [
+            _json_safe(item)
+            for item in value
+        ]
+
+    if isinstance(
+        value,
+        np.ndarray,
+    ):
+        if value.ndim == 0:
+            return _json_safe(
+                value.item()
+            )
+
+        return {
+            "__array__": True,
+            "dtype": str(value.dtype),
+            "shape": list(value.shape),
+        }
+
+    if isinstance(
+        value,
+        np.generic,
+    ):
+        return _json_safe(
+            value.item()
+        )
+
+    if isinstance(
+        value,
+        Path,
+    ):
+        return str(value)
+
+    if isinstance(
+        value,
+        complex,
+    ):
+        return {
+            "real": float(value.real),
+            "imag": float(value.imag),
+        }
+
+    if isinstance(
+        value,
+        (
+            str,
+            int,
+            float,
+            bool,
+        ),
+    ):
+        return value
+
+    return repr(value)
 
 
 def _atomic_write_json(
@@ -44,13 +140,21 @@ def _atomic_write_json(
             delete=False,
         ) as temporary_file:
             json.dump(
-                payload,
+                _json_safe(
+                    payload
+                ),
                 temporary_file,
                 ensure_ascii=False,
                 indent=2,
+                sort_keys=True,
+            )
+
+            temporary_file.write(
+                "\n"
             )
 
             temporary_file.flush()
+
             os.fsync(
                 temporary_file.fileno()
             )
@@ -93,7 +197,9 @@ def _persistent_state_bytes(
 
     return int(
         sum(
-            int(array.nbytes)
+            int(
+                array.nbytes
+            )
             for array in arrays
         )
     )
@@ -133,37 +239,45 @@ def _memory_report(
         * complex_itemsize
     )
 
-    pairwise_matrix_bytes = (
+    unallocated_pairwise_matrix_bytes = int(
         engine.N
         * engine.N
         * float_itemsize
     )
 
     report: dict[str, Any] = {
-        "persistent_state_bytes": (
-            persistent_bytes
-        ),
+        "backend_name": engine.backend_name,
+        "backend_library": engine.backend_library,
+        "using_gpu": engine.using_gpu,
+        "device_id": engine.active_device_id,
+        "dtype": engine.config.dtype,
+        "num_domains": engine.N,
+        "float_itemsize": float_itemsize,
+        "complex_itemsize": complex_itemsize,
+        "persistent_state_bytes": persistent_bytes,
         "persistent_state_mebibytes": (
             persistent_bytes
             / 1024**2
         ),
-        "persistent_bytes_per_domain": (
-            persistent_bytes_per_domain
-        ),
+        "persistent_bytes_per_domain": persistent_bytes_per_domain,
         "conservative_working_bytes_per_domain": (
             conservative_working_bytes_per_domain
         ),
         "unallocated_pairwise_matrix_bytes": (
-            pairwise_matrix_bytes
+            unallocated_pairwise_matrix_bytes
         ),
         "unallocated_pairwise_matrix_gibibytes": (
-            pairwise_matrix_bytes
+            unallocated_pairwise_matrix_bytes
             / 1024**3
         ),
     }
 
     if engine.using_gpu:
         xp = engine.xp
+
+        _synchronize(
+            engine
+        )
 
         free_bytes, total_bytes = (
             xp.cuda.runtime.memGetInfo()
@@ -239,21 +353,61 @@ def _memory_report(
     return report
 
 
+def _validate_runtime_inputs(
+    warmup_tacts: int,
+    measured_tacts: int,
+    forcing: float,
+    forcing_phase: float,
+    dt: float,
+) -> None:
+    if warmup_tacts < 0:
+        raise ValueError(
+            "warmup_tacts must be non-negative."
+        )
+
+    if measured_tacts < 1:
+        raise ValueError(
+            "measured_tacts must be at least 1."
+        )
+
+    if not math.isfinite(
+        forcing
+    ):
+        raise ValueError(
+            "forcing must be finite."
+        )
+
+    if not math.isfinite(
+        forcing_phase
+    ):
+        raise ValueError(
+            "forcing_phase must be finite."
+        )
+
+    if (
+        not math.isfinite(
+            dt
+        )
+        or dt <= 0.0
+    ):
+        raise ValueError(
+            "dt must be a positive finite value."
+        )
+
+
 def _run_warmup(
     engine: EDKGPUMeanFieldPhaseEngine,
-    warmup_steps: int,
+    warmup_tacts: int,
     forcing: float,
     forcing_phase: float,
     dt: float,
 ) -> None:
     for _ in range(
-        warmup_steps
+        warmup_tacts
     ):
         engine.process_micro_interval(
             external_forcing_density=forcing,
-            external_forcing_phase=(
-                forcing_phase
-            ),
+            external_forcing_phase=forcing_phase,
             dt=dt,
         )
 
@@ -264,7 +418,7 @@ def _run_warmup(
 
 def _benchmark_tacts(
     engine: EDKGPUMeanFieldPhaseEngine,
-    measured_steps: int,
+    measured_tacts: int,
     forcing: float,
     forcing_phase: float,
     dt: float,
@@ -284,13 +438,11 @@ def _benchmark_tacts(
         start_event.record()
 
         for _ in range(
-            measured_steps
+            measured_tacts
         ):
             engine.process_micro_interval(
                 external_forcing_density=forcing,
-                external_forcing_phase=(
-                    forcing_phase
-                ),
+                external_forcing_phase=forcing_phase,
                 dt=dt,
             )
 
@@ -307,13 +459,11 @@ def _benchmark_tacts(
 
     else:
         for _ in range(
-            measured_steps
+            measured_tacts
         ):
             engine.process_micro_interval(
                 external_forcing_density=forcing,
-                external_forcing_phase=(
-                    forcing_phase
-                ),
+                external_forcing_phase=forcing_phase,
                 dt=dt,
             )
 
@@ -330,49 +480,39 @@ def _benchmark_tacts(
 
     average_host_seconds = (
         host_seconds
-        / measured_steps
+        / measured_tacts
     )
 
     average_device_seconds = (
         device_seconds
-        / measured_steps
+        / measured_tacts
         if engine.using_gpu
         else 0.0
     )
 
-    domains_per_second = (
+    domain_updates_per_second = (
         engine.N
-        * measured_steps
+        * measured_tacts
         / host_seconds
     )
 
     return {
         "measured_tacts": float(
-            measured_steps
+            measured_tacts
         ),
-        "host_wall_seconds": (
-            host_seconds
-        ),
-        "average_host_seconds_per_tact": (
-            average_host_seconds
-        ),
+        "host_wall_seconds": host_seconds,
+        "average_host_seconds_per_tact": average_host_seconds,
         "average_host_milliseconds_per_tact": (
             average_host_seconds
             * 1000.0
         ),
-        "device_event_seconds": (
-            device_seconds
-        ),
-        "average_device_seconds_per_tact": (
-            average_device_seconds
-        ),
+        "device_event_seconds": device_seconds,
+        "average_device_seconds_per_tact": average_device_seconds,
         "average_device_milliseconds_per_tact": (
             average_device_seconds
             * 1000.0
         ),
-        "domain_updates_per_second": (
-            domains_per_second
-        ),
+        "domain_updates_per_second": domain_updates_per_second,
     }
 
 
@@ -392,6 +532,10 @@ def _benchmark_field_transfer(
         engine.export_field_snapshot()
     )
 
+    _synchronize(
+        engine
+    )
+
     transfer_seconds = (
         time.perf_counter()
         - start_time
@@ -399,16 +543,16 @@ def _benchmark_field_transfer(
 
     total_field_bytes = int(
         sum(
-            array.nbytes
+            int(
+                array.nbytes
+            )
             for array in field_snapshot.values()
         )
     )
 
     return (
         {
-            "field_transfer_seconds": (
-                transfer_seconds
-            ),
+            "field_transfer_seconds": transfer_seconds,
             "field_transfer_milliseconds": (
                 transfer_seconds
                 * 1000.0
@@ -448,25 +592,12 @@ def _benchmark_serialization(
 
         json_start = time.perf_counter()
 
-        with json_path.open(
-            "w",
-            encoding="utf-8",
-        ) as stream:
-            json.dump(
-                {
-                    "metrics": (
-                        engine.get_metrics()
-                    ),
-                },
-                stream,
-                ensure_ascii=False,
-                indent=2,
-            )
-
-            stream.flush()
-            os.fsync(
-                stream.fileno()
-            )
+        _atomic_write_json(
+            json_path,
+            {
+                "metrics": engine.get_metrics(),
+            },
+        )
 
         json_seconds = (
             time.perf_counter()
@@ -484,6 +615,7 @@ def _benchmark_serialization(
             )
 
             stream.flush()
+
             os.fsync(
                 stream.fileno()
             )
@@ -502,9 +634,7 @@ def _benchmark_serialization(
         )
 
     return {
-        "json_serialization_seconds": (
-            json_seconds
-        ),
+        "json_serialization_seconds": json_seconds,
         "json_serialization_milliseconds": (
             json_seconds
             * 1000.0
@@ -512,9 +642,7 @@ def _benchmark_serialization(
         "json_file_bytes": float(
             json_bytes
         ),
-        "npz_serialization_seconds": (
-            npz_seconds
-        ),
+        "npz_serialization_seconds": npz_seconds,
         "npz_serialization_milliseconds": (
             npz_seconds
             * 1000.0
@@ -531,20 +659,30 @@ def _benchmark_serialization(
 
 def run_benchmark(
     config: MeanFieldPhaseConfig,
-    warmup_steps: int,
-    measured_steps: int,
+    warmup_tacts: int,
+    measured_tacts: int,
     forcing: float,
     forcing_phase: float,
     dt: float,
     measure_field_io: bool,
 ) -> dict[str, Any]:
+    _validate_runtime_inputs(
+        warmup_tacts=warmup_tacts,
+        measured_tacts=measured_tacts,
+        forcing=forcing,
+        forcing_phase=forcing_phase,
+        dt=dt,
+    )
+
+    config.validate()
+
     engine = EDKGPUMeanFieldPhaseEngine(
         config
     )
 
     _run_warmup(
         engine=engine,
-        warmup_steps=warmup_steps,
+        warmup_tacts=warmup_tacts,
         forcing=forcing,
         forcing_phase=forcing_phase,
         dt=dt,
@@ -552,55 +690,38 @@ def run_benchmark(
 
     timing_report = _benchmark_tacts(
         engine=engine,
-        measured_steps=measured_steps,
+        measured_tacts=measured_tacts,
         forcing=forcing,
         forcing_phase=forcing_phase,
         dt=dt,
     )
 
     report: dict[str, Any] = {
-        "module": (
-            "module_edk_gpu_mean_field_phase_engine"
-        ),
-        "benchmark": (
-            "benchmark_gpu_phase_engine"
-        ),
+        "module": "module_edk_gpu_mean_field_phase_engine",
+        "benchmark": "benchmark_gpu_phase_engine",
         "backend": {
             "name": engine.backend_name,
+            "library": engine.backend_library,
             "using_gpu": engine.using_gpu,
-            "device_id": (
-                engine.active_device_id
-            ),
+            "device_id": engine.active_device_id,
         },
         "configuration": {
-            "num_domains": (
-                config.num_domains
+            **asdict(
+                config
             ),
-            "coupling_strength_k": (
-                config.coupling_strength_k
-            ),
-            "sakaguchi_phase_lag_alpha": (
-                config.sakaguchi_phase_lag_alpha
-            ),
-            "dtype": config.dtype,
-            "seed": config.seed,
-            "warmup_steps": warmup_steps,
-            "measured_steps": measured_steps,
+            "warmup_tacts": warmup_tacts,
+            "warmup_steps": warmup_tacts,
+            "measured_tacts": measured_tacts,
+            "measured_steps": measured_tacts,
             "dt": dt,
-            "external_forcing_density": (
-                forcing
-            ),
-            "external_forcing_phase": (
-                forcing_phase
-            ),
+            "external_forcing_density": forcing,
+            "external_forcing_phase": forcing_phase,
         },
         "timing": timing_report,
         "memory": _memory_report(
             engine
         ),
-        "final_metrics": (
-            engine.get_metrics()
-        ),
+        "final_metrics": engine.get_metrics(),
     }
 
     if measure_field_io:
@@ -618,13 +739,8 @@ def run_benchmark(
             )
         )
 
-        report["field_transfer"] = (
-            transfer_report
-        )
-
-        report["serialization"] = (
-            serialization_report
-        )
+        report["field_transfer"] = transfer_report
+        report["serialization"] = serialization_report
 
     return report
 
@@ -632,8 +748,7 @@ def run_benchmark(
 def _build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Benchmark the EDK GPU "
-            "mean-field phase engine."
+            "Benchmark the EDK GPU mean-field phase engine."
         )
     )
 
@@ -660,15 +775,27 @@ def _build_argument_parser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "--warmup-tacts",
+        type=int,
+        default=None,
+    )
+
+    parser.add_argument(
         "--warmup-steps",
         type=int,
-        default=3,
+        default=None,
+    )
+
+    parser.add_argument(
+        "--measured-tacts",
+        type=int,
+        default=None,
     )
 
     parser.add_argument(
         "--measured-steps",
         type=int,
-        default=20,
+        default=None,
     )
 
     parser.add_argument(
@@ -723,9 +850,7 @@ def _build_argument_parser() -> argparse.ArgumentParser:
 
     parser.add_argument(
         "--output",
-        default=(
-            "benchmark_gpu_phase_engine.json"
-        ),
+        default="benchmark_gpu_phase_engine.json",
     )
 
     return parser
@@ -735,42 +860,40 @@ def main() -> None:
     parser = _build_argument_parser()
     args = parser.parse_args()
 
+    warmup_tacts = (
+        args.warmup_tacts
+        if args.warmup_tacts is not None
+        else args.warmup_steps
+        if args.warmup_steps is not None
+        else 3
+    )
+
+    measured_tacts = (
+        args.measured_tacts
+        if args.measured_tacts is not None
+        else args.measured_steps
+        if args.measured_steps is not None
+        else 20
+    )
+
     if args.num_domains < 2:
         raise ValueError(
             "num_domains must be at least 2."
         )
 
-    if args.warmup_steps < 0:
-        raise ValueError(
-            "warmup_steps must be non-negative."
-        )
-
-    if args.measured_steps < 1:
-        raise ValueError(
-            "measured_steps must be at least 1."
-        )
-
-    if (
-        not math.isfinite(
-            args.dt
-        )
-        or args.dt <= 0.0
-    ):
-        raise ValueError(
-            "dt must be a positive finite value."
-        )
+    _validate_runtime_inputs(
+        warmup_tacts=warmup_tacts,
+        measured_tacts=measured_tacts,
+        forcing=args.forcing,
+        forcing_phase=args.forcing_phase,
+        dt=args.dt,
+    )
 
     config = MeanFieldPhaseConfig(
         num_domains=args.num_domains,
-        coupling_strength_k=(
-            args.coupling
-        ),
-        sakaguchi_phase_lag_alpha=(
-            args.phase_lag
-        ),
-        external_forcing_phase=(
-            args.forcing_phase
-        ),
+        coupling_strength_k=args.coupling,
+        sakaguchi_phase_lag_alpha=args.phase_lag,
+        external_forcing_phase=args.forcing_phase,
         seed=args.seed,
         dtype=args.dtype,
         backend=args.backend,
@@ -779,14 +902,10 @@ def main() -> None:
 
     report = run_benchmark(
         config=config,
-        warmup_steps=args.warmup_steps,
-        measured_steps=(
-            args.measured_steps
-        ),
+        warmup_tacts=warmup_tacts,
+        measured_tacts=measured_tacts,
         forcing=args.forcing,
-        forcing_phase=(
-            args.forcing_phase
-        ),
+        forcing_phase=args.forcing_phase,
         dt=args.dt,
         measure_field_io=(
             not args.skip_field_io
@@ -807,14 +926,19 @@ def main() -> None:
     backend = report["backend"]
 
     print(
-        "EDK GPU mean-field phase "
-        "benchmark completed."
+        "EDK GPU mean-field phase benchmark completed."
     )
 
     print(
         f"backend={backend['name']} "
+        f"backend_library={backend['library']} "
         f"device_id={backend['device_id']} "
         f"domains={config.num_domains}"
+    )
+
+    print(
+        "measured_tacts="
+        f"{int(timing['measured_tacts'])}"
     )
 
     print(
