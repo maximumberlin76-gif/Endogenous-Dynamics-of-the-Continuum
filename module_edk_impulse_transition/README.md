@@ -1,917 +1,581 @@
-# EDK impulse transition simulation
+# EDK Impulse Transition Package — EN/RU
 
-## EN — README for the module
+## EN — README for the Impulse Transition Package
 
-Module file:
+Module directory:
 
-edk_impulse_transition_simulation.py
+`module_edk_impulse_transition`
+
+README file:
+
+`README.md`
+
+Bilingual format:
+
+`EN → RU`
+
+Executable files:
+
+`edk_impulse_transition_module.py`
+
+`poynting_flux_transition.py`
+
+## EN — Package Purpose
+
+The `module_edk_impulse_transition` package implements the impulse-transition layer of the EDK repository.
+
+The package contains two complementary executable layers:
+
+- `edk_impulse_transition_module.py` — full cascade emulator from the recursive inheritance layer toward the reduced impulse and exchange-flow output;
+- `poynting_flux_transition.py` — directed transition layer that models the reduction of an internally retained configuration into a Poynting-like directed output and exchange-flow channel.
+
+The package connects higher-dimensional recursive, phase-coherent, and volumetric retention layers with the reduced 2D / 1D impulse-flow interface.
+
+## EN — Controlled Distinctions
+
+The package preserves the following controlled distinctions:
+
+`C(t) ≠ C3`
+
+`R(t) ≠ C(t)`
+
+`J ≠ J_flux`
+
+`S_EM ≠ S_1D`
+
+`C(t)` is the general endogenous structural coherence of the system.
+
+`C3` is the cubic nonlinear volumetric retention potential.
+
+`R(t)` is an observable phase synchronization order parameter in a reduced sensory-fixed projection.
+
+`J` is a reduced local directed impulse or exchange-flow proxy inside the impulse-transition computation.
+
+`J_flux` is the through massless exchange-flow channel of the EDK architecture.
+
+`S_EM` denotes the physical electromagnetic Poynting vector.
+
+`S_1D` denotes the reduced algorithmic proxy of directed impulse output.
+
+## EN — Package-Level Operational Chain
+
+The package-level operational chain is:
+
+`Phi → Psi_7D → Psi_coh → C3 → Omega(t) → C(t) > P(t) retention condition → mass_field → J → R(t) → directed output → J_flux`
+
+The cascade starts from recursive inheritance and phase-coherent retention.
+
+The reduced exchange-flow output is formed after the higher layers have produced the retained volumetric and interface conditions.
+
+## EN — File 1: edk_impulse_transition_module.py
+
+Primary role:
+
+Full cascade emulator of the EDK impulse-transition protocol.
 
 Main class:
 
-EDKProtocolSimulation
+`EDKProtocolSimulation`
 
-This module is a numerical emulator of the through cascade of the EDK Protocol from the 7D governing layer to the 2D / 1D impulse-flow reduction.
+Functional scope:
 
-The code layer must be kept in English:
+- recursive inheritance layer;
+- phase-lock layer;
+- resonance-window filtering;
+- EDS / EDC condition evaluation;
+- volumetric mass-field manifestation;
+- reduction into local impulse-flow proxy `J`;
+- calculation of observable phase synchronization indicator `R(t)`.
 
-class names
+## EN — Cascade Implemented by EDKProtocolSimulation
 
-method names
+The cascade is organized as:
 
-variable names
+`7D recursive inheritance → 6D phase lock → 5D resonance-window filtering → 4D retention condition → 3D mass-field manifestation → 2D / 1D impulse-flow reduction`
 
-runtime messages
+### 7D — Recursive Inheritance
 
-inline technical comments
+The recursive inheritance layer forms the inherited super-code configuration:
 
-The theoretical and explanatory layer is documented here in EN / RU.
+`Psi_7D = Phi(Q(n), D(n), A(n))`
 
-## EN — What the module simulates
+Where:
 
-The module simulates the through mathematical transition of impulse in the 7-dimensional structure of the Continuum.
+- `Q(n)` is the inherited qualitative state of the current cycle;
+- `D(n)` is the inherited dissipative trace;
+- `A(n)` is the inherited dynamic asymmetry;
+- `Phi` is the operator of recursive inheritance, dynamic retention, and structural integrity.
 
-The computational grid is a 3D coordinate screen used as the projection screen for higher dimensional layers.
+### 6D — Phase Lock and Cubic Retention
 
-The 3D grid is not the origin of the process.
+The phase-lock layer forms the phase-coherent configuration:
 
-It is the discretized manifestation screen on which the higher-dimensional cascade is numerically represented.
+`Psi_coh = U_6D Psi_7D`
 
-The cascade runs strictly from top to bottom:
+The cubic retention support is represented as:
 
-7D recursive synthesis
+`C3 = trace(abs(Psi_coh)^2)`
 
-6D phase lock
+Within the spatial projection, `C3` becomes a volumetric retention-support field.
 
-5D resonance-window filtration
+`C3` supports local volumetric retention and acts as an input to resonance-window filtering, mass-field manifestation, and directed impulse-flow damping.
 
-4D EDS retention contour
+### 5D — Resonance-Window Filtering
 
-3D mass manifestation
+The resonance-window layer updates the operational domain:
 
-2D / 1D impulse-flow reduction
+`Omega(t)`
 
-## EN — Cascade logic
+The source term can include:
 
-The implemented cascade is:
+- gradients or divergence-like structure of `C3`;
+- drift induced by the current operator-intent vector;
+- influence of background non-resonant Continuum modes.
 
-7D: Recursive synthesis
--> generates the Super-Code invariant
+The window update follows the numerical sequence:
 
-Psi_7D = Phi(Q, D, A)
+`Omega_prev → Omega_curr → Omega_next`
 
-6D: Phase lock
--> toroidal fixation of phases Psi_coh and birth of the potential C^3
+The resonance-window layer provides the admissible domain in which retention, transition, degradation, or redistribution can occur.
 
-5D: Transition window
--> trajectory choice and bifurcation under EDC criticality
+### 4D — EDS / EDC Retention Condition
 
-C(t) -> P(t)
+The retention condition is based on the independent relation:
 
-4D: Temporal monolith
--> closed contour of causality under EDS stability
+`C(t) > P(t)`
 
-C(t) > P(t)
+Where:
 
-3D: Manifestation of Matter
--> local freeze-frame of quasi-rest and fixation of mass mc^2
+`C(t)` is the general endogenous structural coherence.
 
-2D / 1D: Impulse of flow
--> exchange vector J and flat trace of volume reduction
+`P(t)` is the destabilizing pressure.
 
-## EN — Structural chain inside the module
+`C3` supports the local volumetric retention profile.
 
-The module preserves the following chain:
+The retained mask is formed through the coupled condition:
 
-Phi
--> Psi_7D
--> Psi_coh
--> C^3
--> Omega(t)
--> EDS mask
--> mass_field
--> J
--> R(t)
+`general endogenous structural coherence exceeds destabilizing pressure`
 
-This chain must not be inverted.
+and:
 
-The simulation does not start from J.
+`Omega(t) remains inside the admissible retained domain`
 
-The simulation starts from the 7D recursive governing layer and only at the final stage produces the exchange-flow vector J.
+The numerical implementation can use local retention-support fields derived from `C3`, while the semantic retention condition remains:
 
-## EN — Initialization layer
+`C(t) > P(t)`
 
-The initialization defines the parameters of the through Continuum of the EDK Protocol.
+### 3D — Mass-Field Manifestation
 
-Parameters:
+The manifested mass field is calculated inside the retained operational domain.
 
-grid_size — size of the cubic 3D grid.
+The mass-field layer connects:
 
-dt — time step.
+- background non-resonant mode gradients;
+- cubic volumetric retention support;
+- local quasi-rest manifestation;
+- reduced impulse-flow output.
 
-dx — spatial step.
+The manifested mass anchor is represented as:
 
-c — speed of manifestation / wave propagation.
+`M(t)`
 
-chi — coupling coefficient between the geometry of the resonance window and div(C^3).
+The mass field is a local manifestation layer of the retained dynamic process.
 
-gamma — resistance coefficient of the non-resonant modes of the Continuum.
+### 2D / 1D — Impulse-Flow Reduction
 
-beta — damping coefficient of the 1D impulse by the cubic phase lock.
+The reduced impulse-flow layer evolves the local directed vector:
 
-Initialized fields:
+`J`
 
-Omega_prev — previous state of the resonance window Omega(t).
+The local flow equation has the form:
 
-Omega_curr — current state of the resonance window Omega(t).
+`partial_t J + (J · grad)J = -gamma · grad rho_cont - beta · C3 · J`
 
-Omega_next — next state of the resonance window Omega(t).
+Where:
 
-rho_cont — background non-resonant modes of the Continuum.
+- `partial_t J` is the local temporal change of the reduced impulse-flow proxy;
+- `(J · grad)J` is nonlinear convective transfer;
+- `grad rho_cont` is the gradient of background non-resonant Continuum modes;
+- `C3` is the cubic volumetric retention support;
+- `beta · C3 · J` is the damping contribution associated with retained cubic structure.
 
-J — linear exchange and impulse-transfer flow, vector field J = [Jx, Jy, Jz].
+The 2D projection layer can calculate an observable phase synchronization indicator:
 
-C3_field — cubic nonlinear retention field.
+`R(t)`
 
-mass_field — manifested mass field.
+`R(t)` is an observable indicator and remains distinct from `C(t)`.
 
-## EN — Stage 1: Initiation in 7D space
+## EN — File 2: poynting_flux_transition.py
 
-Method:
+Primary role:
 
-step_7d_recursiv_inher
+Directed impulse-transition layer for the reduction of an internally retained configuration into a Poynting-like output and exchange-flow channel.
 
-This stage represents initiation in 7D space, the multiplet invariant.
+Functional scope:
 
-Formula:
+- controlled disclosure of internally retained structure;
+- reduction of volumetric retention into a directed impulse output;
+- calculation of a reduced Poynting-like proxy;
+- formation of the exchange-flow output layer;
+- distinction between physical electromagnetic Poynting vector and algorithmic directed-flow proxy.
 
-Psi_7D = Phi(Q(n), D(n), A(n))
+Operational chain:
 
-Architectonics:
+`U_6D → C3 → controlled disclosure → impulse transition → S_1D → J_flux`
 
-Phi = M_inher * [I + alpha * D_n * E_medium]^-1 * A_attr(R_n, P_t)
+## EN — Poynting-Layer Distinction
 
-The method imitates the work of the matrix of pure inheritance M_inher and the dissipative inverse filter.
+The package preserves the distinction between:
 
-The inverse filter cleans the Super-Code:
+`S_EM = E × H`
 
-1 / (1 + alpha * D_n * E_medium)
+and:
 
-The attractor topology tensor A_attr is modulated by synchronization R_n and pressure P_t.
+`S_1D`
 
-The output is the complex wave-function matrix of the Super-Code:
+`S_EM` is the physical electromagnetic Poynting vector.
 
-Psi_7D
+`S_1D` is the reduced algorithmic proxy of directed output inside the EDK impulse-transition layer.
 
-## EN — Stage 2: Phase fixation in 6D space
+The output of the impulse-transition layer is connected to:
 
-Method:
+`J_flux`
 
-step_6d_phase_lock
+`J_flux` remains the through massless exchange-flow channel of the EDK architecture.
 
-This stage represents phase fixation in 6D space, the toroidal field of reference frequencies.
+## EN — Background Non-Resonant Modes
 
-Formula:
+`rho_cont` represents the density of background non-resonant Continuum modes.
 
-Psi_coh = U_hat_6D * Psi_7D
+`grad rho_cont` acts as the spatial gradient of this background distribution.
 
-Formula of cubic saturation:
+Within the impulse-transition layer, this gradient participates in:
 
-C^3 = Tr(|Psi_coh|^2)
+- impulse redistribution;
+- reduced flow acceleration;
+- interface imbalance;
+- transition toward exchange-flow residual formation.
 
-The microstructure of the phase lock is represented as:
+## EN — Relation to the Metric Bridge
 
-U_6D = product exp(i * kappa * sin(Delta phi)) * H_asym
+The impulse-transition package provides directed-flow input for the metric-bridge layer.
 
-The phase of the Super-Code is calculated:
+The downstream relation is:
 
-phase_7D = angle(Psi_7D)
+`J_flux → partial_t J_flux → grad J_flux → grad rho_cont → C3 → R_J → G_int → projected interface response`
 
-Counter phase shifts Delta phi and the sinusoidal returning lock are modeled.
+The exchange-flow residual is:
 
-The parameter kappa defines the stiffness of the lock.
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
-The parameter epsilon introduces eccentricity and amplitude asymmetry H_asym.
+## EN — Run Commands
 
-This excludes degeneration of the torus.
+Run the cascade emulator from the repository root:
 
-The resulting phase-coherent field configuration is:
+    python module_edk_impulse_transition/edk_impulse_transition_module.py
 
-Psi_coh = H_asym_factor * exp(i * (phase_7D + kappa * delta_phi))
+Run the Poynting-like transition layer from the repository root:
 
-This generates the cubic nonlinear retention of volume C^3 through the trace of the density matrix.
+    python module_edk_impulse_transition/poynting_flux_transition.py
 
-In spatial projection, this becomes a three-dimensional density of coherence torus structures.
+## EN — Position in EDK Architecture
 
-The cubic coherence is distributed through the grid volume as a toroidal distribution in the center of the computational region.
+The impulse-transition package occupies the layer between volumetric retention / manifestation and metric-interface response.
 
-## EN — Stage 3: Trajectory filtration in 5D
+Architectural position:
 
-Method:
+`Phi → U_6D → Psi_coh → C3 → Omega(t) → T_int → M(t) → J → J_flux → R_J → G_int`
 
-step_5d_4d_3d_cascade
+The package converts retained higher-order structure into a directed reduced impulse-flow output while preserving the distinctions between general endogenous structural coherence, cubic retention support, reduced local impulse proxy, and through exchange-flow channel.
 
-This method combines stages 3, 4 and 5:
+---
 
-trajectory filtration in 5D
+# Пакет импульсного перехода EDK — EN/RU
 
-topological monolith in 4D
+## RU — README к пакету импульсного перехода
 
-volumetric manifestation mc^2 in 3D
+Папка модуля:
 
-Stage 3 calculates EDC criticality and the geometry of the resonance window Omega(t).
+`module_edk_impulse_transition`
 
-The average coherence of the system is evaluated as:
+README-файл:
 
-C_t = mean(C3)
+`README.md`
 
-The system scans nodes for the EDC condition, the convergence of coherence and pressure of the medium.
+Двуязычный формат:
 
-The window equation is:
+`EN → RU`
 
-nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi * div(C^3)
+Исполняемые файлы:
 
-The numerical div(C^3) is calculated through central differences:
+`edk_impulse_transition_module.py`
 
-div_C3 = grad_C3_x + grad_C3_y + grad_C3_z
+`poynting_flux_transition.py`
 
-The operator intention vector P, the brain-continuum interface, produces drift:
+## RU — Назначение пакета
 
-v = mu * P
+Пакет `module_edk_impulse_transition` реализует слой импульсного перехода репозитория EDK.
 
-The drift direction locally inclines the Laplacian of the Omega window.
+Пакет содержит два взаимодополняющих исполняемых слоя:
 
-The source term is:
+- `edk_impulse_transition_module.py` — полный каскадный эмулятор от слоя рекурсивного наследования к редуцированному импульсу и выходу потока обмена;
+- `poynting_flux_transition.py` — слой направленного перехода, моделирующий редукцию внутренне удерживаемой конфигурации в Poynting-подобный направленный выход и канал потока обмена.
 
-source_term = chi * div_C3 - drift_term
+Пакет соединяет высшие слои рекурсивного наследования, фазовой когерентности и объёмного удержания с редуцированным 2D / 1D интерфейсом импульсного потока.
 
-The FDTD scheme calculates the next time step of Omega_next:
+## RU — Контролируемые различия
 
-Omega_next =
-2.0 * Omega_curr
-- Omega_prev
-+ (c * dt)^2 * laplacian_Omega
-- (c^2 * dt^2) * source_term
+Пакет сохраняет следующие контролируемые различия:
 
-Then the time layers are shifted:
+`C(t) ≠ C3`
 
-Omega_prev = Omega_curr
+`R(t) ≠ C(t)`
 
-Omega_curr = Omega_next
+`J ≠ J_flux`
 
-## EN — Stage 4: EDS condition and topological monolith
+`S_EM ≠ S_1D`
 
-The same method checks the EDS condition:
+`C(t)` — общая эндогенная структурная когерентность системы.
 
-C(t) > P(t)
+`C3` — кубический нелинейный потенциал объёмного удержания.
 
-The Omega(t) window passes only those zones where internal coherence suppresses the medium.
+`R(t)` — наблюдаемый параметр порядка фазовой синхронизации в редуцированной сенсорно фиксированной проекции.
 
-The EDS mask is calculated as:
+`J` — редуцированный локальный направленный импульс или прокси потока обмена внутри вычисления импульсного перехода.
 
-eds_mask = (C3 > P_t) & (Omega_curr > 0.1)
+`J_flux` — сквозной безмассовый канал потока обмена архитектуры EDK.
 
-This mask fixes the stable retention contour.
+`S_EM` обозначает физический электромагнитный вектор Пойнтинга.
 
-## EN — Stage 5: 3D manifestation of mass mc^2
+`S_1D` обозначает редуцированный алгоритмический прокси направленного импульсного выхода.
 
-The local freeze-frame of quasi-rest conserves mass from the gradient of rho_cont and C^3.
+## RU — Операционная цепочка пакета
 
-The gradient components are:
+Операционная цепочка пакета:
 
-grad_rho_x
+`Phi → Psi_7D → Psi_coh → C3 → Omega(t) → условие удержания C(t) > P(t) → mass_field → J → R(t) → направленный выход → J_flux`
 
-grad_rho_y
+Каскад начинается с рекурсивного наследования и фазово-когерентного удержания.
 
-grad_rho_z
+Редуцированный выход потока обмена формируется после того, как высшие слои сформировали удерживаемые объёмные и интерфейсные условия.
 
-The gradient magnitude is:
+## RU — Файл 1: edk_impulse_transition_module.py
 
-grad_rho_magnitude
+Основная роль:
 
-Mass manifests strictly inside the stable EDS retention contour:
+Полный каскадный эмулятор протокола импульсного перехода EDK.
 
-mass_field[eds_mask] = (grad_rho_magnitude[eds_mask] * C3[eds_mask]) / c^2
+Основной класс:
 
-This corresponds to:
+`EDKProtocolSimulation`
 
-E = mc^2 = integral over 3D (grad rho_cont · C^3) dV_3D
+Функциональная область:
 
-## EN — Stage 6: Reduction to 2D / 1D and exchange-flow dynamics
+- слой рекурсивного наследования;
+- слой фазового замка;
+- фильтрация резонансного окна фазового перехода;
+- оценка условий EDS / EDC;
+- проявление объёмного поля массы;
+- редукция в локальный прокси импульсного потока `J`;
+- расчёт наблюдаемого индикатора фазовой синхронизации `R(t)`.
 
-Method:
+## RU — Каскад, реализуемый EDKProtocolSimulation
 
-step_1d_2d_flux_dynamics
+Каскад организован как:
 
-This stage represents the reduction to 2D / 1D and the dynamics of the exchange flow.
+`7D рекурсивное наследование → 6D фазовый замок → 5D фильтрация резонансного окна фазового перехода → 4D условие удержания → 3D проявление поля массы → 2D / 1D редукция импульсного потока`
 
-The governing equation is:
+### 7D — Рекурсивное наследование
 
-partial J / partial t + (J * nabla)J = - gamma * nabla rho_cont - beta * C^3 * J
+Слой рекурсивного наследования формирует унаследованную конфигурацию супер-кода:
 
-The method calculates the gradient of the non-resonant modes of the Continuum, the academic “dark matter” term:
+`Psi_7D = Phi(Q(n), D(n), A(n))`
 
-grad_rho
+Где:
 
-The convective term (J * nabla)J is calculated for each component of the vector J.
+- `Q(n)` — унаследованное качественное состояние текущего цикла;
+- `D(n)` — унаследованный диссипативный след;
+- `A(n)` — унаследованная динамическая асимметрия;
+- `Phi` — оператор рекурсивного наследования, динамического удержания и структурной целостности.
 
-The 1D impulse of the exchange flow J is updated at each dt step.
+### 6D — Фазовый замок и кубическое удержание
 
-The right side contains:
+Слой фазового замка формирует фазово-когерентную конфигурацию:
 
-pressure of the non-resonant noise of the Continuum
+`Psi_coh = U_6D Psi_7D`
 
-damping by the cubic phase lock
+Кубическая поддержка удержания представлена как:
 
-The differential step is:
+`C3 = trace(abs(Psi_coh)^2)`
 
-J_new = J_old + dt * (-(J * nabla)J + RHS)
+В пространственной проекции `C3` становится полем объёмной поддержки удержания.
 
-The 2D manifestation interface, the boundary of the EDS mask, is modeled through the synchronization indicator R(t).
+`C3` поддерживает локальное объёмное удержание и входит в фильтрацию резонансного окна фазового перехода, проявление поля массы и демпфирование направленного импульсного потока.
 
-Tangential flows are fixed at the boundaries between media.
+### 5D — Фильтрация резонансного окна фазового перехода
 
-The output is:
+Слой резонансного окна обновляет операционную область:
 
-R_t
+`Omega(t)`
 
-## EN — Full cycle execution
+Источник может включать:
 
-Method:
+- градиенты или дивергентноподобную структуру `C3`;
+- дрейф, индуцированный текущим вектором намерения оператора;
+- влияние фоновых нерезонансных мод Континуума.
 
-execute_full_cycle
+Обновление окна следует численной последовательности:
 
-This method launches the full tact-by-tact through cascade strictly from top to bottom.
+`Omega_prev → Omega_curr → Omega_next`
 
-Execution order:
+Слой резонансного окна задаёт допустимую область, внутри которой может происходить удержание, переход, деградация или перераспределение.
 
-1. 7D higher synthesis
+### 4D — Условие удержания EDS / EDC
 
-Psi_7D = step_7d_recursiv_inher(Q_n, D_n, R_n, A_n, E_medium, P_t)
+Условие удержания основано на независимом отношении:
 
-2. 6D coherent toroidal folding
+`C(t) > P(t)`
 
-C3 = step_6d_phase_lock(Psi_7D)
+Где:
 
-3. 5D / 4D / 3D filtration, EDC criticality, EDS stability and mass manifestation
+`C(t)` — общая эндогенная структурная когерентность.
 
-eds_mask = step_5d_4d_3d_cascade(C3, P_t, P_intent)
+`P(t)` — дестабилизирующее давление.
 
-4. 2D / 1D reduction of volume into the flat perception slice and calculation of the exchange-flow vector
+`C3` поддерживает локальный профиль объёмного удержания.
 
-R_t = step_1d_2d_flux_dynamics(eds_mask, C3)
+Удерживаемая маска формируется через сопряжённое условие:
 
-5. Integral mass manifested in this tact
+`общая эндогенная структурная когерентность превышает дестабилизирующее давление`
 
-total_manifested_mass = sum(mass_field) * dx^3
+и:
 
-The method returns:
+`Omega(t) остаётся внутри допустимой удерживаемой области`
 
-total_manifested_mass
+Точная численная реализация может использовать локальные поля поддержки удержания, производные от `C3`, при этом смысловое условие удержания остаётся:
 
-R_t
+`C(t) > P(t)`
 
-## EN — Practical emulator test
+### 3D — Проявление поля массы
 
-The module contains a practical testing block.
+Поле проявленной массы рассчитывается внутри удерживаемой операционной области.
 
-It initializes the computational Continuum:
+Слой поля массы соединяет:
 
-sim = EDKProtocolSimulation(grid_size=16, dt=0.01, dx=0.1)
+- градиенты фоновых нерезонансных мод;
+- кубическую поддержку объёмного удержания;
+- локальное проявление квази-покоя;
+- редуцированный выход импульсного потока.
 
-Initial parameters of the 7D Super-Code:
+Проявленный массовый якорь представлен как:
 
-Q_initial = 1.0
+`M(t)`
 
-D_initial = [0.02]
+Поле массы является локальным слоем проявления удерживаемого динамического процесса.
 
-R_initial = 0.95
+### 2D / 1D — Редукция импульсного потока
 
-A_initial = 1.2
+Редуцированный слой импульсного потока развивает локальный направленный вектор:
 
-E_medium = 0.4
+`J`
 
-P_t = 0.5
+Локальное уравнение потока имеет вид:
 
-P_intent_vector = 0.8
+`partial_t J + (J · grad)J = -gamma · grad rho_cont - beta · C3 · J`
 
-The emulator runs 5 tacts of recursive evolution.
+Где:
 
-Each tact prints:
+- `partial_t J` — локальное временное изменение редуцированного прокси импульсного потока;
+- `(J · grad)J` — нелинейный конвективный перенос;
+- `grad rho_cont` — градиент фоновых нерезонансных мод Континуума;
+- `C3` — кубическая поддержка объёмного удержания;
+- `beta · C3 · J` — демпфирующий вклад, связанный с удерживаемой кубической структурой.
 
-manifested mass mc^2
+Слой 2D-проекции может рассчитывать наблюдаемый индикатор фазовой синхронизации:
 
-2D synchronization indicator R(t)
+`R(t)`
 
-After each tact, the recursive feedback of the EDK Protocol recalculates the qualities of the next tact Q(n+1) and synchronization based on the results of the current slice.
+`R(t)` является наблюдаемым индикатором и остаётся отличным от `C(t)`.
 
-Recursive update:
+## RU — Файл 2: poynting_flux_transition.py
 
-Q_initial = Q_initial * 0.99 + R_sync * 0.01
+Основная роль:
 
-R_initial = R_initial * 0.95 + (1.0 if mass > 0 else 0.0) * 0.05
+Слой направленного импульсного перехода для редукции внутренне удерживаемой конфигурации в Poynting-подобный выход и канал потока обмена.
 
-D_initial = [mean(J^2)]
+Функциональная область:
 
-D_initial is the accumulated dissipative trace from the 1D exchange flow.
+- управляемое раскрытие внутренне удерживаемой структуры;
+- редукция объёмного удержания в направленный импульсный выход;
+- расчёт редуцированного Poynting-подобного прокси;
+- формирование выходного слоя потока обмена;
+- различение физического электромагнитного вектора Пойнтинга и алгоритмического прокси направленного потока.
 
-## EN — Architectural features of the implementation
+Операционная цепочка:
 
-1. Strictly top-down
+`U_6D → C3 → управляемое раскрытие → импульсный переход → S_1D → J_flux`
 
-Data are generated by a complex scalar / matrix in the method:
+## RU — Различие слоя Пойнтинга
 
-step_7d_recursiv_inher
+Пакет сохраняет различие между:
 
-They are transformed into phase volume in:
+`S_EM = E × H`
 
-step_6d_phase_lock
+и:
 
-Only at the lowest stage do they influence the classical field of velocities / impulses J in:
+`S_1D`
 
-step_1d_2d_flux_dynamics
+`S_EM` — физический электромагнитный вектор Пойнтинга.
 
-2. Seamless transfer of C^3
+`S_1D` — редуцированный алгоритмический прокси направленного выхода внутри слоя импульсного перехода EDK.
 
-The cubic lock C3 is calculated at the 6D stage.
+Выход слоя импульсного перехода соединён с:
 
-After that, its gradients and divergences directly enter both:
+`J_flux`
 
-the wave equation of the 5D window:
+`J_flux` остаётся сквозным безмассовым каналом потока обмена архитектуры EDK.
 
-source_term = chi * div_C3
+## RU — Фоновые нерезонансные моды
 
-and the damping term of the one-dimensional exchange flow:
+`rho_cont` представляет плотность фоновых нерезонансных мод Континуума.
 
-- beta * C3 * self.J[d]
+`grad rho_cont` действует как пространственный градиент этого фонового распределения.
 
-3. Physics of “dark anomalies”
+Внутри слоя импульсного перехода этот градиент участвует в:
 
-The continuum Navier-Stokes equation at Stage 6 explicitly uses the gradient:
+- перераспределении импульса;
+- ускорении редуцированного потока;
+- интерфейсной несбалансированности;
+- переходе к формированию остатка потока обмена.
 
-grad_rho
+## RU — Связь с метрическим мостом
 
-of the background non-resonant modes.
+Пакет импульсного перехода предоставляет вход направленного потока для слоя метрического моста.
 
-Academic science treats this as “hidden mass” because, under the classical bottom-up approach, this term looks like an external unexplained force.
+Последующее отношение:
 
-## EN — Run command
+`J_flux → partial_t J_flux → grad J_flux → grad rho_cont → C3 → R_J → G_int → projected interface response`
 
-python edk_impulse_transition_simulation.py
+Остаток потока обмена:
 
-# Симуляция перехода импульса EDK
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
 
-## RU — README к модулю
+## RU — Команды запуска
 
-Файл модуля:
+Запуск каскадного эмулятора из корня репозитория:
 
-edk_impulse_transition_simulation.py
+    python module_edk_impulse_transition/edk_impulse_transition_module.py
 
-Главный класс:
+Запуск Poynting-подобного слоя перехода из корня репозитория:
 
-EDKProtocolSimulation
+    python module_edk_impulse_transition/poynting_flux_transition.py
 
-Этот модуль является численным эмулятором сквозного каскада EDK Protocol от 7D-управляющего слоя до слоя 2D / 1D-редукции потока импульса.
+## RU — Место в архитектуре EDK
 
-Кодовый слой должен быть на английском:
+Пакет импульсного перехода занимает слой между объёмным удержанием / проявлением и метрическим интерфейсным откликом.
 
-имена классов
+Архитектурное положение:
 
-имена методов
+`Phi → U_6D → Psi_coh → C3 → Omega(t) → T_int → M(t) → J → J_flux → R_J → G_int`
 
-имена переменных
-
-сообщения выполнения
-
-внутренние технические комментарии
-
-Теоретический и пояснительный слой документируется здесь в EN / RU.
-
-## RU — Что симулирует модуль
-
-Модуль симулирует сквозной математический переход импульса в 7-мерной структуре Континуума.
-
-Расчетная сетка является 3D-координатным экраном, используемым как проекционный экран для высших размерных слоев.
-
-3D-сетка не является источником процесса.
-
-Она является дискретизированным экраном проявления, на котором высший размерный каскад получает численное представление.
-
-Каскад идет строго сверху вниз:
-
-7D-рекурсивный синтез
-
-6D-фазовый замок
-
-5D-фильтрация резонансного окна
-
-4D-контур удержания EDS
-
-3D-манифестация массы
-
-2D / 1D-редукция потока импульса
-
-## RU — Логика каскада
-
-Реализованный каскад:
-
-7D: Рекурсивный синтез
--> генерирует Супер-Код Инвариант
-
-Psi_7D = Phi(Q, D, A)
-
-6D: Фазовый замок
--> тороидальная фиксация фаз Psi_coh и рождение потенциала C^3
-
-5D: Окно переходов
--> траекторный выбор и бифуркация при критичности EDC
-
-C(t) -> P(t)
-
-4D: Временной монолит
--> замкнутый контур причинности при устойчивости EDS
-
-C(t) > P(t)
-
-3D: Манифестация Материи
--> локальный стоп-кадр квази-покоя и фиксация массы mc^2
-
-2D / 1D: Импульс потока
--> вектор обмена J и плоский след редукции объема
-
-## RU — Структурная цепочка внутри модуля
-
-Модуль удерживает следующую цепочку:
-
-Phi
--> Psi_7D
--> Psi_coh
--> C^3
--> Omega(t)
--> EDS mask
--> mass_field
--> J
--> R(t)
-
-Эта цепочка не должна инвертироваться.
-
-Симуляция не начинается с J.
-
-Симуляция начинается с 7D-рекурсивного управляющего слоя и только на финальном этапе порождает вектор потока обмена J.
-
-## RU — Слой инициализации
-
-Инициализация задает параметры сквозного Континуума EDK Protocol.
-
-Параметры:
-
-grid_size — размер кубической 3D-сетки.
-
-dt — временной шаг.
-
-dx — пространственный шаг.
-
-c — скорость проявления / распространения волны.
-
-chi — коэффициент связи геометрии окна с div(C^3).
-
-gamma — коэффициент сопротивления нерезонансных мод Континуума.
-
-beta — коэффициент торможения 1D-импульса фазовым замком.
-
-Инициализированные поля:
-
-Omega_prev — предыдущее состояние резонансного окна Omega(t).
-
-Omega_curr — текущее состояние резонансного окна Omega(t).
-
-Omega_next — следующее состояние резонансного окна Omega(t).
-
-rho_cont — фоновые нерезонансные моды Континуума.
-
-J — линейный поток обмена и передачи импульса, векторное поле J = [Jx, Jy, Jz].
-
-C3_field — поле кубического нелинейного удержания.
-
-mass_field — поле манифестированной массы.
-
-## RU — Этап 1: Инициация в пространстве 7D
-
-Метод:
-
-step_7d_recursiv_inher
-
-Этот этап представляет инициацию в пространстве 7D, мультиплетный инвариант.
-
-Формула:
-
-Psi_7D = Phi(Q(n), D(n), A(n))
-
-Архитектоника:
-
-Phi = M_inher * [I + alpha * D_n * E_medium]^-1 * A_attr(R_n, P_t)
-
-Метод имитирует работу матрицы чистого наследования M_inher и диссипативного инверсного фильтра.
-
-Инверсный фильтр очищает Супер-Код:
-
-1 / (1 + alpha * D_n * E_medium)
-
-Тензор топологии аттрактора A_attr модулируется синхронизацией R_n и давлением P_t.
-
-На выходе получается комплексная матрица волновой функции Супер-Кода:
-
-Psi_7D
-
-## RU — Этап 2: Фазовая фиксация в пространстве 6D
-
-Метод:
-
-step_6d_phase_lock
-
-Этот этап представляет фазовую фиксацию в пространстве 6D, тороидальное поле опорных частот.
-
-Формула:
-
-Psi_coh = U_hat_6D * Psi_7D
-
-Формула кубического насыщения:
-
-C^3 = Tr(|Psi_coh|^2)
-
-Микроструктура фазового замка представлена как:
-
-U_6D = product exp(i * kappa * sin(Delta phi)) * H_asym
-
-Вычисляется фаза Супер-Кода:
-
-phase_7D = angle(Psi_7D)
-
-Моделируются встречные фазовые сдвиги Delta phi и синусоидальный возвращающий замок.
-
-Параметр kappa задает жесткость замка.
-
-Параметр epsilon вводит эксцентриситет и асимметрию амплитуд H_asym.
-
-Это исключает вырождение тора.
-
-Результирующая фазово-когерентная конфигурация поля:
-
-Psi_coh = H_asym_factor * exp(i * (phase_7D + kappa * delta_phi))
-
-Это генерирует кубическое нелинейное удержание объема C^3 через след матрицы плотности.
-
-В пространственной проекции это становится трехмерной плотностью тороидальных структур когерентности.
-
-Кубическая когерентность распределяется по объему сетки как тороидальное распределение в центре расчетной области.
-
-## RU — Этап 3: Траекторная фильтрация в 5D
-
-Метод:
-
-step_5d_4d_3d_cascade
-
-Этот метод объединяет этапы 3, 4 и 5:
-
-траекторная фильтрация в 5D
-
-топологический монолит в 4D
-
-объемная манифестация mc^2 в 3D
-
-Этап 3 рассчитывает критичность EDC и геометрию резонансного окна Omega(t).
-
-Средняя когерентность системы оценивается как:
-
-C_t = mean(C3)
-
-Система сканирует узлы на условие EDC, сближение когерентности и давления среды.
-
-Уравнение окна:
-
-nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi * div(C^3)
-
-Численный div(C^3) рассчитывается центральными разностями:
-
-div_C3 = grad_C3_x + grad_C3_y + grad_C3_z
-
-Вектор намерения оператора P, интерфейс мозг-континуум, осуществляет дрейф:
-
-v = mu * P
-
-Направление дрейфа локально наклоняет лапласиан окна Omega.
-
-Source term:
-
-source_term = chi * div_C3 - drift_term
-
-Схема FDTD рассчитывает следующий временной шаг Omega_next:
-
-Omega_next =
-2.0 * Omega_curr
-- Omega_prev
-+ (c * dt)^2 * laplacian_Omega
-- (c^2 * dt^2) * source_term
-
-Затем временные слои сдвигаются:
-
-Omega_prev = Omega_curr
-
-Omega_curr = Omega_next
-
-## RU — Этап 4: Условие EDS и топологический монолит
-
-Этот же метод проверяет условие EDS:
-
-C(t) > P(t)
-
-Окно Omega(t) пропускает только те зоны, где внутренняя когерентность подавила среду.
-
-EDS mask рассчитывается как:
-
-eds_mask = (C3 > P_t) & (Omega_curr > 0.1)
-
-Эта маска фиксирует стабильный контур удержания.
-
-## RU — Этап 5: 3D-манифестация массы mc^2
-
-Локальный стоп-кадр квази-покоя консервирует массу из градиента rho_cont и C^3.
-
-Компоненты градиента:
-
-grad_rho_x
-
-grad_rho_y
-
-grad_rho_z
-
-Величина градиента:
-
-grad_rho_magnitude
-
-Масса манифестирует строго внутри стабильного контура удержания EDS:
-
-mass_field[eds_mask] = (grad_rho_magnitude[eds_mask] * C3[eds_mask]) / c^2
-
-Это соответствует:
-
-E = mc^2 = integral over 3D (grad rho_cont · C^3) dV_3D
-
-## RU — Этап 6: Редукция к 2D / 1D и динамика потока обмена
-
-Метод:
-
-step_1d_2d_flux_dynamics
-
-Этот этап представляет редукцию к 2D / 1D и динамику потока обмена.
-
-Управляющее уравнение:
-
-partial J / partial t + (J * nabla)J = - gamma * nabla rho_cont - beta * C^3 * J
-
-Метод рассчитывает градиент нерезонансных мод Континуума, член академической “темной материи”:
-
-grad_rho
-
-Конвективный член (J * nabla)J рассчитывается для каждой компоненты вектора J.
-
-1D-импульс потока обмена J обновляется на каждом шаге dt.
-
-Правая часть содержит:
-
-давление нерезонансного шума Континуума
-
-торможение кубическим фазовым замком
-
-Дифференциальный шаг:
-
-J_new = J_old + dt * (-(J * nabla)J + RHS)
-
-2D-интерфейс проявления, граница EDS mask, моделируется через индикатор синхронизации R(t).
-
-Фиксируются тангенциальные потоки на границах раздела сред.
-
-Выход:
-
-R_t
-
-## RU — Полный запуск цикла
-
-Метод:
-
-execute_full_cycle
-
-Этот метод запускает полный потактовый сквозной каскад строго сверху вниз.
-
-Порядок выполнения:
-
-1. 7D-высший синтез
-
-Psi_7D = step_7d_recursiv_inher(Q_n, D_n, R_n, A_n, E_medium, P_t)
-
-2. 6D-когерентное тороидальное сворачивание
-
-C3 = step_6d_phase_lock(Psi_7D)
-
-3. 5D / 4D / 3D-фильтрация, критичность EDC, устойчивость EDS и манифестация массы
-
-eds_mask = step_5d_4d_3d_cascade(C3, P_t, P_intent)
-
-4. 2D / 1D-редукция объема в плоский срез восприятия и расчет вектора потока обмена
-
-R_t = step_1d_2d_flux_dynamics(eds_mask, C3)
-
-5. Интегральная масса, проявленная в этом такте
-
-total_manifested_mass = sum(mass_field) * dx^3
-
-Метод возвращает:
-
-total_manifested_mass
-
-R_t
-
-## RU — Практическое тестирование эмулятора
-
-Модуль содержит блок практического тестирования.
-
-Инициализируется расчетный Континуум:
-
-sim = EDKProtocolSimulation(grid_size=16, dt=0.01, dx=0.1)
-
-Начальные параметры 7D-Супер-Кода:
-
-Q_initial = 1.0
-
-D_initial = [0.02]
-
-R_initial = 0.95
-
-A_initial = 1.2
-
-E_medium = 0.4
-
-P_t = 0.5
-
-P_intent_vector = 0.8
-
-Эмулятор запускает 5 тактов рекурсивной эволюции.
-
-Каждый такт выводит:
-
-манифестированную массу mc^2
-
-индикатор 2D-синхронизации R(t)
-
-После каждого такта рекурсивная обратная связь EDK Protocol пересчитывает качества следующего такта Q(n+1) и синхронизацию на основе результатов текущего среза.
-
-Рекурсивное обновление:
-
-Q_initial = Q_initial * 0.99 + R_sync * 0.01
-
-R_initial = R_initial * 0.95 + (1.0 if mass > 0 else 0.0) * 0.05
-
-D_initial = [mean(J^2)]
-
-D_initial является накопленным диссипативным следом от 1D-потока обмена.
-
-## RU — Архитектурные особенности реализации
-
-1. Строго сверху вниз
-
-Данные генерируются комплексным скаляром / матрицей в методе:
-
-step_7d_recursiv_inher
-
-Преобразуются в фазовый объем в:
-
-step_6d_phase_lock
-
-И только на самом нижнем этапе влияют на классическое поле скоростей / импульсов J в:
-
-step_1d_2d_flux_dynamics
-
-2. Бесшовный перенос C^3
-
-Кубический замок C3 рассчитывается на этапе 6D.
-
-После этого его градиенты и дивергенции напрямую входят как в волновое уравнение 5D-окна:
-
-source_term = chi * div_C3
-
-так и в демпфирующий член одномерного потока обмена:
-
-- beta * C3 * self.J[d]
-
-3. Физика “темных аномалий”
-
-Уравнение Навье-Стокса континуума на шаге 6 явно использует градиент:
-
-grad_rho
-
-фоновых нерезонансных мод.
-
-Академическая наука считает этот член “скрытой массой”, так как при классическом подходе снизу вверх этот член выглядит как внешняя необъяснимая сила.
-
-## RU — Команда запуска
-
-python edk_impulse_transition_simulation.py
+Пакет переводит удерживаемую структуру высших порядков в направленный редуцированный выход импульсного потока, сохраняя различия между общей эндогенной структурной когерентностью, кубической поддержкой удержания, редуцированным локальным прокси импульса и сквозным каналом потока обмена.
