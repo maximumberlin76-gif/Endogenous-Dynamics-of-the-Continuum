@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -12,7 +13,20 @@ import numpy as np
 try:
     from . import edk_gpu_mean_field_phase_engine as engine_module
 except ImportError:
-    import edk_gpu_mean_field_phase_engine as engine_module
+    try:
+        import edk_gpu_mean_field_phase_engine as engine_module
+    except ImportError:
+        repo_root = Path(__file__).resolve().parents[1]
+
+        if str(repo_root) not in sys.path:
+            sys.path.insert(
+                0,
+                str(repo_root),
+            )
+
+        from module_edk_gpu_mean_field_phase_engine import (
+            edk_gpu_mean_field_phase_engine as engine_module,
+        )
 
 
 EDKGPUMeanFieldLogger = engine_module.EDKGPUMeanFieldLogger
@@ -30,10 +44,43 @@ class MeanFieldPhaseConfigurationTests(unittest.TestCase):
             )
         )
 
-        self.assertEqual(engine.N, 2)
-        self.assertEqual(engine.backend_name, "numpy")
-        self.assertFalse(engine.using_gpu)
-        self.assertIsNone(engine.active_device_id)
+        self.assertEqual(
+            engine.N,
+            2,
+        )
+
+        self.assertEqual(
+            engine.backend_name,
+            "cpu",
+        )
+
+        self.assertEqual(
+            engine.backend_library,
+            "numpy",
+        )
+
+        self.assertFalse(
+            engine.using_gpu
+        )
+
+        self.assertIsNone(
+            engine.active_device_id
+        )
+
+        self.assertEqual(
+            engine.tact_index,
+            0,
+        )
+
+        self.assertEqual(
+            engine.step_index,
+            0,
+        )
+
+        self.assertAlmostEqual(
+            engine.simulation_time,
+            0.0,
+        )
 
     def test_num_domains_below_minimum_is_rejected(self) -> None:
         with self.assertRaisesRegex(
@@ -43,6 +90,30 @@ class MeanFieldPhaseConfigurationTests(unittest.TestCase):
             EDKGPUMeanFieldPhaseEngine(
                 MeanFieldPhaseConfig(
                     num_domains=1,
+                    backend="cpu",
+                )
+            )
+
+    def test_non_finite_coupling_strength_is_rejected(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "coupling_strength_k must be finite",
+        ):
+            EDKGPUMeanFieldPhaseEngine(
+                MeanFieldPhaseConfig(
+                    coupling_strength_k=float("nan"),
+                    backend="cpu",
+                )
+            )
+
+    def test_non_finite_phase_lag_is_rejected(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "sakaguchi_phase_lag_alpha must be finite",
+        ):
+            EDKGPUMeanFieldPhaseEngine(
+                MeanFieldPhaseConfig(
+                    sakaguchi_phase_lag_alpha=float("inf"),
                     backend="cpu",
                 )
             )
@@ -117,7 +188,7 @@ class MeanFieldPhaseConfigurationTests(unittest.TestCase):
                     amplitude_minimum=1.0,
                     amplitude_maximum=1.0,
                     initial_amplitude_minimum=1.0,
-                    initial_amplitude_maximum=1.0,
+                    initial_amplitude_maximum=1.1,
                     backend="cpu",
                 )
             )
@@ -213,7 +284,7 @@ class MeanFieldPhaseConfigurationTests(unittest.TestCase):
                     )
                 )
 
-    def test_auto_backend_falls_back_to_numpy_without_cupy(self) -> None:
+    def test_auto_backend_falls_back_to_cpu_without_cupy(self) -> None:
         with mock.patch.object(
             engine_module,
             "_cupy",
@@ -226,9 +297,23 @@ class MeanFieldPhaseConfigurationTests(unittest.TestCase):
                 )
             )
 
-        self.assertEqual(engine.backend_name, "numpy")
-        self.assertFalse(engine.using_gpu)
-        self.assertIsNone(engine.active_device_id)
+        self.assertEqual(
+            engine.backend_name,
+            "cpu",
+        )
+
+        self.assertEqual(
+            engine.backend_library,
+            "numpy",
+        )
+
+        self.assertFalse(
+            engine.using_gpu
+        )
+
+        self.assertIsNone(
+            engine.active_device_id
+        )
 
 
 class MeanFieldPhaseRuntimeTests(unittest.TestCase):
@@ -276,7 +361,9 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
             float("inf"),
             float("nan"),
         ):
-            with self.subTest(dt=invalid_dt):
+            with self.subTest(
+                dt=invalid_dt,
+            ):
                 with self.assertRaisesRegex(
                     ValueError,
                     "dt must be a positive finite value",
@@ -298,7 +385,7 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
                 dt=0.01,
             )
 
-    def test_non_finite_coupling_strength_is_rejected(self) -> None:
+    def test_non_finite_coupling_strength_update_is_rejected(self) -> None:
         with self.assertRaisesRegex(
             ValueError,
             "coupling_strength_k must be finite",
@@ -307,7 +394,7 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
                 float("nan")
             )
 
-    def test_non_finite_phase_lag_is_rejected(self) -> None:
+    def test_non_finite_phase_lag_update_is_rejected(self) -> None:
         with self.assertRaisesRegex(
             ValueError,
             "sakaguchi_phase_lag_alpha must be finite",
@@ -317,11 +404,23 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
             )
 
     def test_runtime_parameter_updates_are_applied(self) -> None:
-        self.engine.set_coupling_strength(7.5)
-        self.engine.set_phase_lag(0.1)
+        self.engine.set_coupling_strength(
+            7.5
+        )
 
-        self.assertEqual(self.engine.K, 7.5)
-        self.assertEqual(self.engine.alpha, 0.1)
+        self.engine.set_phase_lag(
+            0.1
+        )
+
+        self.assertEqual(
+            self.engine.K,
+            7.5,
+        )
+
+        self.assertEqual(
+            self.engine.alpha,
+            0.1,
+        )
 
     def test_default_external_forcing_phase_is_used(self) -> None:
         metrics = self.engine.process_micro_interval(
@@ -358,13 +457,18 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
             "sakaguchi_phase_lag_alpha",
             "active_domains",
             "backend_name",
+            "backend_library",
             "device_id",
             "simulation_time",
             "tact_index",
+            "step",
         )
 
         for key in required_metrics:
-            self.assertIn(key, metrics)
+            self.assertIn(
+                key,
+                metrics,
+            )
 
         for key in (
             "R_t_phase_order",
@@ -384,39 +488,154 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
             "simulation_time",
         ):
             self.assertTrue(
-                math.isfinite(float(metrics[key])),
+                math.isfinite(
+                    float(
+                        metrics[key]
+                    )
+                ),
                 msg=f"Non-finite metric: {key}={metrics[key]}",
             )
 
-        self.assertGreaterEqual(metrics["R_t_phase_order"], 0.0)
-        self.assertLessEqual(metrics["R_t_phase_order"], 1.0)
+        self.assertGreaterEqual(
+            metrics["R_t_phase_order"],
+            0.0,
+        )
+
+        self.assertLessEqual(
+            metrics["R_t_phase_order"],
+            1.0,
+        )
+
         self.assertGreaterEqual(
             metrics["phase_amplitude_order_proxy"],
             0.0,
         )
+
         self.assertLessEqual(
             metrics["phase_amplitude_order_proxy"],
             1.0,
         )
-        self.assertGreaterEqual(metrics["global_mean_phase"], -math.pi)
-        self.assertLessEqual(metrics["global_mean_phase"], math.pi)
-        self.assertGreaterEqual(metrics["coupling_energy_proxy"], -1.0)
-        self.assertLessEqual(metrics["coupling_energy_proxy"], 1.0)
-        self.assertGreaterEqual(metrics["phase_velocity_dispersion"], 0.0)
-        self.assertGreaterEqual(metrics["amplitude_dispersion"], 0.0)
+
+        self.assertGreaterEqual(
+            metrics["global_mean_phase"],
+            -math.pi,
+        )
+
+        self.assertLessEqual(
+            metrics["global_mean_phase"],
+            math.pi,
+        )
+
+        self.assertGreaterEqual(
+            metrics["coupling_energy_proxy"],
+            -1.0,
+        )
+
+        self.assertLessEqual(
+            metrics["coupling_energy_proxy"],
+            1.0,
+        )
+
+        self.assertGreaterEqual(
+            metrics["phase_velocity_dispersion"],
+            0.0,
+        )
+
+        self.assertGreaterEqual(
+            metrics["amplitude_dispersion"],
+            0.0,
+        )
+
         self.assertGreaterEqual(
             metrics["minimum_amplitude"],
             self.config.amplitude_minimum,
         )
+
         self.assertLessEqual(
             metrics["maximum_amplitude"],
             self.config.amplitude_maximum,
         )
-        self.assertEqual(metrics["active_domains"], self.config.num_domains)
-        self.assertEqual(metrics["backend_name"], "numpy")
-        self.assertIsNone(metrics["device_id"])
-        self.assertEqual(metrics["tact_index"], 1)
-        self.assertAlmostEqual(metrics["simulation_time"], 0.01)
+
+        self.assertEqual(
+            metrics["active_domains"],
+            self.config.num_domains,
+        )
+
+        self.assertEqual(
+            metrics["backend_name"],
+            "cpu",
+        )
+
+        self.assertEqual(
+            metrics["backend_library"],
+            "numpy",
+        )
+
+        self.assertIsNone(
+            metrics["device_id"]
+        )
+
+        self.assertEqual(
+            metrics["tact_index"],
+            1,
+        )
+
+        self.assertEqual(
+            metrics["step"],
+            1,
+        )
+
+        self.assertEqual(
+            self.engine.tact_index,
+            1,
+        )
+
+        self.assertEqual(
+            self.engine.step_index,
+            1,
+        )
+
+        self.assertAlmostEqual(
+            metrics["simulation_time"],
+            0.01,
+        )
+
+    def test_multiple_intervals_advance_tact_step_and_time(self) -> None:
+        for _ in range(
+            5
+        ):
+            self.engine.process_micro_interval(
+                external_forcing_density=1.0,
+                external_forcing_phase=0.0,
+                dt=0.01,
+            )
+
+        metrics = self.engine.get_metrics()
+
+        self.assertEqual(
+            metrics["tact_index"],
+            5,
+        )
+
+        self.assertEqual(
+            metrics["step"],
+            5,
+        )
+
+        self.assertEqual(
+            self.engine.tact_index,
+            5,
+        )
+
+        self.assertEqual(
+            self.engine.step_index,
+            5,
+        )
+
+        self.assertAlmostEqual(
+            metrics["simulation_time"],
+            0.05,
+        )
 
     def test_field_snapshot_shapes_dtypes_and_bounds(self) -> None:
         initial_natural_frequencies = (
@@ -425,7 +644,9 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
             ].copy()
         )
 
-        for _ in range(10):
+        for _ in range(
+            10
+        ):
             self.engine.process_micro_interval(
                 external_forcing_density=1.75,
                 external_forcing_phase=0.35,
@@ -445,11 +666,15 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
         )
 
         for key in required_fields:
-            values = np.asarray(field[key])
+            values = np.asarray(
+                field[key]
+            )
 
             self.assertEqual(
                 values.shape,
-                (self.config.num_domains,),
+                (
+                    self.config.num_domains,
+                ),
             )
 
             self.assertEqual(
@@ -458,11 +683,15 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
             )
 
             self.assertTrue(
-                np.all(np.isfinite(values)),
+                np.all(
+                    np.isfinite(
+                        values
+                    )
+                ),
                 msg=f"Non-finite values in field: {key}",
             )
 
-        phase_tolerance = 1e-6
+        phase_tolerance = 1.0e-6
 
         self.assertTrue(
             np.all(
@@ -576,7 +805,9 @@ class MeanFieldPhaseRuntimeTests(unittest.TestCase):
 
         for values in field.values():
             self.assertEqual(
-                np.asarray(values).dtype,
+                np.asarray(
+                    values
+                ).dtype,
                 np.dtype("float64"),
             )
 
@@ -619,7 +850,7 @@ class MeanFieldPhaseLoggerTests(unittest.TestCase):
             dt=0.01,
         )
 
-    def test_negative_step_id_is_rejected(self) -> None:
+    def test_negative_tact_id_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             logger = EDKGPUMeanFieldLogger(
                 temporary_directory
@@ -627,120 +858,257 @@ class MeanFieldPhaseLoggerTests(unittest.TestCase):
 
             with self.assertRaisesRegex(
                 ValueError,
-                "step_id must be non-negative",
+                "tact_id must be non-negative",
+            ):
+                logger.log_tact(
+                    tact_id=-1,
+                    engine=self.engine,
+                )
+
+    def test_log_step_negative_id_uses_tact_validation(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            logger = EDKGPUMeanFieldLogger(
+                temporary_directory
+            )
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "tact_id must be non-negative",
             ):
                 logger.log_step(
                     step_id=-1,
                     engine=self.engine,
                 )
 
-    def test_logger_writes_metric_and_field_snapshots(self) -> None:
+    def test_logger_rejects_mismatched_tact_id(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             logger = EDKGPUMeanFieldLogger(
                 temporary_directory
             )
 
-            metrics_path, field_path = logger.log_step(
-                step_id=7,
+            with self.assertRaisesRegex(
+                ValueError,
+                "tact_id must match engine.tact_index",
+            ):
+                logger.log_tact(
+                    tact_id=7,
+                    engine=self.engine,
+                )
+
+    def test_logger_writes_metric_and_field_snapshots(self) -> None:
+        tact = int(
+            self.engine.tact_index
+        )
+
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            logger = EDKGPUMeanFieldLogger(
+                temporary_directory
+            )
+
+            metrics_path, field_path = logger.log_tact(
+                tact_id=tact,
                 engine=self.engine,
                 include_field=True,
             )
 
+            output_dir = Path(
+                temporary_directory
+            )
+
+            tact_json_path = (
+                output_dir
+                / f"gpu_mean_field_tact_{tact:06d}.json"
+            )
+
+            step_json_path = (
+                output_dir
+                / f"gpu_mean_field_step_{tact:06d}.json"
+            )
+
+            expected_field_path = (
+                output_dir
+                / f"gpu_mean_field_field_{tact:06d}.npz"
+            )
+
+            self.assertEqual(
+                metrics_path,
+                tact_json_path,
+            )
+
             self.assertTrue(
-                metrics_path.is_file()
+                tact_json_path.is_file()
+            )
+
+            self.assertTrue(
+                step_json_path.is_file()
             )
 
             self.assertIsNotNone(
                 field_path
             )
 
-            self.assertTrue(
-                field_path.is_file()
+            self.assertEqual(
+                field_path,
+                expected_field_path,
             )
 
-            with metrics_path.open(
+            self.assertTrue(
+                expected_field_path.is_file()
+            )
+
+            with tact_json_path.open(
                 "r",
                 encoding="utf-8",
             ) as stream:
-                payload = json.load(
+                tact_payload = json.load(
+                    stream
+                )
+
+            with step_json_path.open(
+                "r",
+                encoding="utf-8",
+            ) as stream:
+                step_payload = json.load(
                     stream
                 )
 
             self.assertEqual(
-                payload["step"],
-                7,
+                tact_payload,
+                step_payload,
             )
 
             self.assertEqual(
-                payload["module"],
+                tact_payload["tact"],
+                tact,
+            )
+
+            self.assertEqual(
+                tact_payload["step"],
+                tact,
+            )
+
+            self.assertEqual(
+                tact_payload["tact_index"],
+                tact,
+            )
+
+            self.assertAlmostEqual(
+                tact_payload["simulation_time"],
+                float(
+                    self.engine.simulation_time
+                ),
+            )
+
+            self.assertEqual(
+                tact_payload["module"],
                 "module_edk_gpu_mean_field_phase_engine",
             )
 
             self.assertEqual(
-                payload["engine_class"],
+                tact_payload["engine_class"],
                 "EDKGPUMeanFieldPhaseEngine",
             )
 
             self.assertEqual(
-                payload["backend"]["name"],
+                tact_payload["backend"]["name"],
+                "cpu",
+            )
+
+            self.assertEqual(
+                tact_payload["backend"]["library"],
                 "numpy",
             )
 
             self.assertFalse(
-                payload["backend"]["using_gpu"]
+                tact_payload["backend"]["using_gpu"]
             )
 
             self.assertIsNone(
-                payload["backend"]["device_id"]
+                tact_payload["backend"]["device_id"]
             )
 
             self.assertIn(
                 "configuration",
-                payload,
+                tact_payload,
             )
 
             self.assertIn(
                 "metrics",
-                payload,
+                tact_payload,
+            )
+
+            self.assertEqual(
+                tact_payload["metrics"]["tact_index"],
+                tact,
+            )
+
+            self.assertEqual(
+                tact_payload["metrics"]["step"],
+                tact,
             )
 
             with np.load(
-                field_path,
+                expected_field_path,
                 allow_pickle=False,
             ) as archive:
-                self.assertIn(
+                for key in (
                     "phases",
-                    archive.files,
-                )
-
-                self.assertIn(
                     "amplitudes",
-                    archive.files,
-                )
-
-                self.assertIn(
                     "natural_frequencies",
-                    archive.files,
-                )
+                    "phase_velocity",
+                    "amplitude_velocity",
+                    "phase_noise_increment",
+                    "amplitude_noise_increment",
+                ):
+                    self.assertIn(
+                        key,
+                        archive.files,
+                    )
 
-    def test_logger_can_write_metrics_without_field_snapshot(self) -> None:
+            self.assertEqual(
+                list(
+                    output_dir.glob(
+                        "*.tmp"
+                    )
+                ),
+                [],
+            )
+
+    def test_log_step_alias_matches_log_tact(self) -> None:
+        tact = int(
+            self.engine.tact_index
+        )
+
         with tempfile.TemporaryDirectory() as temporary_directory:
             logger = EDKGPUMeanFieldLogger(
                 temporary_directory
             )
 
             metrics_path, field_path = logger.log_step(
-                step_id=3,
+                step_id=tact,
                 engine=self.engine,
                 include_field=False,
             )
 
-            self.assertTrue(
-                metrics_path.is_file()
+            self.assertEqual(
+                metrics_path,
+                Path(
+                    temporary_directory
+                )
+                / f"gpu_mean_field_tact_{tact:06d}.json",
             )
 
             self.assertIsNone(
                 field_path
+            )
+
+            self.assertTrue(
+                (
+                    Path(
+                        temporary_directory
+                    )
+                    / f"gpu_mean_field_step_{tact:06d}.json"
+                ).is_file()
             )
 
             self.assertFalse(
@@ -748,7 +1116,7 @@ class MeanFieldPhaseLoggerTests(unittest.TestCase):
                     Path(
                         temporary_directory
                     )
-                    / "gpu_mean_field_field_000003.npz"
+                    / f"gpu_mean_field_field_{tact:06d}.npz"
                 ).exists()
             )
 
