@@ -1,69 +1,46 @@
-# EDK Hierarchical Orchestrator
+# EDK Hierarchical Orchestrator — EN/RU
 
 ## EN
 
 ### Purpose
 
-The `module_edk_hierarchical_orchestrator` package coordinates the tact-by-tact interaction of independent EDK computational modules within one hierarchical execution contour.
+The `module_edk_hierarchical_orchestrator` package coordinates the tact-by-tact interaction of independent EDK computational modules within a unified hierarchical execution loop.
 
-The orchestrator registers module adapters, transfers structured state packets between execution stages, preserves inherited state, forms the upward feedback packet, executes the recursive update operator `Phi`, and preserves the explicit continuity of `T_int` and `J_flux`.
+The orchestrator registers module adapters, transfers structured state packets between execution stages, preserves inherited state, forms the ascending feedback packet, performs the recursive update operator `Phi`, and preserves explicit continuity of `T_int` and `J_flux`.
 
 ### Hierarchical Operational Chain
 
-    state(n)
-        ↓
-    solar
-        ↓
-    planetary
-        ↓
-    bio_planetary
-        ↓
-    continuum_core
-        ↓
-    interface_tensor
-        ↓
-    massless_exchange_channel
-        ↓
-    wave_genetics
-        ↓
-    molecular_phase_chemistry
-        ↓
-    feedback:
-    D(n), A(n), J_flux(n), T_int(n)
-        ↓
-    Q(n+1) = Phi(Q(n), D(n), A(n))
-        ↓
-    state(n+1)
+`state(n) → solar → planetary → bio_planetary → continuum_core → interface_tensor → massless_exchange_channel → wave_genetics → molecular_phase_chemistry → feedback: D(n), A(n), J_flux(n), T_int(n) → Q(n+1) = Phi(Q(n), D(n), A(n)) → state(n+1)`
 
 Each subsequent tact inherits the qualitative characteristics and retained state variables of the preceding tact.
 
 ### Fixed Parameter Distinctions
 
-    phase synchronization != phase coherence
+`phase synchronization ≠ phase coherence`
 
-    R(t) != C(t)
+`R(t) ≠ C(t)`
 
-    C_proxy(t) != C(t)
+`C_proxy(t) ≠ C(t)`
 
-    C(t) != C3
+`C(t) ≠ C3`
 
-    T_int != M(t)
+`T_int ≠ M(t)`
 
-    scalar exchange-activity proxy != J_flux
+`scalar proxy parameter of exchange activity ≠ J_flux`
 
-    J_vector != J_flux
+`J_vector ≠ J_flux`
 
-`C(t)` is general endogenous structural coherence: the mutually coherent coordination of endogenous structural processes across phase and time within one system-level endogenous dynamic state.
+`C(t)` is the general endogenous structural coherence: mutually coherent coordination of endogenous structural processes by phase and time within a unified system state of endogenous dynamics.
 
-`C_proxy(t)` is an explicitly named operational parameter used by a module when the complete `C(t)` is not calculated directly.
+`C_proxy(t)` is an explicitly designated operational parameter used by the module when full `C(t)` is not computed directly.
 
-`R_t_phase_order` is the explicit name for a phase-order parameter when `R(t)` is supplied by a connected phase module.
+`R_t_phase_order` is the explicit designation of the phase-order parameter when `R(t)` is received from a connected phase module.
 
-`T_int` is the interface-tensor layer and remains an independent state element.
+`T_int` is the interface-tensor layer and is preserved as an independent state element.
 
-`J_flux` is the mandatory tact-by-tact massless channel of connection, phase transfer, exchange, dissipation, and structural influence.
+`J_flux` is the mandatory tact-by-tact massless channel of coupling, phase transfer, exchange, dissipation, and structural influence.
 
-`J_vector(x, y, z, t)` is a local vector field and remains distinct from `J_flux`.
+`J_vector(x, y, z, t)` is a local vector field and is preserved separately from `J_flux`.
 
 ### Package Structure
 
@@ -78,17 +55,17 @@ Each subsequent tact inherits the qualitative characteristics and retained state
 
 #### EDKHierarchicalOrchestrator
 
-Controls the complete tact-by-tact forward cascade, upward feedback branch, recursive update, state inheritance, and logging sequence.
+Manages the full tact-by-tact descending cascade, ascending feedback branch, recursive update, state inheritance, and logging sequence.
 
 #### EDKModuleRegistry
 
-Stores registered module adapters and preserves their declared execution stages, input fields, output fields, mandatory status, and backend information.
+Stores registered module adapters and preserves declared execution stages, input fields, output fields, mandatory status, and computational backend information.
 
 #### EDKHierarchicalState
 
 Stores the state inherited by the next tact.
 
-Required state fields:
+Mandatory state fields:
 
 - `tact_index`
 - `simulation_time`
@@ -124,7 +101,7 @@ Packet fields:
 
 #### EDKFeedbackPacket
 
-Transfers the upward recursive branch.
+Transfers the ascending recursive branch.
 
 Feedback fields:
 
@@ -138,11 +115,11 @@ Feedback fields:
 
 #### EDKHierarchicalLogger
 
-Writes scalar state and metadata to JSON and full numerical fields to compressed NPZ snapshots.
+Writes scalar state and metadata to JSON, and full numerical fields to compressed NPZ snapshots.
 
 ### Module Adapter Contract
 
-Each connected module is exposed through an adapter declaring:
+Each connected module is provided through an adapter declaring:
 
 - `module_name`
 - `stage_name`
@@ -167,11 +144,11 @@ Execution stages:
 8. `molecular_phase_chemistry`
 9. `feedback`
 
-The execution stage is declared explicitly by the adapter.
+The execution stage is explicitly declared by the adapter.
 
 ### Mandatory Integration Fields
 
-The complete hierarchical tact preserves:
+A full hierarchical tact preserves:
 
 - `Q_n`
 - `D_n`
@@ -180,7 +157,7 @@ The complete hierarchical tact preserves:
 - `T_int`
 - `J_flux`
 
-Additional operational fields remain explicitly named:
+Additional operational fields preserve explicit designations:
 
 - `C_t`
 - `C_proxy_t`
@@ -198,26 +175,26 @@ Additional operational fields remain explicitly named:
 For each tact `n`, the orchestrator performs:
 
 1. validation of `state(n)` and the module registry;
-2. execution of the forward cascade in the fixed stage order;
+2. execution of the descending cascade in the fixed stage order;
 3. transfer and preservation of `T_int`;
 4. transfer and preservation of `J_flux`;
-5. evaluation of `C(t)`, `C_proxy(t)`, `P(t)`, and the retention margin;
+5. evaluation of `C(t)`, `C_proxy(t)`, `P(t)`, and retention margin;
 6. formation of the feedback packet from `D(n)`, `A(n)`, `J_flux(n)`, and `T_int(n)`;
 7. recursive update `Q(n+1) = Phi(Q(n), D(n), A(n))`;
-8. formation of `state(n+1)` from the retained output of tact `n`;
-9. recording of scalar, array, provenance, and transition data.
+8. formation of `state(n+1)` from the retained result of tact `n`;
+9. logging of scalar, array, provenance, and transition data.
 
-### Dynamic Regime
+### Dynamic State
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
 Endogenous Dynamic Stability.
 
-    C(t) ≈ P(t)
+`C(t) ≈ P(t)`
 
 Endogenous Dynamic Criticality.
 
-    C(t) < P(t)
+`C(t) < P(t)`
 
 Degradation drift.
 
@@ -225,28 +202,28 @@ The sign and qualitative characteristics of the resonance window are determined 
 
 ### Data Provenance
 
-Every exported field preserves:
+Each exported field preserves:
 
 - field name;
 - source module;
 - source stage;
 - tact index;
-- backend;
-- dtype;
+- computational backend;
+- data type;
 - array shape;
 - transition history.
 
-Forwarding a field between modules does not replace its recorded origin.
+Field transfer between modules does not change the fixed provenance of the field.
 
-### Backend Coordination
+### Computational Backend Coordination
 
-Each computational module controls its own NumPy or CuPy backend.
+Each computational module independently manages its own NumPy or CuPy backend.
 
-The orchestrator records the backend and every explicit transfer between array namespaces.
+The orchestrator records the backend and every explicit transfer between array spaces.
 
 ### Logging Output
 
-Default output directory:
+Default directory:
 
     edk_hierarchical_output/
 
@@ -266,16 +243,16 @@ Expected files:
 - `Q(n)`, `D(n)`, and `A(n)`;
 - `C(t)`, `C_proxy(t)`, and `P(t)`;
 - retention margin;
-- dynamic-regime transitions;
+- dynamic state transitions;
 - `R_t_phase_order`;
 - `T_int`;
 - `J_flux`;
-- forward-cascade continuity;
-- upward-feedback continuity;
+- descending cascade continuity;
+- ascending feedback continuity;
 - resonance-window transitions;
-- inherited qualitative characteristics across tacts.
+- inheritance of qualitative characteristics between tacts.
 
-### Failure States
+### Completion States
 
 - `COMPLETED`
 - `MODULE_REGISTRATION_FAILED`
@@ -304,48 +281,25 @@ Expected files:
 
 ### Иерархическая операционная цепочка
 
-    state(n)
-        ↓
-    solar
-        ↓
-    planetary
-        ↓
-    bio_planetary
-        ↓
-    continuum_core
-        ↓
-    interface_tensor
-        ↓
-    massless_exchange_channel
-        ↓
-    wave_genetics
-        ↓
-    molecular_phase_chemistry
-        ↓
-    feedback:
-    D(n), A(n), J_flux(n), T_int(n)
-        ↓
-    Q(n+1) = Phi(Q(n), D(n), A(n))
-        ↓
-    state(n+1)
+`state(n) → solar → planetary → bio_planetary → continuum_core → interface_tensor → massless_exchange_channel → wave_genetics → molecular_phase_chemistry → feedback: D(n), A(n), J_flux(n), T_int(n) → Q(n+1) = Phi(Q(n), D(n), A(n)) → state(n+1)`
 
 Каждый последующий такт наследует качественные характеристики и удержанные переменные состояния предшествующего такта.
 
 ### Фиксированные различия параметров
 
-    фазовая синхронизация != фазовая когерентность
+`фазовая синхронизация ≠ фазовая когерентность`
 
-    R(t) != C(t)
+`R(t) ≠ C(t)`
 
-    C_proxy(t) != C(t)
+`C_proxy(t) ≠ C(t)`
 
-    C(t) != C3
+`C(t) ≠ C3`
 
-    T_int != M(t)
+`T_int ≠ M(t)`
 
-    скалярный прокси-параметр обменной активности != J_flux
+`скалярный прокси-параметр обменной активности ≠ J_flux`
 
-    J_vector != J_flux
+`J_vector ≠ J_flux`
 
 `C(t)` является общей эндогенной структурной когерентностью: взаимно когерентным согласованием эндогенных структурных процессов по фазе и времени в едином системном состоянии эндогенной динамики.
 
@@ -503,15 +457,15 @@ Expected files:
 
 ### Динамическое состояние
 
-    C(t) > P(t)
+`C(t) > P(t)`
 
 Эндогенная Динамическая Устойчивость.
 
-    C(t) ≈ P(t)
+`C(t) ≈ P(t)`
 
 Эндогенная Динамическая Критичность.
 
-    C(t) < P(t)
+`C(t) < P(t)`
 
 Деградационный дрейф.
 
