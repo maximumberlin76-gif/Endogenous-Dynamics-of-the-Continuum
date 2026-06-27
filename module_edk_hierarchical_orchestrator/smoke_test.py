@@ -1850,6 +1850,84 @@ def run_success_case(
         _require(
             (
                 metadata[
+                    "tact"
+                ]
+                == tact_index
+            ),
+            (
+                "Top-level tact metadata "
+                "does not match the log filename."
+            ),
+        )
+
+        _require(
+            (
+                metadata[
+                    "step"
+                ]
+                == tact_index
+            ),
+            (
+                "Compatibility step metadata "
+                "does not match the log filename."
+            ),
+        )
+
+        _require(
+            (
+                metadata[
+                    "tact_index"
+                ]
+                == tact_index
+            ),
+            (
+                "Top-level tact_index metadata "
+                "does not match the log filename."
+            ),
+        )
+
+        _require_close(
+            metadata[
+                "simulation_time"
+            ],
+            tact_index * dt,
+            message=(
+                "Top-level simulation_time "
+                "metadata is incorrect"
+            ),
+        )
+
+        _require(
+            (
+                metadata[
+                    "state"
+                ][
+                    "tact_index"
+                ]
+                == tact_index
+            ),
+            (
+                "State tact_index metadata "
+                "does not match the log filename."
+            ),
+        )
+
+        _require_close(
+            metadata[
+                "state"
+            ][
+                "simulation_time"
+            ],
+            tact_index * dt,
+            message=(
+                "State simulation_time "
+                "metadata is incorrect"
+            ),
+        )
+
+        _require(
+            (
+                metadata[
                     "state"
                 ][
                     "T_int"
@@ -2487,7 +2565,22 @@ def main(
     parser.add_argument(
         "--tacts",
         type=int,
-        default=3,
+        default=None,
+        help=(
+            "Number of tact-by-tact "
+            "hierarchical intervals."
+        ),
+    )
+
+    parser.add_argument(
+        "--steps",
+        type=int,
+        default=None,
+        help=(
+            "Compatibility alias for --tacts. "
+            "If --tacts is provided, --tacts "
+            "takes priority."
+        ),
     )
 
     parser.add_argument(
@@ -2513,7 +2606,15 @@ def main(
 
     arguments = parser.parse_args()
 
-    if arguments.tacts <= 0:
+    total_tacts = (
+        arguments.tacts
+        if arguments.tacts is not None
+        else arguments.steps
+        if arguments.steps is not None
+        else 3
+    )
+
+    if total_tacts <= 0:
         raise ValueError(
             (
                 "--tacts must be "
@@ -2586,7 +2687,7 @@ def main(
         result = run_smoke_suite(
             root_directory,
             tact_count=(
-                arguments.tacts
+                total_tacts
             ),
             dt=(
                 arguments.dt
