@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 import tempfile
 from pathlib import Path
 
@@ -15,12 +16,30 @@ try:
         MeanFieldPhaseConfig,
     )
 except ImportError:
-    from benchmark_gpu_phase_engine import run_benchmark
-    from edk_gpu_mean_field_phase_engine import (
-        EDKGPUMeanFieldLogger,
-        EDKGPUMeanFieldPhaseEngine,
-        MeanFieldPhaseConfig,
-    )
+    try:
+        from benchmark_gpu_phase_engine import run_benchmark
+        from edk_gpu_mean_field_phase_engine import (
+            EDKGPUMeanFieldLogger,
+            EDKGPUMeanFieldPhaseEngine,
+            MeanFieldPhaseConfig,
+        )
+    except ImportError:
+        repo_root = Path(__file__).resolve().parents[1]
+
+        if str(repo_root) not in sys.path:
+            sys.path.insert(
+                0,
+                str(repo_root),
+            )
+
+        from module_edk_gpu_mean_field_phase_engine.benchmark_gpu_phase_engine import (
+            run_benchmark,
+        )
+        from module_edk_gpu_mean_field_phase_engine.edk_gpu_mean_field_phase_engine import (
+            EDKGPUMeanFieldLogger,
+            EDKGPUMeanFieldPhaseEngine,
+            MeanFieldPhaseConfig,
+        )
 
 
 def _assert_finite(
@@ -52,8 +71,7 @@ def _assert_unit_interval(
 
     if not 0.0 <= numeric_value <= 1.0:
         raise RuntimeError(
-            f"Value outside [0, 1]: "
-            f"{name}={numeric_value}"
+            f"Value outside [0, 1]: {name}={numeric_value}"
         )
 
 
@@ -86,14 +104,12 @@ def _assert_field_snapshot(
             num_domains,
         ):
             raise RuntimeError(
-                f"Unexpected shape for {key}: "
-                f"{array.shape}"
+                f"Unexpected shape for {key}: {array.shape}"
             )
 
         if array.dtype != dtype:
             raise RuntimeError(
-                f"Unexpected dtype for {key}: "
-                f"{array.dtype}"
+                f"Unexpected dtype for {key}: {array.dtype}"
             )
 
         if not np.all(
@@ -130,7 +146,7 @@ def _assert_no_pairwise_state_matrix(
 def main() -> None:
     num_domains = 256
     dt = 0.01
-    steps = 10
+    tacts = 10
 
     config = MeanFieldPhaseConfig(
         num_domains=num_domains,
@@ -162,9 +178,7 @@ def main() -> None:
     )
 
     initial_field = engine.export_field_snapshot()
-    duplicate_field = (
-        duplicate_engine.export_field_snapshot()
-    )
+    duplicate_field = duplicate_engine.export_field_snapshot()
 
     for key in (
         "phases",
@@ -176,8 +190,7 @@ def main() -> None:
             duplicate_field[key],
         ):
             raise RuntimeError(
-                f"Initialization is not deterministic "
-                f"for {key}."
+                f"Initialization is not deterministic for {key}."
             )
 
     fixed_natural_frequencies = initial_field[
@@ -187,7 +200,7 @@ def main() -> None:
     metrics: dict[str, object] = {}
 
     for _ in range(
-        steps
+        tacts
     ):
         metrics = engine.process_micro_interval(
             external_forcing_density=1.75,
@@ -212,9 +225,11 @@ def main() -> None:
         "sakaguchi_phase_lag_alpha",
         "active_domains",
         "backend_name",
+        "backend_library",
         "device_id",
         "simulation_time",
         "tact_index",
+        "step",
     )
 
     for key in required_metrics:
@@ -284,15 +299,19 @@ def main() -> None:
                 f"Negative dispersion: {key}"
             )
 
-    if metrics["backend_name"] != "numpy":
+    if metrics["backend_name"] != "cpu":
         raise RuntimeError(
-            "Explicit CPU backend did not select NumPy."
+            "Explicit CPU backend did not select cpu backend_name."
+        )
+
+    if metrics["backend_library"] != "numpy":
+        raise RuntimeError(
+            "Explicit CPU backend did not select NumPy backend_library."
         )
 
     if metrics["device_id"] is not None:
         raise RuntimeError(
-            "CPU backend must not report "
-            "a CUDA device ID."
+            "CPU backend must not report a CUDA device ID."
         )
 
     if int(
@@ -304,18 +323,26 @@ def main() -> None:
 
     if int(
         metrics["tact_index"]
-    ) != steps:
+    ) != tacts:
         raise RuntimeError(
             "Incorrect tact index."
+        )
+
+    if int(
+        metrics["step"]
+    ) != tacts:
+        raise RuntimeError(
+            "Incorrect step compatibility index."
         )
 
     if not math.isclose(
         float(
             metrics["simulation_time"]
         ),
-        steps * dt,
-        rel_tol=1e-12,
-        abs_tol=1e-12,
+        tacts
+        * dt,
+        rel_tol=1.0e-12,
+        abs_tol=1.0e-12,
     ):
         raise RuntimeError(
             "Incorrect accumulated simulation time."
@@ -336,11 +363,10 @@ def main() -> None:
         fixed_natural_frequencies,
     ):
         raise RuntimeError(
-            "Natural frequencies changed "
-            "during simulation."
+            "Natural frequencies changed during simulation."
         )
 
-    phase_tolerance = 1e-6
+    phase_tolerance = 1.0e-6
 
     if np.any(
         field["phases"]
@@ -420,71 +446,165 @@ def main() -> None:
             output_dir
         )
 
-        metrics_path, field_path = logger.log_step(
-            step_id=engine.tact_index,
+        tact = int(
+            engine.tact_index
+        )
+
+        metrics_path, field_path = logger.log_tact(
+            tact_id=tact,
             engine=engine,
             include_field=True,
         )
 
-        if not metrics_path.is_file():
+        tact_json_path = (
+            output_dir
+            / f"gpu_mean_field_tact_{tact:06d}.json"
+        )
+
+        step_json_path = (
+            output_dir
+            / f"gpu_mean_field_step_{tact:06d}.json"
+        )
+
+        expected_field_path = (
+            output_dir
+            / f"gpu_mean_field_field_{tact:06d}.npz"
+        )
+
+        if metrics_path != tact_json_path:
             raise RuntimeError(
-                "JSON metric snapshot was not created."
+                "log_tact returned an unexpected metrics path."
             )
 
-        if (
-            field_path is None
-            or not field_path.is_file()
-        ):
+        if field_path != expected_field_path:
+            raise RuntimeError(
+                "log_tact returned an unexpected field path."
+            )
+
+        if not tact_json_path.is_file():
+            raise RuntimeError(
+                "Primary tact JSON metric snapshot was not created."
+            )
+
+        if not step_json_path.is_file():
+            raise RuntimeError(
+                "Compatibility step JSON metric snapshot was not created."
+            )
+
+        if not expected_field_path.is_file():
             raise RuntimeError(
                 "NPZ field snapshot was not created."
             )
 
-        with metrics_path.open(
+        with tact_json_path.open(
             "r",
             encoding="utf-8",
         ) as stream:
-            payload = json.load(
+            tact_payload = json.load(
                 stream
             )
 
-        if payload.get(
+        with step_json_path.open(
+            "r",
+            encoding="utf-8",
+        ) as stream:
+            step_payload = json.load(
+                stream
+            )
+
+        if tact_payload != step_payload:
+            raise RuntimeError(
+                "Primary tact JSON and compatibility step JSON differ."
+            )
+
+        if tact_payload.get(
             "module"
         ) != "module_edk_gpu_mean_field_phase_engine":
             raise RuntimeError(
-                "Incorrect module identifier "
-                "in JSON snapshot."
+                "Incorrect module identifier in JSON snapshot."
             )
 
-        if payload.get(
+        if tact_payload.get(
             "engine_class"
         ) != "EDKGPUMeanFieldPhaseEngine":
             raise RuntimeError(
-                "Incorrect engine identifier "
-                "in JSON snapshot."
+                "Incorrect engine identifier in JSON snapshot."
             )
 
-        if payload.get(
+        if tact_payload.get(
+            "tact"
+        ) != tact:
+            raise RuntimeError(
+                "Incorrect tact identifier in JSON snapshot."
+            )
+
+        if tact_payload.get(
             "step"
-        ) != engine.tact_index:
+        ) != tact:
             raise RuntimeError(
-                "Incorrect step identifier "
-                "in JSON snapshot."
+                "Incorrect step compatibility identifier in JSON snapshot."
             )
 
-        if "configuration" not in payload:
+        if tact_payload.get(
+            "tact_index"
+        ) != tact:
             raise RuntimeError(
-                "Configuration is missing "
-                "from JSON snapshot."
+                "Incorrect tact_index in JSON snapshot."
             )
 
-        if "metrics" not in payload:
+        if not math.isclose(
+            float(
+                tact_payload.get(
+                    "simulation_time"
+                )
+            ),
+            float(
+                engine.simulation_time
+            ),
+            rel_tol=1.0e-12,
+            abs_tol=1.0e-12,
+        ):
             raise RuntimeError(
-                "Metrics are missing "
-                "from JSON snapshot."
+                "Incorrect simulation_time in JSON snapshot."
+            )
+
+        if tact_payload["backend"]["name"] != "cpu":
+            raise RuntimeError(
+                "Incorrect backend name in JSON snapshot."
+            )
+
+        if tact_payload["backend"]["library"] != "numpy":
+            raise RuntimeError(
+                "Incorrect backend library in JSON snapshot."
+            )
+
+        if tact_payload["backend"]["device_id"] is not None:
+            raise RuntimeError(
+                "CPU JSON snapshot must not contain CUDA device_id."
+            )
+
+        if "configuration" not in tact_payload:
+            raise RuntimeError(
+                "Configuration is missing from JSON snapshot."
+            )
+
+        if "metrics" not in tact_payload:
+            raise RuntimeError(
+                "Metrics are missing from JSON snapshot."
+            )
+
+        if tact_payload["metrics"]["tact_index"] != tact:
+            raise RuntimeError(
+                "metrics.tact_index does not match tact."
+            )
+
+        if tact_payload["metrics"]["step"] != tact:
+            raise RuntimeError(
+                "metrics.step does not match tact."
             )
 
         with np.load(
-            field_path,
+            expected_field_path,
             allow_pickle=False,
         ) as saved_field:
             saved_arrays = {
@@ -499,6 +619,31 @@ def main() -> None:
                 "float32"
             ),
         )
+
+        alias_metrics_path, alias_field_path = logger.log_step(
+            step_id=tact,
+            engine=engine,
+            include_field=False,
+        )
+
+        if alias_metrics_path != tact_json_path:
+            raise RuntimeError(
+                "log_step compatibility alias returned an unexpected path."
+            )
+
+        if alias_field_path is not None:
+            raise RuntimeError(
+                "log_step unexpectedly returned a field path."
+            )
+
+        if list(
+            output_dir.glob(
+                "*.tmp"
+            )
+        ):
+            raise RuntimeError(
+                "Temporary files were left after atomic writes."
+            )
 
     auto_config = MeanFieldPhaseConfig(
         num_domains=64,
@@ -523,12 +668,19 @@ def main() -> None:
     )
 
     if auto_engine.backend_name not in {
+        "cpu",
+        "gpu",
+    }:
+        raise RuntimeError(
+            "Automatic backend selection returned an invalid backend_name."
+        )
+
+    if auto_engine.backend_library not in {
         "numpy",
         "cupy",
     }:
         raise RuntimeError(
-            "Automatic backend selection returned "
-            "an invalid backend."
+            "Automatic backend selection returned an invalid backend_library."
         )
 
     _assert_unit_interval(
@@ -552,21 +704,22 @@ def main() -> None:
 
     benchmark_report = run_benchmark(
         config=benchmark_config,
-        warmup_steps=1,
-        measured_steps=3,
+        warmup_tacts=1,
+        measured_tacts=3,
         forcing=0.75,
         forcing_phase=0.2,
         dt=0.01,
         measure_field_io=False,
     )
 
-    if benchmark_report[
-        "backend"
-    ][
-        "name"
-    ] != "numpy":
+    if benchmark_report["backend"]["name"] != "cpu":
         raise RuntimeError(
-            "CPU benchmark did not use NumPy."
+            "CPU benchmark did not use cpu backend_name."
+        )
+
+    if benchmark_report["backend"]["library"] != "numpy":
+        raise RuntimeError(
+            "CPU benchmark did not use NumPy backend_library."
         )
 
     timing_report = benchmark_report[
@@ -602,23 +755,18 @@ def main() -> None:
         memory_report["persistent_state_bytes"]
     ) <= 0:
         raise RuntimeError(
-            "Persistent-state memory estimate "
-            "must be positive."
+            "Persistent-state memory estimate must be positive."
         )
 
     if int(
-        memory_report[
-            "unallocated_pairwise_matrix_bytes"
-        ]
+        memory_report["unallocated_pairwise_matrix_bytes"]
     ) <= 0:
         raise RuntimeError(
-            "Avoided pairwise-matrix estimate "
-            "must be positive."
+            "Avoided pairwise-matrix estimate must be positive."
         )
 
     print(
-        "EDK GPU mean-field phase engine "
-        "smoke test passed."
+        "EDK GPU mean-field phase engine smoke test passed."
     )
 
     print(
