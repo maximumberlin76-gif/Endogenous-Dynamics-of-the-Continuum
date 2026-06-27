@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import math
+import sys
 import tempfile
 from pathlib import Path
 
@@ -14,20 +15,41 @@ try:
         PhaseDelayConfig,
     )
 except ImportError:
-    from edk_spatiotemporal_phase_delay import (
-        EDKDelayLogger,
-        EDKSpatiotemporalPhaseDelayEngine,
-        PhaseDelayConfig,
-    )
+    try:
+        from edk_spatiotemporal_phase_delay import (
+            EDKDelayLogger,
+            EDKSpatiotemporalPhaseDelayEngine,
+            PhaseDelayConfig,
+        )
+    except ImportError:
+        repo_root = Path(__file__).resolve().parents[1]
+
+        if str(repo_root) not in sys.path:
+            sys.path.insert(
+                0,
+                str(repo_root),
+            )
+
+        from module_edk_spatiotemporal_phase_delay.edk_spatiotemporal_phase_delay import (
+            EDKDelayLogger,
+            EDKSpatiotemporalPhaseDelayEngine,
+            PhaseDelayConfig,
+        )
 
 
 def _assert_finite_metric(
     metrics: dict[str, float],
     key: str,
 ) -> None:
-    value = float(metrics[key])
+    value = float(
+        metrics[
+            key
+        ]
+    )
 
-    if not math.isfinite(value):
+    if not math.isfinite(
+        value
+    ):
         raise RuntimeError(
             f"Non-finite metric: {key}={value}"
         )
@@ -39,7 +61,11 @@ def _assert_interval(
     lower: float,
     upper: float,
 ) -> None:
-    value = float(metrics[key])
+    value = float(
+        metrics[
+            key
+        ]
+    )
 
     if not lower <= value <= upper:
         raise RuntimeError(
@@ -76,7 +102,9 @@ def main() -> None:
     dt = 0.01
     metrics: dict[str, float] = {}
 
-    for _ in range(8):
+    for _ in range(
+        8
+    ):
         metrics = engine.process_delayed_interval(
             external_forcing_density=1.5,
             external_forcing_phase=0.25,
@@ -84,6 +112,9 @@ def main() -> None:
         )
 
     required_metrics = (
+        "tact_index",
+        "step",
+        "simulation_time",
         "R_t_phase_order",
         "global_mean_phase",
         "delayed_local_phase_order",
@@ -105,6 +136,47 @@ def main() -> None:
         _assert_finite_metric(
             metrics,
             key,
+        )
+
+    tact = int(
+        metrics[
+            "tact_index"
+        ]
+    )
+
+    if tact != int(
+        engine.tact_index
+    ):
+        raise RuntimeError(
+            "metrics.tact_index does not match engine.tact_index."
+        )
+
+    if int(
+        metrics[
+            "step"
+        ]
+    ) != tact:
+        raise RuntimeError(
+            "metrics.step does not match metrics.tact_index."
+        )
+
+    expected_time = (
+        tact
+        * dt
+    )
+
+    if not math.isclose(
+        float(
+            metrics[
+                "simulation_time"
+            ]
+        ),
+        expected_time,
+        rel_tol=1.0e-9,
+        abs_tol=1.0e-9,
+    ):
+        raise RuntimeError(
+            "simulation_time does not match tact_index * dt."
         )
 
     _assert_interval(
@@ -135,22 +207,32 @@ def main() -> None:
         1.0,
     )
 
-    if metrics["phase_velocity_dispersion"] < 0.0:
+    if metrics[
+        "phase_velocity_dispersion"
+    ] < 0.0:
         raise RuntimeError(
             "phase_velocity_dispersion must be non-negative."
         )
 
-    if metrics["mean_delay"] <= 0.0:
+    if metrics[
+        "mean_delay"
+    ] <= 0.0:
         raise RuntimeError(
             "mean_delay must be positive."
         )
 
-    if metrics["maximum_delay"] < metrics["mean_delay"]:
+    if metrics[
+        "maximum_delay"
+    ] < metrics[
+        "mean_delay"
+    ]:
         raise RuntimeError(
             "maximum_delay must not be smaller than mean_delay."
         )
 
-    if metrics["delay_dispersion"] < 0.0:
+    if metrics[
+        "delay_dispersion"
+    ] < 0.0:
         raise RuntimeError(
             "delay_dispersion must be non-negative."
         )
@@ -165,7 +247,9 @@ def main() -> None:
 
     actual_history_depth = int(
         round(
-            metrics["history_buffer_depth"]
+            metrics[
+                "history_buffer_depth"
+            ]
         )
     )
 
@@ -198,12 +282,16 @@ def main() -> None:
             "Phase array contains non-finite values."
         )
 
-    phase_tolerance = 1e-6
+    phase_tolerance = 1.0e-6
 
     if np.any(
-        phases < -np.pi - phase_tolerance
+        phases
+        < -np.pi
+        - phase_tolerance
     ) or np.any(
-        phases >= np.pi + phase_tolerance
+        phases
+        >= np.pi
+        + phase_tolerance
     ):
         raise RuntimeError(
             "Wrapped phases are outside [-pi, pi)."
@@ -228,16 +316,19 @@ def main() -> None:
     )
 
     if np.any(
-        delay_floor_steps < 0
+        delay_floor_steps
+        < 0
     ):
         raise RuntimeError(
             "Negative integer delay step found."
         )
 
     if np.any(
-        delay_fractions < 0.0
+        delay_fractions
+        < 0.0
     ) or np.any(
-        delay_fractions >= 1.0
+        delay_fractions
+        >= 1.0
     ):
         raise RuntimeError(
             "Fractional delay weights are outside [0, 1)."
@@ -259,6 +350,11 @@ def main() -> None:
         "neighbor_indices": (
             config.num_domains,
             config.neighbor_count,
+        ),
+        "edge_vectors": (
+            config.num_domains,
+            config.neighbor_count,
+            3,
         ),
         "edge_distances": (
             config.num_domains,
@@ -288,7 +384,9 @@ def main() -> None:
             )
 
         array = np.asarray(
-            field[key]
+            field[
+                key
+            ]
         )
 
         if array.shape != expected_shape:
@@ -307,13 +405,17 @@ def main() -> None:
             )
 
     neighbor_indices = np.asarray(
-        field["neighbor_indices"]
+        field[
+            "neighbor_indices"
+        ]
     )
 
     if np.any(
-        neighbor_indices < 0
+        neighbor_indices
+        < 0
     ) or np.any(
-        neighbor_indices >= config.num_domains
+        neighbor_indices
+        >= config.num_domains
     ):
         raise RuntimeError(
             "neighbor_indices contains an out-of-range index."
@@ -321,10 +423,14 @@ def main() -> None:
 
     row_indices = np.arange(
         config.num_domains
-    )[:, None]
+    )[
+        :,
+        None,
+    ]
 
     if np.any(
-        neighbor_indices == row_indices
+        neighbor_indices
+        == row_indices
     ):
         raise RuntimeError(
             "Self-coupling was found in the neighbor graph."
@@ -332,7 +438,9 @@ def main() -> None:
 
     neighbor_weight_sums = np.sum(
         np.asarray(
-            field["neighbor_weights"]
+            field[
+                "neighbor_weights"
+            ]
         ),
         axis=1,
     )
@@ -340,8 +448,8 @@ def main() -> None:
     if not np.allclose(
         neighbor_weight_sums,
         1.0,
-        rtol=1e-5,
-        atol=1e-6,
+        rtol=1.0e-5,
+        atol=1.0e-6,
     ):
         raise RuntimeError(
             "Spatial coupling weights are not normalized."
@@ -349,7 +457,9 @@ def main() -> None:
 
     if np.any(
         np.asarray(
-            field["edge_distances"]
+            field[
+                "edge_distances"
+            ]
         )
         <= 0.0
     ):
@@ -359,7 +469,9 @@ def main() -> None:
 
     if np.any(
         np.asarray(
-            field["tau_ij"]
+            field[
+                "tau_ij"
+            ]
         )
         <= 0.0
     ):
@@ -368,15 +480,19 @@ def main() -> None:
         )
 
     delayed_neighbor_phases = np.asarray(
-        field["delayed_neighbor_phases"]
+        field[
+            "delayed_neighbor_phases"
+        ]
     )
 
     if np.any(
         delayed_neighbor_phases
-        < -np.pi - phase_tolerance
+        < -np.pi
+        - phase_tolerance
     ) or np.any(
         delayed_neighbor_phases
-        >= np.pi + phase_tolerance
+        >= np.pi
+        + phase_tolerance
     ):
         raise RuntimeError(
             "Delayed phases are outside [-pi, pi)."
@@ -386,7 +502,8 @@ def main() -> None:
         engine.process_delayed_interval(
             external_forcing_density=1.5,
             external_forcing_phase=0.25,
-            dt=dt * 2.0,
+            dt=dt
+            * 2.0,
         )
     except ValueError:
         pass
@@ -409,68 +526,185 @@ def main() -> None:
             )
         )
 
-        logger.log_step(
-            step_id=1,
+        metrics_path, field_path = logger.log_tact(
+            tact_id=tact,
             engine=engine,
             include_field=True,
         )
 
-        json_path = (
+        tact_json_path = (
             output_dir
-            / "delay_step_000001.json"
+            / f"delay_tact_{tact:06d}.json"
         )
 
-        field_path = (
+        step_json_path = (
             output_dir
-            / "delay_field_000001.npz"
+            / f"delay_step_{tact:06d}.json"
         )
 
-        if not json_path.is_file():
+        expected_field_path = (
+            output_dir
+            / f"delay_field_{tact:06d}.npz"
+        )
+
+        if metrics_path != tact_json_path:
             raise RuntimeError(
-                "JSON metric snapshot was not created."
+                "log_tact did not return the primary tact JSON path."
             )
 
-        if not field_path.is_file():
+        if field_path != expected_field_path:
+            raise RuntimeError(
+                "log_tact did not return the expected field path."
+            )
+
+        if not tact_json_path.is_file():
+            raise RuntimeError(
+                "Primary tact JSON metric snapshot was not created."
+            )
+
+        if not step_json_path.is_file():
+            raise RuntimeError(
+                "Compatibility step JSON metric snapshot was not created."
+            )
+
+        if not expected_field_path.is_file():
             raise RuntimeError(
                 "NPZ field snapshot was not created."
             )
 
-        with json_path.open(
+        with tact_json_path.open(
             "r",
             encoding="utf-8",
         ) as stream:
-            record = json.load(
+            tact_record = json.load(
                 stream
             )
 
-        if record.get(
-            "step"
-        ) != 1:
-            raise RuntimeError(
-                "Incorrect step identifier in JSON snapshot."
+        with step_json_path.open(
+            "r",
+            encoding="utf-8",
+        ) as stream:
+            step_record = json.load(
+                stream
             )
 
-        if record.get(
+        if tact_record != step_record:
+            raise RuntimeError(
+                "Primary tact JSON and compatibility step JSON differ."
+            )
+
+        if tact_record.get(
+            "tact"
+        ) != tact:
+            raise RuntimeError(
+                "Incorrect tact identifier in JSON snapshot."
+            )
+
+        if tact_record.get(
+            "step"
+        ) != tact:
+            raise RuntimeError(
+                "Incorrect step compatibility identifier in JSON snapshot."
+            )
+
+        if tact_record.get(
+            "tact_index"
+        ) != tact:
+            raise RuntimeError(
+                "Incorrect tact_index in JSON snapshot."
+            )
+
+        if not math.isclose(
+            float(
+                tact_record.get(
+                    "simulation_time"
+                )
+            ),
+            float(
+                engine.simulation_time
+            ),
+            rel_tol=1.0e-9,
+            abs_tol=1.0e-9,
+        ):
+            raise RuntimeError(
+                "Incorrect simulation_time in JSON snapshot."
+            )
+
+        if tact_record.get(
             "backend"
         ) != "cpu":
             raise RuntimeError(
                 "Incorrect backend identifier in JSON snapshot."
             )
 
-        if "metrics" not in record:
+        if tact_record.get(
+            "engine_class"
+        ) != "EDKSpatiotemporalPhaseDelayEngine":
+            raise RuntimeError(
+                "Incorrect engine_class in JSON snapshot."
+            )
+
+        if "metrics" not in tact_record:
             raise RuntimeError(
                 "Metrics are missing from JSON snapshot."
             )
 
+        if "config" not in tact_record:
+            raise RuntimeError(
+                "Config is missing from JSON snapshot."
+            )
+
         for key in required_metrics:
-            if key not in record["metrics"]:
+            if key not in tact_record[
+                "metrics"
+            ]:
                 raise RuntimeError(
                     f"Metric {key} is missing "
                     "from JSON snapshot."
                 )
 
+        if int(
+            tact_record[
+                "metrics"
+            ][
+                "tact_index"
+            ]
+        ) != tact:
+            raise RuntimeError(
+                "metrics.tact_index does not match tact."
+            )
+
+        if int(
+            tact_record[
+                "metrics"
+            ][
+                "step"
+            ]
+        ) != tact:
+            raise RuntimeError(
+                "metrics.step does not match tact."
+            )
+
+        if not math.isclose(
+            float(
+                tact_record[
+                    "metrics"
+                ][
+                    "simulation_time"
+                ]
+            ),
+            float(
+                engine.simulation_time
+            ),
+            rel_tol=1.0e-9,
+            abs_tol=1.0e-9,
+        ):
+            raise RuntimeError(
+                "metrics.simulation_time does not match engine time."
+            )
+
         with np.load(
-            field_path,
+            expected_field_path,
             allow_pickle=False,
         ) as saved_field:
             for key, expected_shape in expected_shapes.items():
@@ -479,7 +713,9 @@ def main() -> None:
                         f"{key} missing from NPZ field snapshot."
                     )
 
-                if saved_field[key].shape != expected_shape:
+                if saved_field[
+                    key
+                ].shape != expected_shape:
                     raise RuntimeError(
                         f"Incorrect shape for {key} "
                         "in NPZ snapshot."
@@ -487,12 +723,39 @@ def main() -> None:
 
                 if not np.all(
                     np.isfinite(
-                        saved_field[key]
+                        saved_field[
+                            key
+                        ]
                     )
                 ):
                     raise RuntimeError(
                         f"Non-finite values in saved field: {key}"
                     )
+
+        if list(
+            output_dir.glob(
+                "*.tmp"
+            )
+        ):
+            raise RuntimeError(
+                "Temporary files were left after atomic writes."
+            )
+
+        alias_metrics_path, alias_field_path = logger.log_step(
+            step_id=tact,
+            engine=engine,
+            include_field=False,
+        )
+
+        if alias_metrics_path != tact_json_path:
+            raise RuntimeError(
+                "log_step compatibility alias returned an unexpected path."
+            )
+
+        if alias_field_path is not None:
+            raise RuntimeError(
+                "log_step unexpectedly returned a field path."
+            )
 
     print(
         "EDK spatiotemporal phase-delay smoke test passed."
