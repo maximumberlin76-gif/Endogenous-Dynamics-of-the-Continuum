@@ -4,9 +4,22 @@ import argparse
 import glob
 import json
 import os
+from typing import Any
 
 import matplotlib.pyplot as plt
 import numpy as np
+
+
+def _extract_tact_index(record: dict[str, Any]) -> int:
+    if "tact" in record:
+        return int(record["tact"])
+
+    if "step" in record:
+        return int(record["step"])
+
+    raise KeyError(
+        "Snapshot record must contain either 'tact' or compatibility field 'step'."
+    )
 
 
 def load_vortex_metrics(
@@ -26,8 +39,7 @@ def load_vortex_metrics(
             f"No vortex metric snapshots found in '{snapshot_dir}'."
         )
 
-    steps: list[int] = []
-    metrics: dict[str, list[float]] = {}
+    records: list[dict[str, Any]] = []
 
     for filename in files:
         with open(
@@ -35,36 +47,56 @@ def load_vortex_metrics(
             "r",
             encoding="utf-8",
         ) as stream:
-            record = json.load(stream)
-
-        steps.append(
-            int(record["step"])
-        )
-
-        for key, value in record["metrics"].items():
-            metrics.setdefault(
-                key,
-                [],
-            ).append(
-                float(value)
+            records.append(
+                json.load(stream)
             )
+
+    tact_indices: list[int] = [
+        _extract_tact_index(record)
+        for record in records
+    ]
+
+    metric_keys: set[str] = set()
+
+    for record in records:
+        metric_keys.update(
+            record.get(
+                "metrics",
+                {},
+            ).keys()
+        )
 
     result: dict[str, np.ndarray] = {
-        "steps": np.asarray(
-            steps,
+        "tacts": np.asarray(
+            tact_indices,
             dtype=int,
-        )
+        ),
+        "steps": np.asarray(
+            tact_indices,
+            dtype=int,
+        ),
     }
 
-    result.update(
-        {
-            key: np.asarray(
-                values,
-                dtype=float,
+    for key in sorted(metric_keys):
+        values: list[float] = []
+
+        for record in records:
+            raw_value = record.get(
+                "metrics",
+                {},
+            ).get(
+                key,
+                np.nan,
             )
-            for key, values in metrics.items()
-        }
-    )
+
+            values.append(
+                float(raw_value)
+            )
+
+        result[key] = np.asarray(
+            values,
+            dtype=float,
+        )
 
     return result
 
@@ -98,6 +130,11 @@ def _downsample_indices(
     count: int,
     max_vectors: int,
 ) -> np.ndarray:
+    if max_vectors < 1:
+        raise ValueError(
+            "max_vectors must be at least 1."
+        )
+
     if count <= max_vectors:
         return np.arange(
             count,
@@ -117,6 +154,25 @@ def _downsample_indices(
     )[:max_vectors]
 
 
+def _plot_metric_if_available(
+    axis,
+    tact_indices: np.ndarray,
+    metrics: dict[str, np.ndarray],
+    metric_name: str,
+    label: str,
+    **plot_kwargs,
+) -> None:
+    if metric_name not in metrics:
+        return
+
+    axis.plot(
+        tact_indices,
+        metrics[metric_name],
+        label=label,
+        **plot_kwargs,
+    )
+
+
 def plot_vortex_diagnostics(
     snapshot_dir: str = "edk_vortex_snapshots",
     output_path: str = "edk_vortex_diagnostics.png",
@@ -131,7 +187,7 @@ def plot_vortex_diagnostics(
         snapshot_dir
     )
 
-    steps = metrics["steps"]
+    tact_indices = metrics["tacts"]
 
     figure = plt.figure(
         figsize=(18, 6)
@@ -143,15 +199,17 @@ def plot_vortex_diagnostics(
         1,
     )
 
-    axis_1.plot(
-        steps,
-        metrics["continuum_appearance_index"],
+    _plot_metric_if_available(
+        axis_1,
+        tact_indices,
+        metrics,
+        "continuum_appearance_index",
+        "CAI proxy",
         marker="o",
-        label="CAI proxy",
     )
 
     axis_1.set_xlabel(
-        "Tact-by-tact simulation step"
+        "Tact index"
     )
 
     axis_1.set_ylabel(
@@ -164,12 +222,14 @@ def plot_vortex_diagnostics(
 
     axis_1_twin = axis_1.twinx()
 
-    axis_1_twin.plot(
-        steps,
-        metrics["mean_vorticity_abs"],
+    _plot_metric_if_available(
+        axis_1_twin,
+        tact_indices,
+        metrics,
+        "mean_vorticity_abs",
+        "mean |curl J|",
         marker="s",
         linestyle="--",
-        label="mean |curl J|",
     )
 
     axis_1_twin.set_ylabel(
@@ -196,26 +256,50 @@ def plot_vortex_diagnostics(
         2,
     )
 
-    axis_2.plot(
-        steps,
-        metrics["R_t_phase_order"],
-        label="R(t): phase order",
+    _plot_metric_if_available(
+        axis_2,
+        tact_indices,
+        metrics,
+        "R_t_phase_order",
+        "R(t): phase order",
     )
 
-    axis_2.plot(
-        steps,
-        metrics["C_proxy_t"],
-        label="C_proxy(t)",
+    _plot_metric_if_available(
+        axis_2,
+        tact_indices,
+        metrics,
+        "C_proxy_t",
+        "C_proxy(t)",
     )
 
-    axis_2.plot(
-        steps,
-        metrics["interface_retention_proxy"],
-        label="interface proxy",
+    _plot_metric_if_available(
+        axis_2,
+        tact_indices,
+        metrics,
+        "interface_retention_proxy",
+        "interface proxy",
+    )
+
+    _plot_metric_if_available(
+        axis_2,
+        tact_indices,
+        metrics,
+        "positive_vortex_support",
+        "positive vortex support",
+        linestyle="--",
+    )
+
+    _plot_metric_if_available(
+        axis_2,
+        tact_indices,
+        metrics,
+        "negative_vortex_penalty",
+        "negative vortex penalty",
+        linestyle=":",
     )
 
     axis_2.set_xlabel(
-        "Tact-by-tact simulation step"
+        "Tact index"
     )
 
     axis_2.set_ylabel(
