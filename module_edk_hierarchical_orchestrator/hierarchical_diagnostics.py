@@ -163,7 +163,9 @@ class DiagnosticSummary:
     output_directory: str
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        return asdict(
+            self
+        )
 
 
 class EDKHierarchicalDiagnostics:
@@ -1082,21 +1084,142 @@ class EDKHierarchicalDiagnostics:
             )
         )
 
-        tact_index = int(
-            state.get(
-                "tact_index",
-                filename_tact,
-            )
-        )
-
-        simulation_time = float(
-            state.get(
-                "simulation_time",
-                float(
-                    filename_tact
+        metadata_tact = _optional_int(
+            metadata.get(
+                "tact",
+                metadata.get(
+                    "tact_index",
+                    metadata.get(
+                        "step"
+                    ),
                 ),
             )
         )
+
+        state_tact = _optional_int(
+            state.get(
+                "tact_index"
+            )
+        )
+
+        if (
+            metadata_tact is not None
+            and metadata_tact != filename_tact
+        ):
+            self._add_issue(
+                DiagnosticSeverity.WARNING,
+                "TACT_METADATA_FILENAME_MISMATCH",
+                (
+                    "The tact index stored in "
+                    "top-level metadata does not "
+                    "match the tact index encoded "
+                    "in the filename."
+                ),
+                tact_index=(
+                    filename_tact
+                ),
+                details={
+                    "filename_tact": (
+                        filename_tact
+                    ),
+                    "metadata_tact": (
+                        metadata_tact
+                    ),
+                    "json_path": str(
+                        json_path
+                    ),
+                },
+            )
+
+        if (
+            state_tact is not None
+            and state_tact != filename_tact
+        ):
+            self._add_issue(
+                DiagnosticSeverity.WARNING,
+                "TACT_STATE_FILENAME_MISMATCH",
+                (
+                    "The tact index stored in "
+                    "state does not match the tact "
+                    "index encoded in the filename."
+                ),
+                tact_index=(
+                    filename_tact
+                ),
+                details={
+                    "filename_tact": (
+                        filename_tact
+                    ),
+                    "state_tact": (
+                        state_tact
+                    ),
+                    "json_path": str(
+                        json_path
+                    ),
+                },
+            )
+
+        if (
+            metadata_tact is not None
+            and state_tact is not None
+            and metadata_tact != state_tact
+        ):
+            self._add_issue(
+                DiagnosticSeverity.WARNING,
+                "TACT_METADATA_STATE_MISMATCH",
+                (
+                    "The tact index stored in "
+                    "top-level metadata does not "
+                    "match the tact index stored "
+                    "inside state."
+                ),
+                tact_index=(
+                    filename_tact
+                ),
+                details={
+                    "metadata_tact": (
+                        metadata_tact
+                    ),
+                    "state_tact": (
+                        state_tact
+                    ),
+                    "json_path": str(
+                        json_path
+                    ),
+                },
+            )
+
+        if state_tact is not None:
+            tact_index = state_tact
+
+        elif metadata_tact is not None:
+            tact_index = metadata_tact
+
+        else:
+            tact_index = filename_tact
+
+        metadata_time = _optional_float(
+            metadata.get(
+                "simulation_time"
+            )
+        )
+
+        state_time = _optional_float(
+            state.get(
+                "simulation_time"
+            )
+        )
+
+        if state_time is not None:
+            simulation_time = state_time
+
+        elif metadata_time is not None:
+            simulation_time = metadata_time
+
+        else:
+            simulation_time = float(
+                filename_tact
+            )
 
         status = str(
             metadata.get(
@@ -1388,11 +1511,42 @@ class EDKHierarchicalDiagnostics:
             ) in (
                 record.arrays.items()
             ):
-                if not np.all(
-                    np.isfinite(
-                        array
+                try:
+                    finite = np.all(
+                        np.isfinite(
+                            array
+                        )
                     )
-                ):
+
+                except TypeError:
+                    self._add_issue(
+                        DiagnosticSeverity.ERROR,
+                        "NON_NUMERIC_ARRAY",
+                        (
+                            "A loaded NPZ field is "
+                            "not compatible with "
+                            "finite numerical "
+                            "diagnostics."
+                        ),
+                        tact_index=(
+                            record.tact_index
+                        ),
+                        field_name=(
+                            field_name
+                        ),
+                        details={
+                            "shape": list(
+                                array.shape
+                            ),
+                            "dtype": str(
+                                array.dtype
+                            ),
+                        },
+                    )
+
+                    continue
+
+                if not finite:
                     self._add_issue(
                         DiagnosticSeverity.ERROR,
                         "NON_FINITE_ARRAY",
@@ -2283,6 +2437,42 @@ def _list_of_mappings(
     ]
 
 
+def _optional_int(
+    value: Any,
+) -> int | None:
+    if value is None:
+        return None
+
+    try:
+        return int(
+            value
+        )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+        return None
+
+
+def _optional_float(
+    value: Any,
+) -> float | None:
+    if value is None:
+        return None
+
+    try:
+        return float(
+            value
+        )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+        return None
+
+
 def _scalar_from_value(
     value: Any,
 ) -> float | None:
@@ -2397,11 +2587,15 @@ def _scalar_from_array(
             )
         )
 
-    return float(
-        np.mean(
-            array
+    try:
+        return float(
+            np.mean(
+                array
+            )
         )
-    )
+
+    except TypeError:
+        return None
 
 
 def _stable_text(
@@ -2520,8 +2714,7 @@ def _json_safe(
             _json_safe(
                 item
             )
-            for item
-            in value
+            for item in value
         ]
 
     if isinstance(
