@@ -156,6 +156,8 @@ class EDKVortexPhaseFieldEngine:
         self.mean_vorticity = 0.0
         self.signed_vorticity_mean = 0.0
         self.vortex_alignment = 0.0
+        self.positive_vortex_support = 0.0
+        self.negative_vortex_penalty = 0.0
         self.continuum_appearance_index = 0.0
 
         self.node_exchange_current = self.xp.zeros(
@@ -778,9 +780,24 @@ class EDKVortexPhaseFieldEngine:
         appearance-index calculation.
         """
 
+        if not math.isfinite(external_forcing_density):
+            raise ValueError(
+                "external_forcing_density must be finite."
+            )
+
         if external_pressure < 0:
             raise ValueError(
                 "external_pressure must be non-negative."
+            )
+
+        if not math.isfinite(external_pressure):
+            raise ValueError(
+                "external_pressure must be finite."
+            )
+
+        if dt <= 0:
+            raise ValueError(
+                "dt must be positive."
             )
 
         xp = self.xp
@@ -969,6 +986,11 @@ class EDKVortexPhaseFieldEngine:
                 "external_pressure must be non-negative."
             )
 
+        if not math.isfinite(external_pressure):
+            raise ValueError(
+                "external_pressure must be finite."
+            )
+
         vorticity_level = (
             self.mean_vorticity
             / (
@@ -977,7 +999,7 @@ class EDKVortexPhaseFieldEngine:
             )
         )
 
-        positive_vortex_support = (
+        self.positive_vortex_support = (
             max(
                 self.vortex_alignment,
                 0.0,
@@ -985,7 +1007,7 @@ class EDKVortexPhaseFieldEngine:
             * vorticity_level
         )
 
-        negative_vortex_penalty = (
+        self.negative_vortex_penalty = (
             max(
                 -self.vortex_alignment,
                 0.0,
@@ -1005,9 +1027,9 @@ class EDKVortexPhaseFieldEngine:
             self.C_proxy_t
             * pressure_penalty
             + self.config.vortex_retention_gain
-            * positive_vortex_support
+            * self.positive_vortex_support
             - self.config.vortex_destabilization_gain
-            * negative_vortex_penalty
+            * self.negative_vortex_penalty
         )
 
         self.interface_retention_proxy = float(
@@ -1036,11 +1058,11 @@ class EDKVortexPhaseFieldEngine:
             )
             * (
                 1.0
-                + positive_vortex_support
+                + self.positive_vortex_support
             )
             / (
                 1.0
-                + negative_vortex_penalty
+                + self.negative_vortex_penalty
             )
         )
 
@@ -1078,6 +1100,12 @@ class EDKVortexPhaseFieldEngine:
             ),
             "vortex_alignment": (
                 self.vortex_alignment
+            ),
+            "positive_vortex_support": (
+                self.positive_vortex_support
+            ),
+            "negative_vortex_penalty": (
+                self.negative_vortex_penalty
             ),
             "continuum_appearance_index": (
                 self.continuum_appearance_index
@@ -1126,14 +1154,15 @@ class EDKVortexLogger:
             exist_ok=True,
         )
 
-    def log_step(
+    def log_tact(
         self,
-        step_id: int,
+        tact_index: int,
         engine: EDKVortexPhaseFieldEngine,
         include_field: bool = False,
     ) -> None:
         snapshot = {
-            "step": int(step_id),
+            "tact": int(tact_index),
+            "step": int(tact_index),
             "backend": engine.backend_name,
             "config": asdict(
                 engine.config
@@ -1143,7 +1172,7 @@ class EDKVortexLogger:
 
         json_path = (
             self.output_dir
-            / f"vortex_step_{step_id:06d}.json"
+            / f"vortex_step_{tact_index:06d}.json"
         )
 
         with json_path.open(
@@ -1160,13 +1189,31 @@ class EDKVortexLogger:
         if include_field:
             field_path = (
                 self.output_dir
-                / f"vortex_field_{step_id:06d}.npz"
+                / f"vortex_field_{tact_index:06d}.npz"
             )
 
             np.savez_compressed(
                 field_path,
                 **engine.export_field_snapshot(),
             )
+
+    def log_step(
+        self,
+        step_id: int,
+        engine: EDKVortexPhaseFieldEngine,
+        include_field: bool = False,
+    ) -> None:
+        """
+        Compatibility alias for older tests and scripts.
+
+        Internally this represents one tact-by-tact interval.
+        """
+
+        self.log_tact(
+            tact_index=step_id,
+            engine=engine,
+            include_field=include_field,
+        )
 
 
 def build_argument_parser() -> argparse.ArgumentParser:
@@ -1192,6 +1239,20 @@ def build_argument_parser() -> argparse.ArgumentParser:
         "--steps",
         type=int,
         default=50,
+        help=(
+            "Number of simulation intervals. "
+            "Kept for CLI compatibility; in EDK terminology these are tacts."
+        ),
+    )
+
+    parser.add_argument(
+        "--tacts",
+        type=int,
+        default=None,
+        help=(
+            "EDK terminology alias for --steps. "
+            "If provided, it overrides --steps."
+        ),
     )
 
     parser.add_argument(
@@ -1245,6 +1306,22 @@ def build_argument_parser() -> argparse.ArgumentParser:
 def main() -> None:
     args = build_argument_parser().parse_args()
 
+    total_tacts = (
+        args.tacts
+        if args.tacts is not None
+        else args.steps
+    )
+
+    if total_tacts < 1:
+        raise ValueError(
+            "The number of tacts must be at least 1."
+        )
+
+    if args.log_every < 1:
+        raise ValueError(
+            "log_every must be at least 1."
+        )
+
     config = VortexEngineConfig(
         num_domains=args.domains,
         neighbor_count=args.neighbors,
@@ -1266,9 +1343,9 @@ def main() -> None:
         f"neighbors={config.neighbor_count}"
     )
 
-    for step in range(
+    for tact_index in range(
         1,
-        args.steps + 1,
+        total_tacts + 1,
     ):
         metrics = (
             engine.process_vortex_delayed_interval(
@@ -1282,24 +1359,26 @@ def main() -> None:
             )
         )
 
-        if step % args.log_every == 0:
+        if tact_index % args.log_every == 0:
             include_field = (
                 args.field_every > 0
-                and step % args.field_every == 0
+                and tact_index % args.field_every == 0
             )
 
-            logger.log_step(
-                step,
+            logger.log_tact(
+                tact_index,
                 engine,
                 include_field=include_field,
             )
 
         print(
-            f"[step {step:04d}] "
+            f"[tact {tact_index:04d}] "
             f"R={metrics['R_t_phase_order']:.4f} | "
             f"C_proxy={metrics['C_proxy_t']:.4f} | "
             f"|curl J|={metrics['mean_vorticity_abs']:.6f} | "
             f"alignment={metrics['vortex_alignment']:.4f} | "
+            f"positive_vortex={metrics['positive_vortex_support']:.4f} | "
+            f"negative_vortex={metrics['negative_vortex_penalty']:.4f} | "
             f"CAI={metrics['continuum_appearance_index']:.4f}"
         )
 
