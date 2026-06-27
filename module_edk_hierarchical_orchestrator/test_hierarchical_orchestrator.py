@@ -821,6 +821,54 @@ class OrchestratorExecutionTests(
                     ),
                 )
 
+                self.assertEqual(
+                    metadata[
+                        "tact"
+                    ],
+                    tact_index,
+                )
+
+                self.assertEqual(
+                    metadata[
+                        "step"
+                    ],
+                    tact_index,
+                )
+
+                self.assertEqual(
+                    metadata[
+                        "tact_index"
+                    ],
+                    tact_index,
+                )
+
+                self.assertAlmostEqual(
+                    metadata[
+                        "simulation_time"
+                    ],
+                    0.01
+                    * tact_index,
+                )
+
+                self.assertEqual(
+                    metadata[
+                        "state"
+                    ][
+                        "tact_index"
+                    ],
+                    tact_index,
+                )
+
+                self.assertAlmostEqual(
+                    metadata[
+                        "state"
+                    ][
+                        "simulation_time"
+                    ],
+                    0.01
+                    * tact_index,
+                )
+
                 self.assertIsNotNone(
                     metadata[
                         "state"
@@ -1245,6 +1293,108 @@ class OrchestratorExecutionTests(
                         "diagnostics.md"
                     )
                 ).is_file()
+            )
+
+    def test_diagnostics_detects_tact_metadata_mismatch(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(
+                directory
+            )
+
+            source = (
+                root
+                / "source"
+            )
+
+            diagnostics_output = (
+                root
+                / "diagnostics"
+            )
+
+            orchestrator = (
+                build_orchestrator(
+                    source,
+                    dt=0.01,
+                )
+            )
+
+            orchestrator.run(
+                1
+            )
+
+            json_path = (
+                source
+                / "hierarchical_step_000001.json"
+            )
+
+            metadata = json.loads(
+                json_path.read_text(
+                    encoding="utf-8"
+                )
+            )
+
+            metadata[
+                "tact"
+            ] = 99
+
+            metadata[
+                "step"
+            ] = 99
+
+            metadata[
+                "tact_index"
+            ] = 99
+
+            json_path.write_text(
+                json.dumps(
+                    metadata,
+                    ensure_ascii=False,
+                    indent=2,
+                    sort_keys=True,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+
+            diagnostics = (
+                EDKHierarchicalDiagnostics(
+                    input_directory=source,
+                    output_directory=(
+                        diagnostics_output
+                    ),
+                    strict=False,
+                )
+            )
+
+            summary = diagnostics.run(
+                create_plots=False,
+                create_report=False,
+            )
+
+            issue_codes = {
+                issue.code
+                for issue
+                in diagnostics.issues
+            }
+
+            self.assertIn(
+                "TACT_METADATA_FILENAME_MISMATCH",
+                issue_codes,
+            )
+
+            self.assertIn(
+                "TACT_METADATA_STATE_MISMATCH",
+                issue_codes,
+            )
+
+            self.assertEqual(
+                summary.issue_counts.get(
+                    "ERROR",
+                    0,
+                ),
+                0,
             )
 
 
