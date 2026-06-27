@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Any
+
 import numpy as np
 
 from module_framework_core.framework_core import ContinuumSimulation
@@ -7,26 +11,30 @@ class WaveGeneticsDNAOscillator:
     """
     Conceptual module for DNA-based wave-genetic phase modulation.
 
-    The module represents DNA not as a static symbolic storage medium,
-    but as a polarized biophoton laser-interferometric structure.
+    The module models DNA as a biological phase-modulating structure inside
+    an open nonlinear dissipative dynamic Continuum.
 
-    Within the open nonlinear dissipative dynamic Continuum, the DNA phase
-    matrix modulates the dissipative flow channel J_flux and generates
-    a biophoton interference signal. Under sufficient system coherence,
-    this signal can leave a residual phantom-field imprint in the local
-    Continuum domain.
-
-    The module also includes a genetic appearance layer:
-    a numerical indicator of how strongly DNA biophoton modulation is
-    manifested as a retained wave-genetic phase regime.
+    Controlled distinctions preserved by this module:
+    - J_flux is the through massless exchange-flow channel received from
+      the upstream Continuum / framework layer.
+    - biophoton_signal is the modeled biological wave output of this layer.
+    - hologram_density is a compact numerical order parameter of the
+      modeled DNA-biophoton field.
+    - phantom_coherence is the retained remanent field-trace coherence.
+    - current_system_coherence is a local coherence input and is not
+      automatically identical to the full theoretical C(t).
     """
+
+    STABLE_WAVE_GENETIC_MANIFESTATION = "STABLE WAVE-GENETIC MANIFESTATION"
+    PARTIAL_WAVE_GENETIC_MANIFESTATION = "PARTIAL WAVE-GENETIC MANIFESTATION"
+    WEAK_WAVE_GENETIC_MANIFESTATION = "WEAK OR UNSTABLE WAVE-GENETIC MANIFESTATION"
 
     def __init__(
         self,
         sequence_length: int = 64,
         base_frequency: float = 320.0,
         seed: int | None = None,
-    ):
+    ) -> None:
         """
         Initialize the DNA biophoton oscillator.
 
@@ -35,49 +43,106 @@ class WaveGeneticsDNAOscillator:
         sequence_length:
             Length of the quantized DNA phase vector.
         base_frequency:
-            Base emission frequency of the biophoton oscillator
-            in arbitrary simulation units.
+            Base modeled emission frequency of the biophoton oscillator.
         seed:
             Optional random seed for reproducible experiments.
         """
-        if sequence_length <= 0:
-            raise ValueError("sequence_length must be positive.")
-        if base_frequency <= 0:
-            raise ValueError("base_frequency must be positive.")
+        self.length = self._validate_positive_integer(
+            "sequence_length",
+            sequence_length,
+        )
+        self.base_frequency = self._validate_positive_finite(
+            "base_frequency",
+            base_frequency,
+        )
 
-        self.length = sequence_length
-        self.base_frequency = base_frequency
         self.rng = np.random.default_rng(seed)
 
-        # DNA phase matrix:
-        # each sequence position is represented as a phase displacement.
         self.dna_phase_matrix = self.rng.uniform(
             0.0,
             2.0 * np.pi,
-            sequence_length,
+            self.length,
         )
 
-        # Simplified polarization state of the emitted biophoton field.
         self.polarization = np.array(
             [1.0 + 0.0j, 0.0 + 1.0j],
             dtype=np.complex128,
         ) / np.sqrt(2.0)
 
-        # Residual phantom-field variables.
         self.phantom_coherence = 0.0
         self.phantom_field_matrix = np.zeros(
-            sequence_length,
+            self.length,
             dtype=np.float64,
         )
 
-        # Latest generated signal parameters.
         self.last_hologram_density = 0.0
         self.last_signal_energy = 0.0
         self.last_pump_energy = 0.0
+        self.last_j_flux = 0.0
+        self.last_system_coherence = 0.0
 
-        # Genetic appearance layer:
-        # numerical indicator of retained DNA-biophoton manifestation.
         self.genetic_appearance_index = 0.0
+
+        self._validate_state()
+
+    @staticmethod
+    def _validate_finite_scalar(name: str, value: Any) -> float:
+        try:
+            scalar = float(value)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise ValueError(f"{name} must be a finite scalar.") from exc
+
+        if not np.isfinite(scalar):
+            raise ValueError(f"{name} must be finite.")
+
+        return scalar
+
+    @classmethod
+    def _validate_positive_finite(cls, name: str, value: Any) -> float:
+        scalar = cls._validate_finite_scalar(name, value)
+
+        if scalar <= 0.0:
+            raise ValueError(f"{name} must be positive.")
+
+        return scalar
+
+    @classmethod
+    def _validate_non_negative_finite(cls, name: str, value: Any) -> float:
+        scalar = cls._validate_finite_scalar(name, value)
+
+        if scalar < 0.0:
+            raise ValueError(f"{name} must be non-negative.")
+
+        return scalar
+
+    @staticmethod
+    def _validate_positive_integer(name: str, value: Any) -> int:
+        if isinstance(value, bool):
+            raise ValueError(f"{name} must be a positive integer.")
+
+        try:
+            integer = int(value)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise ValueError(f"{name} must be a positive integer.") from exc
+
+        if integer != value:
+            raise ValueError(f"{name} must be a positive integer.")
+
+        if integer <= 0:
+            raise ValueError(f"{name} must be positive.")
+
+        return integer
+
+    def _validate_signal(self, signal: Any, name: str) -> np.ndarray:
+        array = np.asarray(signal, dtype=np.float64)
+
+        if array.shape != (self.length,):
+            raise ValueError(f"{name} must have shape ({self.length},).")
+
+        if not np.all(np.isfinite(array)):
+            raise ValueError(f"{name} must contain only finite values.")
+
+        return array
 
     def emit_biophotons(
         self,
@@ -85,64 +150,76 @@ class WaveGeneticsDNAOscillator:
         brain_modulation_frequency: float = 0.0,
     ) -> tuple[np.ndarray, float]:
         """
-        Generate a biophoton modulation signal from the dissipative flow J_flux.
+        Generate a modeled DNA-biophoton modulation signal from J_flux.
+
+        Operational chain:
+
+        J_flux -> pump_energy -> DNA phase matrix -> biological phase modulation
+        -> biophoton_signal -> modulated_signal -> hologram_density
 
         Parameters
         ----------
         j_flux:
-            Intensity of the dissipative flow channel.
+            Through massless exchange-flow input from the upstream EDK layer.
         brain_modulation_frequency:
-            External biological modulation frequency in arbitrary units.
+            External biological phase-modulation frequency.
 
         Returns
         -------
         tuple[np.ndarray, float]:
-            Modulated biophoton signal and hologram density parameter.
+            Modulated biophoton model signal and hologram-density parameter.
         """
+        j_flux = self._validate_non_negative_finite("j_flux", j_flux)
+        brain_modulation_frequency = self._validate_finite_scalar(
+            "brain_modulation_frequency",
+            brain_modulation_frequency,
+        )
+
+        self.last_j_flux = j_flux
+
         if j_flux <= 0.0:
             self.last_pump_energy = 0.0
             self.last_signal_energy = 0.0
             self.last_hologram_density = 0.0
-            self._update_genetic_appearance(
-                current_system_coherence=0.0,
-            )
+            self._update_genetic_appearance(current_system_coherence=0.0)
 
             return np.zeros(self.length, dtype=np.float64), 0.0
 
-        # The dissipative flow channel pumps the biological oscillator.
         pump_energy = np.log1p(j_flux)
         self.last_pump_energy = float(pump_energy)
 
-        # Phase axis for one complete structural cycle.
         phase_axis = np.linspace(
             0.0,
             2.0 * np.pi,
             self.length,
+            endpoint=False,
+            dtype=np.float64,
         )
 
-        # DNA phase geometry and biological modulation jointly define
-        # the biophoton wave pattern.
-        biophoton_wave = np.sin(
+        biophoton_signal = np.sin(
             self.base_frequency * phase_axis
             + self.dna_phase_matrix
             + brain_modulation_frequency
         )
 
-        # The outgoing signal is scaled by the available pump energy.
-        modulated_signal = biophoton_wave * pump_energy
+        modulated_signal = biophoton_signal * pump_energy
 
-        # Compact hologram-density measure:
-        # order parameter of the resulting interference pattern.
-        hologram_density = np.abs(
-            np.mean(np.exp(1j * modulated_signal))
+        hologram_density = abs(
+            np.mean(
+                np.exp(1j * modulated_signal),
+            )
         )
 
         self.last_hologram_density = float(hologram_density)
         self.last_signal_energy = float(
-            np.mean(np.square(modulated_signal))
+            np.mean(
+                np.square(modulated_signal),
+            )
         )
 
-        return modulated_signal, float(hologram_density)
+        self._validate_state()
+
+        return modulated_signal.astype(np.float64, copy=True), float(hologram_density)
 
     def stabilize_phantom(
         self,
@@ -155,28 +232,36 @@ class WaveGeneticsDNAOscillator:
         Parameters
         ----------
         modulated_signal:
-            Current DNA-modulated biophoton signal.
+            Current DNA-modulated biophoton model signal.
         current_system_coherence:
-            Current coherence of the surrounding system.
+            Local system-coherence input received from the upstream layer.
 
         Returns
         -------
         float:
             Updated phantom coherence.
         """
-        if modulated_signal.shape[0] != self.length:
-            raise ValueError(
-                "modulated_signal length must match sequence_length."
-            )
+        modulated_signal = self._validate_signal(
+            modulated_signal,
+            "modulated_signal",
+        )
 
-        if current_system_coherence < 0:
-            raise ValueError(
-                "current_system_coherence must be non-negative."
+        current_system_coherence = self._validate_non_negative_finite(
+            "current_system_coherence",
+            current_system_coherence,
+        )
+
+        current_system_coherence = float(
+            np.clip(
+                current_system_coherence,
+                0.0,
+                1.0,
             )
+        )
+
+        self.last_system_coherence = current_system_coherence
 
         if current_system_coherence > 0.5:
-            # Coherent conditions allow the local domain to accumulate
-            # the structural trace of the signal.
             self.phantom_field_matrix = (
                 0.95 * self.phantom_field_matrix
                 + 0.05 * modulated_signal
@@ -191,12 +276,19 @@ class WaveGeneticsDNAOscillator:
                 )
             )
         else:
-            # Without sufficient coherence, the residual field decays slowly.
-            self.phantom_coherence *= 0.99
+            self.phantom_coherence = float(
+                np.clip(
+                    self.phantom_coherence * 0.99,
+                    0.0,
+                    1.0,
+                )
+            )
 
         self._update_genetic_appearance(
             current_system_coherence=current_system_coherence,
         )
+
+        self._validate_state()
 
         return float(self.phantom_coherence)
 
@@ -207,29 +299,45 @@ class WaveGeneticsDNAOscillator:
         """
         Update the genetic appearance index.
 
-        The genetic appearance index describes how strongly DNA biophoton
+        The genetic appearance index describes how strongly DNA-biophoton
         modulation is manifested as a retained wave-genetic phase regime.
-
-        It combines:
-        - current coherence of the surrounding system,
-        - hologram density of the emitted biophoton signal,
-        - signal energy of DNA modulation,
-        - phantom coherence of the residual field,
-        - pump energy received through J_flux.
         """
-        coherence_factor = max(float(current_system_coherence), 0.0)
+        coherence_factor = self._validate_non_negative_finite(
+            "current_system_coherence",
+            current_system_coherence,
+        )
 
-        hologram_factor = self.last_hologram_density
+        coherence_factor = float(
+            np.clip(
+                coherence_factor,
+                0.0,
+                1.0,
+            )
+        )
+
+        hologram_factor = max(
+            float(self.last_hologram_density),
+            0.0,
+        )
 
         signal_energy_factor = np.log1p(
-            max(self.last_signal_energy, 0.0)
+            max(
+                float(self.last_signal_energy),
+                0.0,
+            )
         )
 
         pump_factor = np.log1p(
-            max(self.last_pump_energy, 0.0)
+            max(
+                float(self.last_pump_energy),
+                0.0,
+            )
         )
 
-        phantom_factor = self.phantom_coherence
+        phantom_factor = max(
+            float(self.phantom_coherence),
+            0.0,
+        )
 
         self.genetic_appearance_index = float(
             coherence_factor
@@ -241,35 +349,29 @@ class WaveGeneticsDNAOscillator:
 
     def calculate_genetic_appearance(self) -> dict[str, float | str]:
         """
-        Calculate the current appearance state of the DNA biophoton oscillator.
-
-        Returns
-        -------
-        dict[str, float | str]:
-            Genetic appearance index, genetic manifestation regime,
-            hologram density, signal energy, phantom coherence, and pump energy.
+        Calculate the current appearance state of the DNA-biophoton oscillator.
         """
         if self.genetic_appearance_index >= 6.0:
-            genetic_regime = "STABLE WAVE-GENETIC MANIFESTATION"
+            genetic_regime = self.STABLE_WAVE_GENETIC_MANIFESTATION
         elif self.genetic_appearance_index >= 3.0:
-            genetic_regime = "PARTIAL WAVE-GENETIC MANIFESTATION"
+            genetic_regime = self.PARTIAL_WAVE_GENETIC_MANIFESTATION
         else:
-            genetic_regime = "WEAK OR UNSTABLE WAVE-GENETIC MANIFESTATION"
+            genetic_regime = self.WEAK_WAVE_GENETIC_MANIFESTATION
 
         return {
-            "genetic_appearance_index": float(
-                self.genetic_appearance_index
-            ),
+            "genetic_appearance_index": float(self.genetic_appearance_index),
             "genetic_regime": genetic_regime,
             "hologram_density": float(self.last_hologram_density),
             "signal_energy": float(self.last_signal_energy),
             "phantom_coherence": float(self.phantom_coherence),
             "pump_energy": float(self.last_pump_energy),
+            "j_flux": float(self.last_j_flux),
+            "current_system_coherence": float(self.last_system_coherence),
         }
 
     def read_phantom_without_dna(self) -> np.ndarray:
         """
-        Read the residual field after removal of the physical DNA source.
+        Read the residual field after removal of the physical DNA-source input.
 
         Returns
         -------
@@ -277,7 +379,7 @@ class WaveGeneticsDNAOscillator:
             Reconstructed residual phantom signal.
         """
         print(
-            "[OSCILLOGRAPH] Physical DNA source removed. "
+            "[OSCILLOGRAPH] Physical DNA-source input removed. "
             "Scanning the local Continuum domain..."
         )
 
@@ -287,11 +389,9 @@ class WaveGeneticsDNAOscillator:
                 f"Phantom coherence: {self.phantom_coherence:.4f}"
             )
 
-            reconstructed_signal = (
-                self.phantom_field_matrix * self.phantom_coherence
-            )
+            reconstructed_signal = self.phantom_field_matrix * self.phantom_coherence
 
-            return reconstructed_signal
+            return reconstructed_signal.astype(np.float64, copy=True)
 
         print(
             "[INFO] No stable residual phantom field detected. "
@@ -300,8 +400,41 @@ class WaveGeneticsDNAOscillator:
 
         return np.zeros(self.length, dtype=np.float64)
 
+    def _validate_state(self) -> None:
+        if self.dna_phase_matrix.shape != (self.length,):
+            raise RuntimeError("dna_phase_matrix has invalid shape.")
 
-if __name__ == "__main__":
+        if not np.all(np.isfinite(self.dna_phase_matrix)):
+            raise FloatingPointError("dna_phase_matrix contains non-finite values.")
+
+        if self.phantom_field_matrix.shape != (self.length,):
+            raise RuntimeError("phantom_field_matrix has invalid shape.")
+
+        if not np.all(np.isfinite(self.phantom_field_matrix)):
+            raise FloatingPointError("phantom_field_matrix contains non-finite values.")
+
+        scalar_fields = {
+            "phantom_coherence": self.phantom_coherence,
+            "last_hologram_density": self.last_hologram_density,
+            "last_signal_energy": self.last_signal_energy,
+            "last_pump_energy": self.last_pump_energy,
+            "last_j_flux": self.last_j_flux,
+            "last_system_coherence": self.last_system_coherence,
+            "genetic_appearance_index": self.genetic_appearance_index,
+        }
+
+        for name, value in scalar_fields.items():
+            if not np.isfinite(float(value)):
+                raise FloatingPointError(f"{name} is non-finite.")
+
+        if self.phantom_coherence < 0.0:
+            raise RuntimeError("phantom_coherence must be non-negative.")
+
+        if self.genetic_appearance_index < 0.0:
+            raise RuntimeError("genetic_appearance_index must be non-negative.")
+
+
+def run_demo() -> None:
     continuum = ContinuumSimulation(
         num_layers=8,
         dt=0.01,
@@ -316,42 +449,51 @@ if __name__ == "__main__":
 
     print("=== WAVE-GENETIC DNA OSCILLATOR WITH APPEARANCE LAYER ===")
 
-    for tick in range(3):
-        system_coherence = continuum.update_state(
+    for tact_index in range(1, 4):
+        R_t = continuum.update_state(
             coupling_strength=20.0,
             external_pressure=0.05,
         )
 
-        j_flux = continuum.M * system_coherence
+        continuum_state = continuum.calculate_continuum_appearance()
+
+        current_system_coherence = float(
+            continuum_state["endogenous_structural_coherence"]
+        )
+
+        upstream_j_flux = float(
+            continuum_state["j_flux"]
+        )
 
         signal, hologram_density = dna_oscillator.emit_biophotons(
-            j_flux=j_flux,
+            j_flux=upstream_j_flux,
             brain_modulation_frequency=40.0,
         )
 
         phantom_coherence = dna_oscillator.stabilize_phantom(
             modulated_signal=signal,
-            current_system_coherence=system_coherence,
+            current_system_coherence=current_system_coherence,
         )
 
-        appearance_state = dna_oscillator.calculate_genetic_appearance()
+        genetic_state = dna_oscillator.calculate_genetic_appearance()
 
         print(
-            f"Tick {tick} | "
-            f"System coherence: {system_coherence:.4f} | "
-            f"J flux: {j_flux:.4f} | "
+            f"Tact {tact_index:02d} | "
+            f"R(t): {R_t:.4f} | "
+            f"C(t) proxy: {current_system_coherence:.4f} | "
+            f"J_flux: {upstream_j_flux:.4f} | "
             f"Hologram density: {hologram_density:.4f} | "
             f"Phantom coherence: {phantom_coherence:.4f}"
         )
 
         print(
-            f"       -> Genetic appearance index: "
-            f"{appearance_state['genetic_appearance_index']:.4f}"
+            "       -> Genetic appearance index: "
+            f"{genetic_state['genetic_appearance_index']:.4f}"
         )
 
         print(
-            f"       -> Genetic regime: "
-            f"{appearance_state['genetic_regime']}"
+            "       -> Genetic regime: "
+            f"{genetic_state['genetic_regime']}"
         )
 
     print("\n=== STAGE 2: Marnov Protocol collapse of the core interface ===")
@@ -368,9 +510,17 @@ if __name__ == "__main__":
     print("\n=== STAGE 3: Residual phantom-field scan ===")
 
     phantom_signal = dna_oscillator.read_phantom_without_dna()
-    residual_energy = float(np.sum(np.square(phantom_signal)))
+    residual_energy = float(
+        np.sum(
+            np.square(phantom_signal),
+        )
+    )
 
     print(
         "[RESULT] Residual structural field strength: "
         f"{residual_energy:.6f}"
     )
+
+
+if __name__ == "__main__":
+    run_demo()
