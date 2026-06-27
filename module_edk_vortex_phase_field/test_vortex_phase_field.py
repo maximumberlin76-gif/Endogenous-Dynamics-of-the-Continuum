@@ -1,17 +1,22 @@
 from __future__ import annotations
 
+import json
 import math
+import tempfile
 import unittest
+from pathlib import Path
 
 import numpy as np
 
 try:
     from .edk_vortex_phase_field import (
+        EDKVortexLogger,
         EDKVortexPhaseFieldEngine,
         VortexEngineConfig,
     )
 except ImportError:
     from edk_vortex_phase_field import (
+        EDKVortexLogger,
         EDKVortexPhaseFieldEngine,
         VortexEngineConfig,
     )
@@ -140,6 +145,28 @@ class VortexPhaseFieldRuntimeTests(unittest.TestCase):
                 dt=0.01,
             )
 
+    def test_non_finite_external_pressure_is_rejected(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "external_pressure must be finite",
+        ):
+            self.engine.process_vortex_delayed_interval(
+                external_forcing_density=1.0,
+                external_pressure=math.nan,
+                dt=0.01,
+            )
+
+    def test_non_finite_external_forcing_is_rejected(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "external_forcing_density must be finite",
+        ):
+            self.engine.process_vortex_delayed_interval(
+                external_forcing_density=math.inf,
+                external_pressure=0.1,
+                dt=0.01,
+            )
+
     def test_non_positive_dt_is_rejected(self) -> None:
         with self.assertRaisesRegex(
             ValueError,
@@ -179,6 +206,17 @@ class VortexPhaseFieldRuntimeTests(unittest.TestCase):
                 -0.1
             )
 
+    def test_non_finite_pressure_is_rejected_by_appearance_calculation(
+        self,
+    ) -> None:
+        with self.assertRaisesRegex(
+            ValueError,
+            "external_pressure must be finite",
+        ):
+            self.engine.calculate_vortex_appearance(
+                math.nan
+            )
+
     def test_one_interval_produces_finite_bounded_metrics(
         self,
     ) -> None:
@@ -199,6 +237,8 @@ class VortexPhaseFieldRuntimeTests(unittest.TestCase):
             "mean_vorticity_abs",
             "mean_vorticity_signed",
             "vortex_alignment",
+            "positive_vortex_support",
+            "negative_vortex_penalty",
             "continuum_appearance_index",
         )
 
@@ -225,6 +265,8 @@ class VortexPhaseFieldRuntimeTests(unittest.TestCase):
             "amplitude_retention",
             "C_proxy_t",
             "interface_retention_proxy",
+            "positive_vortex_support",
+            "negative_vortex_penalty",
         ):
             self.assertGreaterEqual(
                 metrics[key],
@@ -258,6 +300,35 @@ class VortexPhaseFieldRuntimeTests(unittest.TestCase):
 
         self.assertGreater(
             metrics["mean_vorticity_abs"],
+            0.0,
+        )
+
+    def test_positive_and_negative_vortex_terms_are_separate_metrics(
+        self,
+    ) -> None:
+        metrics = self.engine.process_vortex_delayed_interval(
+            external_forcing_density=1.0,
+            external_pressure=0.1,
+            dt=0.01,
+        )
+
+        self.assertIn(
+            "positive_vortex_support",
+            metrics,
+        )
+
+        self.assertIn(
+            "negative_vortex_penalty",
+            metrics,
+        )
+
+        self.assertGreaterEqual(
+            metrics["positive_vortex_support"],
+            0.0,
+        )
+
+        self.assertGreaterEqual(
+            metrics["negative_vortex_penalty"],
             0.0,
         )
 
@@ -328,6 +399,70 @@ class VortexPhaseFieldRuntimeTests(unittest.TestCase):
                 0.0,
             )
         )
+
+    def test_logger_writes_tact_and_step_compatibility_fields(
+        self,
+    ) -> None:
+        self.engine.process_vortex_delayed_interval(
+            external_forcing_density=1.0,
+            external_pressure=0.1,
+            dt=0.01,
+        )
+
+        with tempfile.TemporaryDirectory() as temporary_dir:
+            logger = EDKVortexLogger(
+                temporary_dir
+            )
+
+            logger.log_tact(
+                tact_index=1,
+                engine=self.engine,
+                include_field=True,
+            )
+
+            snapshot_path = (
+                Path(temporary_dir)
+                / "vortex_step_000001.json"
+            )
+
+            field_path = (
+                Path(temporary_dir)
+                / "vortex_field_000001.npz"
+            )
+
+            self.assertTrue(
+                snapshot_path.exists()
+            )
+
+            self.assertTrue(
+                field_path.exists()
+            )
+
+            with snapshot_path.open(
+                "r",
+                encoding="utf-8",
+            ) as stream:
+                record = json.load(stream)
+
+            self.assertEqual(
+                record["tact"],
+                1,
+            )
+
+            self.assertEqual(
+                record["step"],
+                1,
+            )
+
+            self.assertIn(
+                "positive_vortex_support",
+                record["metrics"],
+            )
+
+            self.assertIn(
+                "negative_vortex_penalty",
+                record["metrics"],
+            )
 
     def test_same_seed_reproduces_initial_state(
         self,
