@@ -1,30 +1,30 @@
-# EDK Vortex Phase-Field Module
+# EDK Vortex Phase Field Module — EN/RU
 
 ## EN
 
 ### Purpose
 
-This module introduces rotational components into the EDK phase-continuum model.
+This module introduces rotational components into the phase-continuum model of EDK.
 
-The module constructs a nonparallel tangential phase-current component, forms a node exchange-current field, and estimates the local three-dimensional curl of that field through weighted least-squares reconstruction over a spatial neighbor graph.
+The module forms a non-parallel tangential component of the phase current, constructs a nodal exchange-flow field, and evaluates the local three-dimensional curl of this field through weighted least-squares reconstruction over a spatial neighborhood graph.
 
 The module preserves the following controlled distinctions:
 
-    phase synchronization ≠ phase coherence
+`phase synchronization ≠ phase coherence`
 
-    R(t) ≠ C(t)
+`R(t) ≠ C(t)`
 
-    C_proxy(t) ≠ complete C(t)
+`C_proxy(t) ≠ full C(t)`
 
-    local vortex moment ≠ strict curl J
+`local vortex moment ≠ strict rot J`
 
-    positive vorticity contribution ≠ automatically stabilizing vorticity
+`positive vortex contribution ≠ automatically stabilizing vortex contribution`
 
-The implemented quantity `curl_J` is a discrete local approximation of:
+The implemented quantity `curl_J` is a discrete local approximation:
 
-    rot J = curl J
+`rot J = curl J`
 
-The numerical quantity `C_proxy_t` is explicitly identified as a model-specific proxy.
+The numerical quantity `C_proxy_t` is explicitly designated as a model proxy parameter.
 
 It is not declared to be the complete general endogenous structural coherence `C(t)`.
 
@@ -59,166 +59,97 @@ Optional GPU backend:
 
     CuPy compatible with the installed CUDA version
 
-The repository should not pin a generic `cupy` package without matching it to the installed CUDA runtime.
+The repository should not pin the abstract `cupy` package without coordination with the installed CUDA environment.
 
 Example:
 
     pip install cupy-cuda12x
 
-Use the corresponding CuPy package for the active CUDA environment.
+The corresponding CuPy package must be selected for the active CUDA version.
 
 ### Mathematical Structure
 
 For domain `i` and neighboring domain `j`:
 
-    delta_theta_ij =
-        theta_j(t - tau_ij)
-        - theta_i(t)
-        - alpha
+`delta_theta_ij = theta_j(t - tau_ij) - theta_i(t) - alpha`
 
-The unit direction vector is:
+Unit direction vector:
 
-    e_ij =
-        (x_j - x_i)
-        /
-        |x_j - x_i|
+`e_ij = (x_j - x_i) / |x_j - x_i|`
 
-The local axis field is:
+Local axis field:
 
-    a_i =
-        normalize(
-            global_axis
-            + radial_mix radial_direction_i
-        )
+`a_i = normalize(global_axis + radial_mix · radial_direction_i)`
 
-The tangential direction is:
+Tangential direction:
 
-    t_ij =
-        normalize(
-            a_i × e_ij
-        )
+`t_ij = normalize(a_i × e_ij)`
 
-The weighted pair current is:
+Weighted pair current:
 
-    J_ij =
-        w_ij
-        sin(delta_theta_ij)
-        (
-            e_ij
-            + xi t_ij
-        )
+`J_ij = w_ij · sin(delta_theta_ij) · (e_ij + xi · t_ij)`
 
-The node exchange-current field is:
+Nodal exchange-flow field:
 
-    J_i =
-        sum_j J_ij
+`J_i = sum_j J_ij`
 
-This construction avoids the zero identity produced by parallel vectors:
+This construction removes the zero identity that appears for parallel vectors:
 
-    e_ij ×
-    [
-        sin(delta_theta_ij) e_ij
-    ]
-    =
-    0
+`e_ij × [sin(delta_theta_ij) · e_ij] = 0`
 
-The radial phase-current component and the tangential phase-current component are therefore calculated separately.
+Therefore, the radial component of the phase current and the tangential component of the phase current are calculated separately.
 
 ### Discrete Curl Reconstruction
 
-For each node, the local current gradient is reconstructed from neighboring current differences.
+For each node, the local gradient of the current field is reconstructed from current differences between neighboring nodes.
 
 Let:
 
-    X_i =
-        [
-            x_j - x_i
-        ]
+`X_i = [x_j - x_i]`
 
-    Delta_J_i =
-        [
-            J_j - J_i
-        ]
+`Delta_J_i = [J_j - J_i]`
 
-The weighted least-squares gradient is:
+Weighted least-squares gradient:
 
-    B_i =
-        (
-            X_i^T W_i X_i
-            + lambda I
-        )^-1
-        X_i^T W_i Delta_J_i
+`B_i = (X_i^T · W_i · X_i + lambda · I)^-1 · X_i^T · W_i · Delta_J_i`
 
 The discrete curl is calculated as:
 
-    curl_J_x =
-        partial_y J_z
-        - partial_z J_y
+`curl_J_x = partial_y J_z - partial_z J_y`
 
-    curl_J_y =
-        partial_z J_x
-        - partial_x J_z
+`curl_J_y = partial_z J_x - partial_x J_z`
 
-    curl_J_z =
-        partial_x J_y
-        - partial_y J_x
+`curl_J_z = partial_x J_y - partial_y J_x`
 
-The signed local vorticity is:
+Signed local vortex component:
 
-    omega_i =
-        curl_J_i · a_i
+`omega_i = curl_J_i · a_i`
 
-This signed projection allows the model to distinguish orientation-supporting and orientation-opposing vortex contributions.
+This signed projection makes it possible to distinguish vortex contributions aligned with the local axis from vortex contributions directed against it.
 
-### Delayed Kuramoto-Sakaguchi Evolution
+### Retarded Kuramoto–Sakaguchi Evolution
 
-The phase evolution is:
+Phase evolution:
 
-    d_theta_i / dt =
-        omega_i_natural
-        + K sum_j
-            w_ij
-            sin(delta_theta_ij)
-        + kappa_vortex
-            tanh(
-                signed_vorticity_i
-                /
-                vorticity_scale
-            )
-        + external_forcing_i
+`d_theta_i / dt = omega_i_natural + K · sum_j w_ij · sin(delta_theta_ij) + kappa_vortex · tanh(signed_vorticity_i / vorticity_scale) + external_forcing_i`
 
-The natural frequencies are initialized once and remain fixed during the simulation.
+Natural frequencies are initialized once and remain constant during the simulation.
 
-The propagation delay is:
+Propagation delay:
 
-    tau_ij =
-        |x_j - x_i|
-        /
-        c
+`tau_ij = |x_j - x_i| / c`
 
-The delay indices are precomputed and stored in the simulation structure.
+Delay indices are precomputed and stored in the simulation structure.
 
-The delayed phase states are read from a ring-buffer history.
+Retarded phase states are read from a ring buffer of phase history.
 
 ### Amplitude Evolution
 
-The amplitudes evolve through a bounded Stuart-Landau-type proxy:
+Amplitudes change through a bounded Stuart–Landau-type proxy equation:
 
-    d_A_i / dt =
-        mu A_i
-        (
-            1 - A_i^2
-        )
-        + k_A
-            (
-                mean_neighbor_amplitude_i
-                - A_i
-            )
-        - eta_A
-            P_ext
-            A_i
+`d_A_i / dt = mu · A_i · (1 - A_i^2) + k_A · (mean_neighbor_amplitude_i - A_i) - eta_A · P_ext · A_i`
 
-This allows the module to distinguish a phase-only order parameter from a phase-amplitude coherence proxy.
+This allows the module to distinguish the phase-only order parameter from the proxy parameter of phase-amplitude coherence.
 
 ### Operational Metrics
 
@@ -226,52 +157,41 @@ This allows the module to distinguish a phase-only order parameter from a phase-
 
 Kuramoto phase-order parameter:
 
-    R(t) =
-        |
-            mean(
-                exp(i theta)
-            )
-        |
+`R(t) = |mean(exp(i · theta))|`
 
-It measures phase synchronization only.
+It measures only phase synchronization.
 
-It is not identified with the complete endogenous structural coherence `C(t)`.
+It is not identified with the full endogenous structural coherence `C(t)`.
 
 #### phase_amplitude_coherence
 
 Normalized global phase-amplitude order:
 
-    |
-        mean(
-            A exp(i theta)
-        )
-    |
-    /
-    mean(A)
+`|mean(A · exp(i · theta))| / mean(A)`
 
 #### local_phase_coherence
 
-Weighted mean local phase order over the spatial neighbor graph.
+Weighted mean local phase order over the spatial neighborhood graph.
 
 #### amplitude_retention
 
-A bounded amplitude-uniformity proxy.
+Bounded proxy parameter of amplitude uniformity.
 
 #### C_proxy_t
 
 Geometric combination of:
 
-    phase-amplitude coherence
-    local phase coherence
-    amplitude retention
+- phase-amplitude coherence;
+- local phase coherence;
+- amplitude retention.
 
-This quantity remains a model-specific proxy.
+This quantity remains a model proxy parameter.
 
-It must not be identified with the complete `C(t)` of EDK.
+It must not be identified with the full `C(t)` of EDK.
 
 #### mean_vorticity_abs
 
-Mean magnitude of the calculated local discrete curl field.
+Mean magnitude of the computed local discrete curl field.
 
 #### vortex_alignment
 
@@ -279,56 +199,56 @@ Mean bounded signed alignment between `curl J` and the local axis field.
 
 #### positive_vortex_support
 
-Positive signed contribution of the calculated vortex field to the retained-interface proxy.
+Positive signed contribution of the computed vortex field into the proxy parameter of the retained interface.
 
 #### negative_vortex_penalty
 
-Negative signed contribution of the calculated vortex field to interface degradation or destabilization.
+Negative signed contribution of the computed vortex field into interface degradation or destabilization.
 
 #### interface_retention_proxy
 
-A bounded proxy that includes:
+Bounded proxy parameter that includes:
 
-    C_proxy(t)
-    external pressure
-    positive vortex support
-    negative vortex penalty
+- `C_proxy(t)`;
+- external pressure;
+- positive vortex support;
+- negative vortex penalty.
 
-Vorticity is therefore not assumed to be automatically stabilizing.
+Therefore, vortex twisting is not considered automatically stabilizing.
 
 #### M_proxy_t
 
-A model-specific manifested-mass-anchor proxy derived from the retained-interface proxy.
+Model proxy parameter of the manifested mass anchor, derived from the retained-interface proxy parameter.
 
 #### continuum_appearance_index
 
-A dimensionless diagnostic index.
+Dimensionless diagnostic index.
 
-It is an algorithmic observable of this numerical implementation and not an independently established physical law.
+It is an algorithmic observable parameter of this numerical implementation, not an independently established physical law.
 
 ### Computational Architecture
 
-The original full `N × N × 3` tensor structure is replaced by a local spatial neighbor graph.
+The original full tensor structure `N × N × 3` is replaced by a local spatial neighborhood graph.
 
-The implementation uses:
+The implementation uses arrays:
 
-    N × k
+`N × k`
 
 and:
 
-    N × k × 3
+`N × k × 3`
 
-arrays, where `k` is the number of spatial neighbors.
+where `k` is the number of spatial neighbors.
 
-This reduces the main simulation memory scaling from:
+This reduces the main memory scaling of the simulation from:
 
-    O(N^2)
+`O(N^2)`
 
-to approximately:
+approximately to:
 
-    O(N k)
+`O(N k)`
 
-The initial nearest-neighbor search is calculated in chunks to avoid retaining a complete pairwise distance tensor.
+The primary nearest-neighbor search is computed in blocks so that the full pairwise distance tensor does not have to be retained in memory.
 
 ### CPU and GPU Modes
 
@@ -336,19 +256,19 @@ Automatic backend selection:
 
     python module_edk_vortex_phase_field/edk_vortex_phase_field.py
 
-Force CPU:
+Forced CPU:
 
     python module_edk_vortex_phase_field/edk_vortex_phase_field.py --backend cpu
 
-Force GPU:
+Forced GPU:
 
     python module_edk_vortex_phase_field/edk_vortex_phase_field.py --backend gpu
 
-Example GPU-scale run:
+Example GPU run:
 
     python module_edk_vortex_phase_field/edk_vortex_phase_field.py --backend gpu --domains 4096 --neighbors 24 --steps 100 --dt 0.005 --forcing 8.0 --pressure 0.1 --field-every 10
 
-CPU smoke run:
+Short CPU check:
 
     python module_edk_vortex_phase_field/edk_vortex_phase_field.py --backend cpu --domains 256 --neighbors 16 --steps 10 --field-every 5
 
@@ -358,11 +278,11 @@ The engine writes compact JSON metric snapshots:
 
     vortex_step_000001.json
 
-Optional calculated field snapshots are written as compressed NumPy archives:
+Optional computed-field snapshots are written as compressed NumPy archives:
 
     vortex_field_000010.npz
 
-The calculated field snapshot contains:
+A computed-field snapshot contains:
 
     coords_3d
     phases
@@ -372,91 +292,70 @@ The calculated field snapshot contains:
     signed_vorticity
     local_axes
 
-Generate the diagnostic panel:
+Diagnostic panel generation:
 
     python module_edk_vortex_phase_field/edk_vortex_diagnostics.py --snapshot-dir edk_vortex_snapshots --output edk_vortex_diagnostics.png --no-show
 
 The diagnostic panel contains:
 
-- the evolution of the continuum appearance index;
-- the evolution of mean discrete vorticity;
-- the evolution of the Kuramoto phase-order parameter `R(t)`;
-- the calculated three-dimensional `curl_J` vector field.
+- dynamics of the Continuum appearance index;
+- dynamics of the mean discrete curl;
+- dynamics of the Kuramoto phase-order parameter `R(t)`;
+- computed three-dimensional vector field `curl_J`.
 
-The three-dimensional panel visualizes the field calculated by the simulation.
+The three-dimensional panel visualizes the field computed during the simulation.
 
 It does not generate a synthetic toroidal substitute.
 
 ### Operational Chain
 
-    spatial domains
-    → delayed phase differences
-    → radial phase current
-    → tangential phase current
-    → node exchange-current field
-    → discrete curl J
-    → signed vorticity
-    → vortex phase feedback
-    → R(t)
-    → C_proxy(t)
-    → retained-interface proxy
-    → M_proxy(t)
-    → positive or negative change in the appearance index
+`spatial domains → retarded phase differences → radial phase current → tangential phase current → nodal exchange-flow field → discrete rot J → signed vortex component → vortex phase feedback → R(t) → C_proxy(t) → retained-interface proxy parameter → M_proxy(t) → positive or negative change of the appearance index`
 
-### Place in the EDK Architecture
+### Position in the EDK Architecture
 
 The module introduces a rotational phase-field layer between spatial phase interaction and the calculation of retained-interface conditions.
 
-Its operational position is:
+Its operational position:
 
-    spatial phase interaction
-    → delayed phase coupling
-    → radial phase-current component
-    → tangential phase-current component
-    → discrete curl J
-    → signed vortex feedback
-    → phase synchronization R(t)
-    → phase-amplitude coherence proxy
-    → C_proxy(t)
-    → retained-interface proxy
-    → M_proxy(t)
-    → diagnostic appearance index
+`spatial phase interaction → retarded phase coupling → radial phase-current component → tangential phase-current component → discrete rot J → signed vortex feedback → phase synchronization R(t) → phase-amplitude coherence proxy parameter → C_proxy(t) → retained-interface proxy parameter → M_proxy(t) → diagnostic appearance index`
 
 The module does not replace:
 
-- the complete EDK mathematical formalism;
+- the complete mathematical formalism of EDK;
 - the general endogenous structural coherence `C(t)`;
 - the dynamic interface tensor `T_int`;
-- the through-scale exchange-flow channel `J_flux`;
+- the through exchange-flow channel `J_flux`;
 - the complete recursive inheritance operator `Phi`.
 
-It provides a numerical vortex-phase-field layer that can later be connected to these elements through a controlled integration interface.
+It provides a numerical rotational phase-field layer that can later be connected with these elements through a controlled integration interface.
 
-### Limits of Interpretation
+### Interpretation Boundaries
 
 This module is a numerical model.
 
 It does not independently establish that:
 
-- the calculated field is a complete physical vorticity field of the Continuum;
-- `C_proxy(t)` is identical to the complete endogenous structural coherence `C(t)`;
-- the appearance index is a directly measured physical observable;
-- every vortex contribution stabilizes a retained form;
-- the metric or mass proxies constitute a complete relativistic field solution;
-- the discrete curl reconstruction replaces direct experimental measurement.
+- the calculated field is the complete physical field of vortex twisting of the Continuum;
+- `C_proxy(t)` is identical to the full endogenous structural coherence `C(t)`;
+- the appearance index is a directly measurable physical observable;
+- any vortex contribution stabilizes the retained form;
+- metric or mass proxy parameters are a complete solution of relativistic field equations;
+- discrete curl reconstruction replaces direct experimental measurement.
 
-The module is suitable for:
+The module is intended for:
 
-- internal mathematical consistency tests;
-- numerical perturbation experiments;
+- testing internal mathematical consistency;
+- numerical experiments with perturbations;
 - comparison of radial and rotational phase coupling;
 - stress testing near `C_proxy(t) ≈ P(t)`;
 - analysis of positive and negative signed vortex contributions;
-- generation of reproducible field snapshots;
+- formation of reproducible computed-field snapshots;
 - comparison of CPU and GPU execution;
-- preparation of later integration with `T_int` and `J_flux`.
+- preparation for subsequent integration with `T_int` and `J_flux`.
 
 ---
+
+# Модуль EDK Vortex Phase Field — EN/RU
 
 ## RU
 
@@ -468,19 +367,19 @@ The module is suitable for:
 
 Модуль сохраняет следующие контролируемые различия:
 
-    фазовая синхронизация ≠ фазовая когерентность
+`фазовая синхронизация ≠ фазовая когерентность`
 
-    R(t) ≠ C(t)
+`R(t) ≠ C(t)`
 
-    C_proxy(t) ≠ полное C(t)
+`C_proxy(t) ≠ полное C(t)`
 
-    локальный вихревой момент ≠ строгий rot J
+`локальный вихревой момент ≠ строгий rot J`
 
-    положительный вихревой вклад ≠ автоматически стабилизирующий вихревой вклад
+`положительный вихревой вклад ≠ автоматически стабилизирующий вихревой вклад`
 
 Реализованная величина `curl_J` является дискретным локальным приближением:
 
-    rot J = curl J
+`rot J = curl J`
 
 Численная величина `C_proxy_t` прямо обозначена как модельный прокси-параметр.
 
@@ -529,56 +428,31 @@ The module is suitable for:
 
 Для домена `i` и соседнего домена `j`:
 
-    delta_theta_ij =
-        theta_j(t - tau_ij)
-        - theta_i(t)
-        - alpha
+`delta_theta_ij = theta_j(t - tau_ij) - theta_i(t) - alpha`
 
 Единичный вектор направления:
 
-    e_ij =
-        (x_j - x_i)
-        /
-        |x_j - x_i|
+`e_ij = (x_j - x_i) / |x_j - x_i|`
 
 Локальное поле осей:
 
-    a_i =
-        normalize(
-            global_axis
-            + radial_mix radial_direction_i
-        )
+`a_i = normalize(global_axis + radial_mix · radial_direction_i)`
 
 Тангенциальное направление:
 
-    t_ij =
-        normalize(
-            a_i × e_ij
-        )
+`t_ij = normalize(a_i × e_ij)`
 
 Взвешенный парный ток:
 
-    J_ij =
-        w_ij
-        sin(delta_theta_ij)
-        (
-            e_ij
-            + xi t_ij
-        )
+`J_ij = w_ij · sin(delta_theta_ij) · (e_ij + xi · t_ij)`
 
 Узловое поле потока обмена:
 
-    J_i =
-        sum_j J_ij
+`J_i = sum_j J_ij`
 
 Данная конструкция устраняет нулевое тождество, возникающее для параллельных векторов:
 
-    e_ij ×
-    [
-        sin(delta_theta_ij) e_ij
-    ]
-    =
-    0
+`e_ij × [sin(delta_theta_ij) · e_ij] = 0`
 
 Поэтому радиальная компонента фазового тока и тангенциальная компонента фазового тока рассчитываются раздельно.
 
@@ -588,43 +462,25 @@ The module is suitable for:
 
 Пусть:
 
-    X_i =
-        [
-            x_j - x_i
-        ]
+`X_i = [x_j - x_i]`
 
-    Delta_J_i =
-        [
-            J_j - J_i
-        ]
+`Delta_J_i = [J_j - J_i]`
 
 Взвешенный градиент метода наименьших квадратов:
 
-    B_i =
-        (
-            X_i^T W_i X_i
-            + lambda I
-        )^-1
-        X_i^T W_i Delta_J_i
+`B_i = (X_i^T · W_i · X_i + lambda · I)^-1 · X_i^T · W_i · Delta_J_i`
 
 Дискретный ротор вычисляется как:
 
-    curl_J_x =
-        partial_y J_z
-        - partial_z J_y
+`curl_J_x = partial_y J_z - partial_z J_y`
 
-    curl_J_y =
-        partial_z J_x
-        - partial_x J_z
+`curl_J_y = partial_z J_x - partial_x J_z`
 
-    curl_J_z =
-        partial_x J_y
-        - partial_y J_x
+`curl_J_z = partial_x J_y - partial_y J_x`
 
 Знаковая локальная вихревая компонента:
 
-    omega_i =
-        curl_J_i · a_i
+`omega_i = curl_J_i · a_i`
 
 Данная знаковая проекция позволяет различать вихревые вклады, согласованные с локальной осью, и вихревые вклады, направленные против неё.
 
@@ -632,27 +488,13 @@ The module is suitable for:
 
 Эволюция фаз:
 
-    d_theta_i / dt =
-        omega_i_natural
-        + K sum_j
-            w_ij
-            sin(delta_theta_ij)
-        + kappa_vortex
-            tanh(
-                signed_vorticity_i
-                /
-                vorticity_scale
-            )
-        + external_forcing_i
+`d_theta_i / dt = omega_i_natural + K · sum_j w_ij · sin(delta_theta_ij) + kappa_vortex · tanh(signed_vorticity_i / vorticity_scale) + external_forcing_i`
 
 Собственные частоты инициализируются один раз и остаются постоянными в течение симуляции.
 
 Задержка распространения:
 
-    tau_ij =
-        |x_j - x_i|
-        /
-        c
+`tau_ij = |x_j - x_i| / c`
 
 Индексы задержек предварительно вычисляются и сохраняются в структуре симуляции.
 
@@ -662,19 +504,7 @@ The module is suitable for:
 
 Амплитуды изменяются посредством ограниченного прокси-уравнения типа Стюарта — Ландау:
 
-    d_A_i / dt =
-        mu A_i
-        (
-            1 - A_i^2
-        )
-        + k_A
-            (
-                mean_neighbor_amplitude_i
-                - A_i
-            )
-        - eta_A
-            P_ext
-            A_i
+`d_A_i / dt = mu · A_i · (1 - A_i^2) + k_A · (mean_neighbor_amplitude_i - A_i) - eta_A · P_ext · A_i`
 
 Это позволяет модулю различать параметр порядка только фаз и прокси-параметр фазово-амплитудной когерентности.
 
@@ -684,12 +514,7 @@ The module is suitable for:
 
 Параметр фазового порядка Курамото:
 
-    R(t) =
-        |
-            mean(
-                exp(i theta)
-            )
-        |
+`R(t) = |mean(exp(i · theta))|`
 
 Он измеряет только фазовую синхронизацию.
 
@@ -699,13 +524,7 @@ The module is suitable for:
 
 Нормированный глобальный фазово-амплитудный порядок:
 
-    |
-        mean(
-            A exp(i theta)
-        )
-    |
-    /
-    mean(A)
+`|mean(A · exp(i · theta))| / mean(A)`
 
 #### local_phase_coherence
 
@@ -719,9 +538,9 @@ The module is suitable for:
 
 Геометрическая комбинация:
 
-    фазово-амплитудной когерентности
-    локальной фазовой когерентности
-    удержания амплитуд
+- фазово-амплитудной когерентности;
+- локальной фазовой когерентности;
+- удержания амплитуд.
 
 Данная величина остаётся модельным прокси-параметром.
 
@@ -747,10 +566,10 @@ The module is suitable for:
 
 Ограниченный прокси-параметр, включающий:
 
-    C_proxy(t)
-    внешнее давление
-    положительную вихревую поддержку
-    отрицательный вихревой штраф
+- `C_proxy(t)`;
+- внешнее давление;
+- положительную вихревую поддержку;
+- отрицательный вихревой штраф.
 
 Поэтому вихревое закручивание не считается автоматически стабилизирующим.
 
@@ -770,21 +589,21 @@ The module is suitable for:
 
 Реализация использует массивы:
 
-    N × k
+`N × k`
 
 и:
 
-    N × k × 3
+`N × k × 3`
 
 где `k` является числом пространственных соседей.
 
 Это уменьшает основное масштабирование памяти симуляции с:
 
-    O(N^2)
+`O(N^2)`
 
 примерно до:
 
-    O(N k)
+`O(N k)`
 
 Первичный поиск ближайших соседей вычисляется блоками, чтобы не удерживать полный тензор попарных расстояний.
 
@@ -847,19 +666,7 @@ The module is suitable for:
 
 ### Операционная цепочка
 
-    пространственные домены
-    → ретардированные фазовые различия
-    → радиальный фазовый ток
-    → тангенциальный фазовый ток
-    → узловое поле потока обмена
-    → дискретный rot J
-    → знаковая вихревая компонента
-    → вихревая фазовая обратная связь
-    → R(t)
-    → C_proxy(t)
-    → прокси-параметр удерживаемого интерфейса
-    → M_proxy(t)
-    → положительное или отрицательное изменение индекса проявленности
+`пространственные домены → ретардированные фазовые различия → радиальный фазовый ток → тангенциальный фазовый ток → узловое поле потока обмена → дискретный rot J → знаковая вихревая компонента → вихревая фазовая обратная связь → R(t) → C_proxy(t) → прокси-параметр удерживаемого интерфейса → M_proxy(t) → положительное или отрицательное изменение индекса проявленности`
 
 ### Место в архитектуре EDK
 
@@ -867,18 +674,7 @@ The module is suitable for:
 
 Его операционное положение:
 
-    пространственное фазовое взаимодействие
-    → ретардированное фазовое сопряжение
-    → радиальная компонента фазового тока
-    → тангенциальная компонента фазового тока
-    → дискретный rot J
-    → знаковая вихревая обратная связь
-    → фазовая синхронизация R(t)
-    → прокси-параметр фазово-амплитудной когерентности
-    → C_proxy(t)
-    → прокси-параметр удерживаемого интерфейса
-    → M_proxy(t)
-    → диагностический индекс проявленности
+`пространственное фазовое взаимодействие → ретардированное фазовое сопряжение → радиальная компонента фазового тока → тангенциальная компонента фазового тока → дискретный rot J → знаковая вихревая обратная связь → фазовая синхронизация R(t) → прокси-параметр фазово-амплитудной когерентности → C_proxy(t) → прокси-параметр удерживаемого интерфейса → M_proxy(t) → диагностический индекс проявленности`
 
 Модуль не заменяет:
 
