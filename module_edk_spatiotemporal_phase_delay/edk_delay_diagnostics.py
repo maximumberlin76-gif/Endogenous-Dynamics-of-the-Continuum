@@ -3,9 +3,15 @@ from __future__ import annotations
 import argparse
 import glob
 import json
+import math
 import os
 from pathlib import Path
 from typing import Any
+
+os.environ.setdefault(
+    "MPLBACKEND",
+    "Agg",
+)
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,65 +29,348 @@ REQUIRED_METRIC_KEYS = (
     "history_buffer_depth",
 )
 
+TACT_METADATA_KEYS = (
+    "tact",
+    "step",
+    "tact_index",
+)
 
-def _extract_step_from_path(path: str) -> int:
+
+def _extract_tact_from_path(
+    path: str | Path,
+) -> int:
     stem = Path(path).stem
-    suffix = stem.rsplit("_", maxsplit=1)[-1]
+    suffix = stem.rsplit(
+        "_",
+        maxsplit=1,
+    )[-1]
 
     try:
-        return int(suffix)
+        return int(
+            suffix
+        )
     except ValueError as exc:
         raise ValueError(
-            f"Unable to extract numeric step identifier from '{path}'."
+            "Unable to extract numeric tact identifier "
+            f"from '{path}'."
         ) from exc
 
 
-def load_delay_metrics(
-    snapshot_dir: str = "edk_delay_snapshots",
-) -> dict[str, np.ndarray]:
-    search_path = os.path.join(
-        snapshot_dir,
-        "delay_step_*.json",
-    )
+def _as_float(
+    value: Any,
+    name: str,
+) -> float:
+    try:
+        number = float(
+            value
+        )
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            f"{name} must be numeric, received {value!r}."
+        ) from exc
 
-    files = sorted(
-        glob.glob(search_path),
-        key=_extract_step_from_path,
-    )
-
-    if not files:
-        raise FileNotFoundError(
-            f"No delay metric snapshots found in '{snapshot_dir}'."
+    if not math.isfinite(
+        number
+    ):
+        raise ValueError(
+            f"{name} must be finite, received {number!r}."
         )
 
-    steps: list[int] = []
+    return number
+
+
+def _as_int(
+    value: Any,
+    name: str,
+) -> int:
+    number = _as_float(
+        value,
+        name,
+    )
+
+    integer = int(
+        number
+    )
+
+    if not math.isclose(
+        number,
+        float(
+            integer
+        ),
+        rel_tol=0.0,
+        abs_tol=1.0e-12,
+    ):
+        raise ValueError(
+            f"{name} must be integer-compatible, received {value!r}."
+        )
+
+    return integer
+
+
+def _load_json_object(
+    path: Path,
+) -> dict[str, Any]:
+    with path.open(
+        "r",
+        encoding="utf-8",
+    ) as stream:
+        payload = json.load(
+            stream
+        )
+
+    if not isinstance(
+        payload,
+        dict,
+    ):
+        raise ValueError(
+            f"JSON root must be an object: {path}"
+        )
+
+    return payload
+
+
+def _collect_metric_paths(
+    snapshot_dir: str | Path,
+) -> list[Path]:
+    directory = Path(
+        snapshot_dir
+    )
+
+    if not directory.is_dir():
+        raise FileNotFoundError(
+            f"Snapshot directory does not exist: '{directory}'."
+        )
+
+    by_tact: dict[int, Path] = {}
+
+    for path in sorted(
+        directory.glob(
+            "delay_step_*.json"
+        ),
+        key=_extract_tact_from_path,
+    ):
+        tact = _extract_tact_from_path(
+            path
+        )
+
+        by_tact.setdefault(
+            tact,
+            path,
+        )
+
+    for path in sorted(
+        directory.glob(
+            "delay_tact_*.json"
+        ),
+        key=_extract_tact_from_path,
+    ):
+        tact = _extract_tact_from_path(
+            path
+        )
+
+        by_tact[
+            tact
+        ] = path
+
+    if not by_tact:
+        raise FileNotFoundError(
+            "No delay_tact_*.json or delay_step_*.json "
+            f"metric snapshots found in '{directory}'."
+        )
+
+    return [
+        by_tact[
+            tact
+        ]
+        for tact in sorted(
+            by_tact
+        )
+    ]
+
+
+def _resolve_tact_metadata(
+    *,
+    filename_tact: int,
+    record: dict[str, Any],
+    metrics: dict[str, Any],
+    filename: str,
+) -> int:
+    candidates: list[
+        tuple[
+            str,
+            int,
+        ]
+    ] = [
+        (
+            "filename",
+            filename_tact,
+        )
+    ]
+
+    for key in TACT_METADATA_KEYS:
+        if key in record:
+            candidates.append(
+                (
+                    f"top_level.{key}",
+                    _as_int(
+                        record[
+                            key
+                        ],
+                        f"top_level.{key} in {filename}",
+                    ),
+                )
+            )
+
+    for key in (
+        "tact_index",
+        "step",
+    ):
+        if key in metrics:
+            candidates.append(
+                (
+                    f"metrics.{key}",
+                    _as_int(
+                        metrics[
+                            key
+                        ],
+                        f"metrics.{key} in {filename}",
+                    ),
+                )
+            )
+
+    resolved = candidates[0][1]
+
+    for name, value in candidates[1:]:
+        if value != resolved:
+            raise ValueError(
+                "Tact metadata mismatch in "
+                f"'{filename}': filename={filename_tact}, "
+                f"{name}={value}, resolved={resolved}."
+            )
+
+    return resolved
+
+
+def _resolve_simulation_time(
+    *,
+    record: dict[str, Any],
+    metrics: dict[str, Any],
+    filename: str,
+) -> float:
+    top_level_exists = (
+        "simulation_time"
+        in record
+    )
+
+    metric_exists = (
+        "simulation_time"
+        in metrics
+    )
+
+    if not top_level_exists and not metric_exists:
+        raise KeyError(
+            f"Missing simulation_time in '{filename}'."
+        )
+
+    top_level_time = (
+        _as_float(
+            record[
+                "simulation_time"
+            ],
+            f"top_level.simulation_time in {filename}",
+        )
+        if top_level_exists
+        else None
+    )
+
+    metric_time = (
+        _as_float(
+            metrics[
+                "simulation_time"
+            ],
+            f"metrics.simulation_time in {filename}",
+        )
+        if metric_exists
+        else None
+    )
+
+    if (
+        top_level_time is not None
+        and metric_time is not None
+        and not math.isclose(
+            top_level_time,
+            metric_time,
+            rel_tol=1.0e-9,
+            abs_tol=1.0e-12,
+        )
+    ):
+        raise ValueError(
+            "simulation_time metadata mismatch in "
+            f"'{filename}': top_level={top_level_time}, "
+            f"metrics={metric_time}."
+        )
+
+    return (
+        metric_time
+        if metric_time is not None
+        else float(
+            top_level_time
+        )
+    )
+
+
+def load_delay_metrics(
+    snapshot_dir: str | Path = "edk_delay_snapshots",
+) -> dict[str, np.ndarray]:
+    files = _collect_metric_paths(
+        snapshot_dir
+    )
+
+    tacts: list[int] = []
+    simulation_times: list[float] = []
 
     metric_history: dict[str, list[float]] = {
         key: []
         for key in REQUIRED_METRIC_KEYS
     }
 
-    for filename in files:
-        with open(
-            filename,
-            "r",
-            encoding="utf-8",
-        ) as stream:
-            record = json.load(
-                stream
-            )
+    for path in files:
+        record = _load_json_object(
+            path
+        )
 
-        if "step" not in record:
+        metrics = record.get(
+            "metrics"
+        )
+
+        if not isinstance(
+            metrics,
+            dict,
+        ):
             raise KeyError(
-                f"Missing 'step' in '{filename}'."
+                f"Missing metrics object in '{path}'."
             )
 
-        if "metrics" not in record:
-            raise KeyError(
-                f"Missing 'metrics' in '{filename}'."
-            )
+        filename_tact = _extract_tact_from_path(
+            path
+        )
 
-        metrics = record["metrics"]
+        tact = _resolve_tact_metadata(
+            filename_tact=filename_tact,
+            record=record,
+            metrics=metrics,
+            filename=str(
+                path
+            ),
+        )
+
+        simulation_time = _resolve_simulation_time(
+            record=record,
+            metrics=metrics,
+            filename=str(
+                path
+            ),
+        )
 
         missing_keys = [
             key
@@ -91,42 +380,51 @@ def load_delay_metrics(
 
         if missing_keys:
             raise KeyError(
-                f"Missing metric keys in '{filename}': "
+                f"Missing metric keys in '{path}': "
                 f"{missing_keys}"
             )
 
-        steps.append(
-            int(
-                record["step"]
-            )
+        tacts.append(
+            tact
+        )
+
+        simulation_times.append(
+            simulation_time
         )
 
         for key in REQUIRED_METRIC_KEYS:
-            value = float(
-                metrics[key]
+            value = _as_float(
+                metrics[
+                    key
+                ],
+                f"metrics.{key} in {path}",
             )
 
-            if not np.isfinite(
-                value
-            ):
-                raise ValueError(
-                    f"Non-finite metric '{key}' "
-                    f"in '{filename}': {value}"
-                )
-
-            metric_history[key].append(
+            metric_history[
+                key
+            ].append(
                 value
             )
 
     result: dict[str, np.ndarray] = {
-        "steps": np.asarray(
-            steps,
+        "tacts": np.asarray(
+            tacts,
             dtype=int,
-        )
+        ),
+        "steps": np.asarray(
+            tacts,
+            dtype=int,
+        ),
+        "simulation_time": np.asarray(
+            simulation_times,
+            dtype=float,
+        ),
     }
 
     for key, values in metric_history.items():
-        result[key] = np.asarray(
+        result[
+            key
+        ] = np.asarray(
             values,
             dtype=float,
         )
@@ -135,16 +433,20 @@ def load_delay_metrics(
 
 
 def load_latest_delay_field(
-    snapshot_dir: str = "edk_delay_snapshots",
+    snapshot_dir: str | Path = "edk_delay_snapshots",
 ) -> dict[str, np.ndarray] | None:
     search_path = os.path.join(
-        snapshot_dir,
+        str(
+            snapshot_dir
+        ),
         "delay_field_*.npz",
     )
 
     files = sorted(
-        glob.glob(search_path),
-        key=_extract_step_from_path,
+        glob.glob(
+            search_path
+        ),
+        key=_extract_tact_from_path,
     )
 
     if not files:
@@ -156,7 +458,9 @@ def load_latest_delay_field(
     ) as archive:
         field = {
             key: np.asarray(
-                archive[key]
+                archive[
+                    key
+                ]
             )
             for key in archive.files
         }
@@ -164,8 +468,12 @@ def load_latest_delay_field(
     required_keys = (
         "coords_3d",
         "phases",
+        "natural_frequencies",
         "neighbor_indices",
+        "edge_distances",
         "tau_ij",
+        "neighbor_weights",
+        "delayed_neighbor_phases",
         "phase_velocity",
     )
 
@@ -187,62 +495,179 @@ def load_latest_delay_field(
 def _validate_field_shapes(
     field: dict[str, np.ndarray],
 ) -> None:
-    coords = field["coords_3d"]
-    phases = field["phases"]
-    neighbor_indices = field["neighbor_indices"]
-    tau_ij = field["tau_ij"]
-    phase_velocity = field["phase_velocity"]
+    coords = field[
+        "coords_3d"
+    ]
 
-    if coords.ndim != 2 or coords.shape[1] != 3:
+    phases = field[
+        "phases"
+    ]
+
+    natural_frequencies = field[
+        "natural_frequencies"
+    ]
+
+    neighbor_indices = field[
+        "neighbor_indices"
+    ]
+
+    edge_distances = field[
+        "edge_distances"
+    ]
+
+    tau_ij = field[
+        "tau_ij"
+    ]
+
+    neighbor_weights = field[
+        "neighbor_weights"
+    ]
+
+    delayed_neighbor_phases = field[
+        "delayed_neighbor_phases"
+    ]
+
+    phase_velocity = field[
+        "phase_velocity"
+    ]
+
+    if (
+        coords.ndim != 2
+        or coords.shape[
+            1
+        ]
+        != 3
+    ):
         raise ValueError(
             "coords_3d must have shape (N, 3), "
             f"received {coords.shape}."
         )
 
-    domain_count = coords.shape[0]
+    domain_count = coords.shape[
+        0
+    ]
 
-    if phases.shape != (
+    vector_shape = (
         domain_count,
-    ):
-        raise ValueError(
-            f"phases must have shape ({domain_count},), "
-            f"received {phases.shape}."
-        )
+    )
 
-    if phase_velocity.shape != (
-        domain_count,
+    for key, array in (
+        (
+            "phases",
+            phases,
+        ),
+        (
+            "natural_frequencies",
+            natural_frequencies,
+        ),
+        (
+            "phase_velocity",
+            phase_velocity,
+        ),
     ):
-        raise ValueError(
-            "phase_velocity must have shape "
-            f"({domain_count},), "
-            f"received {phase_velocity.shape}."
-        )
+        if array.shape != vector_shape:
+            raise ValueError(
+                f"{key} must have shape {vector_shape}, "
+                f"received {array.shape}."
+            )
 
     if neighbor_indices.ndim != 2:
         raise ValueError(
             "neighbor_indices must have shape (N, k)."
         )
 
-    if neighbor_indices.shape[0] != domain_count:
+    if neighbor_indices.shape[
+        0
+    ] != domain_count:
         raise ValueError(
-            "neighbor_indices domain count "
-            "does not match coords_3d."
+            "neighbor_indices domain count does not match coords_3d."
         )
 
-    if tau_ij.shape != neighbor_indices.shape:
+    edge_shape = neighbor_indices.shape
+
+    for key, array in (
+        (
+            "edge_distances",
+            edge_distances,
+        ),
+        (
+            "tau_ij",
+            tau_ij,
+        ),
+        (
+            "neighbor_weights",
+            neighbor_weights,
+        ),
+        (
+            "delayed_neighbor_phases",
+            delayed_neighbor_phases,
+        ),
+    ):
+        if array.shape != edge_shape:
+            raise ValueError(
+                f"{key} must have shape {edge_shape}, "
+                f"received {array.shape}."
+            )
+
+    if "edge_vectors" in field:
+        edge_vectors = field[
+            "edge_vectors"
+        ]
+
+        if edge_vectors.shape != (
+            edge_shape[
+                0
+            ],
+            edge_shape[
+                1
+            ],
+            3,
+        ):
+            raise ValueError(
+                "edge_vectors must have shape (N, k, 3), "
+                f"received {edge_vectors.shape}."
+            )
+
+    if np.any(
+        neighbor_indices
+        < 0
+    ) or np.any(
+        neighbor_indices
+        >= domain_count
+    ):
         raise ValueError(
-            "tau_ij shape must match "
-            "neighbor_indices shape."
+            "neighbor_indices contains an out-of-range domain index."
         )
 
     if np.any(
-        neighbor_indices < 0
-    ) or np.any(
-        neighbor_indices >= domain_count
+        edge_distances
+        <= 0.0
     ):
         raise ValueError(
-            "neighbor_indices contains "
-            "an out-of-range domain index."
+            "edge_distances must be strictly positive."
+        )
+
+    if np.any(
+        tau_ij
+        < 0.0
+    ):
+        raise ValueError(
+            "tau_ij must be non-negative."
+        )
+
+    row_sums = np.sum(
+        neighbor_weights,
+        axis=1,
+    )
+
+    if not np.allclose(
+        row_sums,
+        1.0,
+        rtol=1.0e-5,
+        atol=1.0e-6,
+    ):
+        raise ValueError(
+            "neighbor_weights are not normalized per domain."
         )
 
     for key, array in field.items():
@@ -250,17 +675,19 @@ def _validate_field_shapes(
             array
         )
 
-        if np.issubdtype(
-            numeric_array.dtype,
-            np.number,
-        ) and not np.all(
-            np.isfinite(
-                numeric_array
+        if (
+            np.issubdtype(
+                numeric_array.dtype,
+                np.number,
+            )
+            and not np.all(
+                np.isfinite(
+                    numeric_array
+                )
             )
         ):
             raise ValueError(
-                f"Field '{key}' contains "
-                "non-finite values."
+                f"Field '{key}' contains non-finite values."
             )
 
 
@@ -293,13 +720,26 @@ def _plot_delay_graph(
     maximum_nodes: int,
     maximum_edges: int,
 ) -> None:
-    coords = field["coords_3d"]
-    phases = field["phases"]
-    neighbor_indices = field["neighbor_indices"]
-    tau_ij = field["tau_ij"]
+    coords = field[
+        "coords_3d"
+    ]
+
+    phases = field[
+        "phases"
+    ]
+
+    neighbor_indices = field[
+        "neighbor_indices"
+    ]
+
+    tau_ij = field[
+        "tau_ij"
+    ]
 
     node_indices = _downsample_indices(
-        coords.shape[0],
+        coords.shape[
+            0
+        ],
         maximum_nodes,
     )
 
@@ -312,9 +752,18 @@ def _plot_delay_graph(
     ]
 
     scatter = axis.scatter(
-        selected_coords[:, 0],
-        selected_coords[:, 1],
-        selected_coords[:, 2],
+        selected_coords[
+            :,
+            0,
+        ],
+        selected_coords[
+            :,
+            1,
+        ],
+        selected_coords[
+            :,
+            2,
+        ],
         c=selected_phases,
         cmap="twilight",
         s=18,
@@ -332,10 +781,7 @@ def _plot_delay_graph(
     ] = []
 
     for source_index in node_indices:
-        for (
-            local_neighbor_index,
-            target_index,
-        ) in enumerate(
+        for local_neighbor_index, target_index in enumerate(
             neighbor_indices[
                 source_index
             ]
@@ -357,9 +803,14 @@ def _plot_delay_graph(
                 )
             )
 
-    if edge_candidates and maximum_edges > 0:
+    if (
+        edge_candidates
+        and maximum_edges > 0
+    ):
         edge_candidates.sort(
-            key=lambda item: item[0],
+            key=lambda item: item[
+                0
+            ],
             reverse=True,
         )
 
@@ -369,7 +820,9 @@ def _plot_delay_graph(
 
         edge_delays = np.asarray(
             [
-                edge[0]
+                edge[
+                    0
+                ]
                 for edge in retained_edges
             ],
             dtype=float,
@@ -379,17 +832,16 @@ def _plot_delay_graph(
             edge_delays.min()
         )
 
-        delay_range = float(
-            np.ptp(
-                edge_delays
+        delay_range = (
+            float(
+                np.ptp(
+                    edge_delays
+                )
             )
-        ) + 1e-12
+            + 1.0e-12
+        )
 
-        for (
-            delay_value,
-            source_index,
-            target_index,
-        ) in retained_edges:
+        for delay_value, source_index, target_index in retained_edges:
             source = coords[
                 source_index
             ]
@@ -400,36 +852,43 @@ def _plot_delay_graph(
 
             normalized_delay = (
                 delay_value
-                -
-                delay_min
+                - delay_min
             ) / delay_range
 
             axis.plot(
                 (
-                    source[0],
-                    target[0],
+                    source[
+                        0
+                    ],
+                    target[
+                        0
+                    ],
                 ),
                 (
-                    source[1],
-                    target[1],
+                    source[
+                        1
+                    ],
+                    target[
+                        1
+                    ],
                 ),
                 (
-                    source[2],
-                    target[2],
+                    source[
+                        2
+                    ],
+                    target[
+                        2
+                    ],
                 ),
                 alpha=(
                     0.08
-                    +
-                    0.42
-                    *
-                    normalized_delay
+                    + 0.42
+                    * normalized_delay
                 ),
                 linewidth=(
                     0.4
-                    +
-                    1.2
-                    *
-                    normalized_delay
+                    + 1.2
+                    * normalized_delay
                 ),
             )
 
@@ -459,12 +918,12 @@ def _plot_delay_graph(
 
 
 def plot_delay_diagnostics(
-    snapshot_dir: str = "edk_delay_snapshots",
-    output_path: str = "edk_delay_diagnostics.png",
+    snapshot_dir: str | Path = "edk_delay_snapshots",
+    output_path: str | Path = "edk_delay_diagnostics.png",
     maximum_nodes: int = 500,
     maximum_edges: int = 1200,
     show: bool = True,
-) -> None:
+) -> Path:
     if maximum_nodes < 1:
         raise ValueError(
             "maximum_nodes must be positive."
@@ -495,8 +954,8 @@ def plot_delay_diagnostics(
         2,
     )
 
-    steps = metrics[
-        "steps"
+    tacts = metrics[
+        "tacts"
     ]
 
     axis_1 = figure.add_subplot(
@@ -507,7 +966,7 @@ def plot_delay_diagnostics(
     )
 
     axis_1.plot(
-        steps,
+        tacts,
         metrics[
             "R_t_phase_order"
         ],
@@ -516,7 +975,7 @@ def plot_delay_diagnostics(
     )
 
     axis_1.plot(
-        steps,
+        tacts,
         metrics[
             "delayed_local_phase_order"
         ],
@@ -525,7 +984,7 @@ def plot_delay_diagnostics(
     )
 
     axis_1.set_xlabel(
-        "Tact-by-tact simulation step"
+        "Tact"
     )
 
     axis_1.set_ylabel(
@@ -558,7 +1017,7 @@ def plot_delay_diagnostics(
     )
 
     axis_2.plot(
-        steps,
+        tacts,
         metrics[
             "mean_phase_velocity"
         ],
@@ -567,7 +1026,7 @@ def plot_delay_diagnostics(
     )
 
     axis_2.plot(
-        steps,
+        tacts,
         metrics[
             "phase_velocity_dispersion"
         ],
@@ -576,7 +1035,7 @@ def plot_delay_diagnostics(
     )
 
     axis_2.set_xlabel(
-        "Tact-by-tact simulation step"
+        "Tact"
     )
 
     axis_2.set_ylabel(
@@ -604,7 +1063,7 @@ def plot_delay_diagnostics(
     )
 
     axis_3.plot(
-        steps,
+        tacts,
         metrics[
             "delayed_coupling_energy_proxy"
         ],
@@ -613,7 +1072,7 @@ def plot_delay_diagnostics(
     )
 
     axis_3.set_xlabel(
-        "Tact-by-tact simulation step"
+        "Tact"
     )
 
     axis_3.set_ylabel(
@@ -635,6 +1094,10 @@ def plot_delay_diagnostics(
     )
 
     delay_summary = (
+        f"Final tact: "
+        f"{int(tacts[-1])}\n"
+        f"Final time: "
+        f"{metrics['simulation_time'][-1]:.6f}\n"
         f"Mean delay: "
         f"{metrics['mean_delay'][-1]:.6f}\n"
         f"Maximum delay: "
@@ -727,8 +1190,7 @@ def plot_delay_diagnostics(
     )
 
     print(
-        f"Saved delay diagnostic panel "
-        f"to '{output}'."
+        f"Saved delay diagnostic panel to '{output}'."
     )
 
     if show:
@@ -738,6 +1200,8 @@ def plot_delay_diagnostics(
         plt.close(
             figure
         )
+
+    return output
 
 
 def build_argument_parser() -> argparse.ArgumentParser:
