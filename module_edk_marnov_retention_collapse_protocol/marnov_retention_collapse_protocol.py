@@ -8,7 +8,7 @@ import sys
 import tempfile
 from dataclasses import asdict, dataclass, replace
 from pathlib import Path
-from typing import Any, Literal, Sequence
+from typing import Any, Literal, Mapping, Sequence
 
 import numpy as np
 
@@ -1514,7 +1514,7 @@ class EDKMarnovRetentionCollapseProtocol:
                 should_log
                 or include_field
             ):
-                logger.log_step(
+                logger.log_tact(
                     self,
                     include_field=(
                         include_field
@@ -2012,6 +2012,102 @@ class EDKMarnovRetentionCollapseProtocol:
         }
 
 
+def _json_safe(
+    value: Any,
+) -> Any:
+    if value is None:
+        return None
+
+    if isinstance(
+        value,
+        Mapping,
+    ):
+        return {
+            str(
+                key
+            ): _json_safe(
+                item
+            )
+            for key, item
+            in value.items()
+        }
+
+    if isinstance(
+        value,
+        (
+            list,
+            tuple,
+            set,
+        ),
+    ):
+        return [
+            _json_safe(
+                item
+            )
+            for item
+            in value
+        ]
+
+    if isinstance(
+        value,
+        np.ndarray,
+    ):
+        if value.ndim == 0:
+            return _json_safe(
+                value.item()
+            )
+
+        return {
+            "__array__": True,
+            "dtype": str(
+                value.dtype
+            ),
+            "shape": list(
+                value.shape
+            ),
+        }
+
+    if isinstance(
+        value,
+        np.generic,
+    ):
+        return _json_safe(
+            value.item()
+        )
+
+    if isinstance(
+        value,
+        Path,
+    ):
+        return str(
+            value
+        )
+
+    if isinstance(
+        value,
+        complex,
+    ):
+        return {
+            "real": value.real,
+            "imag": value.imag,
+        }
+
+    if isinstance(
+        value,
+        (
+            str,
+            int,
+            float,
+            bool,
+        ),
+    ):
+        return value
+
+    return repr(
+        value
+    )
+
+
 class EDKMarnovProtocolLogger:
     def __init__(
         self,
@@ -2045,10 +2141,17 @@ class EDKMarnovProtocolLogger:
                 delete=False,
             ) as stream:
                 json.dump(
-                    payload,
+                    _json_safe(
+                        payload
+                    ),
                     stream,
                     ensure_ascii=False,
                     indent=2,
+                    sort_keys=True,
+                )
+
+                stream.write(
+                    "\n"
                 )
 
                 stream.flush()
@@ -2115,7 +2218,7 @@ class EDKMarnovProtocolLogger:
             ):
                 temporary_path.unlink()
 
-    def log_step(
+    def log_tact(
         self,
         protocol: EDKMarnovRetentionCollapseProtocol,
         include_field: bool = False,
@@ -2137,7 +2240,12 @@ class EDKMarnovProtocolLogger:
         )
 
         payload = {
+            "tact": tact,
             "step": tact,
+            "tact_index": tact,
+            "simulation_time": float(
+                protocol.engine.simulation_time
+            ),
             "module": (
                 "module_edk_marnov_retention_collapse_protocol"
             ),
@@ -2186,6 +2294,23 @@ class EDKMarnovProtocolLogger:
         return (
             metrics_path,
             field_path,
+        )
+
+    def log_step(
+        self,
+        protocol: EDKMarnovRetentionCollapseProtocol,
+        include_field: bool = False,
+    ) -> tuple[Path, Path | None]:
+        """
+        Compatibility alias for older scripts and tests.
+
+        Internally this represents one tact of the
+        Marnov Retention-Collapse Protocol.
+        """
+
+        return self.log_tact(
+            protocol,
+            include_field=include_field,
         )
 
     def log_summary(
