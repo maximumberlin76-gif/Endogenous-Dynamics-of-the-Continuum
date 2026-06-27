@@ -3,9 +3,15 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import re
 from pathlib import Path
 from typing import Any, Iterable
+
+os.environ.setdefault(
+    "MPLBACKEND",
+    "Agg",
+)
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -52,14 +58,18 @@ _STATE_ORDER = (
 )
 
 
-def _numeric_suffix(path: Path) -> int:
+def _numeric_suffix(
+    path: Path,
+) -> int:
     match = re.search(
         r"(\d+)(?=\.json$)",
         path.name,
     )
 
     return (
-        int(match.group(1))
+        int(
+            match.group(1)
+        )
         if match
         else -1
     )
@@ -73,18 +83,77 @@ def _as_float(
         return math.nan
 
     try:
-        number = float(value)
+        number = float(
+            value
+        )
     except (TypeError, ValueError) as exc:
         raise ValueError(
             f"Metric {name!r} is not numeric: {value!r}"
         ) from exc
 
-    if not math.isfinite(number):
+    if not math.isfinite(
+        number
+    ):
         raise ValueError(
             f"Metric {name!r} is not finite: {number!r}"
         )
 
     return number
+
+
+def _optional_float_value(
+    value: Any,
+    name: str,
+) -> float | None:
+    if value is None:
+        return None
+
+    return _as_float(
+        value,
+        name,
+    )
+
+
+def _optional_int_value(
+    value: Any,
+    name: str,
+) -> int | None:
+    if value is None:
+        return None
+
+    try:
+        number = float(
+            value
+        )
+    except (TypeError, ValueError) as exc:
+        raise ValueError(
+            f"Metric {name!r} is not integer-compatible: {value!r}"
+        ) from exc
+
+    if not math.isfinite(
+        number
+    ):
+        raise ValueError(
+            f"Metric {name!r} is not finite: {number!r}"
+        )
+
+    integer = int(
+        number
+    )
+
+    if not math.isclose(
+        number,
+        float(
+            integer
+        ),
+        rel_tol=0.0,
+        abs_tol=1.0e-12,
+    ):
+        raise ValueError(
+            f"Metric {name!r} is not integer-compatible: {value!r}"
+        )
+
+    return integer
 
 
 def _load_json(
@@ -94,14 +163,144 @@ def _load_json(
         "r",
         encoding="utf-8",
     ) as stream:
-        payload = json.load(stream)
+        payload = json.load(
+            stream
+        )
 
-    if not isinstance(payload, dict):
+    if not isinstance(
+        payload,
+        dict,
+    ):
         raise ValueError(
             f"JSON root must be an object: {path}"
         )
 
     return payload
+
+
+def _extract_metadata_tact(
+    payload: dict[str, Any],
+    path: Path,
+) -> int | None:
+    for key in (
+        "tact",
+        "tact_index",
+        "step",
+    ):
+        if key in payload:
+            return _optional_int_value(
+                payload.get(
+                    key
+                ),
+                (
+                    f"{key} in "
+                    f"{path.name}"
+                ),
+            )
+
+    return None
+
+
+def _validate_tact_metadata(
+    *,
+    filename_tact: int,
+    metadata_tact: int | None,
+    metrics_tact: int | None,
+    path: Path,
+) -> int:
+    candidates = [
+        value
+        for value in (
+            metadata_tact,
+            metrics_tact,
+            (
+                filename_tact
+                if filename_tact >= 0
+                else None
+            ),
+        )
+        if value is not None
+    ]
+
+    if not candidates:
+        raise ValueError(
+            f"Unable to resolve tact index for {path}"
+        )
+
+    resolved = candidates[0]
+
+    if (
+        filename_tact >= 0
+        and filename_tact != resolved
+    ):
+        raise ValueError(
+            (
+                "Tact metadata mismatch in "
+                f"{path.name}: filename={filename_tact}, "
+                f"resolved={resolved}"
+            )
+        )
+
+    if (
+        metadata_tact is not None
+        and metadata_tact != resolved
+    ):
+        raise ValueError(
+            (
+                "Top-level tact metadata mismatch in "
+                f"{path.name}: metadata={metadata_tact}, "
+                f"resolved={resolved}"
+            )
+        )
+
+    if (
+        metrics_tact is not None
+        and metrics_tact != resolved
+    ):
+        raise ValueError(
+            (
+                "Metrics tact_index mismatch in "
+                f"{path.name}: metrics={metrics_tact}, "
+                f"resolved={resolved}"
+            )
+        )
+
+    return resolved
+
+
+def _validate_simulation_time_metadata(
+    *,
+    metadata_time: float | None,
+    metrics_time: float | None,
+    path: Path,
+) -> float | None:
+    if (
+        metadata_time is None
+        and metrics_time is None
+    ):
+        return None
+
+    if metadata_time is None:
+        return metrics_time
+
+    if metrics_time is None:
+        return metadata_time
+
+    if not math.isclose(
+        metadata_time,
+        metrics_time,
+        rel_tol=1.0e-9,
+        abs_tol=1.0e-12,
+    ):
+        raise ValueError(
+            (
+                "simulation_time metadata mismatch in "
+                f"{path.name}: top_level={metadata_time}, "
+                f"metrics={metrics_time}"
+            )
+        )
+
+    return metrics_time
 
 
 def load_marnov_snapshots(
@@ -110,7 +309,9 @@ def load_marnov_snapshots(
     list[dict[str, Any]],
     dict[str, Any] | None,
 ]:
-    directory = Path(snapshot_dir)
+    directory = Path(
+        snapshot_dir
+    )
 
     if not directory.is_dir():
         raise FileNotFoundError(
@@ -133,21 +334,109 @@ def load_marnov_snapshots(
     records: list[dict[str, Any]] = []
 
     for path in snapshot_paths:
-        payload = _load_json(path)
+        payload = _load_json(
+            path
+        )
 
         metrics = payload.get(
             "metrics"
         )
 
-        if not isinstance(metrics, dict):
+        if not isinstance(
+            metrics,
+            dict,
+        ):
             raise ValueError(
                 f"Missing metrics object in {path}"
             )
 
+        record = dict(
+            metrics
+        )
+
+        filename_tact = _numeric_suffix(
+            path
+        )
+
+        metadata_tact = (
+            _extract_metadata_tact(
+                payload,
+                path,
+            )
+        )
+
+        metrics_tact = (
+            _optional_int_value(
+                record.get(
+                    "tact_index"
+                ),
+                (
+                    f"metrics.tact_index in "
+                    f"{path.name}"
+                ),
+            )
+            if "tact_index" in record
+            else None
+        )
+
+        resolved_tact = (
+            _validate_tact_metadata(
+                filename_tact=filename_tact,
+                metadata_tact=metadata_tact,
+                metrics_tact=metrics_tact,
+                path=path,
+            )
+        )
+
+        record[
+            "tact_index"
+        ] = resolved_tact
+
+        metadata_time = (
+            _optional_float_value(
+                payload.get(
+                    "simulation_time"
+                ),
+                (
+                    f"top-level simulation_time "
+                    f"in {path.name}"
+                ),
+            )
+            if "simulation_time" in payload
+            else None
+        )
+
+        metrics_time = (
+            _optional_float_value(
+                record.get(
+                    "simulation_time"
+                ),
+                (
+                    f"metrics.simulation_time "
+                    f"in {path.name}"
+                ),
+            )
+            if "simulation_time" in record
+            else None
+        )
+
+        resolved_time = (
+            _validate_simulation_time_metadata(
+                metadata_time=metadata_time,
+                metrics_time=metrics_time,
+                path=path,
+            )
+        )
+
+        if resolved_time is not None:
+            record[
+                "simulation_time"
+            ] = resolved_time
+
         missing = [
             key
             for key in _REQUIRED_METRICS
-            if key not in metrics
+            if key not in record
         ]
 
         if missing:
@@ -156,30 +445,50 @@ def load_marnov_snapshots(
                 f"{', '.join(missing)}"
             )
 
-        record = dict(metrics)
+        record[
+            "_source_path"
+        ] = str(
+            path
+        )
 
-        record["_source_path"] = str(path)
+        record[
+            "_top_level_tact"
+        ] = metadata_tact
 
-        record["_transition_events"] = payload.get(
+        record[
+            "_filename_tact"
+        ] = filename_tact
+
+        record[
+            "_transition_events"
+        ] = payload.get(
             "transition_events",
             [],
         )
 
-        record["_protocol_configuration"] = payload.get(
+        record[
+            "_protocol_configuration"
+        ] = payload.get(
             "protocol_configuration",
             {},
         )
 
-        record["_engine_configuration"] = payload.get(
+        record[
+            "_engine_configuration"
+        ] = payload.get(
             "engine_configuration",
             {},
         )
 
-        records.append(record)
+        records.append(
+            record
+        )
 
     records.sort(
         key=lambda item: int(
-            item["tact_index"]
+            item[
+                "tact_index"
+            ]
         )
     )
 
@@ -189,7 +498,9 @@ def load_marnov_snapshots(
     )
 
     summary = (
-        _load_json(summary_path)
+        _load_json(
+            summary_path
+        )
         if summary_path.is_file()
         else None
     )
@@ -204,7 +515,9 @@ def _series(
     return np.asarray(
         [
             _as_float(
-                record.get(key),
+                record.get(
+                    key
+                ),
                 key,
             )
             for record in records
@@ -219,10 +532,14 @@ def _optional_scalar(
     key: str,
 ) -> float | None:
     if summary is not None:
-        value = summary.get(key)
+        value = summary.get(
+            key
+        )
 
         if value is not None:
-            return float(value)
+            return float(
+                value
+            )
 
         final_metrics = summary.get(
             "final_metrics"
@@ -232,16 +549,26 @@ def _optional_scalar(
             final_metrics,
             dict,
         ):
-            value = final_metrics.get(key)
+            value = final_metrics.get(
+                key
+            )
 
             if value is not None:
-                return float(value)
+                return float(
+                    value
+                )
 
-    for record in reversed(records):
-        value = record.get(key)
+    for record in reversed(
+        records
+    ):
+        value = record.get(
+            key
+        )
 
         if value is not None:
-            return float(value)
+            return float(
+                value
+            )
 
     return None
 
@@ -258,7 +585,9 @@ def _optional_tact(
     )
 
     return (
-        int(value)
+        int(
+            value
+        )
         if value is not None
         else None
     )
@@ -290,7 +619,9 @@ def _transition_tacts(
             )
 
     if not events:
-        seen: set[tuple[str, int]] = set()
+        seen: set[
+            tuple[str, int]
+        ] = set()
 
         for record in records:
             record_events = record.get(
@@ -330,14 +661,24 @@ def _transition_tacts(
 
                 event_key = (
                     name,
-                    int(tact),
+                    int(
+                        tact
+                    ),
                 )
 
                 if event_key not in seen:
-                    seen.add(event_key)
-                    events.append(event)
+                    seen.add(
+                        event_key
+                    )
 
-    transitions: dict[str, int] = {}
+                    events.append(
+                        event
+                    )
+
+    transitions: dict[
+        str,
+        int,
+    ] = {}
 
     for event in events:
         name = str(
@@ -355,7 +696,11 @@ def _transition_tacts(
             name
             and tact is not None
         ):
-            transitions[name] = int(tact)
+            transitions[
+                name
+            ] = int(
+                tact
+            )
 
     return transitions
 
@@ -368,7 +713,9 @@ def _add_vertical_marker(
     if tact is None:
         return
 
-    axis_list = list(axes)
+    axis_list = list(
+        axes
+    )
 
     for axis in axis_list:
         axis.axvline(
@@ -492,7 +839,9 @@ def plot_marnov_diagnostics(
 
     protocol_states = [
         str(
-            record["protocol_state"]
+            record[
+                "protocol_state"
+            ]
         )
         for record in records
     ]
@@ -503,7 +852,9 @@ def plot_marnov_diagnostics(
 
     for state in protocol_states:
         if state not in state_names:
-            state_names.append(state)
+            state_names.append(
+                state
+            )
 
     state_to_index = {
         name: index
@@ -514,7 +865,9 @@ def plot_marnov_diagnostics(
 
     state_values = np.asarray(
         [
-            state_to_index[state]
+            state_to_index[
+                state
+            ]
             for state in protocol_states
         ],
         dtype=float,
@@ -599,7 +952,9 @@ def plot_marnov_diagnostics(
         )
 
         R_unlock = float(
-            R_t[unlock_index]
+            R_t[
+                unlock_index
+            ]
         )
 
         amplitude_unlock = float(
@@ -1076,7 +1431,9 @@ def plot_marnov_diagnostics(
     output_path: Path | None = None
 
     if output is not None:
-        output_path = Path(output)
+        output_path = Path(
+            output
+        )
 
         output_path.parent.mkdir(
             parents=True,
@@ -1086,12 +1443,15 @@ def plot_marnov_diagnostics(
         figure.savefig(
             output_path,
             dpi=180,
+            bbox_inches="tight",
         )
 
     if show:
         plt.show()
     else:
-        plt.close(figure)
+        plt.close(
+            figure
+        )
 
     return output_path
 
