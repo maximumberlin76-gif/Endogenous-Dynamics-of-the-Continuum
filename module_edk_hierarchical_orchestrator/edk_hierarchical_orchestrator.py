@@ -123,6 +123,7 @@ class FieldProvenance:
         value: Any,
     ) -> "FieldProvenance":
         history = list(self.transition_history)
+
         history.append(
             {
                 "from_module": self.source_module,
@@ -133,7 +134,9 @@ class FieldProvenance:
             }
         )
 
-        dtype, shape = _dtype_and_shape(value)
+        dtype, shape = _dtype_and_shape(
+            value
+        )
 
         return FieldProvenance(
             field_name=self.field_name,
@@ -162,7 +165,9 @@ class EDKForwardCascadePacket:
             self,
             "payload",
             MappingProxyType(
-                _deep_copy_mapping(self.payload)
+                _deep_copy_mapping(
+                    self.payload
+                )
             ),
         )
 
@@ -170,7 +175,9 @@ class EDKForwardCascadePacket:
             self,
             "field_provenance",
             MappingProxyType(
-                dict(self.field_provenance)
+                dict(
+                    self.field_provenance
+                )
             ),
         )
 
@@ -244,24 +251,42 @@ class EDKHierarchicalState:
 
     def clone(self) -> "EDKHierarchicalState":
         return EDKHierarchicalState(
-            tact_index=int(self.tact_index),
+            tact_index=int(
+                self.tact_index
+            ),
             simulation_time=float(
                 self.simulation_time
             ),
-            Q_n=_deep_copy_value(self.Q_n),
-            D_n=_deep_copy_value(self.D_n),
-            A_n=_deep_copy_value(self.A_n),
-            C_t=_deep_copy_value(self.C_t),
+            Q_n=_deep_copy_value(
+                self.Q_n
+            ),
+            D_n=_deep_copy_value(
+                self.D_n
+            ),
+            A_n=_deep_copy_value(
+                self.A_n
+            ),
+            C_t=_deep_copy_value(
+                self.C_t
+            ),
             C_proxy_t=_deep_copy_value(
                 self.C_proxy_t
             ),
-            P_t=_deep_copy_value(self.P_t),
+            P_t=_deep_copy_value(
+                self.P_t
+            ),
             R_t_phase_order=_deep_copy_value(
                 self.R_t_phase_order
             ),
-            T_int=_deep_copy_value(self.T_int),
-            J_flux=_deep_copy_value(self.J_flux),
-            M_t=_deep_copy_value(self.M_t),
+            T_int=_deep_copy_value(
+                self.T_int
+            ),
+            J_flux=_deep_copy_value(
+                self.J_flux
+            ),
+            M_t=_deep_copy_value(
+                self.M_t
+            ),
             retention_margin=_deep_copy_value(
                 self.retention_margin
             ),
@@ -436,7 +461,9 @@ class CallableModuleAdapter:
     ] | None = None
 
     output_validator: Callable[
-        [Mapping[str, Any]],
+        [
+            Mapping[str, Any],
+        ],
         bool | None,
     ] | None = None
 
@@ -531,7 +558,9 @@ class EDKModuleRegistry:
         ] = adapter
 
         self._by_stage[
-            str(adapter.stage_name)
+            str(
+                adapter.stage_name
+            )
         ].append(
             adapter
         )
@@ -753,8 +782,14 @@ class EDKModuleRegistry:
         )
 
         if (
-            len(set(required_inputs))
-            != len(required_inputs)
+            len(
+                set(
+                    required_inputs
+                )
+            )
+            != len(
+                required_inputs
+            )
         ):
             raise EDKOrchestratorError(
                 RunStatus.MODULE_REGISTRATION_FAILED,
@@ -765,8 +800,14 @@ class EDKModuleRegistry:
             )
 
         if (
-            len(set(provided_outputs))
-            != len(provided_outputs)
+            len(
+                set(
+                    provided_outputs
+                )
+            )
+            != len(
+                provided_outputs
+            )
         ):
             raise EDKOrchestratorError(
                 RunStatus.MODULE_REGISTRATION_FAILED,
@@ -846,6 +887,12 @@ class EDKHierarchicalLogger:
 
         metadata = {
             "status": status.value,
+            "tact": tact_number,
+            "step": tact_number,
+            "tact_index": tact_number,
+            "simulation_time": float(
+                state.simulation_time
+            ),
             "state": _json_safe(
                 state.as_payload()
             ),
@@ -857,7 +904,9 @@ class EDKHierarchicalLogger:
             ),
             "field_provenance": {
                 key: _json_safe(
-                    asdict(value)
+                    asdict(
+                        value
+                    )
                 )
                 for key, value
                 in state.field_provenance.items()
@@ -915,6 +964,29 @@ class EDKHierarchicalLogger:
             npz_path,
         )
 
+    def write_step(
+        self,
+        *,
+        state: EDKHierarchicalState,
+        payload: Mapping[str, Any],
+        feedback: EDKFeedbackPacket,
+        status: RunStatus,
+        registry: EDKModuleRegistry,
+    ) -> tuple[Path, Path]:
+        """
+        Compatibility alias for older scripts and tests.
+
+        Internally this represents one tact-by-tact hierarchical interval.
+        """
+
+        return self.write_tact(
+            state=state,
+            payload=payload,
+            feedback=feedback,
+            status=status,
+            registry=registry,
+        )
+
     def write_summary(
         self,
         summary: Mapping[str, Any],
@@ -937,7 +1009,9 @@ class EDKHierarchicalLogger:
                     f"failed: {error}"
                 ),
                 details={
-                    "path": str(path),
+                    "path": str(
+                        path
+                    ),
                 },
             ) from error
 
@@ -954,7 +1028,9 @@ class EDKHierarchicalLogger:
             dir=path.parent,
         )
 
-        temporary_path = Path(name)
+        temporary_path = Path(
+            name
+        )
 
         try:
             with os.fdopen(
@@ -963,14 +1039,19 @@ class EDKHierarchicalLogger:
                 encoding="utf-8",
             ) as handle:
                 json.dump(
-                    _json_safe(data),
+                    _json_safe(
+                        data
+                    ),
                     handle,
                     ensure_ascii=False,
                     indent=2,
                     sort_keys=True,
                 )
 
-                handle.write("\n")
+                handle.write(
+                    "\n"
+                )
+
                 handle.flush()
 
                 os.fsync(
@@ -1006,9 +1087,13 @@ class EDKHierarchicalLogger:
             dir=path.parent,
         )
 
-        os.close(descriptor)
+        os.close(
+            descriptor
+        )
 
-        temporary_path = Path(name)
+        temporary_path = Path(
+            name
+        )
 
         try:
             normalized = {
@@ -1049,7 +1134,10 @@ class EDKHierarchicalLogger:
             raise
 
 
-PhiOperator = Callable[..., Any]
+PhiOperator = Callable[
+    ...,
+    Any,
+]
 
 
 class EDKHierarchicalOrchestrator:
@@ -1090,7 +1178,9 @@ class EDKHierarchicalOrchestrator:
         self.phi_operator = phi_operator
         self.logger = logger
 
-        self.dt = float(dt)
+        self.dt = float(
+            dt
+        )
 
         self.execution_mode = ExecutionMode(
             execution_mode
@@ -1130,7 +1220,9 @@ class EDKHierarchicalOrchestrator:
         )
 
         if (
-            not math.isfinite(self.dt)
+            not math.isfinite(
+                self.dt
+            )
             or self.dt <= 0.0
         ):
             raise ValueError(
@@ -1357,8 +1449,12 @@ class EDKHierarchicalOrchestrator:
 
             retention_margin = (
                 self._retention_margin(
-                    payload.get("C_t"),
-                    payload.get("P_t"),
+                    payload.get(
+                        "C_t"
+                    ),
+                    payload.get(
+                        "P_t"
+                    ),
                 )
             )
 
@@ -1369,16 +1465,24 @@ class EDKHierarchicalOrchestrator:
             )
 
             if (
-                payload.get("C_proxy_t")
+                payload.get(
+                    "C_proxy_t"
+                )
                 is not None
-                and payload.get("P_t")
+                and payload.get(
+                    "P_t"
+                )
                 is not None
             ):
                 payload[
                     "C_proxy_retention_margin"
                 ] = _subtract(
-                    payload["C_proxy_t"],
-                    payload["P_t"],
+                    payload[
+                        "C_proxy_t"
+                    ],
+                    payload[
+                        "P_t"
+                    ],
                 )
 
             payload[
@@ -1598,7 +1702,9 @@ class EDKHierarchicalOrchestrator:
         if completed_tacts is None:
             completed_tacts = sum(
                 (
-                    record.get("status")
+                    record.get(
+                        "status"
+                    )
                     == RunStatus.COMPLETED.value
                 )
                 for record in self._history
@@ -1622,7 +1728,9 @@ class EDKHierarchicalOrchestrator:
             ),
             "field_provenance": {
                 key: _json_safe(
-                    asdict(value)
+                    asdict(
+                        value
+                    )
                 )
                 for key, value
                 in self.state.field_provenance.items()
@@ -1908,7 +2016,9 @@ class EDKHierarchicalOrchestrator:
         if (
             detected_backends
             and detected_backends
-            != {declared_backend}
+            != {
+                declared_backend
+            }
         ):
             raise EDKOrchestratorError(
                 RunStatus.BACKEND_MISMATCH,
@@ -2161,16 +2271,24 @@ class EDKHierarchicalOrchestrator:
 
         return EDKFeedbackPacket(
             D_n=_deep_copy_value(
-                payload.get("D_n")
+                payload.get(
+                    "D_n"
+                )
             ),
             A_n=_deep_copy_value(
-                payload.get("A_n")
+                payload.get(
+                    "A_n"
+                )
             ),
             J_flux=_deep_copy_value(
-                payload.get("J_flux")
+                payload.get(
+                    "J_flux"
+                )
             ),
             T_int=_deep_copy_value(
-                payload.get("T_int")
+                payload.get(
+                    "T_int"
+                )
             ),
             retained_structural_work=(
                 _deep_copy_value(
@@ -2210,15 +2328,23 @@ class EDKHierarchicalOrchestrator:
                 )
 
             return _deep_copy_value(
-                payload.get("Q_n")
+                payload.get(
+                    "Q_n"
+                )
             )
 
         try:
             return _invoke_phi(
                 self.phi_operator,
-                Q_n=payload.get("Q_n"),
-                D_n=payload.get("D_n"),
-                A_n=payload.get("A_n"),
+                Q_n=payload.get(
+                    "Q_n"
+                ),
+                D_n=payload.get(
+                    "D_n"
+                ),
+                A_n=payload.get(
+                    "A_n"
+                ),
                 feedback=feedback,
                 state=current_state.clone(),
                 dt=self.dt,
@@ -2300,7 +2426,9 @@ class EDKHierarchicalOrchestrator:
 
         next_events = [
             copy.deepcopy(
-                dict(item)
+                dict(
+                    item
+                )
             )
             for item in events
         ]
@@ -2379,19 +2507,29 @@ class EDKHierarchicalOrchestrator:
                 Q_next
             ),
             D_n=_deep_copy_value(
-                payload.get("D_n")
+                payload.get(
+                    "D_n"
+                )
             ),
             A_n=_deep_copy_value(
-                payload.get("A_n")
+                payload.get(
+                    "A_n"
+                )
             ),
             C_t=_deep_copy_value(
-                payload.get("C_t")
+                payload.get(
+                    "C_t"
+                )
             ),
             C_proxy_t=_deep_copy_value(
-                payload.get("C_proxy_t")
+                payload.get(
+                    "C_proxy_t"
+                )
             ),
             P_t=_deep_copy_value(
-                payload.get("P_t")
+                payload.get(
+                    "P_t"
+                )
             ),
             R_t_phase_order=_deep_copy_value(
                 payload.get(
@@ -2399,13 +2537,19 @@ class EDKHierarchicalOrchestrator:
                 )
             ),
             T_int=_deep_copy_value(
-                payload.get("T_int")
+                payload.get(
+                    "T_int"
+                )
             ),
             J_flux=_deep_copy_value(
-                payload.get("J_flux")
+                payload.get(
+                    "J_flux"
+                )
             ),
             M_t=_deep_copy_value(
-                payload.get("M_t")
+                payload.get(
+                    "M_t"
+                )
             ),
             retention_margin=_deep_copy_value(
                 retention_margin
@@ -2536,7 +2680,9 @@ def _invoke_phi(
     ]
 
     if missing_parameters:
-        if len(parameters) == 3:
+        if len(
+            parameters
+        ) == 3:
             return operator(
                 Q_n,
                 D_n,
@@ -2585,7 +2731,9 @@ def _import_symbol(
             module_name,
             separator,
             symbol_name,
-        ) = reference.rpartition(".")
+        ) = reference.rpartition(
+            "."
+        )
 
         if not separator:
             raise ValueError(
@@ -2678,7 +2826,9 @@ def build_orchestrator_from_configuration(
             )
 
         adapter_class = _import_symbol(
-            str(class_reference)
+            str(
+                class_reference
+            )
         )
 
         adapter_kwargs = dict(
@@ -2715,7 +2865,9 @@ def build_orchestrator_from_configuration(
 
     if phi_reference:
         phi_operator = _import_symbol(
-            str(phi_reference)
+            str(
+                phi_reference
+            )
         )
 
     if (
@@ -2802,7 +2954,9 @@ def _deep_copy_mapping(
     value: Mapping[str, Any],
 ) -> dict[str, Any]:
     return {
-        str(key): _deep_copy_value(
+        str(
+            key
+        ): _deep_copy_value(
             item
         )
         for key, item in value.items()
@@ -2846,7 +3000,9 @@ def _deep_copy_value(
         list,
     ):
         return [
-            _deep_copy_value(item)
+            _deep_copy_value(
+                item
+            )
             for item in value
         ]
 
@@ -2855,7 +3011,9 @@ def _deep_copy_value(
         tuple,
     ):
         return tuple(
-            _deep_copy_value(item)
+            _deep_copy_value(
+                item
+            )
             for item in value
         )
 
@@ -2864,7 +3022,9 @@ def _deep_copy_value(
         set,
     ):
         return {
-            _deep_copy_value(item)
+            _deep_copy_value(
+                item
+            )
             for item in value
         }
 
@@ -2906,9 +3066,13 @@ def _dtype_and_shape(
         np.ndarray,
     ):
         return (
-            str(value.dtype),
+            str(
+                value.dtype
+            ),
             tuple(
-                int(item)
+                int(
+                    item
+                )
                 for item in value.shape
             ),
         )
@@ -2931,13 +3095,17 @@ def _dtype_and_shape(
 
         return (
             (
-                str(dtype)
+                str(
+                    dtype
+                )
                 if dtype is not None
                 else None
             ),
             (
                 tuple(
-                    int(item)
+                    int(
+                        item
+                    )
                     for item in shape
                 )
                 if shape is not None
@@ -2950,7 +3118,9 @@ def _dtype_and_shape(
         np.generic,
     ):
         return (
-            str(value.dtype),
+            str(
+                value.dtype
+            ),
             (),
         )
 
@@ -2965,7 +3135,9 @@ def _dtype_and_shape(
         ),
     ):
         return (
-            type(value).__name__,
+            type(
+                value
+            ).__name__,
             (),
         )
 
@@ -3033,7 +3205,9 @@ def _collect_non_finite_paths(
         np.ndarray,
     ):
         if not np.all(
-            np.isfinite(value)
+            np.isfinite(
+                value
+            )
         ):
             bad_paths.append(
                 path
@@ -3050,7 +3224,9 @@ def _collect_non_finite_paths(
         )
 
         if not np.all(
-            np.isfinite(array)
+            np.isfinite(
+                array
+            )
         ):
             bad_paths.append(
                 path
@@ -3063,7 +3239,9 @@ def _collect_non_finite_paths(
         np.generic,
     ):
         if not bool(
-            np.isfinite(value)
+            np.isfinite(
+                value
+            )
         ):
             bad_paths.append(
                 path
@@ -3206,8 +3384,12 @@ def _subtract(
         )
     ):
         return (
-            np.asarray(left)
-            - np.asarray(right)
+            np.asarray(
+                left
+            )
+            - np.asarray(
+                right
+            )
         )
 
     return (
@@ -3224,7 +3406,9 @@ def _reduce_to_scalar(
         np.ndarray,
     ):
         return float(
-            np.mean(value)
+            np.mean(
+                value
+            )
         )
 
     if hasattr(
@@ -3233,7 +3417,9 @@ def _reduce_to_scalar(
     ):
         return float(
             np.mean(
-                _to_numpy(value)
+                _to_numpy(
+                    value
+                )
             )
         )
 
@@ -3267,7 +3453,9 @@ def _json_safe(
         FieldProvenance,
     ):
         return _json_safe(
-            asdict(value)
+            asdict(
+                value
+            )
         )
 
     if isinstance(
@@ -3275,7 +3463,9 @@ def _json_safe(
         Mapping,
     ):
         return {
-            str(key): _json_safe(
+            str(
+                key
+            ): _json_safe(
                 item
             )
             for key, item
@@ -3291,7 +3481,9 @@ def _json_safe(
         ),
     ):
         return [
-            _json_safe(item)
+            _json_safe(
+                item
+            )
             for item in value
         ]
 
@@ -3346,7 +3538,9 @@ def _json_safe(
         value,
         Path,
     ):
-        return str(value)
+        return str(
+            value
+        )
 
     if isinstance(
         value,
@@ -3373,10 +3567,14 @@ def _json_safe(
         "__dict__",
     ):
         return _json_safe(
-            vars(value)
+            vars(
+                value
+            )
         )
 
-    return repr(value)
+    return repr(
+        value
+    )
 
 
 def _collect_arrays(
@@ -3397,7 +3595,9 @@ def _collect_arrays(
                     f"{path}.{key}"
                 )
             else:
-                next_path = str(key)
+                next_path = str(
+                    key
+                )
 
             _collect_arrays(
                 item,
@@ -3449,12 +3649,30 @@ def _sanitize_npz_key(
 ) -> str:
     sanitized = (
         key
-        .replace(".", "__")
-        .replace("[", "_")
-        .replace("]", "")
-        .replace("/", "_")
-        .replace("\\", "_")
-        .replace(" ", "_")
+        .replace(
+            ".",
+            "__",
+        )
+        .replace(
+            "[",
+            "_",
+        )
+        .replace(
+            "]",
+            "",
+        )
+        .replace(
+            "/",
+            "_",
+        )
+        .replace(
+            "\\",
+            "_",
+        )
+        .replace(
+            " ",
+            "_",
+        )
     )
 
     return (
@@ -3473,7 +3691,9 @@ def _fsync_directory(
         return
 
     descriptor = os.open(
-        str(directory),
+        str(
+            directory
+        ),
         (
             os.O_RDONLY
             | os.O_DIRECTORY
@@ -3514,7 +3734,22 @@ def main() -> None:
     parser.add_argument(
         "--tacts",
         type=int,
-        default=1,
+        default=None,
+        help=(
+            "Number of tact-by-tact "
+            "hierarchical intervals."
+        ),
+    )
+
+    parser.add_argument(
+        "--steps",
+        type=int,
+        default=None,
+        help=(
+            "Compatibility alias for --tacts. "
+            "If --tacts is provided, --tacts "
+            "takes priority."
+        ),
     )
 
     parser.add_argument(
@@ -3551,13 +3786,23 @@ def main() -> None:
         )
     )
 
-    summary = orchestrator.run(
+    total_tacts = (
         arguments.tacts
+        if arguments.tacts is not None
+        else arguments.steps
+        if arguments.steps is not None
+        else 1
+    )
+
+    summary = orchestrator.run(
+        total_tacts
     )
 
     print(
         json.dumps(
-            _json_safe(summary),
+            _json_safe(
+                summary
+            ),
             ensure_ascii=False,
             indent=2,
             sort_keys=True,
