@@ -45,6 +45,18 @@ def _assert_unit_interval(
         )
 
 
+def _assert_non_negative(
+    metrics: dict[str, float],
+    key: str,
+) -> None:
+    value = metrics[key]
+
+    if value < 0.0:
+        raise RuntimeError(
+            f"Metric must be non-negative: {key}={value}"
+        )
+
+
 def main() -> None:
     config = VortexEngineConfig(
         num_domains=128,
@@ -83,6 +95,8 @@ def main() -> None:
         "mean_vorticity_abs",
         "mean_vorticity_signed",
         "vortex_alignment",
+        "positive_vortex_support",
+        "negative_vortex_penalty",
         "continuum_appearance_index",
     )
 
@@ -104,6 +118,8 @@ def main() -> None:
         "amplitude_retention",
         "C_proxy_t",
         "interface_retention_proxy",
+        "positive_vortex_support",
+        "negative_vortex_penalty",
     ):
         _assert_unit_interval(
             metrics,
@@ -116,14 +132,13 @@ def main() -> None:
             f"{metrics['vortex_alignment']}"
         )
 
-    if metrics["M_proxy_t"] < 0.0:
-        raise RuntimeError(
-            "M_proxy_t must be non-negative."
-        )
-
-    if metrics["continuum_appearance_index"] < 0.0:
-        raise RuntimeError(
-            "continuum_appearance_index must be non-negative."
+    for key in (
+        "M_proxy_t",
+        "continuum_appearance_index",
+    ):
+        _assert_non_negative(
+            metrics,
+            key,
         )
 
     if metrics["mean_vorticity_abs"] <= 0.0:
@@ -198,8 +213,8 @@ def main() -> None:
             str(output_dir)
         )
 
-        logger.log_step(
-            step_id=1,
+        logger.log_tact(
+            tact_index=1,
             engine=engine,
             include_field=True,
         )
@@ -232,15 +247,34 @@ def main() -> None:
                 stream
             )
 
+        if record.get("tact") != 1:
+            raise RuntimeError(
+                "Incorrect tact identifier in JSON snapshot."
+            )
+
         if record.get("step") != 1:
             raise RuntimeError(
-                "Incorrect step identifier in JSON snapshot."
+                "Incorrect compatibility step identifier in JSON snapshot."
             )
 
         if record.get("backend") != "cpu":
             raise RuntimeError(
                 "Incorrect backend identifier in JSON snapshot."
             )
+
+        record_metrics = record.get(
+            "metrics",
+            {},
+        )
+
+        for key in (
+            "positive_vortex_support",
+            "negative_vortex_penalty",
+        ):
+            if key not in record_metrics:
+                raise RuntimeError(
+                    f"{key} missing from JSON metric snapshot."
+                )
 
         with np.load(
             field_path
