@@ -1,28 +1,28 @@
-# EDK Spatiotemporal Phase-Delay Module
+# EDK Spatiotemporal Phase Delay
 
 ## EN
 
-### Purpose
+## Purpose
 
-This module introduces metric spatial delay of phase-signal propagation into the EDK numerical architecture.
+This module introduces metric spatiotemporal propagation delay of phase signals into the numerical EDK architecture.
 
-The module implements a spatially distributed Kuramoto-Sakaguchi system with propagation retardation. The phase state of neighboring domain `j` is not read at the current time of domain `i`. It is reconstructed from the previous state corresponding to the metric propagation delay:
+The module implements a spatially distributed Kuramoto-Sakaguchi system with propagation retardation. The phase state of a neighboring domain `j` is read by domain `i` through a reconstructed preceding state corresponding to the metric propagation delay:
 
 `tau_ij = distance_ij / c`
 
-The module therefore distinguishes:
+The module preserves the following controlled distinctions:
 
-`instantaneous phase coupling ≠ metric delayed phase coupling`
+`instantaneous phase coupling ≠ metric retarded phase coupling`
 
 `phase synchronization ≠ phase coherence`
 
-`R(t) ≠ complete C(t)`
+`R(t) ≠ full C(t)`
 
 `propagation delay ≠ automatically stabilizing influence`
 
-The module calculates delayed phase interaction as an independent base layer that can subsequently be used by the vortex phase-field module and other EDK modules.
+The module calculates retarded phase interaction as an independent base layer that can be used by the vortex phase-field module and other EDK modules.
 
-### Folder Structure
+## Folder Structure
 
 `module_edk_spatiotemporal_phase_delay/`
 
@@ -48,7 +48,7 @@ Recommended `.gitignore` entries:
 
 `__pycache__/`
 
-### External Dependencies
+## External Dependencies
 
 Required:
 
@@ -60,47 +60,43 @@ Required:
 
 Optional GPU backend:
 
-`CuPy compatible with the installed CUDA version`
+`CuPy compatible with the installed CUDA environment`
 
-The repository should not declare a generic CuPy dependency without matching it to the active CUDA runtime.
+The CuPy package is selected according to the active CUDA version.
 
 Example for CUDA 12:
 
 `pip install cupy-cuda12x`
 
-The corresponding CuPy package must be selected for the installed CUDA environment.
+The installed CuPy package must match the local CUDA environment.
 
-### Spatial Domain Geometry
+## Spatial Geometry of Domains
 
 Each phase domain receives a fixed three-dimensional coordinate:
 
 `x_i = (x_i, y_i, z_i)`
 
-The spatial displacement between domain `i` and neighboring domain `j` is:
+Spatial displacement between domain `i` and neighboring domain `j`:
 
 `delta_x_ij = x_j - x_i`
 
-The metric distance is:
+Metric distance:
 
 `d_ij = |delta_x_ij|`
 
-The propagation delay is:
+Propagation delay:
 
 `tau_ij = d_ij / c`
 
-Where:
+where:
 
 - `d_ij` is the metric distance between two spatial domains;
-
-- `c` is the model propagation parameter of the phase signal through the simulated medium;
-
+- `c` is the model parameter of phase-signal propagation through the simulated medium;
 - `tau_ij` is the individual propagation delay of the connection `i ← j`.
 
-The parameter `c` is a model parameter and is not automatically identified with the vacuum speed of light.
+The parameter `c` is a model parameter and is not automatically identified with the speed of light in vacuum.
 
-### Spatial Neighbor Graph
-
-The module does not retain a complete `N × N` distance and delay matrix.
+## Spatial Neighbor Graph
 
 Each domain interacts with a controlled number `k` of spatial neighbors.
 
@@ -108,7 +104,7 @@ The numerical structure therefore uses:
 
 `N × k`
 
-instead of:
+instead of a full pairwise structure:
 
 `N × N`
 
@@ -116,75 +112,66 @@ The main memory scaling is reduced from:
 
 `O(N²)`
 
-to approximately:
+approximately to:
 
 `O(N k)`
 
-This allows the module to operate with large domain populations without allocating complete pairwise tensors.
+This allows the module to operate with large domain ensembles without allocating full pairwise tensors.
 
-The nearest-neighbor graph is constructed in chunks so that a complete pairwise distance tensor is not retained in memory.
+The nearest-neighbor graph is built in blocks, so the complete pairwise-distance tensor is not retained in memory.
 
-### Spatial Coupling Weights
+## Spatial Coupling Weights
 
 The spatial coupling weight may be defined by a normalized radial kernel:
 
 `raw_w_ij = exp(-d_ij² / 2 sigma²)`
 
-The normalized weight is:
+Normalized weight:
 
 `w_ij = raw_w_ij / sum_j raw_w_ij`
 
-For every domain:
+For each domain:
 
 `sum_j w_ij = 1`
 
-This prevents the effective coupling amplitude from growing automatically with the selected number of neighbors.
+This keeps the effective coupling scale controlled when the selected number of neighbors changes.
 
-### Delayed Kuramoto-Sakaguchi Equation
+## Retarded Kuramoto-Sakaguchi Equation
 
-The delayed phase difference is:
+Retarded phase difference:
 
 `delta_theta_ij(t) = theta_j(t - tau_ij) - theta_i(t) - alpha`
 
-The phase evolution is:
+Phase evolution:
 
 `d theta_i / dt = omega_i + K sum_j w_ij sin(delta_theta_ij(t)) + F_i(t)`
 
-Where:
+where:
 
 - `theta_i(t)` is the current phase of domain `i`;
-
-- `theta_j(t - tau_ij)` is the delayed phase of neighboring domain `j`;
-
+- `theta_j(t - tau_ij)` is the retarded phase of neighboring domain `j`;
 - `omega_i` is the fixed natural frequency of domain `i`;
-
 - `K` is the coupling strength;
-
 - `w_ij` is the normalized spatial coupling weight;
-
 - `alpha` is the Sakaguchi phase-lag parameter;
+- `F_i(t)` is the external-forcing term.
 
-- `F_i(t)` is the external forcing term.
+Natural frequencies are initialized once and remain fixed during the full simulation.
 
-The natural frequencies are initialized once and remain fixed throughout the simulation.
+## External Phase Forcing
 
-They are not regenerated at every tact-by-tact interval.
-
-### External Phase Forcing
-
-The external forcing may be represented as:
+External forcing may be represented as:
 
 `F_i(t) = A_F sin(theta_F(t) - theta_i(t))`
 
-Where:
+where:
 
-- `A_F` is the external forcing density;
+- `A_F` is the external-forcing density;
+- `theta_F(t)` is the external-forcing phase.
 
-- `theta_F(t)` is the external forcing phase.
+When the external phase is not supplied, the module may use the current global mean phase as a model reference phase.
 
-When no external phase is supplied, the module may use the current global mean phase as a model reference.
-
-### Ring Buffer of Phase History
+## Ring Buffer of Phase History
 
 The required history depth is calculated from the maximum spatial delay:
 
@@ -194,19 +181,17 @@ The module uses a preallocated ring buffer:
 
 `phase_history[history_index, domain_index]`
 
-The complete history tensor is not reconstructed at every simulation step.
+This avoids repeated allocation and copying of the complete phase-history field during tact-by-tact simulation.
 
-This eliminates repeated allocation and copying of the entire phase history.
+## Fractional Delay Reconstruction
 
-### Fractional Delay Reconstruction
-
-In general:
+In the general case:
 
 `tau_ij / dt`
 
 is not an integer.
 
-The module therefore separates the delay into:
+The module therefore decomposes the delay into:
 
 `q_ij = floor(tau_ij / dt)`
 
@@ -214,7 +199,7 @@ and:
 
 `lambda_ij = tau_ij / dt - q_ij`
 
-The delayed phase is reconstructed between two neighboring history states.
+The retarded phase is reconstructed between two neighboring history states.
 
 To avoid discontinuities near `-pi` and `pi`, interpolation is performed through the complex phase representation:
 
@@ -228,145 +213,134 @@ To avoid discontinuities near `-pi` and `pi`, interpolation is performed through
 
 This prevents false interpolation across the phase-wrapping boundary.
 
-### Tact-by-Tact Phase Evolution
+## Tact-by-Tact Phase Evolution
 
-At each tact-by-tact interval, the module performs the following sequence:
+At each tact interval, the module performs the following sequence:
 
-`current phase state → delayed history indices → fractional delayed phase reconstruction → delayed phase differences → weighted Kuramoto-Sakaguchi interaction → external forcing → phase velocity → phase update → phase wrapping → ring-buffer update → diagnostic metric calculation`
+`current phase state → retarded-history indices → fractional-delay reconstruction → retarded phase differences → weighted Kuramoto-Sakaguchi interaction → external forcing → phase velocity → phase update → phase wrapping → ring-buffer update → diagnostic metric calculation`
 
 The wrapped phase state remains within:
 
 `-pi <= theta_i < pi`
 
-### Operational Metrics
+## Operational Metrics
 
-#### R_t_phase_order
+### R_t_phase_order
 
-The global Kuramoto phase-order parameter is:
+Global Kuramoto phase-order parameter:
 
 `R(t) = |mean(exp(i theta_i))|`
 
 `R(t)` measures global phase synchronization.
 
-It is not identified with the complete endogenous structural coherence `C(t)`.
+`R(t)` remains distinct from full endogenous structural coherence `C(t)`.
 
-#### global_mean_phase
+### global_mean_phase
 
-The global mean phase is:
+Global mean phase:
 
 `Psi(t) = arg(mean(exp(i theta_i)))`
 
-#### delayed_local_phase_order
+### delayed_local_phase_order
 
-For every domain, the local delayed phase order is calculated over its spatial neighbors:
+For each domain, the local retarded phase order is calculated over its spatial neighbors:
 
 `R_delay_i(t) = |sum_j w_ij exp(i theta_j(t - tau_ij))|`
 
-The system-level delayed local phase order is:
+System-level local retarded phase order:
 
 `R_delay_local(t) = mean_i(R_delay_i(t))`
 
-#### mean_phase_velocity
+### mean_phase_velocity
 
-The mean phase velocity is:
+Mean phase velocity:
 
 `mean_phase_velocity = mean_i(d theta_i / dt)`
 
-#### phase_velocity_dispersion
+### phase_velocity_dispersion
 
-The phase-velocity dispersion is:
+Dispersion of phase velocities:
 
 `phase_velocity_dispersion = std_i(d theta_i / dt)`
 
-This metric indicates whether the domains retain a common phase-velocity range or enter increasing phase divergence.
+This metric shows whether the domains retain a common phase-velocity range or transition toward increasing phase divergence.
 
-#### mean_delay
+### mean_delay
 
-The mean metric propagation delay is:
+Mean metric propagation delay:
 
 `mean_delay = mean_ij(tau_ij)`
 
-#### maximum_delay
+### maximum_delay
 
-The maximum retained metric propagation delay is:
+Maximum retained metric propagation delay:
 
 `maximum_delay = maximum_ij(tau_ij)`
 
-#### delay_dispersion
+### delay_dispersion
 
-The delay dispersion is:
+Delay dispersion:
 
 `delay_dispersion = std_ij(tau_ij)`
 
-#### delayed_coupling_energy_proxy
+### delayed_coupling_energy_proxy
 
-A bounded interaction proxy may be calculated as:
+A bounded interaction proxy parameter may be calculated as:
 
 `E_delay_proxy = mean_ij(w_ij cos(delta_theta_ij))`
 
-This metric describes the average agreement of delayed coupling relations.
+This metric describes the average coordination of retarded coupling links.
 
-It is a numerical diagnostic proxy and not an independently established physical energy law.
+It is a numerical diagnostic proxy parameter of the module layer.
 
-### Delay Is Not Automatically Stabilizing
+## Dynamic Role of Propagation Delay
 
 Propagation delay changes the stability topology of the dynamic system.
 
-Depending on the parameters, delay may produce:
+Depending on the parameters, delay may support or induce:
 
 - retained phase synchronization;
-
-- delayed phase locking;
-
+- retarded phase locking;
 - oscillatory synchronization;
-
 - phase clusters;
-
 - phase waves;
-
 - multistability;
-
 - chimera-like states;
-
 - phase-velocity dispersion;
-
 - destabilization;
-
 - transition toward endogenous dynamic criticality.
 
-The module therefore does not assume:
+The influence of delay is evaluated through the full metric profile and the dynamic trajectory of the system.
 
-`larger delay = greater stability`
-
-The influence of delay must be evaluated through the complete metric profile and parameter evolution.
-
-### CPU and GPU Modes
+## CPU and GPU Modes
 
 Automatic backend selection:
 
 `python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py`
 
-Force CPU:
+Forced CPU:
 
 `python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend cpu`
 
-Force GPU:
+Forced GPU:
 
 `python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend gpu`
 
-Example CPU run:
+CPU example:
 
-`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend cpu --domains 512 --neighbors 24 --steps 100 --dt 0.005 --forcing 2.0`
+`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend cpu --domains 512 --neighbors 24 --tacts 100 --dt 0.005 --forcing 2.0`
 
-Example GPU run:
+GPU example:
 
-`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend gpu --domains 16384 --neighbors 32 --steps 500 --dt 0.005 --forcing 2.0`
+`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend gpu --domains 16384 --neighbors 32 --tacts 500 --dt 0.005 --forcing 2.0`
 
-### Logging
+`--steps` may be preserved as a compatibility alias for older scripts, while `--tacts` remains the primary EDK execution term.
+
+## Logging
 
 The module writes compact JSON metric snapshots:
 
-`delay_step_000001.json`
+`delay_tact_000001.json`
 
 Optional field snapshots may be written as compressed NumPy archives:
 
@@ -390,102 +364,84 @@ A field snapshot may contain:
 
 `phase_velocity`
 
-Generated snapshots should normally remain outside permanent version control.
+Generated snapshots usually remain outside permanent version control.
 
-### Diagnostics
+## Diagnostics
 
-The diagnostic module reads the generated snapshots and visualizes:
+The diagnostic module reads generated snapshots and visualizes:
 
 - global phase-order parameter `R(t)`;
-
-- delayed local phase order;
-
+- local retarded phase order;
 - mean phase velocity;
-
 - phase-velocity dispersion;
-
 - mean and maximum spatial delay;
-
-- delayed coupling-energy proxy;
-
+- retarded-coupling energy proxy;
 - three-dimensional phase distribution;
-
 - three-dimensional propagation-delay graph.
 
 Example:
 
 `python module_edk_spatiotemporal_phase_delay/edk_delay_diagnostics.py --snapshot-dir edk_delay_snapshots --output edk_delay_diagnostics.png --no-show`
 
-The diagnostic visualization must use the calculated simulation data.
+The diagnostic visualization uses the calculated simulation data and the calculated spatial-delay field.
 
-It must not replace the calculated spatial delay field with an unrelated synthetic pattern.
+## Operational Chain
 
-### Operational Chain
+`spatial domains → three-dimensional coordinates → spatial neighbor graph → metric distances → propagation delays tau_ij → ring buffer of phase history → fractional-delay reconstruction → retarded phase differences → weighted Kuramoto-Sakaguchi interaction → phase velocity → tact-by-tact phase evolution → R(t) → local retarded phase order → phase-velocity dispersion → transfer into subsequent EDK modules`
 
-`spatial domains → three-dimensional coordinates → spatial neighbor graph → metric distances → propagation delays tau_ij → phase-history ring buffer → fractional delayed phase reconstruction → delayed phase differences → weighted Kuramoto-Sakaguchi interaction → phase velocity → tact-by-tact phase evolution → R(t) → delayed local phase order → phase-velocity dispersion → transfer to subsequent EDK modules`
-
-### Place in the EDK Architecture
+## Position in the EDK Architecture
 
 The module forms the base metric-retardation layer of the executable EDK architecture.
 
-Its position is:
+Its position:
 
-`framework parameters → three-dimensional spatial geometry → metric propagation delays → delayed phase states → delayed phase coupling → phase synchronization metrics → vortex phase-field layer → subsequent interface and exchange-flow calculations`
+`framework parameters → three-dimensional spatial geometry → metric propagation delays → retarded phase states → retarded phase coupling → phase-synchronization metrics → vortex phase-field layer → subsequent interface and exchange-flow calculations`
 
-The module may supply delayed phase states to:
+The module may pass retarded phase states into:
 
 `module_edk_vortex_phase_field`
 
-The vortex phase-field module subsequently adds:
+The vortex phase-field module then adds:
 
-`radial phase current → tangential phase current → node exchange-current field → discrete curl J → signed vortex feedback`
+`radial phase current → tangential phase current → nodal exchange-flow field → discrete rot J → signed vortex feedback`
 
-The delay module does not independently calculate or replace:
+## Integration Context
 
-- complete endogenous structural coherence `C(t)`;
+The module provides metric phase-retardation diagnostics and retarded phase states for subsequent EDK layers.
 
+Downstream layers may calculate or integrate:
+
+- full endogenous structural coherence `C(t)`;
 - cubic endogenous structural coherence `C3`;
-
 - resonance window `Omega(t)`;
-
 - retention threshold `Theta_N`;
-
 - dynamic interface tensor `T_int`;
-
 - manifested mass anchor `M(t)`;
-
-- through-scale exchange-flow channel `J_flux`;
-
+- through-channel of exchange flow `J_flux`;
 - recursive inheritance operator `Phi`.
 
-The module is suitable for:
+The module is intended for:
 
 - testing metric phase retardation;
-
-- comparing instantaneous and delayed coupling;
-
-- studying sensitivity to propagation speed;
-
+- comparing instantaneous and retarded coupling;
+- studying sensitivity to propagation velocity;
 - studying sensitivity to spatial topology;
-
 - identifying phase-locking regions;
-
-- identifying phase-dispersion regions;
-
+- identifying phase-divergence regions;
 - studying multistability and oscillatory synchronization;
+- forming reproducible phase-delay snapshots;
+- preparing retarded phase states for the vortex phase-field module;
+- comparing CPU and GPU performance.
 
-- generating reproducible phase-delay snapshots;
+---
 
-- preparing delayed phase states for the vortex phase-field module;
-
-- CPU and GPU performance comparison.
-
+# EDK Пространственно-временная фазовая задержка
 
 ## RU
 
-### Назначение
+## Назначение
 
-Данный модуль вводит метрическую пространственную задержку распространения фазового сигнала в численную архитектуру EDK.
+Данный модуль вводит метрическую пространственно-временную задержку распространения фазового сигнала в численную архитектуру EDK.
 
 Модуль реализует пространственно распределённую систему Курамото — Сакагучи с ретардацией распространения. Фазовое состояние соседнего домена `j` считывается не в текущий момент домена `i`, а реконструируется из предшествующего состояния, соответствующего метрической задержке распространения:
 
@@ -503,7 +459,7 @@ The module is suitable for:
 
 Модуль рассчитывает ретардированное фазовое взаимодействие как самостоятельный базовый слой, который впоследствии может использоваться вихревым фазово-полевым модулем и другими модулями EDK.
 
-### Структура папки
+## Структура папки
 
 `module_edk_spatiotemporal_phase_delay/`
 
@@ -529,7 +485,7 @@ The module is suitable for:
 
 `__pycache__/`
 
-### Внешние зависимости
+## Внешние зависимости
 
 Обязательные:
 
@@ -543,15 +499,15 @@ The module is suitable for:
 
 `CuPy, совместимый с установленной версией CUDA`
 
-В репозитории не следует объявлять абстрактную зависимость CuPy без согласования с активной средой CUDA.
+Пакет CuPy выбирается согласно активной версии CUDA.
 
 Пример для CUDA 12:
 
 `pip install cupy-cuda12x`
 
-Необходимо выбирать соответствующий пакет CuPy для установленной среды CUDA.
+Установленный пакет CuPy должен соответствовать локальной среде CUDA.
 
-### Пространственная геометрия доменов
+## Пространственная геометрия доменов
 
 Каждый фазовый домен получает фиксированную трёхмерную координату:
 
@@ -569,27 +525,23 @@ The module is suitable for:
 
 `tau_ij = d_ij / c`
 
-Где:
+где:
 
 - `d_ij` — метрическое расстояние между двумя пространственными доменами;
-
 - `c` — модельный параметр распространения фазового сигнала через симулируемую среду;
-
 - `tau_ij` — индивидуальная задержка распространения связи `i ← j`.
 
 Параметр `c` является параметром модели и автоматически не отождествляется со скоростью света в вакууме.
 
-### Пространственный граф соседства
-
-Модуль не удерживает полную матрицу расстояний и задержек `N × N`.
+## Пространственный граф соседства
 
 Каждый домен взаимодействует с контролируемым числом `k` пространственных соседей.
 
-Поэтому численная структура использует:
+Численная структура поэтому использует:
 
 `N × k`
 
-вместо:
+вместо полной попарной структуры:
 
 `N × N`
 
@@ -605,7 +557,7 @@ The module is suitable for:
 
 Граф ближайших соседей строится блоками, поэтому полный тензор попарных расстояний не удерживается в памяти.
 
-### Пространственные веса сопряжения
+## Пространственные веса сопряжения
 
 Пространственный вес сопряжения может определяться нормированным радиальным ядром:
 
@@ -619,9 +571,9 @@ The module is suitable for:
 
 `sum_j w_ij = 1`
 
-Это предотвращает автоматическое увеличение эффективной амплитуды сопряжения при увеличении выбранного числа соседей.
+Это сохраняет контролируемый масштаб эффективного сопряжения при изменении выбранного числа соседей.
 
-### Ретардированное уравнение Курамото — Сакагучи
+## Ретардированное уравнение Курамото — Сакагучи
 
 Ретардированная разность фаз:
 
@@ -631,41 +583,32 @@ The module is suitable for:
 
 `d theta_i / dt = omega_i + K sum_j w_ij sin(delta_theta_ij(t)) + F_i(t)`
 
-Где:
+где:
 
 - `theta_i(t)` — текущая фаза домена `i`;
-
 - `theta_j(t - tau_ij)` — ретардированная фаза соседнего домена `j`;
-
 - `omega_i` — фиксированная собственная частота домена `i`;
-
 - `K` — сила сопряжения;
-
 - `w_ij` — нормированный пространственный вес сопряжения;
-
 - `alpha` — параметр фазового сдвига Сакагучи;
-
 - `F_i(t)` — член внешнего форсинга.
 
 Собственные частоты инициализируются один раз и остаются постоянными в течение всей симуляции.
 
-Они не генерируются заново на каждом потактовом интервале.
-
-### Внешний фазовый форсинг
+## Внешний фазовый форсинг
 
 Внешний форсинг может быть представлен как:
 
 `F_i(t) = A_F sin(theta_F(t) - theta_i(t))`
 
-Где:
+где:
 
 - `A_F` — плотность внешнего форсинга;
-
 - `theta_F(t)` — фаза внешнего форсинга.
 
 Если внешняя фаза не задана, модуль может использовать текущую глобальную среднюю фазу как модельную опорную фазу.
 
-### Кольцевой буфер истории фаз
+## Кольцевой буфер истории фаз
 
 Необходимая глубина истории вычисляется из максимальной пространственной задержки:
 
@@ -675,11 +618,9 @@ The module is suitable for:
 
 `phase_history[history_index, domain_index]`
 
-Полный тензор истории не пересоздаётся на каждом шаге симуляции.
+Это устраняет повторное выделение памяти и копирование полного поля истории фаз во время потактовой симуляции.
 
-Это устраняет повторное выделение памяти и копирование всей истории фаз.
-
-### Реконструкция дробной задержки
+## Реконструкция дробной задержки
 
 В общем случае:
 
@@ -709,7 +650,7 @@ The module is suitable for:
 
 Это предотвращает ложную интерполяцию через границу свёртки фаз.
 
-### Потактовая эволюция фаз
+## Потактовая эволюция фаз
 
 На каждом потактовом интервале модуль выполняет следующую последовательность:
 
@@ -719,9 +660,9 @@ The module is suitable for:
 
 `-pi <= theta_i < pi`
 
-### Операционные метрики
+## Операционные метрики
 
-#### R_t_phase_order
+### R_t_phase_order
 
 Глобальный параметр фазового порядка Курамото:
 
@@ -729,15 +670,15 @@ The module is suitable for:
 
 `R(t)` измеряет глобальную фазовую синхронизацию.
 
-Он не отождествляется с полной эндогенной структурной когерентностью `C(t)`.
+`R(t)` остаётся отличным от полной эндогенной структурной когерентности `C(t)`.
 
-#### global_mean_phase
+### global_mean_phase
 
 Глобальная средняя фаза:
 
 `Psi(t) = arg(mean(exp(i theta_i)))`
 
-#### delayed_local_phase_order
+### delayed_local_phase_order
 
 Для каждого домена локальный ретардированный фазовый порядок вычисляется по его пространственным соседям:
 
@@ -747,13 +688,13 @@ The module is suitable for:
 
 `R_delay_local(t) = mean_i(R_delay_i(t))`
 
-#### mean_phase_velocity
+### mean_phase_velocity
 
 Средняя фазовая скорость:
 
 `mean_phase_velocity = mean_i(d theta_i / dt)`
 
-#### phase_velocity_dispersion
+### phase_velocity_dispersion
 
 Дисперсия фазовых скоростей:
 
@@ -761,25 +702,25 @@ The module is suitable for:
 
 Данная метрика показывает, удерживают ли домены общий диапазон фазовых скоростей либо переходят к нарастающему фазовому разносу.
 
-#### mean_delay
+### mean_delay
 
 Средняя метрическая задержка распространения:
 
 `mean_delay = mean_ij(tau_ij)`
 
-#### maximum_delay
+### maximum_delay
 
 Максимальная удерживаемая метрическая задержка распространения:
 
 `maximum_delay = maximum_ij(tau_ij)`
 
-#### delay_dispersion
+### delay_dispersion
 
 Дисперсия задержек:
 
 `delay_dispersion = std_ij(tau_ij)`
 
-#### delayed_coupling_energy_proxy
+### delayed_coupling_energy_proxy
 
 Ограниченный прокси-параметр взаимодействия может вычисляться как:
 
@@ -787,41 +728,28 @@ The module is suitable for:
 
 Эта метрика описывает среднее согласование ретардированных связей сопряжения.
 
-Она является численным диагностическим прокси-параметром, а не независимо установленным физическим законом энергии.
+Она является численным диагностическим прокси-параметром уровня модуля.
 
-### Задержка не является автоматически стабилизирующей
+## Динамическая роль задержки распространения
 
 Задержка распространения изменяет топологию устойчивости динамической системы.
 
-В зависимости от параметров задержка может формировать:
+В зависимости от параметров задержка может поддерживать или индуцировать:
 
 - удерживаемую фазовую синхронизацию;
-
 - ретардированную фазовую фиксацию;
-
 - колебательную синхронизацию;
-
 - фазовые кластеры;
-
 - фазовые волны;
-
 - мультистабильность;
-
 - химероподобные состояния;
-
 - дисперсию фазовых скоростей;
-
 - дестабилизацию;
-
 - переход к эндогенной динамической критичности.
 
-Поэтому модуль не принимает условие:
+Влияние задержки оценивается по полному профилю метрик и динамической траектории системы.
 
-`большая задержка = большая устойчивость`
-
-Влияние задержки должно оцениваться по полному профилю метрик и динамике параметров.
-
-### Режимы CPU и GPU
+## Режимы CPU и GPU
 
 Автоматический выбор бэкенда:
 
@@ -837,17 +765,19 @@ The module is suitable for:
 
 Пример запуска на CPU:
 
-`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend cpu --domains 512 --neighbors 24 --steps 100 --dt 0.005 --forcing 2.0`
+`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend cpu --domains 512 --neighbors 24 --tacts 100 --dt 0.005 --forcing 2.0`
 
 Пример запуска на GPU:
 
-`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend gpu --domains 16384 --neighbors 32 --steps 500 --dt 0.005 --forcing 2.0`
+`python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --backend gpu --domains 16384 --neighbors 32 --tacts 500 --dt 0.005 --forcing 2.0`
 
-### Логирование
+`--steps` может сохраняться как compatibility alias для старых скриптов, при этом `--tacts` остаётся основным исполнительным термином EDK.
+
+## Логирование
 
 Модуль записывает компактные JSON-снимки метрик:
 
-`delay_step_000001.json`
+`delay_tact_000001.json`
 
 Необязательные снимки полей могут записываться как сжатые архивы NumPy:
 
@@ -871,41 +801,32 @@ The module is suitable for:
 
 `phase_velocity`
 
-Генерируемые снимки обычно должны оставаться за пределами постоянного контроля версий.
+Генерируемые снимки обычно остаются за пределами постоянного контроля версий.
 
-### Диагностика
+## Диагностика
 
 Диагностический модуль считывает сформированные снимки и визуализирует:
 
 - глобальный параметр фазового порядка `R(t)`;
-
 - локальный ретардированный фазовый порядок;
-
 - среднюю фазовую скорость;
-
 - дисперсию фазовых скоростей;
-
 - среднюю и максимальную пространственную задержку;
-
 - прокси-параметр энергии ретардированного сопряжения;
-
 - трёхмерное распределение фаз;
-
 - трёхмерный граф задержек распространения.
 
 Пример:
 
 `python module_edk_spatiotemporal_phase_delay/edk_delay_diagnostics.py --snapshot-dir edk_delay_snapshots --output edk_delay_diagnostics.png --no-show`
 
-Диагностическая визуализация должна использовать вычисленные данные симуляции.
+Диагностическая визуализация использует рассчитанные данные симуляции и рассчитанное поле пространственных задержек.
 
-Она не должна заменять вычисленное поле пространственных задержек посторонним синтетическим паттерном.
-
-### Операционная цепочка
+## Операционная цепочка
 
 `пространственные домены → трёхмерные координаты → пространственный граф соседства → метрические расстояния → задержки распространения tau_ij → кольцевой буфер истории фаз → реконструкция дробной задержки → ретардированные разности фаз → взвешенное взаимодействие Курамото — Сакагучи → фазовая скорость → потактовая эволюция фаз → R(t) → локальный ретардированный фазовый порядок → дисперсия фазовых скоростей → передача в последующие модули EDK`
 
-### Место в архитектуре EDK
+## Место в архитектуре EDK
 
 Модуль формирует базовый метрический ретардационный слой исполняемой архитектуры EDK.
 
@@ -921,42 +842,30 @@ The module is suitable for:
 
 `радиальный фазовый ток → тангенциальный фазовый ток → узловое поле потока обмена → дискретный rot J → знаковую вихревую обратную связь`
 
-Модуль задержки самостоятельно не вычисляет и не заменяет:
+## Интеграционный контекст
+
+Модуль предоставляет метрики метрической фазовой ретардации и ретардированные состояния фаз для последующих слоёв EDK.
+
+Последующие слои могут рассчитывать или интегрировать:
 
 - полную эндогенную структурную когерентность `C(t)`;
-
 - кубическую эндогенную структурную когерентность `C3`;
-
 - резонансное окно `Omega(t)`;
-
 - порог удержания `Theta_N`;
-
 - динамический тензор интерфейса `T_int`;
-
 - проявленный массовый якорь `M(t)`;
-
 - сквозной канал потока обмена `J_flux`;
-
 - оператор рекурсивного наследования `Phi`.
 
 Модуль предназначен для:
 
 - проверки метрической фазовой ретардации;
-
 - сравнения мгновенного и ретардированного сопряжения;
-
 - исследования чувствительности к скорости распространения;
-
 - исследования чувствительности к пространственной топологии;
-
 - определения областей фазовой фиксации;
-
 - определения областей фазового разноса;
-
 - исследования мультистабильности и колебательной синхронизации;
-
 - формирования воспроизводимых снимков фазовой задержки;
-
 - подготовки ретардированных состояний фаз для вихревого фазово-полевого модуля;
-
 - сравнения производительности CPU и GPU.
