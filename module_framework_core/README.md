@@ -1,796 +1,863 @@
-# Continuum Core
+# Continuum Framework Core — EN/RU
 
-## EN — README for the Continuum Core module
+## EN — README for the Continuum Framework Core Module
 
-Module:
+Module path:
 
-module_framework_core/framework_core.py
+`module_framework_core/framework_core.py`
 
-Class:
+Main class:
 
-ContinuumSimulation
+`ContinuumSimulation`
 
-## EN — Purpose of the module
+Bilingual format:
 
-The `ContinuumSimulation` module is the core simulation module for the Endogenous Dynamics of the Continuum.
+`EN → RU`
 
-This module models the open nonlinear dissipative dynamic Continuum through:
+## EN — Module Purpose
+
+The `ContinuumSimulation` module is the framework-core simulation layer of Endogenous Dynamics of the Continuum.
+
+The module models a local domain of an open nonlinear dissipative dynamic Continuum through:
 
 - a multiplet of coupled phase layers;
-- the Phi phase-locking operator;
-- endogenous structural coherence C(t);
-- manifested mass M(t);
-- the dynamic interface tensor T_int;
-- the dissipative flow channel J_flux;
-- the Continuum appearance layer;
-- Marnov Protocol demolition under excessive external pressure.
+- a local Phi-support phase-coupling operator;
+- phase synchronization and phase-coherence support;
+- general endogenous structural coherence proxy `C(t)`;
+- manifested mass anchor `M(t)`;
+- dynamic interface tensor `T_int`;
+- through massless exchange-flow channel `J_flux`;
+- Continuum appearance index;
+- controlled demanifestation through the Marnov Protocol under excessive destabilizing pressure.
 
-The module is conceptual and intended for numerical sandbox experiments.
+The module is conceptual and intended for numerical sandbox experiments inside the EDK repository.
 
-## EN — Main module chain
+## EN — Controlled Distinctions
 
-phase layers
--> Phi phase-locking operator
--> phase coherence
--> endogenous structural coherence C(t)
--> resonance-window phase transition
--> manifested mass M(t)
--> dynamic interface tensor T_int
--> J_flux
--> continuum_appearance_index
--> manifestation_regime
+The module preserves the following controlled distinctions:
 
-## EN — Phi operator
+`phase synchronization ≠ phase coherence`
 
-The function `calculate_phi_operator` calculates the Phi operator as a phase-frequency synchronizer.
+`R(t) ≠ C(t)`
 
-The Phi operator is implemented as a Kuramoto-style nonlinear synchronization mechanism across the multiplet phase layers.
+`C(t) ≠ C3`
+
+`T_int ≠ M(t)`
+
+`J ≠ J_flux`
+
+`C(t)` is the general endogenous structural coherence of the system.
+
+`R(t)` is a reduced observable phase synchronization indicator or order parameter.
+
+`C3` is the cubic nonlinear potential of volumetric retention.
+
+`T_int` is the dynamic interface tensor.
+
+`M(t)` is the manifested mass anchor.
+
+`J_flux` is the through massless exchange-flow channel of the EDK architecture.
+
+## EN — Main Operational Chain
+
+The main operational chain of the module is:
+
+`phase layers → local Phi-support phase-coupling operator → phase synchronization indicator R(t) → phase-coherence support → C(t) → resonance-window transition condition → T_int → M(t) → J_flux → continuum_appearance_index → manifestation_regime`
+
+This executable module uses a reduced numerical proxy of `C(t)`.
+
+The reduced proxy does not replace the full theoretical definition of general endogenous structural coherence.
+
+## EN — Phi-Support Operator
+
+The function:
+
+`calculate_phi_operator`
+
+calculates the local Phi-support phase-coupling operator.
+
+In this module, the operator is implemented as a Kuramoto-style nonlinear phase-coupling mechanism over a multiplet of phase layers.
 
 Algorithmic chain:
 
-phases
--> phase_difference
--> phase_velocity
--> updated phases
--> order_parameter
--> last_phase_coherence
+`phases → phase_difference → phase_velocity → updated phases → order_parameter → last_phase_coherence`
 
 Phase difference:
 
-phase_difference = phases_j − phases_i
+`phase_difference = phases_j − phases_i`
 
 Phase velocity:
 
-phase_velocity = omega + (coupling_strength / num_layers) · sum(sin(phase_difference))
+`phase_velocity = omega + coupling_strength / num_layers · sum(sin(phase_difference))`
 
 Order parameter:
 
-order_parameter = abs(mean(exp(i · phases)))
+`order_parameter = abs(mean(exp(i · phases)))`
 
 Meaning:
 
-`order_parameter` represents the current phase coherence of the multiplet layers in the range [0, 1].
+`order_parameter` is a reduced phase synchronization indicator in the interval `[0, 1]`.
 
-## EN — Recursive po-tactive state update
+Inside this module, this indicator supports the local calculation of phase-coherence support and the reduced proxy of `C(t)`.
 
-The function `update_state` advances the Continuum state by one recursive po-tactive dynamic step.
+It must not be identified with the full general endogenous structural coherence `C(t)`.
+
+## EN — Recursive Tact-by-Tact State Update
+
+The function:
+
+`update_state`
+
+advances the local Continuum state by one recursive tact-by-tact dynamic step.
 
 Algorithmic chain:
 
-coupling_strength
--> calculate_phi_operator
--> phase_coherence
--> external_pressure
--> C
--> M
--> T_int
--> J_flux
--> continuum_appearance_index
+`coupling_strength → calculate_phi_operator → phase synchronization indicator R(t) → phase-coherence support → external_pressure → C(t) proxy → T_int → M(t) → J_flux → continuum_appearance_index`
 
-Endogenous structural coherence:
+Reduced endogenous structural coherence proxy:
 
-C = phase_coherence / (1 + external_pressure)
+`C = phase_coherence / (1 + external_pressure)`
 
-Resonance-window phase transition:
+Resonance-window transition condition:
 
-if C > 0.8:
+`if C > 0.8`
 
-M = C · 10
+Retained state update:
 
-T_int = identity_matrix(3) · C
+`M = C · 10`
 
-If C is not above the threshold, partial demanifestation occurs:
+`T_int = identity_matrix(3) · C`
 
-M = M · 0.1
+Partial demanifestation update:
 
-T_int = T_int · C
+`M = M · 0.1`
 
-Dissipative / exchange flow channel:
+`T_int = T_int · C`
 
-J_flux = M · phase_coherence
+Exchange-flow channel:
+
+`J_flux = M · phase_coherence`
 
 Meaning:
 
-when endogenous structural coherence exceeds the threshold, manifested mass and the dynamic interface tensor appear. When coherence drops below the threshold, the local form partially demanifests.
+When the reduced endogenous structural coherence proxy exceeds the retained-state threshold, the local dynamic interface tensor and manifested mass anchor are reinforced.
 
-## EN — Continuum appearance index
+When the coherence proxy falls below the threshold, the local form partially demanifests.
 
-The function `_update_continuum_appearance` updates the Continuum appearance index.
+## EN — Continuum Appearance Index
 
-The Continuum appearance index describes how strongly the local dynamic interface is manifested as a retained form regime.
+The function:
+
+`_update_continuum_appearance`
+
+updates the Continuum appearance index.
+
+The Continuum appearance index describes how strongly the local dynamic interface is manifested as a retained form-state.
 
 It combines:
 
-- phase coherence of the multiplet;
-- endogenous structural coherence C(t);
-- manifested mass M(t);
-- trace of the interface tensor T_int;
-- external pressure as destabilizing factor;
-- J_flux as exchange / dissipative channel.
+- phase synchronization indicator of the multiplet;
+- reduced endogenous structural coherence proxy `C(t)`;
+- manifested mass anchor `M(t)`;
+- trace of the dynamic interface tensor `T_int`;
+- external pressure as a destabilizing factor;
+- `J_flux` as the through exchange-flow channel.
 
 Tensor trace:
 
-tensor_trace = trace(T_int)
+`tensor_trace = trace(T_int)`
 
 Pressure penalty:
 
-pressure_penalty = 1 / (1 + last_external_pressure)
+`pressure_penalty = 1 / (1 + last_external_pressure)`
 
 Tensor factor:
 
-tensor_factor = log(1 + max(tensor_trace, 0))
+`tensor_factor = log(1 + max(tensor_trace, 0))`
 
 Mass factor:
 
-mass_factor = log(1 + max(M, 0))
+`mass_factor = log(1 + max(M, 0))`
 
 Flux factor:
 
-flux_factor = log(1 + max(J_flux, 0))
+`flux_factor = log(1 + max(J_flux, 0))`
 
-Formula of the Continuum appearance index:
+Continuum appearance index:
 
-continuum_appearance_index = last_phase_coherence · C · (1 + tensor_factor) · (1 + mass_factor) · (1 + flux_factor) · pressure_penalty
+`continuum_appearance_index = last_phase_coherence · C · (1 + tensor_factor) · (1 + mass_factor) · (1 + flux_factor) · pressure_penalty`
 
-## EN — Continuum appearance state
+## EN — Continuum Appearance State
 
-The function `calculate_continuum_appearance` calculates the current appearance state of the local Continuum domain.
+The function:
 
-It returns:
+`calculate_continuum_appearance`
 
-continuum_appearance_index
+returns the current appearance state of the local Continuum domain.
 
-manifestation_regime
+Returned fields:
 
-phase_coherence
+- `continuum_appearance_index`
+- `manifestation_regime`
+- `phase_coherence`
+- `endogenous_structural_coherence`
+- `manifested_mass`
+- `tensor_trace`
+- `j_flux`
+- `external_pressure`
 
-endogenous_structural_coherence
+## EN — Manifestation Regimes
 
-manifested_mass
+`STABLE CONTINUUM FORM MANIFESTATION`
 
-tensor_trace
+Stable manifestation of a local Continuum form.
 
-j_flux
+`PARTIAL CONTINUUM FORM MANIFESTATION`
 
-external_pressure
+Partial manifestation of a local Continuum form.
 
-## EN — Manifestation statuses
+`WEAK OR UNSTABLE CONTINUUM FORM MANIFESTATION`
 
-STABLE CONTINUUM FORM MANIFESTATION — stable Continuum form manifestation
-
-PARTIAL CONTINUUM FORM MANIFESTATION — partial Continuum form manifestation
-
-WEAK OR UNSTABLE CONTINUUM FORM MANIFESTATION — weak or unstable Continuum form manifestation
+Weak or unstable manifestation of a local Continuum form.
 
 ## EN — Marnov Protocol
 
-The function `run_marnov_demolition` runs the Marnov Protocol.
+The function:
 
-The Marnov Protocol represents recursive po-tactive demolition of the local dynamic interface when external pressure strongly exceeds endogenous structural coherence.
+`run_marnov_demolition`
+
+runs the Marnov Protocol.
+
+The Marnov Protocol is a recursive tact-by-tact controlled demanifestation procedure of a local dynamic interface when destabilizing pressure strongly exceeds the retained coherence capacity.
 
 Algorithmic chain:
 
-external_pressure
--> velocity
--> t_delay
--> recursive decrease of C
--> T_int demolition
--> mass_gradient
--> mass demanifestation
--> J_flux
--> continuum_appearance_index
--> T_int -> 0
--> M -> 0
--> J_flux -> 0
+`external_pressure → velocity → t_delay → recursive decrease of C(t) proxy → T_int demolition → mass_gradient → mass demanifestation → J_flux redistribution → continuum_appearance_index decrease → T_int → 0 → M(t) → 0 → J_flux → 0`
 
-Drift velocity of the tension wave:
+Stress-wave drift velocity:
 
-velocity = mu · external_pressure
+`velocity = mu · external_pressure`
 
-Delay Scaling Law:
+Delay scaling law:
 
-t_delay = velocity ^ (-1/3)
+`t_delay = velocity ^ (-1/3)`
 
-Recursive po-tactive decrease of endogenous structural coherence:
+Recursive tact-by-tact decrease of endogenous structural coherence proxy:
 
-C = C − (external_pressure · t_delay) · dt
+`C = C − external_pressure · t_delay · dt`
 
-Interface tensor demolition:
+Dynamic interface tensor demolition:
 
-T_int = T_int · C
+`T_int = T_int · C`
 
 Mass gradient:
 
-mass_gradient = M · C
+`mass_gradient = M · C`
 
-Mass demanifestation and redirection into J_flux:
+Mass demanifestation and redistribution into `J_flux`:
 
-J_flux = M · (1 − C)
+`J_flux = M · (1 − C)`
 
-M = mass_gradient
+`M = mass_gradient`
 
-Mathematical closure:
+Final mathematical closure:
 
-T_int = zero_matrix(3, 3)
+`T_int = zero_matrix(3, 3)`
 
-M = 0
+`M = 0`
 
-J_flux = 0
+`J_flux = 0`
 
-continuum_appearance_index = 0
+`continuum_appearance_index = 0`
 
 Meaning:
 
-when external pressure exceeds the retained coherence capacity of the local dynamic interface, the interface tensor collapses, manifested mass tends toward zero, and the local form demanifests into background modes of the Continuum.
+When destabilizing pressure exceeds the retained coherence capacity of the local dynamic interface, the interface tensor collapses, manifested mass approaches zero, and the local form demanifests into background Continuum modes.
 
-## EN — Core invariant of the module
+## EN — Main Module Invariant
 
-Continuum local manifestation = retained dynamic interface state produced by phase coherence of a multiplet of layers, endogenous structural coherence C(t), manifested mass M(t), interface tensor T_int, and exchange / dissipative flow J_flux under the condition that external pressure does not destroy the coherence regime.
+Local Continuum appearance is the retained state of a dynamic interface produced through phase-coupling support, phase-coherence support, reduced endogenous structural coherence proxy `C(t)`, manifested mass anchor `M(t)`, dynamic interface tensor `T_int`, and through exchange-flow channel `J_flux`, provided that destabilizing pressure does not destroy the coherence-supporting regime.
 
-## EN — Place in the EDK architecture
+## EN — Position in EDK Architecture
 
-module_framework_core
--> ContinuumSimulation
--> Phi phase-locking operator
--> C(t)
--> M(t)
--> T_int
--> J_flux
--> continuum_appearance_index
--> module_wave_genetics
--> module_molecular_chemistry
--> module_solar_synthesis
--> module_planetary_resonance
+Architectural position:
 
-## EN — Main class
+`module_framework_core → ContinuumSimulation → local Phi-support phase-coupling operator → R(t) → C(t) proxy → T_int → M(t) → J_flux → continuum_appearance_index → module_wave_genetics → module_molecular_phase_chemistry → module_solar_synthesis → module_planetary_resonance`
 
-ContinuumSimulation
+The module acts as the shared executable core for downstream biological, molecular, solar, planetary, visual, impulse-transition, and metric-bridge layers.
 
-## EN — Main fields
+## EN — Main Class
 
-num_layers — number of phase / quantum layers in the multiplet.
+`ContinuumSimulation`
 
-dt — discrete simulation time step.
+## EN — Main Fields
 
-rng — random number generator for reproducible experiments.
+`num_layers`
 
-phases — initial phase state of the multiplet layers.
+Number of phase or quantum layers in the multiplet.
 
-omega — intrinsic angular frequencies of the layers.
+`dt`
 
-C — endogenous structural coherence.
+Discrete simulation tact duration.
 
-M — manifested mass / local invariant anchor.
+`rng`
 
-T_int — dynamic interface tensor of 3D manifestation.
+Random-number generator for reproducible experiments.
 
-J_flux — massless dissipative flow channel.
+`phases`
 
-last_phase_coherence — latest phase coherence order parameter.
+Initial phase state of the multiplet layers.
 
-last_external_pressure — latest external parasitic pressure.
+`omega`
 
-continuum_appearance_index — numerical indicator of retained local manifestation.
+Natural angular frequencies of the layers.
 
-## EN — Main methods
+`C`
 
-calculate_phi_operator
+Reduced proxy of endogenous structural coherence.
 
-Calculates the Phi operator as a phase-frequency synchronizer.
+`M`
 
-update_state
+Manifested mass anchor or local invariant anchor.
 
-Advances the Continuum state by one recursive po-tactive dynamic step.
+`T_int`
 
-_update_continuum_appearance
+Dynamic interface tensor of 3D manifestation.
+
+`J_flux`
+
+Through massless exchange-flow channel.
+
+`last_phase_coherence`
+
+Last reduced phase synchronization indicator.
+
+`last_external_pressure`
+
+Last external destabilizing pressure.
+
+`continuum_appearance_index`
+
+Numerical indicator of retained local appearance.
+
+## EN — Main Methods
+
+`calculate_phi_operator`
+
+Calculates the local Phi-support phase-coupling operator.
+
+`update_state`
+
+Advances the local Continuum state by one recursive tact-by-tact dynamic step.
+
+`_update_continuum_appearance`
 
 Updates the Continuum appearance index.
 
-calculate_continuum_appearance
+`calculate_continuum_appearance`
 
 Calculates the current appearance state of the local Continuum domain.
 
-run_marnov_demolition
+`run_marnov_demolition`
 
-Runs the Marnov Protocol demolition under excessive external pressure.
+Runs the Marnov Protocol under excessive destabilizing pressure.
 
-## EN — Execution logic
+## EN — Execution Logic
 
-The module first initializes the Continuum simulation with:
+The module initializes the Continuum simulation with:
 
-num_layers = 8
+    num_layers = 8
+    dt = 0.01
+    seed = 42
 
-dt = 0.01
+It then runs five regular Continuum-update steps with:
 
-seed = 42
-
-Then it runs five normal Continuum update steps with:
-
-coupling_strength = 15.0
-
-external_pressure = 0.1
+    coupling_strength = 15.0
+    external_pressure = 0.1
 
 At each step, the module prints:
 
-layer phase coherence;
+- phase synchronization indicator;
+- manifested mass;
+- `J_flux`;
+- Continuum appearance index;
+- manifestation regime.
 
-manifested mass;
+Then the module runs a critical overload experiment.
 
-J flux;
+First, it updates the system with:
 
-Continuum appearance index;
+    coupling_strength = 2.0
+    external_pressure = 50.0
 
-manifestation regime.
+Then it runs the Marnov Protocol with:
 
-Then the module starts the critical overload experiment.
-
-It first updates the system state with:
-
-coupling_strength = 2.0
-
-external_pressure = 50.0
-
-Then it runs the Marnov Protocol demolition with:
-
-external_pressure = 50.0
+    external_pressure = 50.0
 
 During the Marnov Protocol, the module prints:
 
-tick number;
+- tact number;
+- `t_delay`;
+- `C`;
+- mass;
+- `J_flux`;
+- appearance index.
 
-t_delay;
-
-C;
-
-Mass;
-
-J flux;
-
-Appearance.
-
-At shutdown, the module prints that the interface T_int approaches zero and matter is fully demanifested into the background modes of the Continuum.
+At completion, the module prints that the interface tensor `T_int` approaches zero and the local form is fully demanifested into background Continuum modes.
 
 ## EN — Dependencies
 
-The module requires:
+Required dependency:
 
-numpy
+`numpy`
 
-## EN — Python version
+## EN — Python Version
 
 Python 3.10+
 
-## EN — Install dependencies
+## EN — Dependency Installation
 
-pip install numpy
+Install dependencies:
 
-## EN — Run command
+    pip install numpy
 
-Run from the module folder:
+## EN — Run Command
 
-python framework_core.py
+Run from the module directory:
+
+    python framework_core.py
 
 Run from the repository root:
 
-python module_framework_core/framework_core.py
+    python module_framework_core/framework_core.py
 
-## EN — Expected output
+## EN — Expected Output
 
 The module prints the Continuum core simulation state, including:
 
-layer phase coherence;
+- phase synchronization indicator;
+- manifested mass;
+- `J_flux`;
+- Continuum appearance index;
+- manifestation regime;
+- critical overload state;
+- Marnov Protocol demolition tacts;
+- final demanifestation of `T_int`, `M(t)`, and `J_flux`.
 
-manifested mass;
+---
 
-J flux;
+# Модуль ядра фреймворка Континуума — EN/RU
 
-Continuum appearance index;
+## RU — README к модулю ядра фреймворка Континуума
 
-manifestation regime;
+Путь модуля:
 
-critical overload state;
+`module_framework_core/framework_core.py`
 
-Marnov Protocol demolition ticks;
+Основной класс:
 
-final demanifestation of T_int, M, and J_flux.
+`ContinuumSimulation`
 
-# Модуль Continuum Core
+Двуязычный формат:
 
-## RU — README к модулю Continuum Core
-
-Модуль:
-
-module_framework_core/framework_core.py
-
-Класс:
-
-ContinuumSimulation
+`EN → RU`
 
 ## RU — Назначение модуля
 
-Модуль `ContinuumSimulation` является ядром симуляции Эндогенной Динамики Континуума.
+Модуль `ContinuumSimulation` является слоем ядра симуляции фреймворка Эндогенной динамики Континуума.
 
-Этот модуль моделирует открытый нелинейный диссипативный динамический Континуум через:
+Модуль моделирует локальный домен открытого нелинейного диссипативного динамического Континуума через:
 
 - мультиплет сопряжённых фазовых слоёв;
-- фазово-запирающий оператор Phi;
-- эндогенную структурную когерентность C(t);
-- манифестированную массу M(t);
-- динамический интерфейсный тензор T_int;
-- диссипативный потоковый канал J_flux;
-- слой проявленности Континуума;
-- демонтаж по Marnov Protocol при избыточном внешнем давлении.
+- локальный Phi-support оператор фазового сопряжения;
+- фазовую синхронизацию и поддержку фазовой когерентности;
+- прокси общей эндогенной структурной когерентности `C(t)`;
+- проявленный массовый якорь `M(t)`;
+- динамический интерфейсный тензор `T_int`;
+- сквозной безмассовый канал потока обмена `J_flux`;
+- индекс проявленности Континуума;
+- управляемую деманифестацию по Marnov Protocol при избыточном дестабилизирующем давлении.
 
-Модуль является концептуальным и предназначен для численных sandbox-экспериментов.
+Модуль является концептуальным и предназначен для численных sandbox-экспериментов внутри репозитория EDK.
 
-## RU — Основная цепочка модуля
+## RU — Контролируемые различия
 
-phase layers
--> Phi phase-locking operator
--> phase coherence
--> endogenous structural coherence C(t)
--> resonance-window phase transition
--> manifested mass M(t)
--> dynamic interface tensor T_int
--> J_flux
--> continuum_appearance_index
--> manifestation_regime
+Модуль сохраняет следующие контролируемые различия:
 
-## RU — Оператор Phi
+`фазовая синхронизация ≠ фазовая когерентность`
 
-Функция `calculate_phi_operator` рассчитывает оператор Phi как фазово-частотный синхронизатор.
+`R(t) ≠ C(t)`
 
-Оператор Phi реализован как Kuramoto-style нелинейный механизм фазовой синхронизации по мультиплету фазовых слоёв.
+`C(t) ≠ C3`
+
+`T_int ≠ M(t)`
+
+`J ≠ J_flux`
+
+`C(t)` — общая эндогенная структурная когерентность системы.
+
+`R(t)` — редуцированный наблюдаемый индикатор фазовой синхронизации или параметр порядка.
+
+`C3` — кубический нелинейный потенциал объёмного удержания.
+
+`T_int` — динамический интерфейсный тензор.
+
+`M(t)` — проявленный массовый якорь.
+
+`J_flux` — сквозной безмассовый канал потока обмена архитектуры EDK.
+
+## RU — Основная операционная цепочка
+
+Основная операционная цепочка модуля:
+
+`phase layers → local Phi-support phase-coupling operator → phase synchronization indicator R(t) → phase-coherence support → C(t) → resonance-window transition condition → T_int → M(t) → J_flux → continuum_appearance_index → manifestation_regime`
+
+Этот исполняемый модуль использует редуцированный численный прокси `C(t)`.
+
+Редуцированный прокси не заменяет полное теоретическое определение общей эндогенной структурной когерентности.
+
+## RU — Phi-support оператор
+
+Функция:
+
+`calculate_phi_operator`
+
+рассчитывает локальный Phi-support оператор фазового сопряжения.
+
+В данном модуле оператор реализован как Kuramoto-style нелинейный механизм фазового сопряжения по мультиплету фазовых слоёв.
 
 Алгоритмическая цепочка:
 
-phases
--> phase_difference
--> phase_velocity
--> updated phases
--> order_parameter
--> last_phase_coherence
+`phases → phase_difference → phase_velocity → updated phases → order_parameter → last_phase_coherence`
 
 Фазовая разность:
 
-phase_difference = phases_j − phases_i
+`phase_difference = phases_j − phases_i`
 
 Фазовая скорость:
 
-phase_velocity = omega + (coupling_strength / num_layers) · sum(sin(phase_difference))
+`phase_velocity = omega + coupling_strength / num_layers · sum(sin(phase_difference))`
 
 Параметр порядка:
 
-order_parameter = abs(mean(exp(i · phases)))
+`order_parameter = abs(mean(exp(i · phases)))`
 
 Смысл:
 
-`order_parameter` представляет текущую фазовую когерентность мультиплетных слоёв в диапазоне [0, 1].
+`order_parameter` является редуцированным индикатором фазовой синхронизации в диапазоне `[0, 1]`.
+
+Внутри данного модуля этот индикатор поддерживает локальный расчёт поддержки фазовой когерентности и редуцированного прокси `C(t)`.
+
+Он не должен отождествляться с полной общей эндогенной структурной когерентностью `C(t)`.
 
 ## RU — Рекурсивное потактовое обновление состояния
 
-Функция `update_state` продвигает состояние Континуума на один рекурсивный потактовый динамический шаг.
+Функция:
+
+`update_state`
+
+продвигает локальное состояние Континуума на один рекурсивный потактовый динамический шаг.
 
 Алгоритмическая цепочка:
 
-coupling_strength
--> calculate_phi_operator
--> phase_coherence
--> external_pressure
--> C
--> M
--> T_int
--> J_flux
--> continuum_appearance_index
+`coupling_strength → calculate_phi_operator → phase synchronization indicator R(t) → phase-coherence support → external_pressure → C(t) proxy → T_int → M(t) → J_flux → continuum_appearance_index`
 
-Эндогенная структурная когерентность:
+Редуцированный прокси эндогенной структурной когерентности:
 
-C = phase_coherence / (1 + external_pressure)
+`C = phase_coherence / (1 + external_pressure)`
 
-Фазовый переход резонансного окна:
+Условие резонансного окна фазового перехода:
 
-if C > 0.8:
+`if C > 0.8`
 
-M = C · 10
+Обновление удерживаемого состояния:
 
-T_int = identity_matrix(3) · C
+`M = C · 10`
 
-Если C не выше порога, происходит частичная деманифестация:
+`T_int = identity_matrix(3) · C`
 
-M = M · 0.1
+Обновление частичной деманифестации:
 
-T_int = T_int · C
+`M = M · 0.1`
 
-Диссипативный / обменный потоковый канал:
+`T_int = T_int · C`
 
-J_flux = M · phase_coherence
+Канал потока обмена:
+
+`J_flux = M · phase_coherence`
 
 Смысл:
 
-когда эндогенная структурная когерентность превышает порог, появляются манифестированная масса и динамический интерфейсный тензор. Когда когерентность падает ниже порога, локальная форма частично деманифестируется.
+когда редуцированный прокси эндогенной структурной когерентности превышает порог удерживаемого состояния, локальный динамический интерфейсный тензор и проявленный массовый якорь усиливаются.
+
+Когда прокси когерентности падает ниже порога, локальная форма частично деманифестируется.
 
 ## RU — Индекс проявленности Континуума
 
-Функция `_update_continuum_appearance` обновляет индекс проявленности Континуума.
+Функция:
 
-Индекс проявленности Континуума описывает, насколько локальный динамический интерфейс проявлен как удержанный режим формы.
+`_update_continuum_appearance`
+
+обновляет индекс проявленности Континуума.
+
+Индекс проявленности Континуума описывает, насколько сильно локальный динамический интерфейс проявлен как удержанное состояние формы.
 
 Он сочетает:
 
-- фазовую когерентность мультиплета;
-- эндогенную структурную когерентность C(t);
-- манифестированную массу M(t);
-- след интерфейсного тензора T_int;
+- индикатор фазовой синхронизации мультиплета;
+- редуцированный прокси эндогенной структурной когерентности `C(t)`;
+- проявленный массовый якорь `M(t)`;
+- след динамического интерфейсного тензора `T_int`;
 - внешнее давление как дестабилизирующий фактор;
-- J_flux как обменный / диссипативный канал.
+- `J_flux` как сквозной канал потока обмена.
 
 След тензора:
 
-tensor_trace = trace(T_int)
+`tensor_trace = trace(T_int)`
 
 Штраф давления:
 
-pressure_penalty = 1 / (1 + last_external_pressure)
+`pressure_penalty = 1 / (1 + last_external_pressure)`
 
 Тензорный фактор:
 
-tensor_factor = log(1 + max(tensor_trace, 0))
+`tensor_factor = log(1 + max(tensor_trace, 0))`
 
 Массовый фактор:
 
-mass_factor = log(1 + max(M, 0))
+`mass_factor = log(1 + max(M, 0))`
 
 Потоковый фактор:
 
-flux_factor = log(1 + max(J_flux, 0))
+`flux_factor = log(1 + max(J_flux, 0))`
 
 Формула индекса проявленности Континуума:
 
-continuum_appearance_index = last_phase_coherence · C · (1 + tensor_factor) · (1 + mass_factor) · (1 + flux_factor) · pressure_penalty
+`continuum_appearance_index = last_phase_coherence · C · (1 + tensor_factor) · (1 + mass_factor) · (1 + flux_factor) · pressure_penalty`
 
 ## RU — Состояние проявленности Континуума
 
-Функция `calculate_continuum_appearance` рассчитывает текущее состояние проявленности локального домена Континуума.
+Функция:
 
-Она возвращает:
+`calculate_continuum_appearance`
 
-continuum_appearance_index
+возвращает текущее состояние проявленности локального домена Континуума.
 
-manifestation_regime
+Возвращаемые поля:
 
-phase_coherence
+- `continuum_appearance_index`
+- `manifestation_regime`
+- `phase_coherence`
+- `endogenous_structural_coherence`
+- `manifested_mass`
+- `tensor_trace`
+- `j_flux`
+- `external_pressure`
 
-endogenous_structural_coherence
+## RU — Режимы проявленности
 
-manifested_mass
+`STABLE CONTINUUM FORM MANIFESTATION`
 
-tensor_trace
+Устойчивая проявленность локальной формы Континуума.
 
-j_flux
+`PARTIAL CONTINUUM FORM MANIFESTATION`
 
-external_pressure
+Частичная проявленность локальной формы Континуума.
 
-## RU — Статусы проявленности
+`WEAK OR UNSTABLE CONTINUUM FORM MANIFESTATION`
 
-STABLE CONTINUUM FORM MANIFESTATION — устойчивая проявленность формы Континуума
-
-PARTIAL CONTINUUM FORM MANIFESTATION — частичная проявленность формы Континуума
-
-WEAK OR UNSTABLE CONTINUUM FORM MANIFESTATION — слабая или нестабильная проявленность формы Континуума
+Слабая или нестабильная проявленность локальной формы Континуума.
 
 ## RU — Marnov Protocol
 
-Функция `run_marnov_demolition` запускает Marnov Protocol.
+Функция:
 
-Marnov Protocol представляет рекурсивный потактовый демонтаж локального динамического интерфейса, когда внешнее давление сильно превышает эндогенную структурную когерентность.
+`run_marnov_demolition`
+
+запускает Marnov Protocol.
+
+Marnov Protocol представляет рекурсивную потактовую процедуру управляемой деманифестации локального динамического интерфейса, когда дестабилизирующее давление сильно превышает удерживаемую когерентностную способность.
 
 Алгоритмическая цепочка:
 
-external_pressure
--> velocity
--> t_delay
--> recursive decrease of C
--> T_int demolition
--> mass_gradient
--> mass demanifestation
--> J_flux
--> continuum_appearance_index
--> T_int -> 0
--> M -> 0
--> J_flux -> 0
+`external_pressure → velocity → t_delay → recursive decrease of C(t) proxy → T_int demolition → mass_gradient → mass demanifestation → J_flux redistribution → continuum_appearance_index decrease → T_int → 0 → M(t) → 0 → J_flux → 0`
 
 Скорость дрейфа волны напряжения:
 
-velocity = mu · external_pressure
+`velocity = mu · external_pressure`
 
-Delay Scaling Law:
+Delay scaling law:
 
-t_delay = velocity ^ (-1/3)
+`t_delay = velocity ^ (-1/3)`
 
-Рекурсивное потактовое снижение эндогенной структурной когерентности:
+Рекурсивное потактовое снижение прокси эндогенной структурной когерентности:
 
-C = C − (external_pressure · t_delay) · dt
+`C = C − external_pressure · t_delay · dt`
 
-Демонтаж интерфейсного тензора:
+Демонтаж динамического интерфейсного тензора:
 
-T_int = T_int · C
+`T_int = T_int · C`
 
 Градиент массы:
 
-mass_gradient = M · C
+`mass_gradient = M · C`
 
-Деманифестация массы и перенаправление в J_flux:
+Деманифестация массы и перераспределение в `J_flux`:
 
-J_flux = M · (1 − C)
+`J_flux = M · (1 − C)`
 
-M = mass_gradient
+`M = mass_gradient`
 
-Математическое замыкание:
+Финальное математическое замыкание:
 
-T_int = zero_matrix(3, 3)
+`T_int = zero_matrix(3, 3)`
 
-M = 0
+`M = 0`
 
-J_flux = 0
+`J_flux = 0`
 
-continuum_appearance_index = 0
+`continuum_appearance_index = 0`
 
 Смысл:
 
-когда внешнее давление превышает удерживающую когерентностную способность локального динамического интерфейса, интерфейсный тензор схлопывается, манифестированная масса стремится к нулю, а локальная форма деманифестируется в фоновые моды Континуума.
+когда дестабилизирующее давление превышает удерживаемую когерентностную способность локального динамического интерфейса, интерфейсный тензор схлопывается, проявленная масса стремится к нулю, а локальная форма деманифестируется в фоновые моды Континуума.
 
 ## RU — Основной инвариант модуля
 
-Локальная проявленность Континуума = удержанное состояние динамического интерфейса, произведённое фазовой когерентностью мультиплета слоёв, эндогенной структурной когерентностью C(t), манифестированной массой M(t), интерфейсным тензором T_int и обменным / диссипативным потоком J_flux при условии, что внешнее давление не разрушает когерентностный режим.
+Локальная проявленность Континуума — это удержанное состояние динамического интерфейса, произведённое через поддержку фазового сопряжения, поддержку фазовой когерентности, редуцированный прокси эндогенной структурной когерентности `C(t)`, проявленный массовый якорь `M(t)`, динамический интерфейсный тензор `T_int` и сквозной канал потока обмена `J_flux` при условии, что дестабилизирующее давление не разрушает режим поддержки когерентности.
 
 ## RU — Место в архитектуре EDK
 
-module_framework_core
--> ContinuumSimulation
--> Phi phase-locking operator
--> C(t)
--> M(t)
--> T_int
--> J_flux
--> continuum_appearance_index
--> module_wave_genetics
--> module_molecular_chemistry
--> module_solar_synthesis
--> module_planetary_resonance
+Архитектурное положение:
+
+`module_framework_core → ContinuumSimulation → local Phi-support phase-coupling operator → R(t) → C(t) proxy → T_int → M(t) → J_flux → continuum_appearance_index → module_wave_genetics → module_molecular_phase_chemistry → module_solar_synthesis → module_planetary_resonance`
+
+Модуль выступает общим исполняемым ядром для последующих биологических, молекулярных, солнечных, планетарных, визуальных, импульсно-переходных и метрическо-мостовых слоёв.
 
 ## RU — Основной класс
 
-ContinuumSimulation
+`ContinuumSimulation`
 
 ## RU — Основные поля
 
-num_layers — количество фазовых / квантовых слоёв в мультиплете.
+`num_layers`
 
-dt — дискретный шаг симуляционного времени.
+Количество фазовых или квантовых слоёв в мультиплете.
 
-rng — генератор случайных чисел для воспроизводимых экспериментов.
+`dt`
 
-phases — начальное фазовое состояние мультиплетных слоёв.
+Дискретная длительность такта симуляции.
 
-omega — собственные угловые частоты слоёв.
+`rng`
 
-C — эндогенная структурная когерентность.
+Генератор случайных чисел для воспроизводимых экспериментов.
 
-M — манифестированная масса / локальный инвариантный якорь.
+`phases`
 
-T_int — динамический интерфейсный тензор 3D-манифестации.
+Начальное фазовое состояние мультиплетных слоёв.
 
-J_flux — безмассовый диссипативный потоковый канал.
+`omega`
 
-last_phase_coherence — последний параметр порядка фазовой когерентности.
+Собственные угловые частоты слоёв.
 
-last_external_pressure — последнее внешнее паразитарное давление.
+`C`
 
-continuum_appearance_index — численный индикатор удержанной локальной проявленности.
+Редуцированный прокси эндогенной структурной когерентности.
+
+`M`
+
+Проявленный массовый якорь или локальный инвариантный якорь.
+
+`T_int`
+
+Динамический интерфейсный тензор 3D-проявления.
+
+`J_flux`
+
+Сквозной безмассовый канал потока обмена.
+
+`last_phase_coherence`
+
+Последний редуцированный индикатор фазовой синхронизации.
+
+`last_external_pressure`
+
+Последнее внешнее дестабилизирующее давление.
+
+`continuum_appearance_index`
+
+Численный индикатор удержанной локальной проявленности.
 
 ## RU — Основные методы
 
-calculate_phi_operator
+`calculate_phi_operator`
 
-Рассчитывает оператор Phi как фазово-частотный синхронизатор.
+Рассчитывает локальный Phi-support оператор фазового сопряжения.
 
-update_state
+`update_state`
 
-Продвигает состояние Континуума на один рекурсивный потактовый динамический шаг.
+Продвигает локальное состояние Континуума на один рекурсивный потактовый динамический шаг.
 
-_update_continuum_appearance
+`_update_continuum_appearance`
 
 Обновляет индекс проявленности Континуума.
 
-calculate_continuum_appearance
+`calculate_continuum_appearance`
 
 Рассчитывает текущее состояние проявленности локального домена Континуума.
 
-run_marnov_demolition
+`run_marnov_demolition`
 
-Запускает демонтаж по Marnov Protocol при избыточном внешнем давлении.
+Запускает Marnov Protocol при избыточном дестабилизирующем давлении.
 
 ## RU — Логика исполнения
 
-Модуль сначала инициализирует симуляцию Континуума с параметрами:
+Модуль инициализирует симуляцию Континуума с параметрами:
 
-num_layers = 8
-
-dt = 0.01
-
-seed = 42
+    num_layers = 8
+    dt = 0.01
+    seed = 42
 
 Затем запускает пять обычных шагов обновления Континуума с параметрами:
 
-coupling_strength = 15.0
-
-external_pressure = 0.1
+    coupling_strength = 15.0
+    external_pressure = 0.1
 
 На каждом шаге модуль печатает:
 
-фазовую когерентность слоя;
-
-манифестированную массу;
-
-J flux;
-
-индекс проявленности Континуума;
-
-режим проявленности.
+- индикатор фазовой синхронизации;
+- проявленную массу;
+- `J_flux`;
+- индекс проявленности Континуума;
+- режим проявленности.
 
 Затем модуль запускает эксперимент критической перегрузки.
 
 Сначала он обновляет состояние системы с параметрами:
 
-coupling_strength = 2.0
+    coupling_strength = 2.0
+    external_pressure = 50.0
 
-external_pressure = 50.0
+Затем запускает Marnov Protocol с параметром:
 
-Затем запускает демонтаж по Marnov Protocol с параметром:
-
-external_pressure = 50.0
+    external_pressure = 50.0
 
 Во время Marnov Protocol модуль печатает:
 
-номер такта;
+- номер такта;
+- `t_delay`;
+- `C`;
+- массу;
+- `J_flux`;
+- индекс проявленности.
 
-t_delay;
-
-C;
-
-Mass;
-
-J flux;
-
-Appearance.
-
-При завершении модуль печатает, что интерфейс T_int стремится к нулю, а материя полностью деманифестирована в фоновые моды Континуума.
+При завершении модуль печатает, что интерфейсный тензор `T_int` стремится к нулю, а локальная форма полностью деманифестируется в фоновые моды Континуума.
 
 ## RU — Зависимости
 
-Модулю требуется:
+Требуемая зависимость:
 
-numpy
+`numpy`
 
 ## RU — Версия Python
 
@@ -798,34 +865,29 @@ Python 3.10+
 
 ## RU — Установка зависимостей
 
-pip install numpy
+Установка зависимостей:
+
+    pip install numpy
 
 ## RU — Команда запуска
 
 Запуск из папки модуля:
 
-python framework_core.py
+    python framework_core.py
 
 Запуск из корня репозитория:
 
-python module_framework_core/framework_core.py
+    python module_framework_core/framework_core.py
 
 ## RU — Ожидаемый вывод
 
 Модуль печатает состояние симуляции ядра Континуума, включая:
 
-фазовую когерентность слоя;
-
-манифестированную массу;
-
-J flux;
-
-индекс проявленности Континуума;
-
-режим проявленности;
-
-состояние критической перегрузки;
-
-такты демонтажа по Marnov Protocol;
-
-финальную деманифестацию T_int, M и J_flux.
+- индикатор фазовой синхронизации;
+- проявленную массу;
+- `J_flux`;
+- индекс проявленности Континуума;
+- режим проявленности;
+- состояние критической перегрузки;
+- такты демонтажа по Marnov Protocol;
+- финальную деманифестацию `T_int`, `M(t)` и `J_flux`.
