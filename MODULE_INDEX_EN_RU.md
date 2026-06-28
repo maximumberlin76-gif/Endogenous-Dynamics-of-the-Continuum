@@ -766,7 +766,7 @@ Boundary invariants:
 
 C(t) ≠ C_proxy(t)
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 T_int ≠ M(t)
 
@@ -1184,7 +1184,7 @@ R(t) ≠ C(t)
 
 C_proxy(t) ≠ C(t)
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 T_int ≠ M(t)
 
@@ -2020,7 +2020,7 @@ python -m unittest module_edk_hierarchical_orchestrator/test_hierarchical_orches
 
 C(t) ≠ C_proxy(t)
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 T_int ≠ M(t)
 
@@ -2438,7 +2438,7 @@ R(t) ≠ C(t)
 
 C_proxy(t) ≠ C(t)
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 T_int ≠ M(t)
 

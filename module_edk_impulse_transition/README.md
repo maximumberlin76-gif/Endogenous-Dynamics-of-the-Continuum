@@ -35,7 +35,7 @@ The package connects higher-dimensional recursive, phase-coherent, and volumetri
 
 The package preserves the following controlled distinctions:
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `R(t) ≠ C(t)`
 
@@ -45,7 +45,7 @@ The package preserves the following controlled distinctions:
 
 `C(t)` is the general endogenous structural coherence of the system.
 
-`C3` is the cubic nonlinear volumetric retention potential.
+`C^3` is the cubic nonlinear volumetric retention potential.
 
 `R(t)` is an observable phase synchronization order parameter in a reduced sensory-fixed projection.
 
@@ -61,7 +61,7 @@ The package preserves the following controlled distinctions:
 
 The package-level operational chain is:
 
-`Phi → Psi_7D → Psi_coh → C3 → Omega(t) → C(t) > P(t) retention condition → mass_field → J → R(t) → directed output → J_flux`
+`Phi → Psi_7D → Psi_coh → C^3 → Omega(t) → C(t) > P(t) retention condition → mass_field → J → R(t) → directed output → J_flux`
 
 The cascade starts from recursive inheritance and phase-coherent retention.
 
@@ -114,11 +114,11 @@ The phase-lock layer forms the phase-coherent configuration:
 
 The cubic retention support is represented as:
 
-`C3 = trace(abs(Psi_coh)^2)`
+`C^3 = trace(abs(Psi_coh)^2)`
 
-Within the spatial projection, `C3` becomes a volumetric retention-support field.
+Within the spatial projection, `C^3` becomes a volumetric retention-support field.
 
-`C3` supports local volumetric retention and acts as an input to resonance-window filtering, mass-field manifestation, and directed impulse-flow damping.
+`C^3` supports local volumetric retention and acts as an input to resonance-window filtering, mass-field manifestation, and directed impulse-flow damping.
 
 ### 5D — Resonance-Window Filtering
 
@@ -128,7 +128,7 @@ The resonance-window layer updates the operational domain:
 
 The source term can include:
 
-- gradients or divergence-like structure of `C3`;
+- gradients or divergence-like structure of `C^3`;
 - drift induced by the current operator-intent vector;
 - influence of background non-resonant Continuum modes.
 
@@ -150,7 +150,7 @@ Where:
 
 `P(t)` is the destabilizing pressure.
 
-`C3` supports the local volumetric retention profile.
+`C^3` supports the local volumetric retention profile.
 
 The retained mask is formed through the coupled condition:
 
@@ -160,7 +160,7 @@ and:
 
 `Omega(t) remains inside the admissible retained domain`
 
-The numerical implementation can use local retention-support fields derived from `C3`, while the semantic retention condition remains:
+The numerical implementation can use local retention-support fields derived from `C^3`, while the semantic retention condition remains:
 
 `C(t) > P(t)`
 
@@ -189,15 +189,15 @@ The reduced impulse-flow layer evolves the local directed vector:
 
 The local flow equation has the form:
 
-`partial_t J + (J · grad)J = -gamma · grad rho_cont - beta · C3 · J`
+`partial_t J + (J · grad)J = -gamma · grad rho_cont - beta · C^3 · J`
 
 Where:
 
 - `partial_t J` is the local temporal change of the reduced impulse-flow proxy;
 - `(J · grad)J` is nonlinear convective transfer;
 - `grad rho_cont` is the gradient of background non-resonant Continuum modes;
-- `C3` is the cubic volumetric retention support;
-- `beta · C3 · J` is the damping contribution associated with retained cubic structure.
+- `C^3` is the cubic volumetric retention support;
+- `beta · C^3 · J` is the damping contribution associated with retained cubic structure.
 
 The 2D projection layer can calculate an observable phase synchronization indicator:
 
@@ -221,7 +221,7 @@ Functional scope:
 
 Operational chain:
 
-`U_6D → C3 → controlled disclosure → impulse transition → S_1D → J_flux`
+`U_6D → C^3 → controlled disclosure → impulse transition → S_1D → J_flux`
 
 ## EN — Poynting-Layer Distinction
 
@@ -262,11 +262,11 @@ The impulse-transition package provides directed-flow input for the metric-bridg
 
 The downstream relation is:
 
-`J_flux → partial_t J_flux → grad J_flux → grad rho_cont → C3 → R_J → G_int → projected interface response`
+`J_flux → partial_t J_flux → grad J_flux → grad rho_cont → C^3 → R_J → G_int → projected interface response`
 
 The exchange-flow residual is:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 ## EN — Run Commands
 
@@ -284,7 +284,7 @@ The impulse-transition package occupies the layer between volumetric retention /
 
 Architectural position:
 
-`Phi → U_6D → Psi_coh → C3 → Omega(t) → T_int → M(t) → J → J_flux → R_J → G_int`
+`Phi → U_6D → Psi_coh → C^3 → Omega(t) → T_int → M(t) → J → J_flux → R_J → G_int`
 
 The package converts retained higher-order structure into a directed reduced impulse-flow output while preserving the distinctions between general endogenous structural coherence, cubic retention support, reduced local impulse proxy, and through exchange-flow channel.
 
@@ -327,7 +327,7 @@ README-файл:
 
 Пакет сохраняет следующие контролируемые различия:
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `R(t) ≠ C(t)`
 
@@ -337,7 +337,7 @@ README-файл:
 
 `C(t)` — общая эндогенная структурная когерентность системы.
 
-`C3` — кубический нелинейный потенциал объёмного удержания.
+`C^3` — кубический нелинейный потенциал объёмного удержания.
 
 `R(t)` — наблюдаемый параметр порядка фазовой синхронизации в редуцированной сенсорно фиксированной проекции.
 
@@ -353,7 +353,7 @@ README-файл:
 
 Операционная цепочка пакета:
 
-`Phi → Psi_7D → Psi_coh → C3 → Omega(t) → условие удержания C(t) > P(t) → mass_field → J → R(t) → направленный выход → J_flux`
+`Phi → Psi_7D → Psi_coh → C^3 → Omega(t) → условие удержания C(t) > P(t) → mass_field → J → R(t) → направленный выход → J_flux`
 
 Каскад начинается с рекурсивного наследования и фазово-когерентного удержания.
 
@@ -406,11 +406,11 @@ README-файл:
 
 Кубическая поддержка удержания представлена как:
 
-`C3 = trace(abs(Psi_coh)^2)`
+`C^3 = trace(abs(Psi_coh)^2)`
 
-В пространственной проекции `C3` становится полем объёмной поддержки удержания.
+В пространственной проекции `C^3` становится полем объёмной поддержки удержания.
 
-`C3` поддерживает локальное объёмное удержание и входит в фильтрацию резонансного окна фазового перехода, проявление поля массы и демпфирование направленного импульсного потока.
+`C^3` поддерживает локальное объёмное удержание и входит в фильтрацию резонансного окна фазового перехода, проявление поля массы и демпфирование направленного импульсного потока.
 
 ### 5D — Фильтрация резонансного окна фазового перехода
 
@@ -420,7 +420,7 @@ README-файл:
 
 Источник может включать:
 
-- градиенты или дивергентноподобную структуру `C3`;
+- градиенты или дивергентноподобную структуру `C^3`;
 - дрейф, индуцированный текущим вектором намерения оператора;
 - влияние фоновых нерезонансных мод Континуума.
 
@@ -442,7 +442,7 @@ README-файл:
 
 `P(t)` — дестабилизирующее давление.
 
-`C3` поддерживает локальный профиль объёмного удержания.
+`C^3` поддерживает локальный профиль объёмного удержания.
 
 Удерживаемая маска формируется через сопряжённое условие:
 
@@ -452,7 +452,7 @@ README-файл:
 
 `Omega(t) остаётся внутри допустимой удерживаемой области`
 
-Точная численная реализация может использовать локальные поля поддержки удержания, производные от `C3`, при этом смысловое условие удержания остаётся:
+Точная численная реализация может использовать локальные поля поддержки удержания, производные от `C^3`, при этом смысловое условие удержания остаётся:
 
 `C(t) > P(t)`
 
@@ -481,15 +481,15 @@ README-файл:
 
 Локальное уравнение потока имеет вид:
 
-`partial_t J + (J · grad)J = -gamma · grad rho_cont - beta · C3 · J`
+`partial_t J + (J · grad)J = -gamma · grad rho_cont - beta · C^3 · J`
 
 Где:
 
 - `partial_t J` — локальное временное изменение редуцированного прокси импульсного потока;
 - `(J · grad)J` — нелинейный конвективный перенос;
 - `grad rho_cont` — градиент фоновых нерезонансных мод Континуума;
-- `C3` — кубическая поддержка объёмного удержания;
-- `beta · C3 · J` — демпфирующий вклад, связанный с удерживаемой кубической структурой.
+- `C^3` — кубическая поддержка объёмного удержания;
+- `beta · C^3 · J` — демпфирующий вклад, связанный с удерживаемой кубической структурой.
 
 Слой 2D-проекции может рассчитывать наблюдаемый индикатор фазовой синхронизации:
 
@@ -513,7 +513,7 @@ README-файл:
 
 Операционная цепочка:
 
-`U_6D → C3 → управляемое раскрытие → импульсный переход → S_1D → J_flux`
+`U_6D → C^3 → управляемое раскрытие → импульсный переход → S_1D → J_flux`
 
 ## RU — Различие слоя Пойнтинга
 
@@ -554,11 +554,11 @@ README-файл:
 
 Последующее отношение:
 
-`J_flux → partial_t J_flux → grad J_flux → grad rho_cont → C3 → R_J → G_int → projected interface response`
+`J_flux → partial_t J_flux → grad J_flux → grad rho_cont → C^3 → R_J → G_int → projected interface response`
 
 Остаток потока обмена:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 ## RU — Команды запуска
 
@@ -576,6 +576,6 @@ README-файл:
 
 Архитектурное положение:
 
-`Phi → U_6D → Psi_coh → C3 → Omega(t) → T_int → M(t) → J → J_flux → R_J → G_int`
+`Phi → U_6D → Psi_coh → C^3 → Omega(t) → T_int → M(t) → J → J_flux → R_J → G_int`
 
 Пакет переводит удерживаемую структуру высших порядков в направленный редуцированный выход импульсного потока, сохраняя различия между общей эндогенной структурной когерентностью, кубической поддержкой удержания, редуцированным локальным прокси импульса и сквозным каналом потока обмена.

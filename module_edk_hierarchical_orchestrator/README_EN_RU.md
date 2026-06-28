@@ -22,7 +22,7 @@ Each subsequent tact inherits the qualitative characteristics and retained state
 
 `C_proxy(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 
@@ -293,7 +293,7 @@ Expected files:
 
 `C_proxy(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 

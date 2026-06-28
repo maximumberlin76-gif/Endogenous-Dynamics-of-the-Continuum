@@ -1,4 +1,4 @@
-# Marnov Protocol U_6D / C3 Engineering Visualizer
+# Marnov Protocol U_6D / C^3 Engineering Visualizer
 
 ## EN — Engineering Visualization of Tact-by-Tact Phase Locking and Local Interface Transition
 
@@ -8,15 +8,15 @@ The `MarnovCubicPotentialVisualizer` module implements an engineering visual sim
 - the trajectory of a three-plane phase-state space;
 - the tensor-product multiplet operator `U_6D`;
 - the normalized phase-lock amplitude;
-- the local representation of `C3`;
-- the local transition between `C3` and the cubic-dissipation level `P_cubic`;
+- the local representation of `C^3`;
+- the local transition between `C^3` and the cubic-dissipation level `P_cubic`;
 - the independent system-level relation between `C(t)` and `P(t)`.
 
 The module combines temporal phase dynamics with spatial analysis of an interface barrier.
 
 The module preserves the mandatory distinctions:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 P(t) ≠ P_cubic
 
@@ -24,7 +24,7 @@ R(n) ≠ C(t)
 
 The local equality:
 
-C3 = P_cubic
+C^3 = P_cubic
 
 is a local cubic-transition boundary.
 
@@ -71,10 +71,10 @@ three orthogonal two-dimensional phase planes
 → pair-lock operators `L_k`  
 → tensor-product operator `U_6D`  
 → normalized phase-lock amplitude  
-→ local representation of `C3`  
+→ local representation of `C^3`  
 → comparison with `P_cubic`  
-→ local `C3`-dominance domain  
-→ local transition boundary `C3 = P_cubic`  
+→ local `C^3`-dominance domain  
+→ local transition boundary `C^3 = P_cubic`  
 → local cubic-dissipation-dominance domain
 
 Independent system-level relation:
@@ -84,7 +84,7 @@ C(t) and P(t)
 → C(t) = P(t): Endogenous Dynamic Criticality  
 → C(t) < P(t): degradation drift
 
-The local relation between `C3` and `P_cubic` must not be used as a replacement for the system-level relation between `C(t)` and `P(t)`.
+The local relation between `C^3` and `P_cubic` must not be used as a replacement for the system-level relation between `C(t)` and `P(t)`.
 
 ## EN — Pair-Lock Operator
 
@@ -157,29 +157,29 @@ The normalized lock amplitude is an indicator of the current multiplet phase-loc
 
 It is not the general endogenous structural coherence `C(t)`.
 
-## EN — Local Representation of C3
+## EN — Local Representation of C^3
 
-`C3` is defined within the EDK architecture as cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
+`C^3` is defined within the EDK architecture as cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
 
-The current visualizer represents the cubic amplitude component of `C3` through:
+The current visualizer represents the cubic amplitude component of `C^3` through:
 
-`C3 = (psi_amplitude · lock_amplitude)^3`
+`C^3 = (psi_amplitude · lock_amplitude)^3`
 
-The cubic relation increases the sensitivity of the local `C3` profile to a reduction in the normalized phase-lock amplitude.
+The cubic relation increases the sensitivity of the local `C^3` profile to a reduction in the normalized phase-lock amplitude.
 
 The local operational chain is:
 
 reduction of `lock_amplitude`  
-→ stronger relative reduction of `C3`  
-→ approach to the local `C3 / P_cubic` transition boundary
+→ stronger relative reduction of `C^3`  
+→ approach to the local `C^3 / P_cubic` transition boundary
 
-The current visualizer does not implement a separate temporal delay kernel for `C3`.
+The current visualizer does not implement a separate temporal delay kernel for `C^3`.
 
 It visualizes the cubic nonlinear amplitude component used by the local interface model.
 
-`C3` is not the general endogenous structural coherence:
+`C^3` is not the general endogenous structural coherence:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 ## EN — Local Cubic-Dissipation Level P_cubic
 
@@ -195,13 +195,13 @@ P(t) ≠ P_cubic
 
 The local relations are:
 
-C3 > P_cubic  
-→ local C3 dominance
+C^3 > P_cubic  
+→ local C^3 dominance
 
-C3 = P_cubic  
+C^3 = P_cubic  
 → local cubic-transition boundary
 
-C3 < P_cubic  
+C^3 < P_cubic  
 → local cubic-dissipation dominance
 
 These relations describe the local interface profile only.
@@ -226,13 +226,13 @@ C(t) = P(t)
 C(t) < P(t)  
 → degradation drift
 
-The method `classify_system_regime()` performs this classification independently from the local `C3` profile.
+The method `classify_system_regime()` performs this classification independently from the local `C^3` profile.
 
 The system-level relation must not be derived from:
 
 - the normalized trace of `U_6D`;
 - the phase-support coefficient `R`;
-- the local `C3` profile;
+- the local `C^3` profile;
 - the local cubic-dissipation level `P_cubic`.
 
 ## EN — Tact-by-Tact Phase Dynamics
@@ -291,9 +291,9 @@ The local phase-lock strength is:
 
 For each spatial coordinate, the module recalculates:
 
-`R(X) → L_k(X) → U_6D(X) → lock_amplitude(X) → C3(X)`
+`R(X) → L_k(X) → U_6D(X) → lock_amplitude(X) → C^3(X)`
 
-The local `C3` profile is then compared with the independent local cubic-dissipation profile:
+The local `C^3` profile is then compared with the independent local cubic-dissipation profile:
 
 `P_cubic(X)`
 
@@ -303,7 +303,7 @@ In the current implementation, `P_cubic(X)` is spatially constant unless the mod
 
 The module determines coordinates where:
 
-`C3(X) - P_cubic(X) = 0`
+`C^3(X) - P_cubic(X) = 0`
 
 The transition-point detector retains:
 
@@ -314,7 +314,7 @@ For a sign-changing interval, the transition coordinate is estimated through lin
 
 The resulting coordinates represent the local numerical boundary:
 
-`C3 = P_cubic`
+`C^3 = P_cubic`
 
 They are local cubic-transition coordinates.
 
@@ -362,7 +362,7 @@ This is the phase-state space of the numerical system.
 
 It is not a space of ordinary physical coordinates.
 
-### EN — 3. U_6D Lock Amplitude and C3
+### EN — 3. U_6D Lock Amplitude and C^3
 
 The graph displays:
 
@@ -370,35 +370,35 @@ The graph displays:
 
 and:
 
-`C3`
+`C^3`
 
 The normalized trace represents the current multiplet phase-lock amplitude.
 
-The `C3` curve represents the local cubic nonlinear amplitude used by the visualizer.
+The `C^3` curve represents the local cubic nonlinear amplitude used by the visualizer.
 
 Neither quantity is the general endogenous structural coherence `C(t)`.
 
-### EN — 4. Local C3 / P_cubic Interface Transition
+### EN — 4. Local C^3 / P_cubic Interface Transition
 
 The graph displays:
 
-`C3(X)`
+`C^3(X)`
 
 and:
 
 `P_cubic(X)`
 
-Local `C3`-dominance domain:
+Local `C^3`-dominance domain:
 
-`C3 > P_cubic`
+`C^3 > P_cubic`
 
 Local cubic-dissipation-dominance domain:
 
-`C3 < P_cubic`
+`C^3 < P_cubic`
 
 Vertical markers show the approximate local transition coordinates:
 
-`C3 = P_cubic`
+`C^3 = P_cubic`
 
 The graphical block separately displays the independent system-level values:
 
@@ -451,17 +451,17 @@ The module must not be interpreted as a direct numerical realization of six or s
 
 Local multiplet invariant:
 
-`tact-by-tact phase-lock retention is represented by a dynamically evolving multiplet state whose normalized phase-lock amplitude forms the local C3 profile`
+`tact-by-tact phase-lock retention is represented by a dynamically evolving multiplet state whose normalized phase-lock amplitude forms the local C^3 profile`
 
 Local interface relation:
 
-C3 > P_cubic  
-→ local C3 dominance
+C^3 > P_cubic  
+→ local C^3 dominance
 
-C3 = P_cubic  
+C^3 = P_cubic  
 → local cubic-transition boundary
 
-C3 < P_cubic  
+C^3 < P_cubic  
 → local cubic-dissipation dominance
 
 System-level relation:
@@ -477,7 +477,7 @@ C(t) < P(t)
 
 Mandatory distinctions:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 P(t) ≠ P_cubic
 
@@ -496,7 +496,7 @@ The local interface relation and the system-level relation are not interchangeab
 - `build_pair_lock()` — forms one complex pair-lock operator `2 × 2`.
 - `calculate_u_6d()` — contracts three pair-lock operators into one multiplet operator `8 × 8`.
 - `calculate_lock_amplitude()` — calculates the normalized absolute trace.
-- `calculate_cubic_potential()` — calculates the local representation of `C3`.
+- `calculate_cubic_potential()` — calculates the local representation of `C^3`.
 - `calculate_cubic_dissipation_level()` — calculates the local cubic-dissipation level `P_cubic`.
 - `simulate_temporal_dynamics()` — simulates tact-by-tact phase dynamics.
 - `calculate_interface_profile()` — calculates the local interface profile.
@@ -505,7 +505,7 @@ The local interface relation and the system-level relation are not interchangeab
 
 ---
 
-# Инженерный визуальный симулятор U_6D / C3 Протокола Марнова
+# Инженерный визуальный симулятор U_6D / C^3 Протокола Марнова
 
 ## RU — Инженерная визуализация потактового фазового удержания и локального интерфейсного перехода
 
@@ -515,15 +515,15 @@ The local interface relation and the system-level relation are not interchangeab
 - траектории трёхплоскостного фазового пространства состояний;
 - тензорно-произведённого мультиплетного оператора `U_6D`;
 - нормированной амплитуды фазового замка;
-- локального представления `C3`;
-- локального перехода между `C3` и уровнем кубической диссипации `P_cubic`;
+- локального представления `C^3`;
+- локального перехода между `C^3` и уровнем кубической диссипации `P_cubic`;
 - самостоятельного общесистемного соотношения между `C(t)` и `P(t)`.
 
 Модуль объединяет временную фазовую динамику и пространственный анализ перехода через интерфейсный барьер.
 
 Модуль сохраняет обязательные различия:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 P(t) ≠ P_cubic
 
@@ -531,7 +531,7 @@ R(n) ≠ C(t)
 
 Локальное равенство:
 
-C3 = P_cubic
+C^3 = P_cubic
 
 является локальной границей кубического перехода.
 
@@ -578,10 +578,10 @@ C(t) < P(t) — дрейф деградации
 → операторы парного замка `L_k`  
 → тензорно-произведённый оператор `U_6D`  
 → нормированная амплитуда фазового замка  
-→ локальное представление `C3`  
+→ локальное представление `C^3`  
 → сравнение с `P_cubic`  
-→ локальная область доминирования `C3`  
-→ локальная граница перехода `C3 = P_cubic`  
+→ локальная область доминирования `C^3`  
+→ локальная граница перехода `C^3 = P_cubic`  
 → локальная область доминирования кубической диссипации
 
 Самостоятельное общесистемное соотношение:
@@ -591,7 +591,7 @@ C(t) и P(t)
 → C(t) = P(t): эндогенная динамическая критичность  
 → C(t) < P(t): дрейф деградации
 
-Локальное соотношение между `C3` и `P_cubic` не должно использоваться как замена общесистемного соотношения между `C(t)` и `P(t)`.
+Локальное соотношение между `C^3` и `P_cubic` не должно использоваться как замена общесистемного соотношения между `C(t)` и `P(t)`.
 
 ## RU — Оператор парного замка
 
@@ -664,29 +664,29 @@ C(t) и P(t)
 
 Она не является общей эндогенной структурной когерентностью `C(t)`.
 
-## RU — Локальное представление C3
+## RU — Локальное представление C^3
 
-`C3` определяется в архитектуре EDK как кубическое нелинейное насыщение, сжатие и задержка фазово-когерентной конфигурации.
+`C^3` определяется в архитектуре EDK как кубическое нелинейное насыщение, сжатие и задержка фазово-когерентной конфигурации.
 
-Текущий визуализатор представляет кубическую амплитудную составляющую `C3` через:
+Текущий визуализатор представляет кубическую амплитудную составляющую `C^3` через:
 
-`C3 = (psi_amplitude · lock_amplitude)^3`
+`C^3 = (psi_amplitude · lock_amplitude)^3`
 
-Кубическое соотношение повышает чувствительность локального профиля `C3` к снижению нормированной амплитуды фазового замка.
+Кубическое соотношение повышает чувствительность локального профиля `C^3` к снижению нормированной амплитуды фазового замка.
 
 Локальная операционная цепочка:
 
 снижение `lock_amplitude`  
-→ более сильное относительное снижение `C3`  
-→ приближение к локальной границе перехода `C3 / P_cubic`
+→ более сильное относительное снижение `C^3`  
+→ приближение к локальной границе перехода `C^3 / P_cubic`
 
-Текущий визуализатор не реализует отдельное временное ядро задержки `C3`.
+Текущий визуализатор не реализует отдельное временное ядро задержки `C^3`.
 
 Он визуализирует кубическую нелинейную амплитудную составляющую, используемую локальной интерфейсной моделью.
 
-`C3` не является общей эндогенной структурной когерентностью:
+`C^3` не является общей эндогенной структурной когерентностью:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 ## RU — Локальный уровень кубической диссипации P_cubic
 
@@ -702,13 +702,13 @@ P(t) ≠ P_cubic
 
 Локальные соотношения:
 
-C3 > P_cubic  
-→ локальное доминирование C3
+C^3 > P_cubic  
+→ локальное доминирование C^3
 
-C3 = P_cubic  
+C^3 = P_cubic  
 → локальная граница кубического перехода
 
-C3 < P_cubic  
+C^3 < P_cubic  
 → локальное доминирование кубической диссипации
 
 Эти соотношения описывают только локальный интерфейсный профиль.
@@ -733,13 +733,13 @@ C(t) = P(t)
 C(t) < P(t)  
 → дрейф деградации
 
-Метод `classify_system_regime()` выполняет эту классификацию независимо от локального профиля `C3`.
+Метод `classify_system_regime()` выполняет эту классификацию независимо от локального профиля `C^3`.
 
 Общесистемное соотношение нельзя выводить непосредственно из:
 
 - нормированного следа `U_6D`;
 - коэффициента фазовой поддержки `R`;
-- локального профиля `C3`;
+- локального профиля `C^3`;
 - локального уровня кубической диссипации `P_cubic`.
 
 ## RU — Потактовая фазовая динамика
@@ -798,9 +798,9 @@ C(t) < P(t)
 
 Для каждой пространственной координаты модуль заново рассчитывает:
 
-`R(X) → L_k(X) → U_6D(X) → lock_amplitude(X) → C3(X)`
+`R(X) → L_k(X) → U_6D(X) → lock_amplitude(X) → C^3(X)`
 
-После этого локальный профиль `C3` сравнивается с самостоятельным локальным профилем кубической диссипации:
+После этого локальный профиль `C^3` сравнивается с самостоятельным локальным профилем кубической диссипации:
 
 `P_cubic(X)`
 
@@ -810,7 +810,7 @@ C(t) < P(t)
 
 Модуль определяет координаты, в которых:
 
-`C3(X) - P_cubic(X) = 0`
+`C^3(X) - P_cubic(X) = 0`
 
 Механизм определения точек перехода сохраняет:
 
@@ -821,7 +821,7 @@ C(t) < P(t)
 
 Полученные координаты представляют локальную численную границу:
 
-`C3 = P_cubic`
+`C^3 = P_cubic`
 
 Они являются координатами локального кубического перехода.
 
@@ -869,7 +869,7 @@ C(t) < P(t)
 
 Оно не является пространством обычных физических координат.
 
-### RU — 3. Амплитуда замка U_6D и C3
+### RU — 3. Амплитуда замка U_6D и C^3
 
 Отображаются:
 
@@ -877,35 +877,35 @@ C(t) < P(t)
 
 и:
 
-`C3`
+`C^3`
 
 Нормированный след представляет текущую амплитуду мультиплетного фазового замка.
 
-Кривая `C3` представляет локальную кубическую нелинейную амплитуду, используемую визуализатором.
+Кривая `C^3` представляет локальную кубическую нелинейную амплитуду, используемую визуализатором.
 
 Ни одна из этих величин не является общей эндогенной структурной когерентностью `C(t)`.
 
-### RU — 4. Локальный интерфейсный переход C3 / P_cubic
+### RU — 4. Локальный интерфейсный переход C^3 / P_cubic
 
 Отображаются:
 
-`C3(X)`
+`C^3(X)`
 
 и:
 
 `P_cubic(X)`
 
-Локальная область доминирования `C3`:
+Локальная область доминирования `C^3`:
 
-`C3 > P_cubic`
+`C^3 > P_cubic`
 
 Локальная область доминирования кубической диссипации:
 
-`C3 < P_cubic`
+`C^3 < P_cubic`
 
 Вертикальные маркеры показывают приближённые координаты локального перехода:
 
-`C3 = P_cubic`
+`C^3 = P_cubic`
 
 В графическом блоке отдельно отображаются самостоятельные общесистемные значения:
 
@@ -958,17 +958,17 @@ C(t) < P(t)
 
 Локальный мультиплетный инвариант:
 
-`потактовое удержание фазового замка представлено динамически изменяющимся мультиплетным состоянием, нормированная амплитуда фазового замка которого формирует локальный профиль C3`
+`потактовое удержание фазового замка представлено динамически изменяющимся мультиплетным состоянием, нормированная амплитуда фазового замка которого формирует локальный профиль C^3`
 
 Локальное интерфейсное соотношение:
 
-C3 > P_cubic  
-→ локальное доминирование C3
+C^3 > P_cubic  
+→ локальное доминирование C^3
 
-C3 = P_cubic  
+C^3 = P_cubic  
 → локальная граница кубического перехода
 
-C3 < P_cubic  
+C^3 < P_cubic  
 → локальное доминирование кубической диссипации
 
 Общесистемное соотношение:
@@ -984,7 +984,7 @@ C(t) < P(t)
 
 Обязательные различия:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 P(t) ≠ P_cubic
 
@@ -1003,7 +1003,7 @@ R(n) ≠ C(t)
 - `build_pair_lock()` — формирует один комплексный оператор парного замка `2 × 2`.
 - `calculate_u_6d()` — сворачивает три оператора парного замка в один мультиплетный оператор `8 × 8`.
 - `calculate_lock_amplitude()` — рассчитывает нормированный абсолютный след.
-- `calculate_cubic_potential()` — рассчитывает локальное представление `C3`.
+- `calculate_cubic_potential()` — рассчитывает локальное представление `C^3`.
 - `calculate_cubic_dissipation_level()` — рассчитывает локальный уровень кубической диссипации `P_cubic`.
 - `simulate_temporal_dynamics()` — моделирует потактовую фазовую динамику.
 - `calculate_interface_profile()` — рассчитывает локальный интерфейсный профиль.

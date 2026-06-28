@@ -22,12 +22,12 @@ Main class:
 
 The `MarnovOrganicMatrixGenerator` module implements a conceptual numerical model of recursive tact-by-tact growth of a three-dimensional organic-density matrix.
 
-The module starts from a central initiation point and develops a spatial density field through an asymmetric toroidal cubic-retention field `C3`.
+The module starts from a central initiation point and develops a spatial density field through an asymmetric toroidal cubic-retention field `C^3`.
 
 The organic-density field evolves through the interaction of:
 
 - central initiation;
-- asymmetric toroidal `C3` retention;
+- asymmetric toroidal `C^3` retention;
 - nonlinear spatial diffusion;
 - density-limited local growth;
 - nonlinear saturation;
@@ -64,7 +64,7 @@ Run from the repository root:
 ## EN — Core Operational Chain
 
     central initiation point
-    → asymmetric toroidal C3 field
+    → asymmetric toroidal C^3 field
     → nonlinear spatial diffusion
     → retained local growth
     → nonlinear saturation
@@ -85,9 +85,9 @@ This cell functions as:
 - a trigger of spatial density propagation;
 - a local anchor of the developing organic matrix.
 
-The distributed `C3` field forms additional spatial regions of retention and local density growth around the toroidal core.
+The distributed `C^3` field forms additional spatial regions of retention and local density growth around the toroidal core.
 
-## EN — 2. Asymmetric Toroidal C3 Field
+## EN — 2. Asymmetric Toroidal C^3 Field
 
 The method `generate_asymmetric_c3_field()` generates the three-dimensional toroidal cubic-retention field.
 
@@ -124,7 +124,7 @@ The persistent angular and vertical asymmetry is:
 
 The resulting field is:
 
-    C3 =
+    C^3 =
     asymmetry_factor
     · toroidal_envelope
 
@@ -142,7 +142,7 @@ The module calculates a scalar field on a three-dimensional grid:
 
     grid_size × grid_size × grid_size
 
-The field `C3` is the operational cubic-retention field used by the model.
+The field `C^3` is the operational cubic-retention field used by the model.
 
 The field `bio_density` is the evolving organic-density matrix.
 
@@ -164,7 +164,7 @@ Each tact calculates:
 1. the spatial Laplacian of `bio_density`;
 2. the current recursive branching modulation;
 3. the remaining local density capacity;
-4. the retained `C3`-driven growth;
+4. the retained `C^3`-driven growth;
 5. nonlinear saturation;
 6. the updated organic-density field.
 
@@ -173,7 +173,7 @@ Each subsequent tact inherits the density distribution produced by the preceding
 The recursive operational chain is:
 
     previous bio_density
-    → current C3 retention
+    → current C^3 retention
     → current phase-shifted branching field
     → diffusion and local growth
     → nonlinear saturation
@@ -229,7 +229,7 @@ The retained local growth is:
 
     retained_growth =
     growth_strength
-    · C3
+    · C^3
     · branching_modulation
     · available_capacity
 
@@ -314,7 +314,7 @@ The index combines:
 - mean biological density;
 - active-volume fraction;
 - spatial density contrast;
-- density retention inside the `C3` field.
+- density retention inside the `C^3` field.
 
 The mean density is:
 
@@ -334,8 +334,8 @@ The branching contrast is:
 The toroidal retention value is:
 
     toroidal_retention =
-    sum(bio_density · C3)
-    / sum(C3)
+    sum(bio_density · C^3)
+    / sum(C^3)
 
 The organic manifestation index is:
 
@@ -411,7 +411,7 @@ The technically accurate output name is:
 The density-channel layer is formed through:
 
 - gradients of `bio_density`;
-- asymmetric `C3` retention;
+- asymmetric `C^3` retention;
 - recursive branching modulation;
 - nonlinear diffusion;
 - local saturation boundaries.
@@ -422,7 +422,7 @@ A future explicit flow layer can use the operational form:
 
     J_density_proxy =
     -diffusion_coefficient · grad(bio_density)
-    + directed_retention_flux(C3)
+    + directed_retention_flux(C^3)
 
 This extension can provide separate visualization of:
 
@@ -438,7 +438,7 @@ This extension can provide separate visualization of:
 The organic matrix is generated through the dynamic balance:
 
     spatial diffusion
-    + asymmetric toroidal C3 retention
+    + asymmetric toroidal C^3 retention
     + inherited micro-asymmetry
     + recursive phase-shifted branching
     - nonlinear saturation
@@ -449,7 +449,7 @@ The core invariant is:
     organic matrix =
     a recursively retained asymmetric density structure
     formed through the balance of diffusion,
-    C3-driven local growth,
+    C^3-driven local growth,
     nonlinear saturation,
     and tact-by-tact phase-shifted branching
     inside the open nonlinear dissipative dynamic Continuum
@@ -501,7 +501,7 @@ It translates local phase and molecular conditions into a spatially distributed 
     )
 
     generator.grow_organic_matrix(
-        C3=C3_field,
+        C^3=C3_field,
         steps=15,
     )
 
@@ -537,12 +537,12 @@ README-файл:
 
 Модуль `MarnovOrganicMatrixGenerator` реализует концептуальную численную модель рекурсивного потактового роста трёхмерной матрицы органической плотности.
 
-Модуль начинает расчёт с центральной точки инициации и развивает пространственное поле плотности через асимметричное тороидальное поле кубического удержания `C3`.
+Модуль начинает расчёт с центральной точки инициации и развивает пространственное поле плотности через асимметричное тороидальное поле кубического удержания `C^3`.
 
 Поле органической плотности развивается через взаимодействие:
 
 - центральной инициации;
-- асимметричного тороидального удержания `C3`;
+- асимметричного тороидального удержания `C^3`;
 - нелинейной пространственной диффузии;
 - локального роста с ограниченной вместимостью;
 - нелинейного насыщения;
@@ -579,7 +579,7 @@ README-файл:
 ## RU — Основная операционная цепочка
 
     центральная точка инициации
-    → асимметричное тороидальное поле C3
+    → асимметричное тороидальное поле C^3
     → нелинейная пространственная диффузия
     → локальный удерживаемый рост
     → нелинейное насыщение
@@ -600,9 +600,9 @@ README-файл:
 - точки запуска пространственного распространения плотности;
 - локального якоря формирующейся органической матрицы.
 
-Распределённое поле `C3` формирует дополнительные пространственные области удержания и локального роста плотности вокруг тороидального ядра.
+Распределённое поле `C^3` формирует дополнительные пространственные области удержания и локального роста плотности вокруг тороидального ядра.
 
-## RU — 2. Асимметричное тороидальное поле C3
+## RU — 2. Асимметричное тороидальное поле C^3
 
 Метод `generate_asymmetric_c3_field()` формирует трёхмерное тороидальное поле кубического удержания.
 
@@ -639,7 +639,7 @@ README-файл:
 
 Результирующее поле:
 
-    C3 =
+    C^3 =
     asymmetry_factor
     · toroidal_envelope
 
@@ -657,7 +657,7 @@ README-файл:
 
     grid_size × grid_size × grid_size
 
-Поле `C3` является операционным полем кубического удержания, используемым моделью.
+Поле `C^3` является операционным полем кубического удержания, используемым моделью.
 
 Поле `bio_density` является развивающейся матрицей органической плотности.
 
@@ -679,7 +679,7 @@ README-файл:
 1. пространственный Лапласиан `bio_density`;
 2. текущая рекурсивная модуляция ветвления;
 3. оставшаяся локальная вместимость плотности;
-4. удерживаемый рост под действием `C3`;
+4. удерживаемый рост под действием `C^3`;
 5. нелинейное насыщение;
 6. обновлённое поле органической плотности.
 
@@ -688,7 +688,7 @@ README-файл:
 Рекурсивная операционная цепочка:
 
     предыдущее состояние bio_density
-    → текущее удержание C3
+    → текущее удержание C^3
     → текущее фазово-смещённое поле ветвления
     → диффузия и локальный рост
     → нелинейное насыщение
@@ -744,7 +744,7 @@ README-файл:
 
     retained_growth =
     growth_strength
-    · C3
+    · C^3
     · branching_modulation
     · available_capacity
 
@@ -829,7 +829,7 @@ README-файл:
 - среднюю биологическую плотность;
 - долю активного объёма;
 - пространственный контраст плотности;
-- удержание плотности внутри поля `C3`.
+- удержание плотности внутри поля `C^3`.
 
 Средняя плотность:
 
@@ -849,8 +849,8 @@ README-файл:
 Тороидальное удержание:
 
     toroidal_retention =
-    sum(bio_density · C3)
-    / sum(C3)
+    sum(bio_density · C^3)
+    / sum(C^3)
 
 Индекс проявленности органической матрицы:
 
@@ -926,7 +926,7 @@ README-файл:
 Слой каналов плотности формируется через:
 
 - градиенты `bio_density`;
-- асимметричное удержание `C3`;
+- асимметричное удержание `C^3`;
 - рекурсивную модуляцию ветвления;
 - нелинейную диффузию;
 - локальные границы насыщения.
@@ -937,7 +937,7 @@ README-файл:
 
     J_density_proxy =
     -diffusion_coefficient · grad(bio_density)
-    + directed_retention_flux(C3)
+    + directed_retention_flux(C^3)
 
 Это расширение может обеспечить отдельную визуализацию:
 
@@ -953,7 +953,7 @@ README-файл:
 Органическая матрица формируется через динамический баланс:
 
     пространственная диффузия
-    + асимметричное тороидальное удержание C3
+    + асимметричное тороидальное удержание C^3
     + наследуемая микроасимметрия
     + рекурсивное фазово-смещённое ветвление
     - нелинейное насыщение
@@ -964,7 +964,7 @@ README-файл:
     органическая матрица =
     рекурсивно удерживаемая асимметричная структура плотности,
     формируемая через баланс диффузии,
-    локального роста под действием C3,
+    локального роста под действием C^3,
     нелинейного насыщения
     и потактового фазово-смещённого ветвления
     внутри открытого нелинейного диссипативного динамического Континуума
@@ -1016,7 +1016,7 @@ README-файл:
     )
 
     generator.grow_organic_matrix(
-        C3=C3_field,
+        C^3=C3_field,
         steps=15,
     )
 

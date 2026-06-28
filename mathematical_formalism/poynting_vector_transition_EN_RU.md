@@ -1,6 +1,6 @@
 # Poynting-Vector Transition Formalism
 
-## From U_6D / C3 Internal Retention to Directed 1D Energy Flux
+## From U_6D / C^3 Internal Retention to Directed 1D Energy Flux
 
 ## English Version
 
@@ -14,7 +14,7 @@ The operational chain is:
     → pair-lock operators L_k
     → multiplet operator U_6D
     → normalized lock amplitude A_lock
-    → cubic retention potential C3
+    → cubic retention potential C^3
     → controlled phase opening
     → directed axial flux S_1D
 
@@ -22,12 +22,12 @@ Within this formalism:
 
 - `U_6D` describes the coupled multiplet phase-lock operator;
 - `A_lock` describes the normalized retained phase-lock amplitude;
-- `C3` describes the cubic retention potential;
+- `C^3` describes the cubic retention potential;
 - `P` describes environmental dissipation;
 - `g_open` describes the controlled opening of the retained contour;
 - `S_1D` describes the directed axial output-flux density.
 
-`C3` must not be confused with the general endogenous structural coherence `C(t)`.
+`C^3` must not be confused with the general endogenous structural coherence `C(t)`.
 
 ## 2. Pair-Lock Operator
 
@@ -86,11 +86,11 @@ The normalized phase-lock amplitude is:
 
 The retained phase-lock domain corresponds to comparatively high `A_lock`.
 
-## 4. Cubic Retention Potential C3
+## 4. Cubic Retention Potential C^3
 
 The cubic retention potential is defined as:
 
-    C3 =
+    C^3 =
     abs(Psi)^2
     · A_lock^3
 
@@ -101,16 +101,16 @@ Where:
 
 The EDS comparison is:
 
-    C3 > P
+    C^3 > P
     → retained dynamic domain
 
-    C3 = P
+    C^3 = P
     → critical boundary
 
-    C3 < P
+    C^3 < P
     → breakdown tendency
 
-The condition `C3 > P` does not require the output flux to be zero. A controlled output can occur while the retained domain remains above the critical boundary.
+The condition `C^3 > P` does not require the output flux to be zero. A controlled output can occur while the retained domain remains above the critical boundary.
 
 ## 5. Physical Poynting Vector
 
@@ -134,7 +134,7 @@ Therefore, a calculated quantity may be called a physical Poynting flux only whe
 
 ## 6. Reduced EDK Output-Flux Model
 
-When explicit electromagnetic fields are not yet calculated, the transition from retained `C3` to directed output is represented by a reduced output-flux proxy.
+When explicit electromagnetic fields are not yet calculated, the transition from retained `C^3` to directed output is represented by a reduced output-flux proxy.
 
 The normalized phase-opening gradient is:
 
@@ -170,7 +170,7 @@ The directed axial output-flux density is:
 
     S_1D =
     eta_release
-    · C3
+    · C^3
     · g_open
 
 The corresponding directed vector is:
@@ -249,7 +249,7 @@ A directed output therefore reduces the retained energy unless it is compensated
 
 ### Closed Retention
 
-    C3 > P
+    C^3 > P
     g_open ≈ 0
     S_1D ≈ 0
 
@@ -257,7 +257,7 @@ The phase-lock domain is retained and the dominant flux circulates internally.
 
 ### Controlled Directed Release
 
-    C3 > P
+    C^3 > P
     0 < g_open < 1
     S_1D > 0
 
@@ -265,7 +265,7 @@ The retained contour remains dynamically supported while part of the accumulated
 
 ### Critical Boundary
 
-    C3 = P
+    C^3 = P
 
 The retained domain reaches its critical boundary.
 
@@ -273,7 +273,7 @@ Further output or external pressure can initiate a phase transition toward break
 
 ### Breakdown
 
-    C3 < P
+    C^3 < P
 
 Environmental dissipation exceeds the cubic retention potential.
 
@@ -282,16 +282,16 @@ The retained phase-lock contour loses its capacity to preserve the previous qual
 ## 10. Core Invariant
 
     directed axial output =
-    controlled conversion of part of the retained cubic potential C3
+    controlled conversion of part of the retained cubic potential C^3
     into an axial flux through a phase-opening function,
     while the retained domain remains dynamically sustainable
-    only as long as C3 remains above environmental dissipation P
+    only as long as C^3 remains above environmental dissipation P
 
 The complete operational chain is:
 
     U_6D phase lock
     → A_lock
-    → C3
+    → C^3
     → controlled phase displacement
     → G_phi
     → g_open
@@ -303,7 +303,7 @@ The complete operational chain is:
     pair-lock operators L_k
     → U_6D
     → A_lock
-    → C3
+    → C^3
     → phase-opening control
     → directed output-flux density S_1D
     → J_flux / energy redistribution layer
@@ -313,7 +313,7 @@ The complete operational chain is:
 
 # Формализм перехода вектора Пойнтинга
 
-## От внутреннего удержания U_6D / C3 к направленному одномерному потоку энергии
+## От внутреннего удержания U_6D / C^3 к направленному одномерному потоку энергии
 
 ## Русская версия
 
@@ -327,7 +327,7 @@ The complete operational chain is:
     → операторы парного замка L_k
     → мультиплетный оператор U_6D
     → нормированная амплитуда замка A_lock
-    → кубический потенциал удержания C3
+    → кубический потенциал удержания C^3
     → управляемое открытие фазового контура
     → направленный осевой поток S_1D
 
@@ -335,12 +335,12 @@ The complete operational chain is:
 
 - `U_6D` описывает сопряжённый мультиплетный оператор фазового замка;
 - `A_lock` описывает нормированную удерживаемую амплитуду фазового замка;
-- `C3` описывает кубический потенциал удержания;
+- `C^3` описывает кубический потенциал удержания;
 - `P` описывает диссипацию среды;
 - `g_open` описывает управляемое открытие удерживаемого контура;
 - `S_1D` описывает плотность направленного осевого выходного потока.
 
-`C3` нельзя смешивать с общей эндогенной структурной когерентностью `C(t)`.
+`C^3` нельзя смешивать с общей эндогенной структурной когерентностью `C(t)`.
 
 ## 2. Оператор парного замка
 
@@ -399,11 +399,11 @@ The complete operational chain is:
 
 Удерживаемая фазовая область соответствует сравнительно высокому значению `A_lock`.
 
-## 4. Кубический потенциал удержания C3
+## 4. Кубический потенциал удержания C^3
 
 Кубический потенциал удержания определяется как:
 
-    C3 =
+    C^3 =
     abs(Psi)^2
     · A_lock^3
 
@@ -414,16 +414,16 @@ The complete operational chain is:
 
 Сравнение EDS:
 
-    C3 > P
+    C^3 > P
     → удерживаемая динамическая область
 
-    C3 = P
+    C^3 = P
     → критическая граница
 
-    C3 < P
+    C^3 < P
     → тенденция к срыву
 
-Условие `C3 > P` не требует полного отсутствия выходного потока. Управляемый выход может происходить, пока удерживаемая область остаётся выше критической границы.
+Условие `C^3 > P` не требует полного отсутствия выходного потока. Управляемый выход может происходить, пока удерживаемая область остаётся выше критической границы.
 
 ## 5. Физический вектор Пойнтинга
 
@@ -447,7 +447,7 @@ The complete operational chain is:
 
 ## 6. Редуцированная модель выходного потока EDK
 
-Если электромагнитные поля ещё не рассчитываются явно, переход от удерживаемого `C3` к направленному выходу представляется редуцированным прокси-параметром выходного потока.
+Если электромагнитные поля ещё не рассчитываются явно, переход от удерживаемого `C^3` к направленному выходу представляется редуцированным прокси-параметром выходного потока.
 
 Нормированный градиент фазового открытия:
 
@@ -483,7 +483,7 @@ The complete operational chain is:
 
     S_1D =
     eta_release
-    · C3
+    · C^3
     · g_open
 
 Соответствующий направленный вектор:
@@ -562,7 +562,7 @@ The complete operational chain is:
 
 ### Закрытое удержание
 
-    C3 > P
+    C^3 > P
     g_open ≈ 0
     S_1D ≈ 0
 
@@ -570,7 +570,7 @@ The complete operational chain is:
 
 ### Управляемый направленный выход
 
-    C3 > P
+    C^3 > P
     0 < g_open < 1
     S_1D > 0
 
@@ -578,7 +578,7 @@ The complete operational chain is:
 
 ### Критическая граница
 
-    C3 = P
+    C^3 = P
 
 Удерживаемая область достигает критической границы.
 
@@ -586,7 +586,7 @@ The complete operational chain is:
 
 ### Срыв
 
-    C3 < P
+    C^3 < P
 
 Диссипация среды превышает кубический потенциал удержания.
 
@@ -595,16 +595,16 @@ The complete operational chain is:
 ## 10. Основной инвариант
 
     направленный осевой выход =
-    управляемое преобразование части удерживаемого кубического потенциала C3
+    управляемое преобразование части удерживаемого кубического потенциала C^3
     в осевой поток через функцию фазового открытия,
     при этом удерживаемая область остаётся динамически устойчивой
-    только пока C3 остаётся выше диссипации среды P
+    только пока C^3 остаётся выше диссипации среды P
 
 Полная операционная цепочка:
 
     фазовый замок U_6D
     → A_lock
-    → C3
+    → C^3
     → управляемое фазовое смещение
     → G_phi
     → g_open
@@ -616,7 +616,7 @@ The complete operational chain is:
     операторы парного замка L_k
     → U_6D
     → A_lock
-    → C3
+    → C^3
     → управление фазовым открытием
     → плотность направленного потока S_1D
     → слой J_flux / перераспределения энергии

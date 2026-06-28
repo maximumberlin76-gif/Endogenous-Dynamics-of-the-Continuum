@@ -20,11 +20,11 @@ This module adds a graphical rendering layer based on Matplotlib to the Endogeno
 
 The module performs tact-by-tact rendering of two central 2D slices of the 3D manifestation grid:
 
-1. A 2D slice of the central toroidal field C3.
+1. A 2D slice of the central toroidal field C^3.
 
 2. A 2D map of the manifested-mass field M(t).
 
-The field C3 represents cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
+The field C^3 represents cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
 
 The field M(t) represents the spatial distribution of manifested mass retained by the current local dynamic state.
 
@@ -36,7 +36,7 @@ It visualizes a local descending computational cascade and does not represent th
 
 The visualization renders two central 2D slices along the middle Z axis of the three-dimensional computational grid.
 
-The left screen displays the toroidal spatial field C3 formed after the 6D phase-lock stage.
+The left screen displays the toroidal spatial field C^3 formed after the 6D phase-lock stage.
 
 The right screen displays the 3D manifested-mass field M(t) through its central 2D section.
 
@@ -51,7 +51,7 @@ The visualization follows the local descending EDK cascade:
 Phi
 → Psi_7D
 → Psi_coh
-→ C3
+→ C^3
 → Omega(t)
 → EDC
 → EDS retention mask
@@ -60,7 +60,7 @@ Phi
 
 The visualization is generated only after the internal cascade has formed:
 
-1. The field of cubic nonlinear saturation, compression, and delay C3.
+1. The field of cubic nonlinear saturation, compression, and delay C^3.
 
 2. The phase-transition window Omega(t).
 
@@ -76,25 +76,25 @@ The visualization is generated only after the internal cascade has formed:
 
 The principal semantic distinction is:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 C(t) is the general endogenous structural coherence of the system.
 
-C3 is the spatial field of cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
+C^3 is the spatial field of cubic nonlinear saturation, compression, and delay of the phase-coherent configuration.
 
-C3 must not be used as a substitute for C(t).
+C^3 must not be used as a substitute for C(t).
 
-## EN — First Rendered Screen: 2D Slice of C3
+## EN — First Rendered Screen: 2D Slice of C^3
 
-The first rendered screen displays a central 2D slice of the toroidal field C3.
+The first rendered screen displays a central 2D slice of the toroidal field C^3.
 
 This screen corresponds to the spatial projection of the 6D toroidal phase lock.
 
 The phase-coherent configuration Psi_coh is formed through the toroidal phase-lock operator.
 
-The field C3 is then calculated as:
+The field C^3 is then calculated as:
 
-C3 = |Psi_coh|^3
+C^3 = |Psi_coh|^3
 
 The field represents cubic nonlinear saturation, compression, and delay.
 
@@ -120,7 +120,7 @@ The local numerical retention mask additionally requires the phase-transition wi
 
 eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
 
-The field C3 participates in the calculation of the local manifested-mass density but does not determine the general endogenous structural coherence.
+The field C^3 participates in the calculation of the local manifested-mass density but does not determine the general endogenous structural coherence.
 
 The manifested-mass field is calculated only inside the retained contour.
 
@@ -136,7 +136,7 @@ This condition means that the general endogenous structural coherence C(t) excee
 
 C_t is supplied as an independent parameter.
 
-It is not calculated as a mean, integral, or other reduction of C3.
+It is not calculated as a mean, integral, or other reduction of C^3.
 
 The operational retention mask is:
 
@@ -152,7 +152,7 @@ Only the grid regions satisfying both conditions are available for manifestation
 
 Left screen:
 
-6D toroidal field C3
+6D toroidal field C^3
 
 The screen visualizes the spatial geometry of the toroidal section.
 
@@ -162,7 +162,7 @@ The visualized asymmetry represents the nonuniform spatial distribution of cubic
 
 The screen does not directly display C(t).
 
-It displays C3.
+It displays C^3.
 
 ## EN — Visual Interpretation of the Right Screen
 
@@ -240,7 +240,7 @@ Generates the 7D Super-Code Psi_7D through the recursive control operator Phi.
 
 ### step_6d_phase_lock
 
-Forms the phase-coherent configuration Psi_coh and generates the field C3.
+Forms the phase-coherent configuration Psi_coh and generates the field C^3.
 
 ### step_5d_4d_3d_cascade
 
@@ -260,7 +260,7 @@ Executes one complete tact of the local descending computational cascade.
 
 Generates the graphical rendering of the two central 2D slices:
 
-1. The toroidal field C3.
+1. The toroidal field C^3.
 
 2. The manifested-mass field M(t).
 
@@ -282,11 +282,11 @@ solar
 
 The dynamic interface tensor T_int and the through massless channel J_flux remain independent architectural layers.
 
-They must not be inferred directly from the displayed C3 or J fields.
+They must not be inferred directly from the displayed C^3 or J fields.
 
 The following distinctions remain mandatory:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 R_t ≠ C(t)
 
@@ -314,7 +314,7 @@ python edk_visual_protocol_module.py
 
 The module prints the tact-by-tact simulation status and opens graphical windows containing two rendered central 2D slices:
 
-1. Left screen — toroidal field C3.
+1. Left screen — toroidal field C^3.
 
 2. Right screen — manifested-mass field M(t).
 
@@ -342,11 +342,11 @@ README.md
 
 Модуль выполняет потактовый вывод двух центральных 2D-срезов трёхмерной расчётной сетки манифестации:
 
-1. 2D-срез центрального тороидального поля C3.
+1. 2D-срез центрального тороидального поля C^3.
 
 2. 2D-карту поля манифестированной массы M(t).
 
-Поле C3 представляет кубическое нелинейное насыщение, сжатие и задержку фазово-когерентной конфигурации.
+Поле C^3 представляет кубическое нелинейное насыщение, сжатие и задержку фазово-когерентной конфигурации.
 
 Поле M(t) представляет пространственное распределение манифестированной массы, удерживаемой текущим локальным динамическим состоянием.
 
@@ -358,7 +358,7 @@ README.md
 
 Модуль визуализации рендерит два центральных 2D-среза по средней оси Z трёхмерной расчётной сетки.
 
-Левый экран отображает тороидальное пространственное поле C3, сформированное после этапа 6D-фазового замка.
+Левый экран отображает тороидальное пространственное поле C^3, сформированное после этапа 6D-фазового замка.
 
 Правый экран отображает поле манифестированной массы M(t) через его центральный 2D-срез.
 
@@ -373,7 +373,7 @@ README.md
 Phi
 → Psi_7D
 → Psi_coh
-→ C3
+→ C^3
 → Omega(t)
 → EDC
 → EDS retention mask
@@ -382,7 +382,7 @@ Phi
 
 Визуализация формируется только после того, как внутренний каскад сформировал:
 
-1. Поле кубического нелинейного насыщения, сжатия и задержки C3.
+1. Поле кубического нелинейного насыщения, сжатия и задержки C^3.
 
 2. Окно фазового перехода Omega(t).
 
@@ -398,25 +398,25 @@ Phi
 
 Основное смысловое различие:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 C(t) — общая эндогенная структурная когерентность системы.
 
-C3 — пространственное поле кубического нелинейного насыщения, сжатия и задержки фазово-когерентной конфигурации.
+C^3 — пространственное поле кубического нелинейного насыщения, сжатия и задержки фазово-когерентной конфигурации.
 
-C3 не должно использоваться как замена C(t).
+C^3 не должно использоваться как замена C(t).
 
-## RU — Первый рендерируемый экран: 2D-срез C3
+## RU — Первый рендерируемый экран: 2D-срез C^3
 
-Первый рендерируемый экран отображает центральный 2D-срез тороидального поля C3.
+Первый рендерируемый экран отображает центральный 2D-срез тороидального поля C^3.
 
 Этот экран соответствует пространственной проекции 6D-тороидального фазового замка.
 
 Фазово-когерентная конфигурация Psi_coh формируется через оператор тороидального фазового замка.
 
-После этого рассчитывается поле C3:
+После этого рассчитывается поле C^3:
 
-C3 = |Psi_coh|^3
+C^3 = |Psi_coh|^3
 
 Поле представляет кубическое нелинейное насыщение, сжатие и задержку.
 
@@ -442,7 +442,7 @@ C(t) > P(t)
 
 eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
 
-Поле C3 участвует в расчёте локальной плотности манифестированной массы, но не определяет общую эндогенную структурную когерентность.
+Поле C^3 участвует в расчёте локальной плотности манифестированной массы, но не определяет общую эндогенную структурную когерентность.
 
 Поле манифестированной массы рассчитывается только внутри удерживаемого контура.
 
@@ -458,7 +458,7 @@ C(t) > P(t)
 
 C_t передаётся как самостоятельный параметр.
 
-Он не рассчитывается как среднее значение, интеграл или иное сведение поля C3.
+Он не рассчитывается как среднее значение, интеграл или иное сведение поля C^3.
 
 Операционная маска удержания:
 
@@ -474,7 +474,7 @@ eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
 
 Левый экран:
 
-6D-тороидальное поле C3
+6D-тороидальное поле C^3
 
 Экран визуализирует пространственную геометрию тороидального сечения.
 
@@ -484,7 +484,7 @@ eds_mask = (C_t > P_t) & (Omega_curr > omega_threshold)
 
 Экран не отображает непосредственно C(t).
 
-Он отображает C3.
+Он отображает C^3.
 
 ## RU — Визуальная интерпретация правого экрана
 
@@ -562,7 +562,7 @@ R_t ≠ C(t)
 
 ### step_6d_phase_lock
 
-Формирует фазово-когерентную конфигурацию Psi_coh и генерирует поле C3.
+Формирует фазово-когерентную конфигурацию Psi_coh и генерирует поле C^3.
 
 ### step_5d_4d_3d_cascade
 
@@ -582,7 +582,7 @@ R_t ≠ C(t)
 
 Генерирует графический вывод двух центральных 2D-срезов:
 
-1. Тороидальное поле C3.
+1. Тороидальное поле C^3.
 
 2. Поле манифестированной массы M(t).
 
@@ -604,11 +604,11 @@ solar
 
 Динамический интерфейсный тензор T_int и сквозной безмассовый канал J_flux остаются самостоятельными архитектурными слоями.
 
-Их нельзя напрямую выводить из отображаемых полей C3 или J.
+Их нельзя напрямую выводить из отображаемых полей C^3 или J.
 
 Сохраняются обязательные различия:
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 R_t ≠ C(t)
 
@@ -636,7 +636,7 @@ python edk_visual_protocol_module.py
 
 Модуль печатает потактовый статус симуляции и открывает графические окна с двумя рендерируемыми центральными 2D-срезами:
 
-1. Левый экран — тороидальное поле C3.
+1. Левый экран — тороидальное поле C^3.
 
 2. Правый экран — поле манифестированной массы M(t).
 

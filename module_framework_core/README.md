@@ -40,7 +40,7 @@ The module preserves the following controlled distinctions:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 
@@ -50,7 +50,7 @@ The module preserves the following controlled distinctions:
 
 `R(t)` is a reduced observable phase synchronization indicator or order parameter.
 
-`C3` is the cubic nonlinear potential of volumetric retention.
+`C^3` is the cubic nonlinear potential of volumetric retention.
 
 `T_int` is the dynamic interface tensor.
 
@@ -488,7 +488,7 @@ The module prints the Continuum core simulation state, including:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 
@@ -498,7 +498,7 @@ The module prints the Continuum core simulation state, including:
 
 `R(t)` — редуцированный наблюдаемый индикатор фазовой синхронизации или параметр порядка.
 
-`C3` — кубический нелинейный потенциал объёмного удержания.
+`C^3` — кубический нелинейный потенциал объёмного удержания.
 
 `T_int` — динамический интерфейсный тензор.
 

@@ -63,7 +63,7 @@ Controlled distinctions:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 Phase synchronization means phase agreement while amplitudes can remain dynamically chaotic.
 
@@ -116,15 +116,15 @@ Loss of coherence between endogenous structural processes reduces regenerative c
 
 ### Cubic Retention Potential
 
-`C3` is the cubic nonlinear potential of volumetric retention associated with nonlinear saturation and retention of a three-dimensional dynamic form.
+`C^3` is the cubic nonlinear potential of volumetric retention associated with nonlinear saturation and retention of a three-dimensional dynamic form.
 
 Controlled distinction:
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `C(t)` describes general endogenous structural coherence.
 
-`C3` describes local cubic volumetric retention.
+`C^3` describes local cubic volumetric retention.
 
 ### Resonance-Window Phase Transition and Retained Operational Domain
 
@@ -170,7 +170,7 @@ Recursive inheritance transforms qualitative characteristics of the preceding cy
 
 Operational transition:
 
-`Phi → U_6D → Psi_coh → C3`
+`Phi → U_6D → Psi_coh → C^3`
 
 ### Dynamic Interface and Manifested Mass Anchor
 
@@ -196,7 +196,7 @@ Main reverse chain:
 
 `loss of C(t) → degradation of T_int → reduction or demanifestation of M(t) → redistribution through J_flux → return into background non-resonant modes`
 
-`C3` acts as the cubic volumetric retention node of the process.
+`C^3` acts as the cubic volumetric retention node of the process.
 
 `J_flux` closes the chain of manifestation, retention, exchange, dissipation, demanifestation, and return.
 
@@ -210,7 +210,7 @@ Main reverse chain:
 
 `R_J` is the exchange-flow residual:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 `G_int` is the interface projection operator:
 
@@ -240,15 +240,15 @@ Each subsequent cycle inherits transformed qualitative characteristics of the pr
 
 ### Forward Chain of Manifestation and Retention
 
-`multiplet of phase layers → Phi → phase coherence → C(t) → Omega(t) → C3 → T_int → M(t) → J_flux → wave-genetic modulation → molecular phase chemistry → organic matrix manifestation → planetary and environmental modulation → recursively retained structural form`
+`multiplet of phase layers → Phi → phase coherence → C(t) → Omega(t) → C^3 → T_int → M(t) → J_flux → wave-genetic modulation → molecular phase chemistry → organic matrix manifestation → planetary and environmental modulation → recursively retained structural form`
 
 Dynamic retention depends on the coupled relation between:
 
-`Phi Omega(t) C(t) P(t) C3 T_int M(t) J_flux rho_cont`
+`Phi Omega(t) C(t) P(t) C^3 T_int M(t) J_flux rho_cont`
 
 ### Reverse Chain of Demanifestation
 
-`increase of destabilizing pressure P(t) → compression of C(t) > P(t) → approach to C(t) ≈ P(t) → Endogenous Dynamic Criticality → loss of retained phase coherence → destabilization of C3 → degradation of T_int → reduction or demanifestation of M(t) → redistribution through J_flux → exchange-flow residual R_J → projection through G_int → interface deformation → dissipation and redistribution → return into background non-resonant modes rho_cont`
+`increase of destabilizing pressure P(t) → compression of C(t) > P(t) → approach to C(t) ≈ P(t) → Endogenous Dynamic Criticality → loss of retained phase coherence → destabilization of C^3 → degradation of T_int → reduction or demanifestation of M(t) → redistribution through J_flux → exchange-flow residual R_J → projection through G_int → interface deformation → dissipation and redistribution → return into background non-resonant modes rho_cont`
 
 Demanifestation is treated as a phase transition from a locally retained manifested configuration into redistributed exchange flow, dissipative traces, and background non-resonant Continuum modes.
 
@@ -262,15 +262,15 @@ Demanifestation is treated as a phase transition from a locally retained manifes
 
 ### Interface Projection Chain
 
-`J_flux → temporal change of J_flux → convective transport of J_flux → influence of grad rho_cont → influence of C3 → exchange-flow residual R_J → interface projection operator G_int → projected interface response → correction or degradation of the retained interface → metric bridge response`
+`J_flux → temporal change of J_flux → convective transport of J_flux → influence of grad rho_cont → influence of C^3 → exchange-flow residual R_J → interface projection operator G_int → projected interface response → correction or degradation of the retained interface → metric bridge response`
 
 ### Recursive Closure
 
-`retained state of cycle Q(n) → endogenous and exogenous parameter drift → change of C(t), P(t), C3, T_int, and J_flux → formation or deformation of Omega(t) → synthesis, retention, redistribution, degradation, or demanifestation → inheritance of transformed qualitative characteristics → formation of cycle Q(n+1)`
+`retained state of cycle Q(n) → endogenous and exogenous parameter drift → change of C(t), P(t), C^3, T_int, and J_flux → formation or deformation of Omega(t) → synthesis, retention, redistribution, degradation, or demanifestation → inheritance of transformed qualitative characteristics → formation of cycle Q(n+1)`
 
 Formal recursive closure:
 
-`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
+`Q(n+1) = F(Q(n), C(t), P(t), C^3, T_int, J_flux, Omega(t), rho_cont)`
 
 ## EN — Mathematical Formalism
 
@@ -282,7 +282,7 @@ They define sequential reductions of one continuous volumetric dynamic process.
 
 Full cascade:
 
-`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3 → Omega(t) → Theta_N → T_int → E_medium → M(t) → J_flux`
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C^3 → Omega(t) → Theta_N → T_int → E_medium → M(t) → J_flux`
 
 Where:
 
@@ -292,7 +292,7 @@ Where:
 - `Phi` is the operator of recursive inheritance, dynamic retention, and structural integrity;
 - `U_6D` is the internal toroidal multiplet retention potential;
 - `Psi_coh` is the phase-coherent state formed by the six-dimensional convolution layer;
-- `C3` is the cubic nonlinear volumetric retention potential;
+- `C^3` is the cubic nonlinear volumetric retention potential;
 - `Omega(t)` is the admissible operational domain of resonance-window phase-transition formation;
 - `Theta_N` is the accumulated operational retention capacity of the current cycle;
 - `T_int` is the dynamic interface tensor;
@@ -334,14 +334,14 @@ Core operator:
 
 Operational transition:
 
-`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3`
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C^3`
 
 Functions:
 
 - convolution of the recursively inherited multiplet configuration into a coupled phase structure;
 - retention of internal toroidal connectivity;
 - formation of the phase-coherent state `Psi_coh`;
-- preparation of the cubic volumetric retention potential `C3`;
+- preparation of the cubic volumetric retention potential `C^3`;
 - transfer of inherited qualitative characteristics into the resonance-window and bifurcation layer.
 
 ### 5D — Bifurcation Choice and Resonance-Window Phase-Transition Layer
@@ -355,7 +355,7 @@ Core operational domain:
 Input conditions:
 
 - phase-coherent state `Psi_coh`;
-- cubic retention potential `C3`;
+- cubic retention potential `C^3`;
 - inherited qualitative characteristics `Q(n)`;
 - dissipative trace `D(n)`;
 - dynamic asymmetry `A(n)`;
@@ -364,7 +364,7 @@ Input conditions:
 
 Operational chain:
 
-`Psi_coh → C3 → Omega(t) → formation of a positive or negative resonance-window phase transition → selection of the subsequent phase-transition trajectory`
+`Psi_coh → C^3 → Omega(t) → formation of a positive or negative resonance-window phase transition → selection of the subsequent phase-transition trajectory`
 
 ### 4D — Topological Monolith of Space-Time Matter
 
@@ -374,7 +374,7 @@ It describes the continuous dynamic process through which the selected phase-tra
 
 Core elements:
 
-`Omega(t) Theta_N T_int C(t) P(t) C3 J_flux`
+`Omega(t) Theta_N T_int C(t) P(t) C^3 J_flux`
 
 Retention condition:
 
@@ -408,7 +408,7 @@ Manifested mass anchor:
 
 Functions:
 
-- manifestation of the cubic volumetric configuration formed through `C3`;
+- manifestation of the cubic volumetric configuration formed through `C^3`;
 - retention of the local mass anchor `M(t)`;
 - connection of volumetric manifestation with the dynamic interface `T_int`;
 - transfer of retained structural influence into `J_flux`;
@@ -454,11 +454,11 @@ Controlled distinction:
 
 Transition into the one-dimensional layer:
 
-`U_6D → C3 → controlled disclosure → impulse transition → directed output → J_flux`
+`U_6D → C^3 → controlled disclosure → impulse transition → directed output → J_flux`
 
 Exchange-flow residual:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 For locally balanced exchange-flow state:
 
@@ -466,7 +466,7 @@ For locally balanced exchange-flow state:
 
 Therefore:
 
-`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C^3 · J_flux`
 
 Interface projection:
 
@@ -603,7 +603,7 @@ Functions:
 
 Preserved variables and operators:
 
-`Phi Omega(t) Omega_ret C(t) P(t) C3 Theta_N Theta_crit T_int M(t) J_flux rho_cont R_J G_int R(t)`
+`Phi Omega(t) Omega_ret C(t) P(t) C^3 Theta_N Theta_crit T_int M(t) J_flux rho_cont R_J G_int R(t)`
 
 ### Continuum Simulation
 
@@ -767,7 +767,7 @@ Documentation:
 Functions:
 
 - visualization of `U_6D`;
-- visualization of `C3`;
+- visualization of `C^3`;
 - phase-configuration diagnostics;
 - lock-amplitude diagnostics;
 - dynamic-interface profile;
@@ -798,7 +798,7 @@ Functions:
 
 Operational chain:
 
-`U_6D → C3 → controlled disclosure → impulse transition → directed output flow → J_flux`
+`U_6D → C^3 → controlled disclosure → impulse transition → directed output flow → J_flux`
 
 Controlled distinction:
 
@@ -824,7 +824,7 @@ Documentation:
 
 Inputs:
 
-`J_flux partial_t J_flux grad J_flux grad rho_cont C3 G_int C(t) P(t) g_mu_nu`
+`J_flux partial_t J_flux grad J_flux grad rho_cont C^3 G_int C(t) P(t) g_mu_nu`
 
 Functions:
 
@@ -837,7 +837,7 @@ Functions:
 
 Exchange-flow residual:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 Interface projection:
 
@@ -970,7 +970,7 @@ The implementation preserves the following controlled distinctions:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 
@@ -1004,7 +1004,7 @@ Reverse chain:
 
 Recursive update:
 
-`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
+`Q(n+1) = F(Q(n), C(t), P(t), C^3, T_int, J_flux, Omega(t), rho_cont)`
 
 ## EN — Scope of Application
 
@@ -1029,7 +1029,7 @@ The cross-scale scope includes diverse forms, levels, and transitional states of
 The framework defines the following operationally verifiable consequences:
 
 - volumetric impulse distribution;
-- dependence of dynamic stability on cubic nonlinear volumetric saturation `C3`;
+- dependence of dynamic stability on cubic nonlinear volumetric saturation `C^3`;
 - transition toward Endogenous Dynamic Criticality when `C(t)` approaches `P(t)`;
 - change of `Omega(t)` geometry when phase-coherent retention changes;
 - existence of a dynamic manifestation interface `T_int`;
@@ -1164,7 +1164,7 @@ Publication type:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 Фазовая синхронизация означает согласование фаз при возможном сохранении динамической хаотичности амплитуд.
 
@@ -1217,15 +1217,15 @@ Publication type:
 
 ### Кубический потенциал удержания
 
-`C3` — кубический нелинейный потенциал объёмного удержания, связанный с нелинейным насыщением и удержанием трёхмерной динамической формы.
+`C^3` — кубический нелинейный потенциал объёмного удержания, связанный с нелинейным насыщением и удержанием трёхмерной динамической формы.
 
 Контролируемое различие:
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `C(t)` описывает общую эндогенную структурную когерентность.
 
-`C3` описывает локальное кубическое объёмное удержание.
+`C^3` описывает локальное кубическое объёмное удержание.
 
 ### Резонансное окно фазового перехода и удерживаемая операционная область
 
@@ -1271,7 +1271,7 @@ Publication type:
 
 Операционный переход:
 
-`Phi → U_6D → Psi_coh → C3`
+`Phi → U_6D → Psi_coh → C^3`
 
 ### Динамический интерфейс и проявленный массовый якорь
 
@@ -1297,7 +1297,7 @@ Publication type:
 
 `потеря C(t) → деградация T_int → снижение или деманифестация M(t) → перераспределение через J_flux → возврат в фоновые нерезонансные моды`
 
-`C3` действует как кубический узел объёмного удержания процесса.
+`C^3` действует как кубический узел объёмного удержания процесса.
 
 `J_flux` замыкает цепочку проявления, удержания, обмена, диссипации, деманифестации и возврата.
 
@@ -1311,7 +1311,7 @@ Publication type:
 
 `R_J` — остаток потока обмена:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 `G_int` — оператор интерфейсной проекции:
 
@@ -1341,15 +1341,15 @@ Publication type:
 
 ### Прямая цепочка проявления и удержания
 
-`мультиплет фазовых слоёв → Phi → фазовая когерентность → C(t) → Omega(t) → C3 → T_int → M(t) → J_flux → волново-генетическая модуляция → молекулярная фазовая химия → проявление органической матрицы → планетарная и средовая модуляция → рекурсивно удерживаемая структурная форма`
+`мультиплет фазовых слоёв → Phi → фазовая когерентность → C(t) → Omega(t) → C^3 → T_int → M(t) → J_flux → волново-генетическая модуляция → молекулярная фазовая химия → проявление органической матрицы → планетарная и средовая модуляция → рекурсивно удерживаемая структурная форма`
 
 Динамическое удержание зависит от сопряжённого отношения между:
 
-`Phi Omega(t) C(t) P(t) C3 T_int M(t) J_flux rho_cont`
+`Phi Omega(t) C(t) P(t) C^3 T_int M(t) J_flux rho_cont`
 
 ### Обратная цепочка деманифестации
 
-`рост дестабилизирующего давления P(t) → сжатие условия C(t) > P(t) → приближение к C(t) ≈ P(t) → эндогенная динамическая критичность → потеря удерживаемой фазовой когерентности → дестабилизация C3 → деградация T_int → снижение или деманифестация M(t) → перераспределение через J_flux → остаток потока обмена R_J → проекция через G_int → деформация интерфейса → диссипация и перераспределение → возврат в фоновые нерезонансные моды rho_cont`
+`рост дестабилизирующего давления P(t) → сжатие условия C(t) > P(t) → приближение к C(t) ≈ P(t) → эндогенная динамическая критичность → потеря удерживаемой фазовой когерентности → дестабилизация C^3 → деградация T_int → снижение или деманифестация M(t) → перераспределение через J_flux → остаток потока обмена R_J → проекция через G_int → деформация интерфейса → диссипация и перераспределение → возврат в фоновые нерезонансные моды rho_cont`
 
 Деманифестация рассматривается как фазовый переход из локально удерживаемой проявленной конфигурации в перераспределённый поток обмена, диссипативные следы и фоновые нерезонансные моды Континуума.
 
@@ -1363,15 +1363,15 @@ Publication type:
 
 ### Цепочка интерфейсной проекции
 
-`J_flux → временное изменение J_flux → конвективный перенос J_flux → влияние grad rho_cont → влияние C3 → остаток потока обмена R_J → оператор интерфейсной проекции G_int → проецируемый интерфейсный отклик → коррекция или деградация удерживаемого интерфейса → отклик метрического моста`
+`J_flux → временное изменение J_flux → конвективный перенос J_flux → влияние grad rho_cont → влияние C^3 → остаток потока обмена R_J → оператор интерфейсной проекции G_int → проецируемый интерфейсный отклик → коррекция или деградация удерживаемого интерфейса → отклик метрического моста`
 
 ### Рекурсивное замыкание
 
-`удерживаемое состояние цикла Q(n) → эндогенный и экзогенный дрейф параметров → изменение C(t), P(t), C3, T_int и J_flux → формирование или деформация Omega(t) → синтез, удержание, перераспределение, деградация или деманифестация → наследование преобразованных качественных характеристик → формирование цикла Q(n+1)`
+`удерживаемое состояние цикла Q(n) → эндогенный и экзогенный дрейф параметров → изменение C(t), P(t), C^3, T_int и J_flux → формирование или деформация Omega(t) → синтез, удержание, перераспределение, деградация или деманифестация → наследование преобразованных качественных характеристик → формирование цикла Q(n+1)`
 
 Формальное рекурсивное замыкание:
 
-`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
+`Q(n+1) = F(Q(n), C(t), P(t), C^3, T_int, J_flux, Omega(t), rho_cont)`
 
 ## RU — Математический формализм
 
@@ -1383,7 +1383,7 @@ Publication type:
 
 Полный каскад:
 
-`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3 → Omega(t) → Theta_N → T_int → E_medium → M(t) → J_flux`
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C^3 → Omega(t) → Theta_N → T_int → E_medium → M(t) → J_flux`
 
 Где:
 
@@ -1393,7 +1393,7 @@ Publication type:
 - `Phi` — оператор рекурсивного наследования, динамического удержания и структурной целостности;
 - `U_6D` — внутренний тороидальный мультиплетный потенциал удержания;
 - `Psi_coh` — фазово-когерентное состояние, формируемое шестимерным слоем свёртки;
-- `C3` — кубический нелинейный потенциал объёмного удержания;
+- `C^3` — кубический нелинейный потенциал объёмного удержания;
 - `Omega(t)` — допустимая операционная область формирования резонансного окна фазового перехода;
 - `Theta_N` — накопленная операционная способность удержания текущего цикла;
 - `T_int` — динамический интерфейсный тензор;
@@ -1435,14 +1435,14 @@ Publication type:
 
 Операционный переход:
 
-`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C3`
+`Phi(Q(n), D(n), A(n)) → U_6D → Psi_coh → C^3`
 
 Функции:
 
 - свёртка рекурсивно унаследованной мультиплетной конфигурации в сопряжённую фазовую структуру;
 - удержание внутренней тороидальной связности;
 - формирование фазово-когерентного состояния `Psi_coh`;
-- подготовка кубического объёмного потенциала удержания `C3`;
+- подготовка кубического объёмного потенциала удержания `C^3`;
 - перенос унаследованных качественных характеристик в слой резонансного окна фазового перехода и бифуркации.
 
 ### 5D — Слой бифуркационного выбора и резонансного окна фазового перехода
@@ -1456,7 +1456,7 @@ Publication type:
 Входные условия:
 
 - фазово-когерентное состояние `Psi_coh`;
-- кубический потенциал удержания `C3`;
+- кубический потенциал удержания `C^3`;
 - унаследованные качественные характеристики `Q(n)`;
 - диссипативный след `D(n)`;
 - динамическая асимметрия `A(n)`;
@@ -1465,7 +1465,7 @@ Publication type:
 
 Операционная цепочка:
 
-`Psi_coh → C3 → Omega(t) → формирование положительного или отрицательного резонансного окна фазового перехода → выбор последующей траектории фазового перехода`
+`Psi_coh → C^3 → Omega(t) → формирование положительного или отрицательного резонансного окна фазового перехода → выбор последующей траектории фазового перехода`
 
 ### 4D — Топологический монолит Материи Пространства Времени
 
@@ -1475,7 +1475,7 @@ Publication type:
 
 Основные элементы:
 
-`Omega(t) Theta_N T_int C(t) P(t) C3 J_flux`
+`Omega(t) Theta_N T_int C(t) P(t) C^3 J_flux`
 
 Условия удержания:
 
@@ -1509,7 +1509,7 @@ Publication type:
 
 Функции:
 
-- проявление кубической объёмной конфигурации, сформированной через `C3`;
+- проявление кубической объёмной конфигурации, сформированной через `C^3`;
 - удержание локального массового якоря `M(t)`;
 - соединение объёмного проявления с динамическим интерфейсом `T_int`;
 - передача удерживаемого структурного влияния в `J_flux`;
@@ -1555,11 +1555,11 @@ Publication type:
 
 Переход в одномерный слой:
 
-`U_6D → C3 → управляемое раскрытие → импульсный переход → направленный выход → J_flux`
+`U_6D → C^3 → управляемое раскрытие → импульсный переход → направленный выход → J_flux`
 
 Остаток потока обмена:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 Для локально сбалансированного состояния потока обмена:
 
@@ -1567,7 +1567,7 @@ Publication type:
 
 Следовательно:
 
-`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C^3 · J_flux`
 
 Интерфейсная проекция:
 
@@ -1704,7 +1704,7 @@ Publication type:
 
 Сохраняемые переменные и операторы:
 
-`Phi Omega(t) Omega_ret C(t) P(t) C3 Theta_N Theta_crit T_int M(t) J_flux rho_cont R_J G_int R(t)`
+`Phi Omega(t) Omega_ret C(t) P(t) C^3 Theta_N Theta_crit T_int M(t) J_flux rho_cont R_J G_int R(t)`
 
 ### Симуляция Континуума
 
@@ -1868,7 +1868,7 @@ Publication type:
 Функции:
 
 - визуализация `U_6D`;
-- визуализация `C3`;
+- визуализация `C^3`;
 - диагностика фазовой конфигурации;
 - диагностика амплитуды захвата;
 - профиль динамического интерфейса;
@@ -1899,7 +1899,7 @@ Publication type:
 
 Операционная цепочка:
 
-`U_6D → C3 → controlled disclosure → impulse transition → directed output flow → J_flux`
+`U_6D → C^3 → controlled disclosure → impulse transition → directed output flow → J_flux`
 
 Контролируемое различие:
 
@@ -1925,7 +1925,7 @@ Publication type:
 
 Входы:
 
-`J_flux partial_t J_flux grad J_flux grad rho_cont C3 G_int C(t) P(t) g_mu_nu`
+`J_flux partial_t J_flux grad J_flux grad rho_cont C^3 G_int C(t) P(t) g_mu_nu`
 
 Функции:
 
@@ -1938,7 +1938,7 @@ Publication type:
 
 Остаток потока обмена:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 Интерфейсная проекция:
 
@@ -2071,7 +2071,7 @@ Publication type:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 
@@ -2105,7 +2105,7 @@ Publication type:
 
 Рекурсивное обновление:
 
-`Q(n+1) = F(Q(n), C(t), P(t), C3, T_int, J_flux, Omega(t), rho_cont)`
+`Q(n+1) = F(Q(n), C(t), P(t), C^3, T_int, J_flux, Omega(t), rho_cont)`
 
 ## RU — Область применимости
 
@@ -2130,7 +2130,7 @@ Publication type:
 Фреймворк определяет следующие операционно проверяемые следствия:
 
 - объёмное распределение импульса;
-- зависимость динамической устойчивости от кубического нелинейного насыщения объёма `C3`;
+- зависимость динамической устойчивости от кубического нелинейного насыщения объёма `C^3`;
 - переход к эндогенной динамической критичности при приближении `C(t)` к `P(t)`;
 - изменение геометрии `Omega(t)` при изменении фазово-когерентного удержания;
 - существование динамического интерфейса проявления `T_int`;

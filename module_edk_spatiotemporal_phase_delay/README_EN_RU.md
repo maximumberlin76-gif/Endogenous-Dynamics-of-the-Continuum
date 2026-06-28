@@ -412,7 +412,7 @@ The module provides metric phase-retardation diagnostics and retarded phase stat
 Downstream layers may calculate or integrate:
 
 - full endogenous structural coherence `C(t)`;
-- cubic endogenous structural coherence `C3`;
+- cubic endogenous structural coherence `C^3`;
 - resonance window `Omega(t)`;
 - retention threshold `Theta_N`;
 - dynamic interface tensor `T_int`;
@@ -849,7 +849,7 @@ The module is intended for:
 Последующие слои могут рассчитывать или интегрировать:
 
 - полную эндогенную структурную когерентность `C(t)`;
-- кубическую эндогенную структурную когерентность `C3`;
+- кубическую эндогенную структурную когерентность `C^3`;
 - резонансное окно `Omega(t)`;
 - порог удержания `Theta_N`;
 - динамический тензор интерфейса `T_int`;

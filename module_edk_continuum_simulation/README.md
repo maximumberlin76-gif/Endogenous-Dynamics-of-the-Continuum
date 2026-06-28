@@ -45,7 +45,7 @@ The module preserves the following controlled distinctions:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 
@@ -55,7 +55,7 @@ The module preserves the following controlled distinctions:
 
 `C(t)` is the general endogenous structural coherence of the system or its reduced executable proxy inside this module.
 
-`C3` is the cubic nonlinear potential of volumetric retention used in other EDK layers.
+`C^3` is the cubic nonlinear potential of volumetric retention used in other EDK layers.
 
 `T_int` is the dynamic interface tensor.
 
@@ -321,7 +321,7 @@ Then the module launches a critical-overload demonstration through:
 
 `R(t) ≠ C(t)`
 
-`C(t) ≠ C3`
+`C(t) ≠ C^3`
 
 `T_int ≠ M(t)`
 
@@ -331,7 +331,7 @@ Then the module launches a critical-overload demonstration through:
 
 `C(t)` — общая эндогенная структурная когерентность системы или её редуцированный исполняемый прокси внутри данного модуля.
 
-`C3` — кубический нелинейный потенциал объёмного удержания, используемый в других слоях EDK.
+`C^3` — кубический нелинейный потенциал объёмного удержания, используемый в других слоях EDK.
 
 `T_int` — динамический интерфейсный тензор.
 

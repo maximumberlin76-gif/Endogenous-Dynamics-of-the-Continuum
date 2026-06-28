@@ -48,13 +48,13 @@ The solver implements the EDK interface layer for exchange-flow residual calcula
 
 ## EN — Main Operational Chain
 
-`J_flux → spatial Jacobian grad_J_flux → convective transport → background-mode gradient → cubic retention C3 → exchange-flow residual R_J → interface projection G_int → projected residual → EDS / EDC regime classification → retained metric or metric-deformation proxy`
+`J_flux → spatial Jacobian grad_J_flux → convective transport → background-mode gradient → cubic retention C^3 → exchange-flow residual R_J → interface projection G_int → projected residual → EDS / EDC regime classification → retained metric or metric-deformation proxy`
 
 ## EN — 1. Exchange-Flow Residual
 
 The exchange-flow residual is defined as:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 The solver separates this expression into four numerical components:
 
@@ -90,7 +90,7 @@ Under local residual balance:
 
 the tact-by-tact evolution of the exchange-flow channel is:
 
-`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C^3 · J_flux`
 
 The method:
 
@@ -112,19 +112,19 @@ The solver separates:
 
 and:
 
-`C3`
+`C^3`
 
 `C(t)` is the general endogenous structural coherence of the system.
 
-`C3` is the cubic retention potential associated with the retained phase-lock state.
+`C^3` is the cubic retention potential associated with the retained phase-lock state.
 
 The cubic retention contribution is:
 
-`beta · C3 · J_flux`
+`beta · C^3 · J_flux`
 
-A higher retained value of `C3` increases the damping contribution acting on uncontrolled exchange-flow growth.
+A higher retained value of `C^3` increases the damping contribution acting on uncontrolled exchange-flow growth.
 
-A lower retained value of `C3` weakens this retention contribution and allows the exchange-flow residual to increase under destabilizing pressure and spatial inhomogeneity.
+A lower retained value of `C^3` weakens this retention contribution and allows the exchange-flow residual to increase under destabilizing pressure and spatial inhomogeneity.
 
 ## EN — 5. Background Non-Resonant Modes
 
@@ -317,7 +317,7 @@ The solver validates:
 - square shape of the Jacobian and metric matrix;
 - dimensional consistency of `J_flux`, `grad_J_flux`, and `grad rho_cont`;
 - dimensional consistency of the projected residual and `g_mu_nu`;
-- non-negativity of `C3`;
+- non-negativity of `C^3`;
 - positivity of tact duration `dt`.
 
 Dimension mismatches raise explicit `ValueError` exceptions.
@@ -356,7 +356,7 @@ Preserves the metric in the retained regime or calculates the local metric-defor
 
 ## EN — 14. Example Operational Sequence
 
-`solver initialization → define J_flux → define grad_J_flux → define grad_rho_cont → define C3 → calculate partial_t J_flux → calculate balanced residual R_J → define G_int → project R_J → compare C(t) and P(t) → preserve or deform g_mu_nu`
+`solver initialization → define J_flux → define grad_J_flux → define grad_rho_cont → define C^3 → calculate partial_t J_flux → calculate balanced residual R_J → define G_int → project R_J → compare C(t) and P(t) → preserve or deform g_mu_nu`
 
 ## EN — 15. Core Invariant
 
@@ -391,7 +391,7 @@ A full relativistic extension requires:
 
 ## EN — 17. Position in the EDK Architecture
 
-`U_6D → A_lock → C3 → T_int → M(t) → J_flux → MetricBridgeSolver → R_J → G_int → projected residual → retained metric or deformation proxy`
+`U_6D → A_lock → C^3 → T_int → M(t) → J_flux → MetricBridgeSolver → R_J → G_int → projected residual → retained metric or deformation proxy`
 
 The solver connects the mathematical formalism of interface balance with the executable numerical layer of the EDK repository.
 
@@ -447,13 +447,13 @@ README-файл:
 
 ## RU — Основная операционная цепочка
 
-`J_flux → пространственный Якобиан grad_J_flux → конвективный перенос → градиент фоновых мод → кубическое удержание C3 → остаток потока обмена R_J → интерфейсная проекция G_int → проецируемый остаток → классификация режима EDS / EDC → удерживаемая метрика или прокси деформации метрики`
+`J_flux → пространственный Якобиан grad_J_flux → конвективный перенос → градиент фоновых мод → кубическое удержание C^3 → остаток потока обмена R_J → интерфейсная проекция G_int → проецируемый остаток → классификация режима EDS / EDC → удерживаемая метрика или прокси деформации метрики`
 
 ## RU — 1. Остаток потока обмена
 
 Остаток потока обмена определяется как:
 
-`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C3 · J_flux`
+`R_J = partial_t J_flux + (J_flux · grad)J_flux + gamma · grad rho_cont + beta · C^3 · J_flux`
 
 Решатель разделяет это выражение на четыре численных компонента:
 
@@ -489,7 +489,7 @@ README-файл:
 
 потактовая эволюция канала потока обмена имеет вид:
 
-`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C3 · J_flux`
+`partial_t J_flux = -(J_flux · grad)J_flux - gamma · grad rho_cont - beta · C^3 · J_flux`
 
 Метод:
 
@@ -511,19 +511,19 @@ README-файл:
 
 и:
 
-`C3`
+`C^3`
 
 `C(t)` — общая эндогенная структурная когерентность системы.
 
-`C3` — кубический потенциал удержания, связанный с удерживаемым состоянием фазового замка.
+`C^3` — кубический потенциал удержания, связанный с удерживаемым состоянием фазового замка.
 
 Вклад кубического удержания:
 
-`beta · C3 · J_flux`
+`beta · C^3 · J_flux`
 
-Более высокое удерживаемое значение `C3` усиливает демпфирующий вклад, действующий на неконтролируемый рост потока обмена.
+Более высокое удерживаемое значение `C^3` усиливает демпфирующий вклад, действующий на неконтролируемый рост потока обмена.
 
-Более низкое удерживаемое значение `C3` ослабляет данный вклад удержания и позволяет остатку потока обмена возрастать под воздействием дестабилизующего давления и пространственной неоднородности.
+Более низкое удерживаемое значение `C^3` ослабляет данный вклад удержания и позволяет остатку потока обмена возрастать под воздействием дестабилизующего давления и пространственной неоднородности.
 
 ## RU — 5. Фоновые нерезонансные моды
 
@@ -716,7 +716,7 @@ README-файл:
 - квадратную форму Якобиана и метрической матрицы;
 - согласованность размерностей `J_flux`, `grad_J_flux` и `grad rho_cont`;
 - согласованность размерности проецируемого остатка с `g_mu_nu`;
-- неотрицательность `C3`;
+- неотрицательность `C^3`;
 - положительность длительности такта `dt`.
 
 При несовпадении размерностей формируются явные исключения `ValueError`.
@@ -755,7 +755,7 @@ README-файл:
 
 ## RU — 14. Пример операционной последовательности
 
-`инициализация решателя → определение J_flux → определение grad_J_flux → определение grad_rho_cont → определение C3 → расчёт partial_t J_flux → расчёт сбалансированного остатка R_J → определение G_int → проекция R_J → сравнение C(t) и P(t) → сохранение или деформация g_mu_nu`
+`инициализация решателя → определение J_flux → определение grad_J_flux → определение grad_rho_cont → определение C^3 → расчёт partial_t J_flux → расчёт сбалансированного остатка R_J → определение G_int → проекция R_J → сравнение C(t) и P(t) → сохранение или деформация g_mu_nu`
 
 ## RU — 15. Основной инвариант
 
@@ -790,6 +790,6 @@ README-файл:
 
 ## RU — 17. Место в архитектуре EDK
 
-`U_6D → A_lock → C3 → T_int → M(t) → J_flux → MetricBridgeSolver → R_J → G_int → проецируемый остаток → удерживаемая метрика или прокси деформации`
+`U_6D → A_lock → C^3 → T_int → M(t) → J_flux → MetricBridgeSolver → R_J → G_int → проецируемый остаток → удерживаемая метрика или прокси деформации`
 
 Решатель соединяет математический формализм интерфейсного баланса с исполняемым численным слоем репозитория EDK.

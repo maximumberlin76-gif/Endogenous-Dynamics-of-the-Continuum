@@ -246,7 +246,7 @@ Boundary invariants:
 
 C(t) ≠ C_proxy(t)
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 T_int ≠ M(t)
 
@@ -760,7 +760,7 @@ hierarchical_diagnostics.py
 
 C(t) ≠ C_proxy(t)
 
-C(t) ≠ C3
+C(t) ≠ C^3
 
 T_int ≠ M(t)
 
