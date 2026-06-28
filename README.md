@@ -1071,13 +1071,7 @@ License:
 
 ## EN — Citation
 
-Before assignment of a DOI through Zenodo, cite this repository as an open author publication.
-
-After GitHub release archiving through Zenodo, the DOI will be added to this section and to:
-
-`CITATION.cff`
-
-Recommended citation before DOI assignment:
+Recommended citation:
 
 Marnov, Maksym. Endogenous Dynamics of the Continuum (EDK): A theorem-algorithmic framework for open nonlinear dissipative dynamic systems in which Space-Time Matter is considered as diverse forms, levels, and transitional states of structural self-organization of the Continuum. GitHub repository release, 2026.
 
@@ -2172,13 +2166,7 @@ Publication type:
 
 ## RU — Цитирование
 
-До присвоения DOI через Zenodo данный репозиторий следует цитировать как открытую авторскую публикацию.
-
-После архивирования релиза GitHub через Zenodo DOI будет добавлен в данный раздел и в файл:
-
-`CITATION.cff`
-
-Рекомендуемое цитирование до присвоения DOI:
+Рекомендуемое цитирование:
 
 Marnov, Maksym. Эндогенная динамика Континуума (EDK): теоремно-алгоритмический фреймворк для открытых нелинейных диссипативных динамических систем, в которых Материя Пространства Времени рассматривается как разнообразные формы, уровни и переходные состояния структурной самоорганизации Континуума. Релиз репозитория GitHub, 2026.
 
