@@ -1,0 +1,44 @@
+name: Restore C^3 notation in Markdown
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/restore-cpow3.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  restore-cpow3:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Restore C^3 notation in Markdown only
+        run: |
+          find . -type f \( -name "*.md" -o -name "*.markdown" \) -print0 \
+            | xargs -0 perl -pi -e 's/\bC3\b/C^3/g'
+
+      - name: Show remaining C3 in Markdown
+        run: |
+          grep -RIn --include="*.md" --include="*.markdown" '\bC3\b' . || true
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No Markdown C3 replacements needed."
+          else
+            git add .
+            git commit -m "Restore C^3 notation in Markdown documentation"
+            git push
+          fi
