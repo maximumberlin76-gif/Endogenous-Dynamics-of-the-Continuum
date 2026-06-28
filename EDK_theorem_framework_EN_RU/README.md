@@ -18,8 +18,6 @@ The Russian version remains the semantic control source.
 
 The English version is the literal academic translation for international publication.
 
----
-
 ## EN — Folder Structure
 
 - `chapter_01/` — Chapter 1. Limits of Applicability of Einstein’s Relativistic Invariant and the Principles and Mechanisms of the Endogenous Dynamics of the Continuum.
@@ -42,15 +40,43 @@ The English version is the literal academic translation for international public
 
 - `chapter_10/` — Chapter 10. Universal Meta-Protocol of Phase Coupling of Heterogeneous Systems.
 
-- `chapter_11/` — Chapter 11. Protocol of Endogenous Dynamic Resilience of the Continuum.
+Repository-level related layers:
 
-- `chapter_12/` — Chapter 12. Glossary of Terms and Symbols.
+- `../mathematical_formalism/` — mathematical formalism, formulas, operators and invariants.
 
-- `mathematical_apparatus/` — Mathematical apparatus, formulas, operators, and invariants.
+- `../glossary/` — controlled terminology layer.
 
-- `boundary_conditions/` — Boundary conditions, dynamic interface of manifestation, interface tensor, and related retention conditions.
+## EN — File Names
 
----
+Each chapter is stored in a separate subfolder as one bilingual file:
+
+- `chapter_01/chapter_01_EN_RU.md`
+
+- `chapter_02/chapter_02_EN_RU.md`
+
+- `chapter_03/chapter_03_EN_RU.md`
+
+- `chapter_04/chapter_04_EN_RU.md`
+
+- `chapter_05/chapter_05_EN_RU.md`
+
+- `chapter_06/chapter_06_EN_RU.md`
+
+- `chapter_07/chapter_07_EN_RU.md`
+
+- `chapter_08/chapter_08_EN_RU.md`
+
+- `chapter_09/chapter_09_EN_RU.md`
+
+- `chapter_10/chapter_10_EN_RU.md`
+
+The internal language order of each chapter file is:
+
+EN → RU
+
+The Russian layer remains the semantic control source.
+
+The English layer is the literal academic translation for international publication.
 
 ## RU — Теоремно-алгоритмический фреймворк ЕДК
 
@@ -67,8 +93,6 @@ EN → RU
 Русская версия остаётся контрольным смысловым источником.
 
 Английская версия является дословным академическим переводом для международной публикации.
-
----
 
 ## RU — Структура папки
 
@@ -92,36 +116,40 @@ EN → RU
 
 - `chapter_10/` — Глава 10. Универсальный мета-протокол фазового сопряжения разнородных систем.
 
-- `chapter_11/` — Глава 11. Протокол эндогенной динамической устойчивости Континуума.
+Связанные слои уровня репозитория:
 
-- `chapter_12/` — Глава 12. Глоссарий терминов и обозначений.
+- `../mathematical_formalism/` — математический формализм, формулы, операторы и инварианты.
 
-- `mathematical_apparatus/` — математический аппарат, формулы, операторы и инварианты.
-
-- `boundary_conditions/` — граничные условия, динамический интерфейс проявления, тензор интерфейса и связанные условия удержания.
-
----
+- `../glossary/` — контролируемый терминологический слой.
 
 ## RU — Имена файлов
 
-Каждая глава размещается в отдельной подпапке в двух версиях:
+Каждая глава размещается в отдельной подпапке как один двуязычный файл:
 
-- `chapter_XX_EN.md` — английский дословный академический перевод.
+- `chapter_01/chapter_01_EN_RU.md`
 
-- `chapter_XX_RU.md` — русский контрольный текст.
+- `chapter_02/chapter_02_EN_RU.md`
 
-Пример:
+- `chapter_03/chapter_03_EN_RU.md`
 
-- `chapter_01/chapter_01_EN.md`
+- `chapter_04/chapter_04_EN_RU.md`
 
-- `chapter_01/chapter_01_RU.md`
+- `chapter_05/chapter_05_EN_RU.md`
 
-Дополнительные разделы:
+- `chapter_06/chapter_06_EN_RU.md`
 
-- `mathematical_apparatus/mathematical_apparatus_EN.md`
+- `chapter_07/chapter_07_EN_RU.md`
 
-- `mathematical_apparatus/mathematical_apparatus_RU.md`
+- `chapter_08/chapter_08_EN_RU.md`
 
-- `boundary_conditions/boundary_conditions_EN.md`
+- `chapter_09/chapter_09_EN_RU.md`
 
-- `boundary_conditions/boundary_conditions_RU.md`
+- `chapter_10/chapter_10_EN_RU.md`
+
+Внутренний порядок языковых слоёв каждого файла главы:
+
+EN → RU
+
+Русский слой остаётся контрольным смысловым источником.
+
+Английский слой является дословным академическим переводом для международной публикации.
