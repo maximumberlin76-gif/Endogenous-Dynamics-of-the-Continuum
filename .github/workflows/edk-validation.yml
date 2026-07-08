@@ -1,0 +1,73 @@
+name: EDK Validation
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-validation.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Python Tests and Smoke Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      MPLBACKEND: Agg
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy matplotlib pytest
+
+      - name: Compile Python files
+        run: |
+          python -m compileall -q .
+
+      - name: Run full test suite
+        run: |
+          python -m pytest -q
+
+      - name: Run GPU mean-field phase engine smoke test
+        run: |
+          python module_edk_gpu_mean_field_phase_engine/smoke_test.py
+
+      - name: Run hierarchical orchestrator smoke test
+        run: |
+          python module_edk_hierarchical_orchestrator/smoke_test.py
+
+      - name: Run Marnov retention-collapse protocol smoke test
+        run: |
+          python module_edk_marnov_retention_collapse_protocol/smoke_test.py
+
+      - name: Run spatiotemporal phase-delay smoke test
+        run: |
+          python module_edk_spatiotemporal_phase_delay/smoke_test.py
+
+      - name: Run vortex phase-field smoke test
+        run: |
+          python module_edk_vortex_phase_field/smoke_test.py
