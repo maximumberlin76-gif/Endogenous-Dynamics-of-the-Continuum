@@ -29,7 +29,6 @@ jobs:
     env:
       PYTHONPATH: ${{ github.workspace }}
       MPLBACKEND: Agg
-      ARTIFACT_ROOT: ${{ runner.temp }}/edk-artifact-validation
 
     steps:
       - name: Checkout repository
@@ -46,6 +45,17 @@ jobs:
           python -m pip install numpy matplotlib pytest
           python -m pip check
 
+      - name: Initialize artifact root
+        run: |
+          ARTIFACT_ROOT="${RUNNER_TEMP}/edk-artifact-validation"
+          rm -rf "${ARTIFACT_ROOT}"
+          mkdir -p \
+            "${ARTIFACT_ROOT}/gpu-a" \
+            "${ARTIFACT_ROOT}/gpu-b" \
+            "${ARTIFACT_ROOT}/delay" \
+            "${ARTIFACT_ROOT}/vortex"
+          echo "ARTIFACT_ROOT=${ARTIFACT_ROOT}" >> "${GITHUB_ENV}"
+
       - name: Validate core CLI interfaces
         run: |
           python module_edk_gpu_mean_field_phase_engine/edk_gpu_mean_field_phase_engine.py --help
@@ -53,13 +63,6 @@ jobs:
           python module_edk_marnov_retention_collapse_protocol/marnov_retention_collapse_protocol.py --help
           python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --help
           python module_edk_vortex_phase_field/edk_vortex_phase_field.py --help
-
-      - name: Create artifact directories
-        run: |
-          mkdir -p "${ARTIFACT_ROOT}/gpu-a"
-          mkdir -p "${ARTIFACT_ROOT}/gpu-b"
-          mkdir -p "${ARTIFACT_ROOT}/delay"
-          mkdir -p "${ARTIFACT_ROOT}/vortex"
 
       - name: Generate deterministic GPU mean-field artifacts A
         run: |
@@ -127,7 +130,7 @@ jobs:
 
 
           def validate_finite(value: Any, path: str) -> None:
-              if isinstance(value, bool) or value is None:
+              if value is None or isinstance(value, bool):
                   return
 
               if isinstance(value, (int, float)):
@@ -139,31 +142,24 @@ jobs:
 
               if isinstance(value, dict):
                   for key, item in value.items():
-                      validate_finite(
-                          item,
-                          f"{path}.{key}",
-                      )
+                      validate_finite(item, f"{path}.{key}")
                   return
 
               if isinstance(value, list):
                   for index, item in enumerate(value):
-                      validate_finite(
-                          item,
-                          f"{path}[{index}]",
-                      )
+                      validate_finite(item, f"{path}[{index}]")
 
 
           def validate_json_directory(
               directory: Path,
-              minimum_files: int,
-              required_top_level_keys: set[str],
+              expected_count: int,
+              required_keys: set[str],
           ) -> None:
               json_files = sorted(directory.glob("*.json"))
 
-              if len(json_files) < minimum_files:
+              if len(json_files) != expected_count:
                   raise RuntimeError(
-                      f"{directory}: expected at least "
-                      f"{minimum_files} JSON files, "
+                      f"{directory}: expected {expected_count} JSON files, "
                       f"found {len(json_files)}."
                   )
 
@@ -184,34 +180,26 @@ jobs:
                           f"JSON root is not an object: {path}"
                       )
 
-                  missing = (
-                      required_top_level_keys
-                      - set(payload)
-                  )
+                  missing = required_keys - set(payload)
 
                   if missing:
                       raise RuntimeError(
-                          f"{path} missing keys: "
-                          f"{sorted(missing)}"
+                          f"{path} missing keys: {sorted(missing)}"
                       )
 
-                  validate_finite(
-                      payload,
-                      str(path),
-                  )
+                  validate_finite(payload, str(path))
 
 
           def validate_npz_directory(
               directory: Path,
-              minimum_files: int,
+              expected_count: int,
               required_arrays: set[str],
           ) -> None:
               npz_files = sorted(directory.glob("*.npz"))
 
-              if len(npz_files) < minimum_files:
+              if len(npz_files) != expected_count:
                   raise RuntimeError(
-                      f"{directory}: expected at least "
-                      f"{minimum_files} NPZ files, "
+                      f"{directory}: expected {expected_count} NPZ files, "
                       f"found {len(npz_files)}."
                   )
 
@@ -226,13 +214,11 @@ jobs:
                       allow_pickle=False,
                   ) as archive:
                       names = set(archive.files)
-
                       missing = required_arrays - names
 
                       if missing:
                           raise RuntimeError(
-                              f"{path} missing arrays: "
-                              f"{sorted(missing)}"
+                              f"{path} missing arrays: {sorted(missing)}"
                           )
 
                       if not archive.files:
@@ -241,9 +227,7 @@ jobs:
                           )
 
                       for name in archive.files:
-                          array = np.asarray(
-                              archive[name]
-                          )
+                          array = np.asarray(archive[name])
 
                           if array.size == 0:
                               raise RuntimeError(
@@ -252,17 +236,15 @@ jobs:
 
                           if array.dtype.hasobject:
                               raise RuntimeError(
-                                  f"Object dtype is prohibited "
-                                  f"for {name}: {path}"
+                                  f"Object dtype is prohibited for "
+                                  f"{name}: {path}"
                               )
 
                           if np.issubdtype(
                               array.dtype,
                               np.number,
                           ):
-                              if not np.all(
-                                  np.isfinite(array)
-                              ):
+                              if not np.all(np.isfinite(array)):
                                   raise RuntimeError(
                                       f"Non-finite values in "
                                       f"{name}: {path}"
@@ -285,59 +267,57 @@ jobs:
               if temporary_files:
                   raise RuntimeError(
                       "Temporary files remained after "
-                      f"artifact generation: "
-                      f"{temporary_files}"
+                      f"artifact generation: {temporary_files}"
                   )
 
 
-          gpu_json_keys = {
-              "engine_class",
-              "metrics",
-              "simulation_time",
-              "tact_index",
-          }
-
-          delay_json_keys = {
-              "engine_class",
-              "metrics",
-              "simulation_time",
-              "tact_index",
-          }
-
-          vortex_json_keys = {
-              "backend",
-              "config",
-              "metrics",
-              "tact",
-          }
-
           validate_json_directory(
               root / "gpu-a",
-              minimum_files=12,
-              required_top_level_keys=gpu_json_keys,
+              expected_count=12,
+              required_keys={
+                  "engine_class",
+                  "metrics",
+                  "simulation_time",
+                  "tact_index",
+              },
           )
 
           validate_json_directory(
               root / "gpu-b",
-              minimum_files=12,
-              required_top_level_keys=gpu_json_keys,
+              expected_count=12,
+              required_keys={
+                  "engine_class",
+                  "metrics",
+                  "simulation_time",
+                  "tact_index",
+              },
           )
 
           validate_json_directory(
               root / "delay",
-              minimum_files=12,
-              required_top_level_keys=delay_json_keys,
+              expected_count=12,
+              required_keys={
+                  "engine_class",
+                  "metrics",
+                  "simulation_time",
+                  "tact_index",
+              },
           )
 
           validate_json_directory(
               root / "vortex",
-              minimum_files=6,
-              required_top_level_keys=vortex_json_keys,
+              expected_count=6,
+              required_keys={
+                  "backend",
+                  "config",
+                  "metrics",
+                  "tact",
+              },
           )
 
           validate_npz_directory(
               root / "gpu-a",
-              minimum_files=3,
+              expected_count=3,
               required_arrays={
                   "phases",
                   "amplitudes",
@@ -348,7 +328,7 @@ jobs:
 
           validate_npz_directory(
               root / "gpu-b",
-              minimum_files=3,
+              expected_count=3,
               required_arrays={
                   "phases",
                   "amplitudes",
@@ -359,7 +339,7 @@ jobs:
 
           validate_npz_directory(
               root / "delay",
-              minimum_files=3,
+              expected_count=3,
               required_arrays={
                   "coords_3d",
                   "phases",
@@ -371,7 +351,7 @@ jobs:
 
           validate_npz_directory(
               root / "vortex",
-              minimum_files=3,
+              expected_count=3,
               required_arrays={
                   "coords_3d",
                   "phases",
@@ -383,9 +363,7 @@ jobs:
 
           validate_no_temporary_files(root)
 
-          print(
-              "EDK structured artifact validation passed."
-          )
+          print("EDK structured artifact validation passed.")
           PY
 
       - name: Validate deterministic replay equivalence
