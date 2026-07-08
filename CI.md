@@ -1,22 +1,28 @@
 # Continuous Integration
 
-The Endogenous Dynamics of the Continuum (EDK) repository uses GitHub Actions for automated Python validation, smoke testing, and executable module verification.
+[![EDK Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-validation.yml)
+[![EDK Module Execution](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-module-execution.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-module-execution.yml)
+[![EDK Artifact Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-artifact-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-artifact-validation.yml)
 
-## CI Status
+The Endogenous Dynamics of the Continuum (EDK) repository uses GitHub Actions for automated Python validation, executable module verification, structured artifact validation, and deterministic replay checks.
 
-Current CI layers:
+## CI Validation Architecture
 
-- EDK Validation — PASS
-- EDK Module Execution — PASS
-- Restore C^3 notation in Markdown — PASS
+The repository currently uses three independent executable validation layers:
 
-## EDK Validation
+1. EDK Validation;
+2. EDK Module Execution;
+3. EDK Artifact Validation.
+
+These layers validate different parts of the repository and are kept separate so that test-suite validation, independent module execution, and generated-artifact validation remain individually observable.
+
+## 1. EDK Validation
 
 Workflow file:
 
 `.github/workflows/edk-validation.yml`
 
-The validation workflow performs:
+The EDK Validation workflow performs:
 
 - Python source compilation;
 - full pytest execution;
@@ -26,19 +32,27 @@ The validation workflow performs:
 - spatiotemporal phase-delay smoke validation;
 - vortex phase-field smoke validation.
 
-The workflow validates the repository with Python 3.11 on GitHub Actions.
+The workflow runs in a clean GitHub-hosted Ubuntu environment with Python 3.11.
 
-Current status:
+### Retention-Collapse Protocol Correction
 
-PASS
+The Marnov retention-collapse protocol smoke test validates multi-tact critical exposure accumulation before phase-node unlock.
 
-## EDK Module Execution
+The validated smoke-test configuration uses:
+
+`critical_exposure_threshold = 0.50`
+
+This preserves the intended validation sequence:
+
+positive exposure accumulation → multi-tact persistence → threshold crossing → phase-node unlock
+
+## 2. EDK Module Execution
 
 Workflow file:
 
 `.github/workflows/edk-module-execution.yml`
 
-The module-execution workflow independently executes the remaining repository modules through a GitHub Actions matrix.
+The EDK Module Execution workflow independently executes repository modules through a GitHub Actions matrix.
 
 Validated executable modules:
 
@@ -57,54 +71,105 @@ Validated executable modules:
 - Solar Synthesis;
 - Wave Genetics.
 
-Each module is executed independently so that failure in one module does not prevent validation of the remaining matrix entries.
+Each module is executed as an independent matrix job.
 
-Current status:
+The matrix uses:
 
-PASS
+`fail-fast: false`
 
-## Retention-Collapse Protocol Correction
+This allows all module jobs to complete even if an individual matrix entry fails.
 
-The Marnov retention-collapse protocol smoke test validates multi-tact critical exposure accumulation before phase-node unlock.
+## 3. EDK Artifact Validation
 
-The validated smoke-test configuration uses:
+Workflow file:
 
-`critical_exposure_threshold = 0.50`
+`.github/workflows/edk-artifact-validation.yml`
 
-This preserves the intended test sequence:
+The EDK Artifact Validation workflow validates generated machine-readable outputs rather than only checking whether executable scripts terminate successfully.
 
-positive exposure accumulation → multi-tact persistence → threshold crossing → phase-node unlock
+The workflow performs:
 
-Current status:
+- dependency installation validation through `pip check`;
+- core CLI interface validation;
+- deterministic GPU mean-field artifact generation;
+- repeated seeded execution;
+- spatiotemporal phase-delay artifact generation;
+- vortex phase-field artifact generation;
+- JSON artifact validation;
+- NPZ artifact validation;
+- required field validation;
+- required array validation;
+- empty artifact detection;
+- non-finite numeric value detection;
+- object-dtype rejection in NPZ arrays;
+- temporary-file residue detection;
+- exact deterministic replay comparison;
+- repository mutation detection.
 
-PASS
+### Deterministic Replay Validation
 
-## CI Trigger Conditions
+The GPU mean-field reference execution is run twice with the same configuration and seed.
 
-The validation workflows run on:
+Validated seed:
 
-- manual workflow dispatch;
-- pushes to the `main` branch affecting Python files;
-- pull requests to the `main` branch affecting Python files;
-- changes to the corresponding workflow files.
+`76`
+
+The two generated artifact directories are compared directly.
+
+The validation requires exact replay equivalence.
+
+### Structured Artifact Validation
+
+Generated JSON artifacts are checked for:
+
+- valid JSON decoding;
+- object root structure;
+- required top-level keys;
+- non-empty files;
+- finite numeric values.
+
+Generated NPZ artifacts are checked for:
+
+- successful loading with `allow_pickle=False`;
+- required array presence;
+- non-empty arrays;
+- prohibited object dtype;
+- finite numeric values.
+
+### Repository Integrity Validation
+
+After all artifact-generation and validation stages, the workflow executes:
+
+`git diff --exit-code`
+
+This verifies that validation does not modify tracked repository content.
 
 ## Validation Environment
 
-Primary environment:
+Primary CI environment:
 
 - GitHub Actions;
-- Ubuntu latest runner;
+- GitHub-hosted Ubuntu runner;
 - Python 3.11;
-- repository root added to `PYTHONPATH`;
+- repository root available through `PYTHONPATH`;
 - non-interactive Matplotlib backend through `MPLBACKEND=Agg`.
 
-Validation dependencies:
+Primary validation dependencies:
 
 - NumPy;
 - Matplotlib;
 - pytest.
 
-## Maintenance Workflow
+## Trigger Conditions
+
+The executable validation workflows support:
+
+- manual workflow dispatch;
+- pushes to the `main` branch affecting Python files;
+- pull requests to the `main` branch affecting Python files;
+- changes to the corresponding workflow file.
+
+## Documentation Maintenance Workflow
 
 Workflow file:
 
@@ -112,17 +177,37 @@ Workflow file:
 
 This workflow preserves the required `C^3` notation in Markdown documentation.
 
-Current status:
+It is a documentation-maintenance workflow and is not part of the three executable test badges.
 
-PASS
+## Validation Coverage
 
-## Final CI Result
+The current CI architecture confirms:
 
-The repository currently has two independent executable validation layers:
+- Python source compilation;
+- pytest execution;
+- five dedicated smoke-test paths;
+- independent execution of fourteen repository modules;
+- real JSON artifact generation;
+- real NPZ artifact generation;
+- artifact structure and numeric-integrity validation;
+- deterministic seeded replay equivalence;
+- absence of validation-generated repository changes.
 
-1. full Python test and smoke-test validation;
-2. independent execution of the remaining executable modules.
+## Final CI Structure
 
-Combined result:
+EDK Validation  
+→ source compilation  
+→ pytest  
+→ smoke tests
 
-PASS
+EDK Module Execution  
+→ independent executable-module matrix
+
+EDK Artifact Validation  
+→ generated artifacts  
+→ structural validation  
+→ numeric validation  
+→ deterministic replay  
+→ repository integrity
+
+The three executable CI layers are independently visible through GitHub Actions and their status badges.
