@@ -1,0 +1,423 @@
+name: EDK Stress and Scaling Validation
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-stress-scaling-validation.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-stress-scaling-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  stress-scaling:
+    name: ${{ matrix.num_domains }} domains · ${{ matrix.dtype }} · ${{ matrix.tacts }} tacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - num_domains: 32
+            tacts: 4096
+            dtype: float32
+
+          - num_domains: 64
+            tacts: 4096
+            dtype: float32
+
+          - num_domains: 128
+            tacts: 3072
+            dtype: float32
+
+          - num_domains: 256
+            tacts: 2048
+            dtype: float32
+
+          - num_domains: 512
+            tacts: 1536
+            dtype: float32
+
+          - num_domains: 1024
+            tacts: 1024
+            dtype: float32
+
+          - num_domains: 256
+            tacts: 2048
+            dtype: float64
+
+          - num_domains: 1024
+            tacts: 1024
+            dtype: float64
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      MPLBACKEND: Agg
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install stress-test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy
+          python -m pip check
+
+      - name: Run sustained numerical stress test
+        env:
+          NUM_DOMAINS: ${{ matrix.num_domains }}
+          TACTS: ${{ matrix.tacts }}
+          DTYPE: ${{ matrix.dtype }}
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import math
+          import os
+          import time
+          from typing import Any
+
+          import numpy as np
+
+          from module_edk_gpu_mean_field_phase_engine import (
+              EDKGPUMeanFieldPhaseEngine,
+              MeanFieldPhaseConfig,
+          )
+
+
+          num_domains = int(os.environ["NUM_DOMAINS"])
+          tacts = int(os.environ["TACTS"])
+          dtype = os.environ["DTYPE"]
+          dt = 0.01
+          seed = 76
+
+          engine = EDKGPUMeanFieldPhaseEngine(
+              MeanFieldPhaseConfig(
+                  num_domains=num_domains,
+                  coupling_strength_k=18.0,
+                  sakaguchi_phase_lag_alpha=0.30 * math.pi,
+                  natural_frequency_mean=0.0,
+                  natural_frequency_std=0.10,
+                  phase_noise_strength=0.02,
+                  amplitude_noise_strength=0.01,
+                  seed=seed,
+                  dtype=dtype,
+                  backend="cpu",
+              )
+          )
+
+
+          def assert_finite_metric(
+              name: str,
+              value: Any,
+          ) -> None:
+              if value is None or isinstance(value, (str, bool)):
+                  return
+
+              if isinstance(value, (int, float)):
+                  if not math.isfinite(float(value)):
+                      raise RuntimeError(
+                          f"Non-finite metric: {name}={value}"
+                      )
+
+
+          started = time.perf_counter()
+
+          for tact in range(tacts):
+              forcing_phase = (
+                  (tact * 0.173) % (2.0 * math.pi)
+              ) - math.pi
+
+              pressure_segment = tact % 120
+
+              if pressure_segment < 40:
+                  forcing_density = 0.0
+              elif pressure_segment < 80:
+                  forcing_density = 4.0
+              else:
+                  forcing_density = 8.0
+
+              metrics = engine.process_micro_interval(
+                  external_forcing_density=forcing_density,
+                  dt=dt,
+                  external_forcing_phase=forcing_phase,
+              )
+
+              if tact % 128 == 0 or tact == tacts - 1:
+                  for name, value in metrics.items():
+                      assert_finite_metric(name, value)
+
+                  phase_order = float(
+                      metrics["R_t_phase_order"]
+                  )
+
+                  amplitude_order = float(
+                      metrics["phase_amplitude_order_proxy"]
+                  )
+
+                  if not 0.0 <= phase_order <= 1.0:
+                      raise RuntimeError(
+                          "R_t_phase_order left [0, 1]."
+                      )
+
+                  if not 0.0 <= amplitude_order <= 1.0:
+                      raise RuntimeError(
+                          "phase_amplitude_order_proxy left [0, 1]."
+                      )
+
+          elapsed = time.perf_counter() - started
+          snapshot = engine.export_field_snapshot()
+
+          for name, array in snapshot.items():
+              values = np.asarray(array)
+
+              if values.shape != (num_domains,):
+                  raise RuntimeError(
+                      f"Unexpected shape for {name}: {values.shape}"
+                  )
+
+              if not np.all(np.isfinite(values)):
+                  raise RuntimeError(
+                      f"Non-finite values detected in {name}."
+                  )
+
+          phases = np.asarray(snapshot["phases"])
+          amplitudes = np.asarray(snapshot["amplitudes"])
+
+          if np.any(phases < -math.pi - 1.0e-6):
+              raise RuntimeError(
+                  "Phase minimum left the wrapped domain."
+              )
+
+          if np.any(phases >= math.pi + 1.0e-6):
+              raise RuntimeError(
+                  "Phase maximum left the wrapped domain."
+              )
+
+          if np.any(
+              amplitudes
+              < engine.config.amplitude_minimum - 1.0e-6
+          ):
+              raise RuntimeError(
+                  "Amplitude minimum bound was violated."
+              )
+
+          if np.any(
+              amplitudes
+              > engine.config.amplitude_maximum + 1.0e-6
+          ):
+              raise RuntimeError(
+                  "Amplitude maximum bound was violated."
+              )
+
+          if engine.tact_index != tacts:
+              raise RuntimeError(
+                  f"Expected tact_index={tacts}, "
+                  f"got {engine.tact_index}."
+              )
+
+          expected_time = tacts * dt
+
+          if not math.isclose(
+              engine.simulation_time,
+              expected_time,
+              rel_tol=1.0e-9,
+              abs_tol=1.0e-7,
+          ):
+              raise RuntimeError(
+                  "Simulation time does not match tact count."
+              )
+
+          if elapsed <= 0.0:
+              raise RuntimeError(
+                  "Invalid elapsed execution time."
+              )
+
+          result = {
+              "status": "PASS",
+              "num_domains": num_domains,
+              "tacts": tacts,
+              "dtype": dtype,
+              "seed": seed,
+              "elapsed_seconds": elapsed,
+              "tacts_per_second": tacts / elapsed,
+              "final_phase_order": engine.R_t_phase_order,
+              "final_mean_amplitude": engine.mean_amplitude,
+              "final_phase_velocity_dispersion": (
+                  engine.phase_velocity_dispersion
+              ),
+          }
+
+          print(json.dumps(result, indent=2, sort_keys=True))
+          PY
+
+  state-memory-scaling:
+    name: Validate linear state-memory scaling
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install scaling dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy
+          python -m pip check
+
+      - name: Validate state-memory scaling
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+
+          from module_edk_gpu_mean_field_phase_engine import (
+              EDKGPUMeanFieldPhaseEngine,
+              MeanFieldPhaseConfig,
+          )
+
+
+          sizes = (
+              32,
+              64,
+              128,
+              256,
+              512,
+              1024,
+              2048,
+          )
+
+          dtypes = (
+              "float32",
+              "float64",
+          )
+
+          results = {}
+
+          for dtype in dtypes:
+              dtype_results = []
+              reference_bytes_per_domain = None
+
+              for num_domains in sizes:
+                  engine = EDKGPUMeanFieldPhaseEngine(
+                      MeanFieldPhaseConfig(
+                          num_domains=num_domains,
+                          seed=76,
+                          dtype=dtype,
+                          backend="cpu",
+                      )
+                  )
+
+                  arrays = (
+                      engine.phases,
+                      engine.amplitudes,
+                      engine.natural_frequencies,
+                      engine.phase_velocity,
+                      engine.amplitude_velocity,
+                      engine.phase_noise_increment,
+                      engine.amplitude_noise_increment,
+                  )
+
+                  state_bytes = sum(
+                      int(array.nbytes)
+                      for array in arrays
+                  )
+
+                  bytes_per_domain = (
+                      state_bytes // num_domains
+                  )
+
+                  if reference_bytes_per_domain is None:
+                      reference_bytes_per_domain = (
+                          bytes_per_domain
+                      )
+                  elif (
+                      bytes_per_domain
+                      != reference_bytes_per_domain
+                  ):
+                      raise RuntimeError(
+                          f"Non-linear state-memory scaling "
+                          f"for {dtype}: expected "
+                          f"{reference_bytes_per_domain} "
+                          f"bytes/domain, got "
+                          f"{bytes_per_domain}."
+                      )
+
+                  dtype_results.append(
+                      {
+                          "num_domains": num_domains,
+                          "state_bytes": state_bytes,
+                          "bytes_per_domain": (
+                              bytes_per_domain
+                          ),
+                      }
+                  )
+
+              results[dtype] = dtype_results
+
+          float32_bytes = results["float32"][0][
+              "bytes_per_domain"
+          ]
+
+          float64_bytes = results["float64"][0][
+              "bytes_per_domain"
+          ]
+
+          if float64_bytes != 2 * float32_bytes:
+              raise RuntimeError(
+                  "float64 state memory is not exactly "
+                  "twice the float32 state memory."
+              )
+
+          print(
+              json.dumps(
+                  {
+                      "status": "PASS",
+                      "scaling": results,
+                  },
+                  indent=2,
+                  sort_keys=True,
+              )
+          )
+          PY
+
+  final-result:
+    name: Final Stress and Scaling Result
+    runs-on: ubuntu-latest
+    needs:
+      - stress-scaling
+      - state-memory-scaling
+
+    steps:
+      - name: Report final result
+        run: |
+          echo "EDK stress and scaling validation: PASS"
