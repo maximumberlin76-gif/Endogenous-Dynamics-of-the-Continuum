@@ -1,0 +1,91 @@
+name: EDK Python Compatibility
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-python-compatibility.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-python-compatibility.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  python-compatibility:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.10"
+          - "3.11"
+          - "3.12"
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      MPLBACKEND: Agg
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show Python environment
+        run: |
+          python --version
+          python -m pip --version
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy matplotlib pytest
+          python -m pip check
+
+      - name: Compile Python files
+        run: |
+          python -m compileall -q .
+
+      - name: Run full test suite
+        run: |
+          python -m pytest -q
+
+      - name: Run GPU mean-field phase engine smoke test
+        run: |
+          python module_edk_gpu_mean_field_phase_engine/smoke_test.py
+
+      - name: Run hierarchical orchestrator smoke test
+        run: |
+          python module_edk_hierarchical_orchestrator/smoke_test.py
+
+      - name: Run Marnov retention-collapse protocol smoke test
+        run: |
+          python module_edk_marnov_retention_collapse_protocol/smoke_test.py
+
+      - name: Run spatiotemporal phase-delay smoke test
+        run: |
+          python module_edk_spatiotemporal_phase_delay/smoke_test.py
+
+      - name: Run vortex phase-field smoke test
+        run: |
+          python module_edk_vortex_phase_field/smoke_test.py
+
+      - name: Final compatibility result
+        run: |
+          echo "EDK Python ${{ matrix.python-version }} compatibility: PASS"
