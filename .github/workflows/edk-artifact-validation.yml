@@ -1,0 +1,403 @@
+name: EDK Artifact Validation
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-artifact-validation.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-artifact-validation.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  artifact-validation:
+    name: Validate Generated Artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      MPLBACKEND: Agg
+      ARTIFACT_ROOT: ${{ runner.temp }}/edk-artifact-validation
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install validation dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy matplotlib pytest
+          python -m pip check
+
+      - name: Validate core CLI interfaces
+        run: |
+          python module_edk_gpu_mean_field_phase_engine/edk_gpu_mean_field_phase_engine.py --help
+          python module_edk_hierarchical_orchestrator/edk_hierarchical_orchestrator.py --help
+          python module_edk_marnov_retention_collapse_protocol/marnov_retention_collapse_protocol.py --help
+          python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py --help
+          python module_edk_vortex_phase_field/edk_vortex_phase_field.py --help
+
+      - name: Create artifact directories
+        run: |
+          mkdir -p "${ARTIFACT_ROOT}/gpu-a"
+          mkdir -p "${ARTIFACT_ROOT}/gpu-b"
+          mkdir -p "${ARTIFACT_ROOT}/delay"
+          mkdir -p "${ARTIFACT_ROOT}/vortex"
+
+      - name: Generate deterministic GPU mean-field artifacts A
+        run: |
+          python module_edk_gpu_mean_field_phase_engine/edk_gpu_mean_field_phase_engine.py \
+            --backend cpu \
+            --num-domains 32 \
+            --tacts 6 \
+            --dt 0.01 \
+            --seed 76 \
+            --output-dir "${ARTIFACT_ROOT}/gpu-a" \
+            --log-every 1 \
+            --field-every 2
+
+      - name: Generate deterministic GPU mean-field artifacts B
+        run: |
+          python module_edk_gpu_mean_field_phase_engine/edk_gpu_mean_field_phase_engine.py \
+            --backend cpu \
+            --num-domains 32 \
+            --tacts 6 \
+            --dt 0.01 \
+            --seed 76 \
+            --output-dir "${ARTIFACT_ROOT}/gpu-b" \
+            --log-every 1 \
+            --field-every 2
+
+      - name: Generate spatiotemporal phase-delay artifacts
+        run: |
+          python module_edk_spatiotemporal_phase_delay/edk_spatiotemporal_phase_delay.py \
+            --backend cpu \
+            --domains 32 \
+            --neighbors 4 \
+            --tacts 6 \
+            --dt 0.01 \
+            --output-dir "${ARTIFACT_ROOT}/delay" \
+            --log-every 1 \
+            --field-every 2
+
+      - name: Generate vortex phase-field artifacts
+        run: |
+          python module_edk_vortex_phase_field/edk_vortex_phase_field.py \
+            --backend cpu \
+            --domains 32 \
+            --neighbors 4 \
+            --tacts 6 \
+            --dt 0.01 \
+            --output-dir "${ARTIFACT_ROOT}/vortex" \
+            --log-every 1 \
+            --field-every 2
+
+      - name: Validate JSON and NPZ artifacts
+        run: |
+          python - <<'PY'
+          from __future__ import annotations
+
+          import json
+          import math
+          import os
+          from pathlib import Path
+          from typing import Any
+
+          import numpy as np
+
+
+          root = Path(os.environ["ARTIFACT_ROOT"])
+
+
+          def validate_finite(value: Any, path: str) -> None:
+              if isinstance(value, bool) or value is None:
+                  return
+
+              if isinstance(value, (int, float)):
+                  if not math.isfinite(float(value)):
+                      raise RuntimeError(
+                          f"Non-finite numeric value at {path}: {value}"
+                      )
+                  return
+
+              if isinstance(value, dict):
+                  for key, item in value.items():
+                      validate_finite(
+                          item,
+                          f"{path}.{key}",
+                      )
+                  return
+
+              if isinstance(value, list):
+                  for index, item in enumerate(value):
+                      validate_finite(
+                          item,
+                          f"{path}[{index}]",
+                      )
+
+
+          def validate_json_directory(
+              directory: Path,
+              minimum_files: int,
+              required_top_level_keys: set[str],
+          ) -> None:
+              json_files = sorted(directory.glob("*.json"))
+
+              if len(json_files) < minimum_files:
+                  raise RuntimeError(
+                      f"{directory}: expected at least "
+                      f"{minimum_files} JSON files, "
+                      f"found {len(json_files)}."
+                  )
+
+              for path in json_files:
+                  if path.stat().st_size <= 0:
+                      raise RuntimeError(
+                          f"Empty JSON artifact: {path}"
+                      )
+
+                  with path.open(
+                      "r",
+                      encoding="utf-8",
+                  ) as stream:
+                      payload = json.load(stream)
+
+                  if not isinstance(payload, dict):
+                      raise RuntimeError(
+                          f"JSON root is not an object: {path}"
+                      )
+
+                  missing = (
+                      required_top_level_keys
+                      - set(payload)
+                  )
+
+                  if missing:
+                      raise RuntimeError(
+                          f"{path} missing keys: "
+                          f"{sorted(missing)}"
+                      )
+
+                  validate_finite(
+                      payload,
+                      str(path),
+                  )
+
+
+          def validate_npz_directory(
+              directory: Path,
+              minimum_files: int,
+              required_arrays: set[str],
+          ) -> None:
+              npz_files = sorted(directory.glob("*.npz"))
+
+              if len(npz_files) < minimum_files:
+                  raise RuntimeError(
+                      f"{directory}: expected at least "
+                      f"{minimum_files} NPZ files, "
+                      f"found {len(npz_files)}."
+                  )
+
+              for path in npz_files:
+                  if path.stat().st_size <= 0:
+                      raise RuntimeError(
+                          f"Empty NPZ artifact: {path}"
+                      )
+
+                  with np.load(
+                      path,
+                      allow_pickle=False,
+                  ) as archive:
+                      names = set(archive.files)
+
+                      missing = required_arrays - names
+
+                      if missing:
+                          raise RuntimeError(
+                              f"{path} missing arrays: "
+                              f"{sorted(missing)}"
+                          )
+
+                      if not archive.files:
+                          raise RuntimeError(
+                              f"NPZ contains no arrays: {path}"
+                          )
+
+                      for name in archive.files:
+                          array = np.asarray(
+                              archive[name]
+                          )
+
+                          if array.size == 0:
+                              raise RuntimeError(
+                                  f"Empty array {name}: {path}"
+                              )
+
+                          if array.dtype.hasobject:
+                              raise RuntimeError(
+                                  f"Object dtype is prohibited "
+                                  f"for {name}: {path}"
+                              )
+
+                          if np.issubdtype(
+                              array.dtype,
+                              np.number,
+                          ):
+                              if not np.all(
+                                  np.isfinite(array)
+                              ):
+                                  raise RuntimeError(
+                                      f"Non-finite values in "
+                                      f"{name}: {path}"
+                                  )
+
+
+          def validate_no_temporary_files(
+              directory: Path,
+          ) -> None:
+              temporary_files = [
+                  path
+                  for path in directory.rglob("*")
+                  if path.is_file()
+                  and (
+                      path.name.startswith(".")
+                      or path.suffix == ".tmp"
+                  )
+              ]
+
+              if temporary_files:
+                  raise RuntimeError(
+                      "Temporary files remained after "
+                      f"artifact generation: "
+                      f"{temporary_files}"
+                  )
+
+
+          gpu_json_keys = {
+              "engine_class",
+              "metrics",
+              "simulation_time",
+              "tact_index",
+          }
+
+          delay_json_keys = {
+              "engine_class",
+              "metrics",
+              "simulation_time",
+              "tact_index",
+          }
+
+          vortex_json_keys = {
+              "backend",
+              "config",
+              "metrics",
+              "tact",
+          }
+
+          validate_json_directory(
+              root / "gpu-a",
+              minimum_files=12,
+              required_top_level_keys=gpu_json_keys,
+          )
+
+          validate_json_directory(
+              root / "gpu-b",
+              minimum_files=12,
+              required_top_level_keys=gpu_json_keys,
+          )
+
+          validate_json_directory(
+              root / "delay",
+              minimum_files=12,
+              required_top_level_keys=delay_json_keys,
+          )
+
+          validate_json_directory(
+              root / "vortex",
+              minimum_files=6,
+              required_top_level_keys=vortex_json_keys,
+          )
+
+          validate_npz_directory(
+              root / "gpu-a",
+              minimum_files=3,
+              required_arrays={
+                  "phases",
+                  "amplitudes",
+                  "natural_frequencies",
+                  "phase_velocity",
+              },
+          )
+
+          validate_npz_directory(
+              root / "gpu-b",
+              minimum_files=3,
+              required_arrays={
+                  "phases",
+                  "amplitudes",
+                  "natural_frequencies",
+                  "phase_velocity",
+              },
+          )
+
+          validate_npz_directory(
+              root / "delay",
+              minimum_files=3,
+              required_arrays={
+                  "coords_3d",
+                  "phases",
+                  "neighbor_indices",
+                  "tau_ij",
+                  "phase_velocity",
+              },
+          )
+
+          validate_npz_directory(
+              root / "vortex",
+              minimum_files=3,
+              required_arrays={
+                  "coords_3d",
+                  "phases",
+                  "amplitudes",
+                  "curl_J",
+                  "signed_vorticity",
+              },
+          )
+
+          validate_no_temporary_files(root)
+
+          print(
+              "EDK structured artifact validation passed."
+          )
+          PY
+
+      - name: Validate deterministic replay equivalence
+        run: |
+          diff -rq \
+            "${ARTIFACT_ROOT}/gpu-a" \
+            "${ARTIFACT_ROOT}/gpu-b"
+
+      - name: Validate repository remains unchanged
+        run: |
+          git diff --exit-code
+
+      - name: Final artifact validation result
+        run: |
+          echo "EDK artifact validation: PASS"
