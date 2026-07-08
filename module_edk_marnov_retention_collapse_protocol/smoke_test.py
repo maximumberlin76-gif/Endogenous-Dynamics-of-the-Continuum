@@ -134,7 +134,7 @@ def _build_collapse_config(
         pressure_velocity_coefficient_mu=5.0,
         delay_regularization_epsilon=1.0e-9,
         minimum_delay_tau=1.0e-6,
-        critical_exposure_threshold=0.25,
+        critical_exposure_threshold=0.50,
         exposure_recovery_mode="decaying",
         exposure_recovery_rate=0.25,
         coupling_quench_mode="exponential",
