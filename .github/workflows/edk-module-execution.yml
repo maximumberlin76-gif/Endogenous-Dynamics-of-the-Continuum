@@ -1,0 +1,95 @@
+name: EDK Module Execution
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-module-execution.yml"
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**/*.py"
+      - ".github/workflows/edk-module-execution.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  module-execution:
+    name: Execute ${{ matrix.module }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - module: Continuum Simulation
+            script: module_edk_continuum_simulation/continuum_simulation.py
+
+          - module: Impulse Transition
+            script: module_edk_impulse_transition/edk_impulse_transition_module.py
+
+          - module: Poynting Flux Transition
+            script: module_edk_impulse_transition/poynting_flux_transition.py
+
+          - module: Recursive Feedback Loop
+            script: module_edk_recursive_feedback_loop/edk_recursive_feedback_loop_module.py
+
+          - module: Visual Protocol
+            script: module_edk_visual_protocol/edk_visual_protocol_module.py
+
+          - module: Marnov Cubic Potential Visualizer
+            script: module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+
+          - module: Framework Core
+            script: module_framework_core/framework_core.py
+
+          - module: Marnov Reverse Decoder
+            script: module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py
+
+          - module: Metric Bridge Solver
+            script: module_metric_bridge_solver/metric_bridge.py
+
+          - module: Molecular Phase Chemistry
+            script: module_molecular_phase_chemistry/molecular_phase_chemistry.py
+
+          - module: Organic Matrix
+            script: module_organic_matrix/marnov_organic_matrix_generator.py
+
+          - module: Planetary Resonance
+            script: module_planetary_resonance/schumann_planetary_resonator.py
+
+          - module: Solar Synthesis
+            script: module_solar_synthesis/solar_synthesis_resonator.py
+
+          - module: Wave Genetics
+            script: module_wave_genetics/wave_genetics_dna_oscillator.py
+
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+      MPLBACKEND: Agg
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install execution dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy matplotlib
+
+      - name: Execute module
+        run: |
+          python "${{ matrix.script }}"
