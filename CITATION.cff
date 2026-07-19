@@ -1,20 +1,17 @@
 cff-version: "1.2.0"
 message: "If you use this work, please cite it using the metadata below."
-
 title: "Endogenous Dynamics of the Continuum (EDK)"
 type: software
-
 authors:
   - family-names: "Marnov"
     given-names: "Maksym"
     alias: "Alchimist"
-
+    orcid: "https://orcid.org/0009-0000-0832-9597"
 abstract: >-
   A bilingual theorem-algorithmic framework of Endogenous Dynamics of the
   Continuum within an open nonlinear dynamic system, where Matter of Space Time
   is considered as diverse forms, levels, and transitional states of structural
   self-organization of the Continuum.
-
 keywords:
   - "Physics"
   - "Theoretical physics"
@@ -29,11 +26,8 @@ keywords:
   - "Phase coherence"
   - "Resonance window"
   - "Continuum"
-
 version: "1.0.9"
 date-released: "2026-06-23"
-
 license: "CC-BY-4.0"
-
 repository-code: "https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum"
 url: "https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum"
