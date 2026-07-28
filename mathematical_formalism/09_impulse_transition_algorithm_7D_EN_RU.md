@@ -82,7 +82,9 @@ This gives rise to the term of cubic nonlinear saturation of volume C^3.
 
 The medium stops resisting itself:
 
-C^3 = Tr(|Psi_coh|^2) = Tr(|U_hat_6D Phi|^2)
+C^3 := (1 / N_C) Tr(Psi_coh^dagger Psi_coh) = (1 / N_C) Tr((U_hat_6D Phi)^dagger (U_hat_6D Phi))
+
+Here N_C > 0 normalizes the folded-state intensity and the equation defines the cubic saturation through C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
 
 ## EN — Stage 3: Trajectory filtration in 5D space, space of bifurcations
 
@@ -96,7 +98,7 @@ This state describes the approach to the critical boundary at which the general 
 
 The equation of the geometry of the resonance window of phase transition is activated:
 
-nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
+nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi C^3
 
 The direction of bifurcation drift determines the choice of a specific development trajectory.
 
@@ -250,7 +252,9 @@ Psi_coh = U_hat_6D · Phi(Q(n), D(n), A(n))
 
 Среда перестает сопротивляться самой себе:
 
-C^3 = Tr(|Psi_coh|^2) = Tr(|U_hat_6D Phi|^2)
+C^3 := (1 / N_C) Tr(Psi_coh^dagger Psi_coh) = (1 / N_C) Tr((U_hat_6D Phi)^dagger (U_hat_6D Phi))
+
+Здесь N_C > 0 нормирует интенсивность свёрнутого состояния, а уравнение определяет кубическое насыщение через C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
 
 ## RU — Этап 3: Траекторная фильтрация в пространстве 5D, Пространство бифуркаций
 
@@ -264,7 +268,7 @@ C(t) -> P(t)
 
 Активируется уравнение геометрии резонансного окна фазового перехода:
 
-nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3)
+nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi C^3
 
 Направление бифуркационного дрейфа определяет выбор конкретной траектории развития.
 

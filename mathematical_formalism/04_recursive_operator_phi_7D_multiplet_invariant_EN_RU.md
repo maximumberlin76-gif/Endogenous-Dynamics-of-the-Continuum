@@ -103,7 +103,7 @@ In this sense, A_hat_attr(R(n), P(t)) is the tensor that prepares the lower-dime
 
 ## EN — Direct Connection with the Cascade
 
-Under such recalculation, the Super-Code Psi_7D = Phi(Q(n), D(n), A(n)) initially contains within itself the embedded algorithm of compensation for the external medium. When, at Stage 2, the cubic term C^3 is extracted from it, this potential already carries information about the pressure P(t), which makes the wave equation of the resonance window of phase transition to a new level of structural self-organization nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3) at Stage 3 absolutely deterministic.
+Under such recalculation, the Super-Code Psi_7D = Phi(Q(n), D(n), A(n)) initially contains within itself the embedded algorithm of compensation for the external medium. When, at Stage 2, the cubic term C^3 is extracted from it, this potential already carries information about the pressure P(t), which makes the wave equation of the resonance window of phase transition to a new level of structural self-organization nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi C^3 at Stage 3 absolutely deterministic.
 
 This means that the resonance window of phase transition to a new level of structural self-organization is not produced as an isolated event.
 
@@ -287,7 +287,7 @@ C > P
 
 ## RU — Прямая связь с каскадом
 
-При таком пересчете Супер-Код Psi_7D = Phi(Q(n), D(n), A(n)) изначально содержит в себе встроенный алгоритм компенсации внешней среды. Когда на Этапе 2 из него выделяется кубический член C^3, этот потенциал уже несет в себе информацию о давлении P(t), что делает волновое уравнение резонансного окна фазового перехода на новый уровень структурной самоорганизации nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi div(C^3) на Этапе 3 абсолютно детерминированным.
+При таком пересчете Супер-Код Psi_7D = Phi(Q(n), D(n), A(n)) изначально содержит в себе встроенный алгоритм компенсации внешней среды. Когда на Этапе 2 из него выделяется кубический член C^3, этот потенциал уже несет в себе информацию о давлении P(t), что делает волновое уравнение резонансного окна фазового перехода на новый уровень структурной самоорганизации nabla^2 Omega - (1 / c^2) partial^2 Omega / partial t^2 = chi C^3 на Этапе 3 абсолютно детерминированным.
 
 Это означает, что резонансное окно фазового перехода на новый уровень структурной самоорганизации не возникает как изолированное событие.
 

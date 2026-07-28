@@ -73,11 +73,13 @@ acquires vortex topology.
 
 When the trace Tr of this state is calculated, multidimensional angular coordinates are folded:
 
-C^3 =
-Tr(U_6D · |Psi_coh|^2)
+C^3 :=
+(1 / N_C) Tr(Psi_coh^dagger Psi_coh)
 =
-integral over T^6
-Psi_coh* · U_6D · Psi_coh dT^6
+(1 / N_C) integral over T^6
+Psi_coh* · Psi_coh dT^6
+
+Where N_C > 0 is the normalization factor of the folded-state intensity and C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
 
 Due to the cyclic structure of U_6D, the higher harmonics of the field do not dissipate, but overlap with each other, that is, they self-focus.
 
@@ -160,11 +162,13 @@ A(n)
 
 При вычислении следа Tr от этого состояния происходит свертка многомерных угловых координат:
 
-C^3 =
-Tr(U_6D · |Psi_coh|^2)
+C^3 :=
+(1 / N_C) Tr(Psi_coh^dagger Psi_coh)
 =
-integral over T^6
-Psi_coh* · U_6D · Psi_coh dT^6
+(1 / N_C) integral over T^6
+Psi_coh* · Psi_coh dT^6
+
+Где N_C > 0 — нормировочный коэффициент интенсивности свёрнутого состояния, а C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
 
 Из-за циклической структуры U_6D высшие гармоники поля не рассеиваются, а накладываются друг на друга, то есть самофокусируются.
 

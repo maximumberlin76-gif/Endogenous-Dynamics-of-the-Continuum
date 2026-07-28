@@ -129,7 +129,7 @@ the FDTD scheme;
 
 the discrete Laplacian;
 
-the discrete source div(C^3);
+the discrete source C^3;
 
 the step-by-step cycle of the program core;
 
@@ -266,7 +266,7 @@ FDTD-схему;
 
 дискретный оператор Лапласа;
 
-дискретный источник div(C^3);
+дискретный источник C^3;
 
 пошаговый цикл программного ядра;
 
