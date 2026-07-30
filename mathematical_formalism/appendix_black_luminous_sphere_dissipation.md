@@ -42,6 +42,8 @@ t_delay ~ v^(-1/2)
 
 where v is the endogenous drift velocity.
 
+The exponent `-1/2` follows from the linear critical-ramp normal-form class and is independent of the saturation order. The corresponding amplitude exponent remains saturation-order dependent; see the [Generalized Ramp-Scaling Lemma](10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 In the present regime:
 
 v = mu P
@@ -302,6 +304,8 @@ P(t) >> C(t) для всех t в Delta t
 t_delay ~ v^(-1/2)
 
 где v является скоростью эндогенного дрейфа.
+
+Показатель `-1/2` следует из класса линейной критической рамповой нормальной формы и не зависит от порядка насыщения. Соответствующий амплитудный показатель остаётся зависимым от порядка насыщения; см. [Обобщённую лемму рампового масштабирования](10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 В данном режиме:
 

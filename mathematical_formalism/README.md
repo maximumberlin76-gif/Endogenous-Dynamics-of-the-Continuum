@@ -1,273 +1,123 @@
 # Mathematical Protocol of Endogenous Dynamics of Various Forms, Levels and Transitional States of Structural Self-Organization of Matter of Space Time of the Continuum
 
-This folder contains the structured mathematical protocol of endogenous dynamics of various forms, levels and transitional states of structural self-organization of Matter of Space Time of the Continuum within the EDK framework.
+This folder contains the structured mathematical protocol of the EDK framework.
 
-The mathematical protocol is divided into six working EN/RU files and one entry README.
-
-The purpose of this folder is to keep the controlling cascade of the multidimensional Continuum from 7D to 1D in a logically ordered and technically navigable form.
-
-The mathematical protocol includes the full through cascade, detailed stage formulas, closing equations, recursive operator architecture, tensor matrix of the dynamic interface of manifestation, and the numerical FDTD algorithm for modeling the 5D resonance window of phase transition to a new level of structural self-organization Omega(t).
+The protocol is organized as thirteen working mathematical files and one entry README. The files preserve the through cascade from 7D to 1D, its operators and closing equations, the interface and exchange-flow layers, the numerical scheme, and the generalized critical ramp-scaling law.
 
 ## EN — Folder Structure
 
+```text
 mathematical_formalism/
   README.md
   01_full_cascade_7D_to_1D_EN_RU.md
   02_stage_formulas_7D_1D_EN_RU.md
   03_closing_equations_EN_RU.md
-  04_phi_operator_architecture_EN_RU.md
-  05_tensor_matrix_dynamic_interface_EN_RU.md
-  06_numerical_algorithm_FDTD_EN_RU.md
+  04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md
+  05_numerical_algorithm_FDTD_EN_RU.md
+  06_tensor_matrix_dynamic_interface_EN_RU.md
+  07_fractal_morphogenesis_biomatrix_EN_RU.md
+  08_toroidal_operator_U6D_EN_RU.md
+  09_impulse_transition_algorithm_7D_EN_RU.md
+  10_generalized_ramp_scaling_lemma_EN_RU.md
+  poynting_vector_transition_EN_RU.md
+  interface_projection_balance_formalism_4D_2D_1D_EN_RU.md
+  appendix_black_luminous_sphere_dissipation.md
+```
+
+## EN — Controlled Reading Order
+
+`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → 10_generalized_ramp_scaling_lemma_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
 
 ## EN — File Map
 
-README.md
+- `01_full_cascade_7D_to_1D_EN_RU.md` — full controlling cascade from recursive synthesis to directed exchange flow.
+- `02_stage_formulas_7D_1D_EN_RU.md` — detailed stage formulas for the 7D–1D cascade.
+- `03_closing_equations_EN_RU.md` — closing equations for `C^3`, `Omega(t)`, and `J / J_flux`.
+- `04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md` — architecture and cascade position of the recursive operator `Phi`.
+- `05_numerical_algorithm_FDTD_EN_RU.md` — FDTD algorithm for the resonance-window field.
+- `06_tensor_matrix_dynamic_interface_EN_RU.md` — tensor matrix of the dynamic manifestation interface.
+- `07_fractal_morphogenesis_biomatrix_EN_RU.md` — fractal morphogenesis and biomatrix layer.
+- `08_toroidal_operator_U6D_EN_RU.md` — toroidal operator, folded-state intensity, and the boundary between intensity definition and dynamical cubic closure.
+- `09_impulse_transition_algorithm_7D_EN_RU.md` — through impulse-transition algorithm across the dimensional cascade.
+- `10_generalized_ramp_scaling_lemma_EN_RU.md` — complete proof of `t_critical ~ t_delay ~ v_eff^(-1/2)` for `dC/dt = v_eff t C - g C^n`, amplitude scaling, cubic specialization, and separate geometric and symmetry closures.
+- `poynting_vector_transition_EN_RU.md` — Poynting-vector transition layer.
+- `interface_projection_balance_formalism_4D_2D_1D_EN_RU.md` — interface projection and balance formalism.
+- `appendix_black_luminous_sphere_dissipation.md` — application of the controlled delay scaling to the stated dissipation regime.
 
-Entry file of the mathematical protocol folder.
+## EN — Ramp-Scaling Control
 
-It defines the purpose of the folder and the internal file structure of the mathematical protocol.
+For
 
-01_full_cascade_7D_to_1D_EN_RU.md
+`dC/dt = v_eff t C - g C^n`, `v_eff > 0`, `g > 0`, `n > 1`,
 
-Contains the full through cascade of the mathematical protocol from 7D to 1D.
+the controlled temporal scaling is
 
-This file fixes the general descending sequence of the controlling cascade:
+`t_critical ~ t_delay ~ v_eff^(-1/2)`,
 
-7D → 6D → 5D → 4D → 3D → 2D/1D
+while the amplitude scaling is
 
-It contains the main formulas of each level without expanding all explanatory details.
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
 
-The file includes:
+The temporal exponent is independent of `n`. The amplitude exponent depends on `n`. The full derivation is contained in `10_generalized_ramp_scaling_lemma_EN_RU.md`.
 
-7D — recursive synthesis;
+# Математический протокол эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума
 
-6D — coherent folding;
+Данная папка содержит структурированный математический протокол фреймворка EDK.
 
-5D — geometry of the transition window;
-
-4D — topological monolith;
-
-3D — volumetric manifestation;
-
-2D/1D — exchange-flow dynamics.
-
-02_stage_formulas_7D_1D_EN_RU.md
-
-Contains the detailed stage-by-stage mathematical description of the 7D–1D cascade.
-
-This file includes the formulas and explanations for:
-
-7D — recursive synthesis and inheritance of qualitative characteristics;
-
-6D — phase-coherent folding and cubic nonlinear saturation C^3;
-
-5D — geometry of the resonance window of phase transition to a new level of structural self-organization and endogenous dynamic criticality EDC;
-
-4D — dynamic retention, causal continuity and topological monolith T_mu_nu;
-
-3D — volumetric manifestation of observable Matter and local mass anchor m c^2;
-
-2D/1D — manifestation interface and directed exchange flow J / J_flux.
-
-03_closing_equations_EN_RU.md
-
-Contains the closing equations of the mathematical protocol.
-
-This file includes:
-
-the equation of exchange-flow dynamics J / J_flux;
-
-the equation of the geometry of the resonance window of phase transition to a new level of structural self-organization Omega(t);
-
-the role of C^3 in the closure of the 5D geometry of the resonance window of phase transition to a new level of structural self-organization and the 1D/2D exchange-flow dynamics;
-
-the final status of mathematical closure of the through apparatus.
-
-04_phi_operator_architecture_EN_RU.md
-
-Contains the internal architecture of the recursive operator Phi.
-
-This file describes the operator Phi as a tensor operator of nonlinear mapping and expands its internal components:
-
-M_inher;
-
-[I + alpha J_dist(D)]^(-1);
-
-A_attr.
-
-The file fixes the role of Phi in tact-by-tact recursive generation of Psi_7D without loss of qualitative characteristics.
-
-05_tensor_matrix_dynamic_interface_EN_RU.md
-
-Contains the tensor matrix of the dynamic interface of manifestation.
-
-This file includes:
-
-the dynamic interface tensor T_int;
-
-the tensor matrix of manifestation, coupling and retention;
-
-normal and tangential components of the interface tensor;
-
-tensor decomposition into isotropic and deviatoric components;
-
-the interface-retention equation;
-
-the geophysical extension of the interface equation;
-
-the relation between T_int and T_mu_nu;
-
-the role of the tensor layer in manifestation and demanifestation.
-
-06_numerical_algorithm_FDTD_EN_RU.md
-
-Contains the numerical algorithm for modeling the 5D resonance window of phase transition to a new level of structural self-organization Omega(t).
-
-This file includes:
-
-the FDTD scheme;
-
-the discrete Laplacian;
-
-the discrete source C^3;
-
-the step-by-step cycle of the program core;
-
-the transition from theoretical protocol to applied computational modeling in Python or C++ / CUDA for GPU-based calculations.
-
-# Математический Протокол эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума
-
-Данная папка содержит структурированный математический протокол эндогенной динамики различных форм, уровней и переходных состояний структурной самоорганизации Материи Пространства Времени Континуума в рамках EDK.
-
-Математический протокол разделён на шесть рабочих EN/RU-файлов и один входной README.
-
-Назначение данной папки — удержать управляющий каскад многомерного Континуума от 7D к 1D в логически упорядоченной и технически навигируемой форме.
-
-Математический протокол включает полный сквозной каскад, подробные поэтапные формулы, замыкающие уравнения, архитектонику рекурсивного оператора, тензорную матрицу динамического интерфейса манифестации и численный FDTD-алгоритм моделирования 5D-резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t).
+Протокол организован как тринадцать рабочих математических файлов и один входной README. Файлы сохраняют сквозной каскад от 7D к 1D, его операторы и замыкающие уравнения, интерфейсный и потоковый слои, численную схему и обобщённый закон критического рампового масштабирования.
 
 ## RU — Структура папки
 
+```text
 mathematical_formalism/
   README.md
   01_full_cascade_7D_to_1D_EN_RU.md
   02_stage_formulas_7D_1D_EN_RU.md
   03_closing_equations_EN_RU.md
-  04_phi_operator_architecture_EN_RU.md
-  05_tensor_matrix_dynamic_interface_EN_RU.md
-  06_numerical_algorithm_FDTD_EN_RU.md
+  04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md
+  05_numerical_algorithm_FDTD_EN_RU.md
+  06_tensor_matrix_dynamic_interface_EN_RU.md
+  07_fractal_morphogenesis_biomatrix_EN_RU.md
+  08_toroidal_operator_U6D_EN_RU.md
+  09_impulse_transition_algorithm_7D_EN_RU.md
+  10_generalized_ramp_scaling_lemma_EN_RU.md
+  poynting_vector_transition_EN_RU.md
+  interface_projection_balance_formalism_4D_2D_1D_EN_RU.md
+  appendix_black_luminous_sphere_dissipation.md
+```
+
+## RU — Контролируемый порядок чтения
+
+`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → 10_generalized_ramp_scaling_lemma_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
 
 ## RU — Карта файлов
 
-README.md
+- `01_full_cascade_7D_to_1D_EN_RU.md` — полный управляющий каскад от рекурсивного синтеза до направленного потока обмена.
+- `02_stage_formulas_7D_1D_EN_RU.md` — подробные поэтапные формулы каскада 7D–1D.
+- `03_closing_equations_EN_RU.md` — замыкающие уравнения для `C^3`, `Omega(t)` и `J / J_flux`.
+- `04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md` — архитектура и положение рекурсивного оператора `Phi` в каскаде.
+- `05_numerical_algorithm_FDTD_EN_RU.md` — FDTD-алгоритм поля резонансного окна.
+- `06_tensor_matrix_dynamic_interface_EN_RU.md` — тензорная матрица динамического интерфейса манифестации.
+- `07_fractal_morphogenesis_biomatrix_EN_RU.md` — слой фрактального морфогенеза и биоматрицы.
+- `08_toroidal_operator_U6D_EN_RU.md` — тороидальный оператор, интенсивность свёрнутого состояния и граница между определением интенсивности и динамическим кубическим замыканием.
+- `09_impulse_transition_algorithm_7D_EN_RU.md` — сквозной алгоритм перехода импульса через размерностный каскад.
+- `10_generalized_ramp_scaling_lemma_EN_RU.md` — полное доказательство `t_critical ~ t_delay ~ v_eff^(-1/2)` для `dC/dt = v_eff t C - g C^n`, амплитудное масштабирование, кубическая специализация и раздельные геометрическое и симметрийное замыкания.
+- `poynting_vector_transition_EN_RU.md` — слой перехода вектора Пойнтинга.
+- `interface_projection_balance_formalism_4D_2D_1D_EN_RU.md` — формализм интерфейсной проекции и баланса.
+- `appendix_black_luminous_sphere_dissipation.md` — применение контролируемого масштабирования задержки к указанному режиму диссипации.
 
-Входной файл папки математического протокола.
+## RU — Контроль рампового масштабирования
 
-Он фиксирует назначение папки и внутреннюю структуру файлов математического протокола.
+Для
 
-01_full_cascade_7D_to_1D_EN_RU.md
+`dC/dt = v_eff t C - g C^n`, `v_eff > 0`, `g > 0`, `n > 1`,
 
-Содержит полный сквозной каскад математического протокола от 7D к 1D.
+контролируемое временное масштабирование имеет вид
 
-Этот файл фиксирует общую нисходящую последовательность управляющего каскада:
+`t_critical ~ t_delay ~ v_eff^(-1/2)`,
 
-7D → 6D → 5D → 4D → 3D → 2D/1D
+а амплитудное масштабирование —
 
-Он содержит основные формулы каждого уровня без разворачивания всех пояснительных деталей.
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
 
-Файл включает:
-
-7D — рекурсивный синтез;
-
-6D — когерентное сворачивание;
-
-5D — геометрию окна перехода;
-
-4D — топологический монолит;
-
-3D — объёмную манифестацию;
-
-2D/1D — динамику потока обмена.
-
-02_stage_formulas_7D_1D_EN_RU.md
-
-Содержит подробное поэтапное математическое описание каскада 7D–1D.
-
-Этот файл включает формулы и пояснения для:
-
-7D — рекурсивного синтеза и наследования качественных характеристик;
-
-6D — фазово-когерентного сворачивания и кубического нелинейного насыщения C^3;
-
-5D — геометрии резонансного окна фазового перехода на новый уровень структурной самоорганизации и эндогенной динамической критичности EDC;
-
-4D — динамического удержания, причинно-следственной непрерывности и топологического монолита T_mu_nu;
-
-3D — объёмной манифестации наблюдаемой Материи и локального якоря массы m c^2;
-
-2D/1D — интерфейса манифестации и направленного потока обмена J / J_flux.
-
-03_closing_equations_EN_RU.md
-
-Содержит замыкающие уравнения математического протокола.
-
-Этот файл включает:
-
-уравнение динамики потока обмена J / J_flux;
-
-уравнение геометрии резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t);
-
-роль C^3 в замыкании геометрии резонансного окна фазового перехода на новый уровень структурной самоорганизации 5D и динамики потока обмена 1D/2D;
-
-итоговый статус математической замкнутости сквозного аппарата.
-
-04_phi_operator_architecture_EN_RU.md
-
-Содержит внутреннюю архитектонику рекурсивного оператора Phi.
-
-Этот файл описывает оператор Phi как тензорный оператор нелинейного отображения и разворачивает его внутренние компоненты:
-
-M_inher;
-
-[I + alpha J_dist(D)]^(-1);
-
-A_attr.
-
-Файл фиксирует роль Phi в потактовой рекурсивной генерации Psi_7D без потери качественных характеристик.
-
-05_tensor_matrix_dynamic_interface_EN_RU.md
-
-Содержит тензорную матрицу динамического интерфейса манифестации.
-
-Этот файл включает:
-
-динамический интерфейсный тензор T_int;
-
-тензорную матрицу манифестации, сопряжения и удержания;
-
-нормальные и тангенциальные компоненты интерфейсного тензора;
-
-тензорное разложение на изотропную и девиаторную компоненты;
-
-уравнение интерфейсного удержания;
-
-геофизическое расширение интерфейсного уравнения;
-
-связь между T_int и T_mu_nu;
-
-роль тензорного слоя в манифестации и деманифестации.
-
-06_numerical_algorithm_FDTD_EN_RU.md
-
-Содержит численный алгоритм моделирования 5D-резонансного окна фазового перехода на новый уровень структурной самоорганизации Omega(t).
-
-Этот файл включает:
-
-FDTD-схему;
-
-дискретный оператор Лапласа;
-
-дискретный источник C^3;
-
-пошаговый цикл программного ядра;
-
-переход от теоретического протокола к прикладному компьютерному моделированию на Python или C++ / CUDA для расчётов на видеокартах.
+Временной показатель не зависит от `n`. Амплитудный показатель зависит от `n`. Полный вывод содержится в `10_generalized_ramp_scaling_lemma_EN_RU.md`.

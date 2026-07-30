@@ -440,6 +440,8 @@ Equivalent form:
 
 This relation implements the temporal scaling of the linear critical ramp class used by the numerical protocol.
 
+For `dC/dt = v_eff t C - g C^n`, this temporal exponent is independent of `n`, while `C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`. The complete derivation is fixed in the [Generalized Ramp-Scaling Lemma](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 ## Critical-Exposure Accumulator
 
 Critical exposure accumulates as:
@@ -1636,6 +1638,8 @@ The module inherits the license of the parent EDK repository.
 `tau_delay(t) пропорционально v(t)^(-1/2)`
 
 Это соотношение реализует временное масштабирование класса с линейным критическим рамповым членом, используемого численным протоколом.
+
+Для `dC/dt = v_eff t C - g C^n` этот временной показатель не зависит от `n`, тогда как `C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`. Полный вывод зафиксирован в [Обобщённой лемме рампового масштабирования](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 ## Аккумулятор критического воздействия
 

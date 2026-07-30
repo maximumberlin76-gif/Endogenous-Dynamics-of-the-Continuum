@@ -242,6 +242,8 @@ Delay scaling law:
 
 `t_delay = velocity ^ (-1/2)`
 
+This is the temporal scaling of the linear critical-ramp class. It remains `-1/2` for every saturation order `n > 1`; only the critical-amplitude exponent depends on `n`. See the [Generalized Ramp-Scaling Lemma](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 Recursive tact-by-tact decrease of endogenous structural coherence proxy:
 
 `C = C − external_pressure · t_delay · dt`
@@ -689,6 +691,8 @@ Marnov Protocol представляет рекурсивную потактов
 Delay scaling law:
 
 `t_delay = velocity ^ (-1/2)`
+
+Это временное масштабирование линейно-рампового критического класса. Оно сохраняет показатель `-1/2` для любого порядка насыщения `n > 1`; только показатель критической амплитуды зависит от `n`. См. [Обобщённую лемму рампового масштабирования](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 Рекурсивное потактовое снижение прокси эндогенной структурной когерентности:
 

@@ -644,6 +644,8 @@ t_delay ~ v^(-1/2)
 
 v = mu · P_ext
 
+This is the temporal scaling of the linear critical-ramp class and is independent of the saturation order `n`; the amplitude exponent remains `n`-dependent. Full derivation: [Generalized Ramp-Scaling Lemma](mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 Main outputs:
 
 marnov_step_*.json
@@ -1897,6 +1899,8 @@ P_ext >> C(t) → деградация T_int → деманифестация M(
 t_delay ~ v^(-1/2)
 
 v = mu · P_ext
+
+Это временное масштабирование линейно-рампового критического класса не зависит от порядка насыщения `n`; амплитудный показатель остаётся зависимым от `n`. Полный вывод: [Обобщённая лемма рампового масштабирования](mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 Основные выходы:
 

@@ -133,6 +133,24 @@ Controlled distinction:
 
 `C^3` describes local cubic volumetric retention.
 
+### Generalized Ramp-Scaling Lemma
+
+For the linear critical-ramp normal form
+
+`dC/dt = v_eff t C - g C^n`, with `v_eff > 0`, `g > 0`, and `n > 1`,
+
+the temporal and amplitude scales are separated:
+
+`t_critical ~ t_delay ~ v_eff^(-1/2)`
+
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
+
+The temporal exponent `-1/2` is independent of the saturation order `n`; the amplitude exponent depends on `n`. For the cubic three-dimensional specialization `n = 3`, `C_critical ~ g^(-1/2) v_eff^(1/4)`, while `t_delay ~ v_eff^(-1/2)`.
+
+Geometric closure `V_coh,d ∝ C^d` with `n = d` and symmetry closure under `C -> -C` are distinct arguments. In the three-dimensional EDS case both support `C^3`, but neither changes the temporal exponent.
+
+The complete derivation and applicability boundary are fixed in the [Generalized Ramp-Scaling Lemma](mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 ### Resonance-Window Phase Transition and Retained Operational Domain
 
 `Omega(t)` is the admissible operational domain of states inside which a resonance-window phase transition can form.
@@ -557,7 +575,7 @@ Path:
 
 Recommended reading order:
 
-`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
+`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → 10_generalized_ramp_scaling_lemma_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
 
 ### Executable Algorithmic Layer
 
@@ -1228,6 +1246,24 @@ Publication type:
 
 `C^3` описывает локальное кубическое объёмное удержание.
 
+### Обобщённая лемма рампового масштабирования
+
+Для линейной критической нормальной формы
+
+`dC/dt = v_eff t C - g C^n`, при `v_eff > 0`, `g > 0` и `n > 1`,
+
+временной и амплитудный масштабы разделяются:
+
+`t_critical ~ t_delay ~ v_eff^(-1/2)`
+
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
+
+Временной показатель `-1/2` не зависит от порядка насыщения `n`; амплитудный показатель зависит от `n`. Для кубической трёхмерной специализации `n = 3` выполняется `C_critical ~ g^(-1/2) v_eff^(1/4)`, тогда как `t_delay ~ v_eff^(-1/2)`.
+
+Геометрическое замыкание `V_coh,d ∝ C^d` при `n = d` и симметрийное замыкание относительно `C -> -C` являются различными аргументами. В трёхмерном EDS-случае оба поддерживают `C^3`, но ни одно из них не изменяет временной показатель.
+
+Полный вывод и граница применимости зафиксированы в [Обобщённой лемме рампового масштабирования](mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 ### Резонансное окно фазового перехода и удерживаемая операционная область
 
 `Omega(t)` — допустимая операционная область состояний, внутри которой может сформироваться резонансное окно фазового перехода.
@@ -1652,7 +1688,7 @@ Publication type:
 
 Рекомендуемый порядок чтения:
 
-`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
+`README.md → 01_full_cascade_7D_to_1D_EN_RU.md → 02_stage_formulas_7D_1D_EN_RU.md → 03_closing_equations_EN_RU.md → 04_recursive_operator_phi_7D_multiplet_invariant_EN_RU.md → 05_numerical_algorithm_FDTD_EN_RU.md → 06_tensor_matrix_dynamic_interface_EN_RU.md → 07_fractal_morphogenesis_biomatrix_EN_RU.md → 08_toroidal_operator_U6D_EN_RU.md → 09_impulse_transition_algorithm_7D_EN_RU.md → 10_generalized_ramp_scaling_lemma_EN_RU.md → poynting_vector_transition_EN_RU.md → interface_projection_balance_formalism_4D_2D_1D_EN_RU.md → appendix_black_luminous_sphere_dissipation.md`
 
 ### Исполняемый алгоритмический слой
 

@@ -78,13 +78,15 @@ Psi_coh = U_hat_6D · Phi(Q(n), D(n), A(n))
 
 Here the phase differences of all oscillators of the medium are fixed under the action of the toroidal projection operator U_hat_6D, fixing the phase lock under amplitude asymmetry.
 
-This gives rise to the term of cubic nonlinear saturation of volume C^3.
+This defines the folded-state intensity represented on the `C^3` scale.
 
 The medium stops resisting itself:
 
 C^3 := (1 / N_C) Tr(Psi_coh^dagger Psi_coh) = (1 / N_C) Tr((U_hat_6D Phi)^dagger (U_hat_6D Phi))
 
 Here N_C > 0 normalizes the folded-state intensity and the equation defines the cubic saturation through C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
+
+The trace relation is a normalization of folded-state intensity, not a standalone derivation of the dynamical saturation order. In the three-dimensional EDS specialization, geometric closure and symmetry closure independently support `n = 3`; their separation is fixed in the [Generalized Ramp-Scaling Lemma](10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 ## EN — Stage 3: Trajectory filtration in 5D space, space of bifurcations
 
@@ -95,6 +97,8 @@ In this layer, the system enters the region of bifurcation trajectories and reso
 C(t) -> P(t)
 
 This state describes the approach to the critical boundary at which the general endogenous structural coherence C(t) approaches the destabilizing pressure of the medium P(t).
+
+When the local approach is represented by `dC/dt = v_eff t C - g C^n`, the critical and delay scales obey `t_critical ~ t_delay ~ v_eff^(-1/2)` for every `n > 1`; the amplitude scale is `g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
 
 The equation of the geometry of the resonance window of phase transition is activated:
 
@@ -248,13 +252,15 @@ Psi_coh = U_hat_6D · Phi(Q(n), D(n), A(n))
 
 Здесь фиксируются разности фаз всех осцилляторов среды под действием оператора тороидальной проекции U_hat_6D, фиксирующего фазовый замок при асимметрии амплитуд.
 
-Это порождает член кубического нелинейного насыщения объема C^3.
+Это определяет интенсивность свёрнутого состояния, представленную в шкале `C^3`.
 
 Среда перестает сопротивляться самой себе:
 
 C^3 := (1 / N_C) Tr(Psi_coh^dagger Psi_coh) = (1 / N_C) Tr((U_hat_6D Phi)^dagger (U_hat_6D Phi))
 
 Здесь N_C > 0 нормирует интенсивность свёрнутого состояния, а уравнение определяет кубическое насыщение через C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
+
+Отношение со следом является нормировкой интенсивности свёрнутого состояния, а не самостоятельным выводом динамического порядка насыщения. В трёхмерной EDS-специализации геометрическое и симметрийное замыкания независимо поддерживают `n = 3`; их разделение зафиксировано в [Обобщённой лемме рампового масштабирования](10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 ## RU — Этап 3: Траекторная фильтрация в пространстве 5D, Пространство бифуркаций
 
@@ -265,6 +271,8 @@ C^3 := (1 / N_C) Tr(Psi_coh^dagger Psi_coh) = (1 / N_C) Tr((U_hat_6D Phi)^dagger
 C(t) -> P(t)
 
 Данное состояние описывает приближение к критической границе, при которой общая эндогенная структурная когерентность C(t) приближается к дестабилизирующему давлению среды P(t).
+
+Когда локальное приближение представлено как `dC/dt = v_eff t C - g C^n`, критический масштаб и масштаб задержки подчиняются `t_critical ~ t_delay ~ v_eff^(-1/2)` для любого `n > 1`; амплитудный масштаб равен `g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
 
 Активируется уравнение геометрии резонансного окна фазового перехода:
 

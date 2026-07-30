@@ -74,7 +74,7 @@ U_6D — folding operator of the 6D layer;
 
 Phi(Q(n), D(n), A(n)) — recursive synthesis state inherited from the 7D layer.
 
-The phase-coherent folding layer does not merely compress the previous layer. It converts the recursive synthesis state into a coherent configuration capable of generating cubic nonlinear saturation.
+The phase-coherent folding layer does not merely compress the previous layer. It converts the recursive synthesis state into a coherent configuration whose folded-state intensity is represented on the `C^3` scale.
 
 C^3 := (1 / N_C) Tr(Psi_coh^dagger Psi_coh) = (1 / N_C) Tr((U_6D Phi)^dagger (U_6D Phi))
 
@@ -89,6 +89,10 @@ Psi_coh^dagger Psi_coh — positive-semidefinite intensity operator of the phase
 N_C > 0 — normalization factor that maps the folded-state intensity to the operational cubic-saturation scale;
 
 C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3) — normalized coherence variable associated with C^3.
+
+This trace identity is an intensity definition and normalization. The dynamical saturation order is a separate closure. Geometric closure gives `V_coh,d ∝ C^d` under isotropic reduction and then identifies `n = d`; symmetry closure under `C -> -C` excludes even powers and supports a leading cubic saturation term when its coefficient is nonzero.
+
+For `dC/dt = v_eff t C - g C^n`, the [Generalized Ramp-Scaling Lemma](10_generalized_ramp_scaling_lemma_EN_RU.md) fixes `t_critical ~ t_delay ~ v_eff^(-1/2)` for all `n > 1` and `C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
 
 The 6D layer fixes the second condition of the mathematical protocol:
 
@@ -360,7 +364,7 @@ U_6D — оператор сворачивания слоя 6D;
 
 Phi(Q(n), D(n), A(n)) — состояние рекурсивного синтеза, наследуемое от слоя 7D.
 
-Слой фазово-когерентного сворачивания не просто сжимает предшествующий слой. Он переводит состояние рекурсивного синтеза в когерентную конфигурацию, способную формировать кубическое нелинейное насыщение.
+Слой фазово-когерентного сворачивания не просто сжимает предшествующий слой. Он переводит состояние рекурсивного синтеза в когерентную конфигурацию, интенсивность свёрнутого состояния которой представлена в шкале `C^3`.
 
 C^3 := (1 / N_C) Tr(Psi_coh^dagger Psi_coh) = (1 / N_C) Tr((U_6D Phi)^dagger (U_6D Phi))
 
@@ -375,6 +379,10 @@ Psi_coh^dagger Psi_coh — положительно полуопределённ
 N_C > 0 — нормировочный коэффициент, отображающий интенсивность свёрнутого состояния в операционную шкалу кубического насыщения;
 
 C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3) — нормированная переменная когерентности, связанная с C^3.
+
+Это тождество со следом является определением и нормировкой интенсивности. Динамический порядок насыщения представляет отдельное замыкание. Геометрическое замыкание даёт `V_coh,d ∝ C^d` при изотропной редукции и затем отождествляет `n = d`; симметрийное замыкание относительно `C -> -C` исключает чётные степени и поддерживает ведущий кубический член насыщения при ненулевом коэффициенте.
+
+Для `dC/dt = v_eff t C - g C^n` [Обобщённая лемма рампового масштабирования](10_generalized_ramp_scaling_lemma_EN_RU.md) фиксирует `t_critical ~ t_delay ~ v_eff^(-1/2)` для любого `n > 1` и `C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
 
 Слой 6D фиксирует второе условие математического протокола:
 

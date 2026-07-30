@@ -204,6 +204,7 @@ Used in: tact-by-tact process description, recursive retention, internal timing.
 t_delay — internal recursive delay  
 Meaning: internal delay interval between recursive operational tacts.  
 Used in: t_delay ~ v^(-1/2), lim as t_delay -> 0 of div J = partial rho_cont / partial t.
+Scope: for the linear critical-ramp normal form dC/dt = v_eff t C - g C^n, t_delay ~ v_eff^(-1/2) for every n > 1; see the [Generalized Ramp-Scaling Lemma](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 v — drift velocity  
 Meaning: velocity of endogenous drift under pressure.  
@@ -883,6 +884,7 @@ t° — тактовая метка
 t_delay — внутренняя рекурсивная задержка  
 Значение: внутренний интервал задержки между рекурсивными операционными тактами.  
 Используется в: t_delay ~ v^(-1/2), lim as t_delay -> 0 of div J = partial rho_cont / partial t.
+Область: для линейной критической нормальной формы dC/dt = v_eff t C - g C^n выполняется t_delay ~ v_eff^(-1/2) для любого n > 1; см. [Обобщённую лемму рампового масштабирования](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 v — скорость дрейфа  
 Значение: скорость эндогенного дрейфа под давлением.  

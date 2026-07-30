@@ -136,6 +136,54 @@ Thus, the criticality threshold Theta_crit represents the boundary between tempo
 
 ---
 
+#### 5.5A. Generalized Ramp-Scaling Lemma for the critical approach to the resonance-window boundary
+
+Consider the local critical normal form
+
+`dC/dt = v_eff t C - g C^n`,
+
+where `v_eff > 0`, `g > 0`, and `n > 1`. Introduce
+
+`t = v_eff^(-alpha) tau`
+
+`C = g^(-1/(n-1)) v_eff^beta y`.
+
+The derivative, ramp, and saturation terms require the exponent balance
+
+`beta + alpha = 1 - alpha + beta = n beta`.
+
+Therefore,
+
+`alpha = 1/2`
+
+`beta = 1/(2(n-1))`,
+
+and the reduced equation is
+
+`dy/dtau = tau y - y^n`.
+
+Hence, for every `n > 1` in the class with the linear ramp term `v_eff t C`,
+
+`t_critical ~ t_delay ~ v_eff^(-1/2)`,
+
+while
+
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
+
+For `n = 3`,
+
+`C_critical ~ g^(-1/2) v_eff^(1/4)`,
+
+but the delay scale remains
+
+`t_delay ~ v_eff^(-1/2)`.
+
+The cubic order can be supported by two independent closures. Geometric closure uses `V_coh,d ∝ C^d` under isotropic reduction and then sets `n = d`. Symmetry closure uses invariance of a signed amplitude under `C -> -C`, excludes even powers, and leaves `-g C^3` as the leading saturating nonlinearity after the linear term when its coefficient is nonzero. Three-dimensionality alone does not prove the cubic normal form, and the trace definition of `C^3` alone does not derive its dynamical saturation order.
+
+The complete proof, scope, and non-implications are fixed in the [Generalized Ramp-Scaling Lemma](../../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
+---
+
 #### 5.6. Conditions of formation of a stable attractor as an area of recursive dynamic retention of qualitative characteristics of the new cycle of different forms of structural self-organization of the Continuum
 
 Conditions of formation of a stable attractor as an area of recursive dynamic retention of qualitative characteristics of the new cycle of different forms of structural self-organization of the Continuum determine the mechanism of fixation of the new level of organization after completion of the phase recursive transition.
@@ -497,6 +545,54 @@ Theta_crit представляет собой критическое значе
 Поэтому переход на новый уровень структурной самоорганизации становится возможным только тогда, когда накопленные результаты предшествующих циклов обеспечивают превышение порога критичности Theta_crit и создают условия для формирования нового устойчивого режима.
 
 Таким образом, порог критичности Theta_crit представляет собой границу между временным резонансным возбуждением и устойчивым рекурсивным потактовым динамическим удержанием различных форм и уровней структурной самоорганизации Континуума, определяя возможность сохранения качественных характеристик нового режима после завершения фазового перехода.
+
+---
+
+#### 5.5A. Обобщённая лемма рампового масштабирования для критического приближения к границе резонансного окна
+
+Рассмотрим локальную критическую нормальную форму
+
+`dC/dt = v_eff t C - g C^n`,
+
+где `v_eff > 0`, `g > 0` и `n > 1`. Введём
+
+`t = v_eff^(-alpha) tau`
+
+`C = g^(-1/(n-1)) v_eff^beta y`.
+
+Члены производной, рампа и насыщения требуют баланса показателей
+
+`beta + alpha = 1 - alpha + beta = n beta`.
+
+Следовательно,
+
+`alpha = 1/2`
+
+`beta = 1/(2(n-1))`,
+
+а редуцированное уравнение имеет вид
+
+`dy/dtau = tau y - y^n`.
+
+Поэтому для любого `n > 1` в классе с линейным рамповым членом `v_eff t C`
+
+`t_critical ~ t_delay ~ v_eff^(-1/2)`,
+
+тогда как
+
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
+
+Для `n = 3`
+
+`C_critical ~ g^(-1/2) v_eff^(1/4)`,
+
+но масштаб задержки сохраняется:
+
+`t_delay ~ v_eff^(-1/2)`.
+
+Кубический порядок может поддерживаться двумя независимыми замыканиями. Геометрическое замыкание использует `V_coh,d ∝ C^d` при изотропной редукции и затем устанавливает `n = d`. Симметрийное замыкание использует инвариантность знакопеременной амплитуды относительно `C -> -C`, исключает чётные степени и оставляет `-g C^3` ведущей насыщающей нелинейностью после линейного члена при ненулевом коэффициенте кубического члена. Одна только трёхмерность не доказывает кубическую нормальную форму, а одно только определение `C^3` через след не выводит динамический порядок насыщения.
+
+Полное доказательство, область применимости и неследствия зафиксированы в [Обобщённой лемме рампового масштабирования](../../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 ---
 

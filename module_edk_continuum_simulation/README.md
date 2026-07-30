@@ -209,6 +209,8 @@ Where:
 
 `v = mu · P_ext`
 
+For the linear critical-ramp normal-form class, the temporal exponent `-1/2` is independent of the saturation order `n`; the amplitude exponent depends on `n`. See the [Generalized Ramp-Scaling Lemma](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 Meaning:
 
 The higher the destabilizing external pressure, the faster the interval of local dynamic-interface demanifestation is compressed.
@@ -484,6 +486,8 @@ Then the module launches a critical-overload demonstration through:
 Где:
 
 `v = mu · P_ext`
+
+Для класса линейной критической рамповой нормальной формы временной показатель `-1/2` не зависит от порядка насыщения `n`; амплитудный показатель зависит от `n`. См. [Обобщённую лемму рампового масштабирования](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 Смысл:
 

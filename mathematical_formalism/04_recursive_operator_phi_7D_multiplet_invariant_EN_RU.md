@@ -159,7 +159,7 @@ Psi_7D
 
 The operator U_hat_6D unfolds the toroidal mechanism of phase capture in the 6D layer.
 
-The cubic term C^3 emerges as cubic nonlinear saturation extracted from the folded phase structure.
+The folded phase structure is represented by the normalized intensity variable `C^3`; the dynamical cubic saturation order is fixed by a separate closure.
 
 The resonance window Omega(t) becomes the resonance window of phase transition to a new level of structural self-organization in the lower cascade.
 
@@ -179,6 +179,8 @@ The 7D operator Phi prepares the inherited multiplet configuration.
 The 6D toroidal operator U_hat_6D performs phase capture and toroidal folding.
 
 The cubic saturation C^3 carries the nonlinear potential extracted from the phase-locked structure.
+
+The trace-based `C^3` definition does not by itself prove a cubic critical normal form. In the three-dimensional EDS specialization, geometric closure `V_coh,3 ∝ C_x C_y C_z` with isotropic reduction and symmetry closure under `C -> -C` independently support `n = 3`. For the linear ramp class, the temporal scaling remains `t_critical ~ t_delay ~ v_eff^(-1/2)` for every `n > 1`; see the [Generalized Ramp-Scaling Lemma](10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 The resonance window Omega(t) opens only after this inherited and folded potential becomes dynamically admissible for the lower-dimensional layer.
 
@@ -343,7 +345,7 @@ Psi_7D
 
 Оператор U_hat_6D разворачивает тороидальный механизм фазового захвата в 6D-слое.
 
-Кубический член C^3 возникает как кубическое нелинейное насыщение, извлеченное из свернутой фазовой структуры.
+Свёрнутая фазовая структура представляется нормированной переменной интенсивности `C^3`; динамический кубический порядок насыщения фиксируется отдельным замыканием.
 
 Резонансное окно Omega(t) становится резонансным окном фазового перехода на новый уровень структурной самоорганизации в нижнем каскаде.
 
@@ -363,5 +365,7 @@ Phi
 6D-тороидальный оператор U_hat_6D выполняет фазовый захват и тороидальную свертку.
 
 Кубическое насыщение C^3 несет нелинейный потенциал, извлеченный из фазово-замкнутой структуры.
+
+Определение `C^3` через след само по себе не доказывает кубическую критическую нормальную форму. В трёхмерной EDS-специализации геометрическое замыкание `V_coh,3 ∝ C_x C_y C_z` при изотропной редукции и симметрийное замыкание относительно `C -> -C` независимо поддерживают `n = 3`. Для линейно-рампового класса временное масштабирование сохраняется как `t_critical ~ t_delay ~ v_eff^(-1/2)` для любого `n > 1`; см. [Обобщённую лемму рампового масштабирования](10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 Резонансное окно Omega(t) открывается только после того, как этот наследуемый и свернутый потенциал становится динамически допустимым для нижнеразмерного слоя.

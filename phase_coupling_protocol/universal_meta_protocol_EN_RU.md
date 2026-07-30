@@ -346,6 +346,8 @@ Where:
 
 v = mu · P_ext
 
+For the linear critical-ramp normal-form class, `t_delay ~ v_eff^(-1/2)` for every `n > 1`, whereas the amplitude exponent depends on `n`. Full proof: [Generalized Ramp-Scaling Lemma](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
+
 Meaning:
 
 the higher the external parasitic pressure, the faster the delay interval of local interface dismantling is compressed.
@@ -859,6 +861,8 @@ t_delay ~ v^(-1/2)
 Где:
 
 v = mu · P_ext
+
+Для класса линейной критической рамповой нормальной формы `t_delay ~ v_eff^(-1/2)` для любого `n > 1`, тогда как амплитудный показатель зависит от `n`. Полное доказательство: [Обобщённая лемма рампового масштабирования](../mathematical_formalism/10_generalized_ramp_scaling_lemma_EN_RU.md).
 
 Смысл:
 

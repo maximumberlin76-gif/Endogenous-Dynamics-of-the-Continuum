@@ -63,15 +63,15 @@ A(n)
 
 This creates a dynamic imbalance that forces the vortex not simply to stand still, but to twist into a torus and move, launching the descending cascade.
 
-## EN — How U_6D Generates Cubic Nonlinear Saturation C^3
+## EN — Folded-State Intensity and the C^3 Scale
 
-When the operator U_6D acts on the Super-Code, the field density
+When U_6D acts on the Super-Code, the field density
 
 |Psi_coh|^2
 
 acquires vortex topology.
 
-When the trace Tr of this state is calculated, multidimensional angular coordinates are folded:
+The trace over the folded state defines the normalized intensity represented on the `C^3` scale:
 
 C^3 :=
 (1 / N_C) Tr(Psi_coh^dagger Psi_coh)
@@ -79,13 +79,41 @@ C^3 :=
 (1 / N_C) integral over T^6
 Psi_coh* · Psi_coh dT^6
 
-Where N_C > 0 is the normalization factor of the folded-state intensity and C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
+Where `N_C > 0` is the normalization factor and
 
-Due to the cyclic structure of U_6D, the higher harmonics of the field do not dissipate, but overlap with each other, that is, they self-focus.
+C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
 
-Mathematically, this integral folds into cubic nonlinearity, analogous to the nonlinearity in hydrodynamic equations of vortex rings.
+This relation defines and normalizes the folded-state intensity. The trace operation and the cube-root definition do not by themselves derive the order of the nonlinear saturation term in a critical normal form.
 
-The medium stops resisting itself because counter-propagating phase waves are fully synchronized and transformed into a single toroidal framework.
+## EN — Independent Closures Supporting C^3
+
+Geometric closure starts from a coherent-volume product
+
+V_coh,d ∝ C_1 C_2 ... C_d.
+
+Under isotropic reduction, `C_1 ~ ... ~ C_d ~ C`, hence
+
+V_coh,d ∝ C^d.
+
+The identification `n = d` is then an explicit model closure. For `d = 3`, it gives `n = 3`.
+
+Symmetry closure applies when `C` is a signed amplitude and the local dynamics are invariant under `C -> -C`. The vector field must then be odd in `C`; even powers are excluded, and `-g C^3` is the leading saturating nonlinearity after the linear term when its coefficient is nonzero.
+
+The geometric and symmetry closures are logically independent. In the three-dimensional EDS specialization, both support `C^3`.
+
+For the critical normal form
+
+`dC/dt = v_eff t C - g C^n`,
+
+the [Generalized Ramp-Scaling Lemma](10_generalized_ramp_scaling_lemma_EN_RU.md) gives
+
+`t_critical ~ t_delay ~ v_eff^(-1/2)`
+
+for every `n > 1`, while the amplitude scale is
+
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
+
+Thus the cubic specialization changes the amplitude exponent to `1/4`, not the temporal exponent.
 
 # Структура тороидального оператора U_6D
 
@@ -152,15 +180,15 @@ A(n)
 
 Это создает динамический дисбаланс, который заставляет вихрь не просто стоять на месте, а закручиваться в тор и двигаться, запуская каскад вниз.
 
-## RU — Как U_6D порождает кубическое нелинейное насыщение C^3?
+## RU — Интенсивность свёрнутого состояния и шкала C^3
 
-Когда оператор U_6D действует на Супер-Код, плотность поля
+Когда U_6D действует на Супер-Код, плотность поля
 
 |Psi_coh|^2
 
 приобретает вихревую топологию.
 
-При вычислении следа Tr от этого состояния происходит свертка многомерных угловых координат:
+След по свёрнутому состоянию определяет нормированную интенсивность, представленную в шкале `C^3`:
 
 C^3 :=
 (1 / N_C) Tr(Psi_coh^dagger Psi_coh)
@@ -168,10 +196,38 @@ C^3 :=
 (1 / N_C) integral over T^6
 Psi_coh* · Psi_coh dT^6
 
-Где N_C > 0 — нормировочный коэффициент интенсивности свёрнутого состояния, а C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
+Где `N_C > 0` — нормировочный коэффициент, а
 
-Из-за циклической структуры U_6D высшие гармоники поля не рассеиваются, а накладываются друг на друга, то есть самофокусируются.
+C := [(1 / N_C) Tr(Psi_coh^dagger Psi_coh)]^(1/3).
 
-Математически этот интеграл сворачивается в кубическую нелинейность, аналогичную нелинейности в гидродинамических уравнениях вихревых колец.
+Это отношение определяет и нормирует интенсивность свёрнутого состояния. Операция следа и определение через кубический корень сами по себе не выводят порядок нелинейного члена насыщения критической нормальной формы.
 
-Среда перестает сопротивляться самой себе, потому что встречные фазовые волны полностью синхронизированы и превращены в единый тороидальный каркас.
+## RU — Независимые замыкания, поддерживающие C^3
+
+Геометрическое замыкание начинается с произведения когерентного объёма
+
+V_coh,d ∝ C_1 C_2 ... C_d.
+
+При изотропной редукции `C_1 ~ ... ~ C_d ~ C`, поэтому
+
+V_coh,d ∝ C^d.
+
+Отождествление `n = d` является затем явным модельным замыканием. Для `d = 3` оно даёт `n = 3`.
+
+Симметрийное замыкание применяется, когда `C` является знакопеременной амплитудой, а локальная динамика инвариантна относительно `C -> -C`. Векторное поле тогда должно быть нечётным по `C`; чётные степени исключаются, а `-g C^3` является ведущей насыщающей нелинейностью после линейного члена при ненулевом коэффициенте кубического члена.
+
+Геометрическое и симметрийное замыкания логически независимы. В трёхмерной EDS-специализации оба поддерживают `C^3`.
+
+Для критической нормальной формы
+
+`dC/dt = v_eff t C - g C^n`
+
+[Обобщённая лемма рампового масштабирования](10_generalized_ramp_scaling_lemma_EN_RU.md) даёт
+
+`t_critical ~ t_delay ~ v_eff^(-1/2)`
+
+для любого `n > 1`, тогда как амплитудный масштаб равен
+
+`C_critical ~ g^(-1/(n-1)) v_eff^(1/(2(n-1)))`.
+
+Следовательно, кубическая специализация изменяет амплитудный показатель на `1/4`, а не временной показатель.
