@@ -490,4 +490,4 @@ jobs:
           git commit \
             -m "Add generalized ramp-scaling lemma" \
             -m "Add the bilingual Generalized Ramp-Scaling Lemma for the linear critical-ramp normal form, prove the universal -1/2 temporal exponent and n-dependent amplitude exponent, document the cubic three-dimensional specialization, separate geometric and symmetry closures, integrate the result across the theorem, mathematical, glossary, protocol, and module layers, and remove the stale dispatchable cubic-source correction workflow."
-          git push origin "HEAD:${{ GITHUB_REF_NAME }}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
