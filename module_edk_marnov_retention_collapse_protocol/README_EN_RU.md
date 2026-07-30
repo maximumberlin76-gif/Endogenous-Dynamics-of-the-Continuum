@@ -419,13 +419,13 @@ the system accumulates critical exposure according to the retardation law.
 
 ## Retardation Law
 
-The protocol represents the configured inverse-cube-root delay relation through:
+The protocol represents the inverse-square-root critical ramp-delay relation through:
 
 `v(t) = mu pressure_excess(t)`
 
 and:
 
-`tau_delay(t) = tau_0 / (v(t) + epsilon_v)^(1/3)`
+`tau_delay(t) = tau_0 / (v(t) + epsilon_v)^(1/2)`
 
 where:
 
@@ -436,9 +436,9 @@ where:
 
 Equivalent form:
 
-`tau_delay(t) is proportional to v(t)^(-1/3)`
+`tau_delay(t) is proportional to v(t)^(-1/2)`
 
-This relation is a configurable modelling assumption of the numerical protocol.
+This relation implements the temporal scaling of the linear critical ramp class used by the numerical protocol.
 
 ## Critical-Exposure Accumulator
 
@@ -1187,7 +1187,7 @@ It provides a controlled protocol for investigating:
 
 `amplitude-regime decay`
 
-The inverse-cube-root retardation relation is implemented as a configurable modelling assumption whose consequences can be numerically compared with alternative delay laws.
+The inverse-square-root retardation relation is implemented as the protocol critical ramp-delay law and is regression-tested against exponent -1/2.
 
 ## License
 
@@ -1616,13 +1616,13 @@ The module inherits the license of the parent EDK repository.
 
 ## Ретардационный закон
 
-Протокол представляет настроенное соотношение задержки, обратно пропорциональной кубическому корню, через:
+Протокол представляет критическое рамповое соотношение задержки, обратно пропорциональной квадратному корню, через:
 
 `v(t) = mu pressure_excess(t)`
 
 и:
 
-`tau_delay(t) = tau_0 / (v(t) + epsilon_v)^(1/3)`
+`tau_delay(t) = tau_0 / (v(t) + epsilon_v)^(1/2)`
 
 где:
 
@@ -1633,9 +1633,9 @@ The module inherits the license of the parent EDK repository.
 
 Эквивалентная запись:
 
-`tau_delay(t) пропорционально v(t)^(-1/3)`
+`tau_delay(t) пропорционально v(t)^(-1/2)`
 
-Это соотношение является настраиваемым модельным предположением численного протокола.
+Это соотношение реализует временное масштабирование класса с линейным критическим рамповым членом, используемого численным протоколом.
 
 ## Аккумулятор критического воздействия
 
@@ -2384,7 +2384,7 @@ The module inherits the license of the parent EDK repository.
 
 `распада амплитудного режима`
 
-Ретардационное соотношение обратного кубического корня реализуется как настраиваемое модельное предположение, последствия которого могут численно сравниваться с альтернативными законами задержки.
+Ретардационное соотношение обратного квадратного корня реализуется как критический рамповый закон задержки протокола и регрессионно проверяется относительно показателя -1/2.
 
 ## Лицензия
 

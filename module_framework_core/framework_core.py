@@ -453,7 +453,7 @@ class ContinuumSimulation:
             tact_index += 1
 
             velocity = mu * external_pressure
-            t_delay = velocity ** (-1.0 / 3.0)
+            t_delay = velocity ** (-1.0 / 2.0)
 
             self.C -= external_pressure * t_delay * self.dt
             self.C = max(self.C, 0.0)

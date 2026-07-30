@@ -640,7 +640,7 @@ P_ext >> C(t) → degradation of T_int → demanifestation of M(t) → growth of
 
 Delay scaling:
 
-t_delay ~ v^(-1/3)
+t_delay ~ v^(-1/2)
 
 v = mu · P_ext
 
@@ -1894,7 +1894,7 @@ P_ext >> C(t) → деградация T_int → деманифестация M(
 
 Масштабирование задержки:
 
-t_delay ~ v^(-1/3)
+t_delay ~ v^(-1/2)
 
 v = mu · P_ext
 

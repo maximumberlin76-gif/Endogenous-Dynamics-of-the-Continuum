@@ -477,30 +477,58 @@ class RuntimeTests(
     def test_delay_and_critical_exposure(
         self,
     ) -> None:
-        tau_low = (
-            self.protocol._calculate_delay_tau(
-                0.01
-            )
+        pressure_low = 0.05
+        pressure_high = 0.20
+        config = self.protocol.config
+
+        tau_low = self.protocol._calculate_delay_tau(
+            pressure_low
+        )
+        tau_high = self.protocol._calculate_delay_tau(
+            pressure_high
         )
 
-        tau_high = (
-            self.protocol._calculate_delay_tau(
-                0.50
-            )
+        expected_low = max(
+            config.delay_base_tau_0
+            / math.sqrt(
+                config.pressure_velocity_coefficient_mu
+                * pressure_low
+                + config.delay_regularization_epsilon
+            ),
+            config.minimum_delay_tau,
+        )
+        expected_high = max(
+            config.delay_base_tau_0
+            / math.sqrt(
+                config.pressure_velocity_coefficient_mu
+                * pressure_high
+                + config.delay_regularization_epsilon
+            ),
+            config.minimum_delay_tau,
         )
 
+        self.assertAlmostEqual(
+            tau_low,
+            expected_low,
+            places=12,
+        )
+        self.assertAlmostEqual(
+            tau_high,
+            expected_high,
+            places=12,
+        )
         self.assertGreater(
             tau_low,
             tau_high,
         )
-
+        self.assertAlmostEqual(
+            tau_low / tau_high,
+            2.0,
+            places=8,
+        )
         self.assertGreaterEqual(
             tau_high,
-            (
-                self.protocol
-                .config
-                .minimum_delay_tau
-            ),
+            config.minimum_delay_tau,
         )
 
         self.protocol.pressure_excess = 0.5

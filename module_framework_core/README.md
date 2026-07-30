@@ -240,7 +240,7 @@ Stress-wave drift velocity:
 
 Delay scaling law:
 
-`t_delay = velocity ^ (-1/3)`
+`t_delay = velocity ^ (-1/2)`
 
 Recursive tact-by-tact decrease of endogenous structural coherence proxy:
 
@@ -688,7 +688,7 @@ Marnov Protocol представляет рекурсивную потактов
 
 Delay scaling law:
 
-`t_delay = velocity ^ (-1/3)`
+`t_delay = velocity ^ (-1/2)`
 
 Рекурсивное потактовое снижение прокси эндогенной структурной когерентности:
 

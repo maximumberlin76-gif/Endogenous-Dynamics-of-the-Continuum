@@ -340,7 +340,7 @@ P_ext >> C(t) → degradation of T_int → demanifestation of M(t) → growth of
 
 The algorithmic implementation uses delay scaling:
 
-t_delay ~ v^(-1/3)
+t_delay ~ v^(-1/2)
 
 Where:
 
@@ -854,7 +854,7 @@ P_ext >> C(t) → деградация T_int → деманифестация M(
 
 В алгоритмической реализации используется масштабирование задержки:
 
-t_delay ~ v^(-1/3)
+t_delay ~ v^(-1/2)
 
 Где:
 

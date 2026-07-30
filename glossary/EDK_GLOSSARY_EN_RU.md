@@ -203,11 +203,11 @@ Used in: tact-by-tact process description, recursive retention, internal timing.
 
 t_delay — internal recursive delay  
 Meaning: internal delay interval between recursive operational tacts.  
-Used in: t_delay ~ v^(-1/3), lim as t_delay -> 0 of div J = partial rho_cont / partial t.
+Used in: t_delay ~ v^(-1/2), lim as t_delay -> 0 of div J = partial rho_cont / partial t.
 
 v — drift velocity  
 Meaning: velocity of endogenous drift under pressure.  
-Used in: t_delay ~ v^(-1/3), v = mu P.
+Used in: t_delay ~ v^(-1/2), v = mu P.
 
 mu — proportionality coefficient  
 Meaning: coefficient relating pressure P to drift velocity v.  
@@ -633,7 +633,7 @@ Meaning: accumulated structural threshold reaches or exceeds the critical thresh
 Q(n+1) = Phi(Q(n), D(n), R(n), A(n), E(n))  
 Meaning: recursive endogenous synthesis of the next qualitative state.
 
-t_delay ~ v^(-1/3)  
+t_delay ~ v^(-1/2)
 Meaning: internal recursive delay decreases as drift velocity increases.
 
 v = mu P  
@@ -882,11 +882,11 @@ t° — тактовая метка
 
 t_delay — внутренняя рекурсивная задержка  
 Значение: внутренний интервал задержки между рекурсивными операционными тактами.  
-Используется в: t_delay ~ v^(-1/3), lim as t_delay -> 0 of div J = partial rho_cont / partial t.
+Используется в: t_delay ~ v^(-1/2), lim as t_delay -> 0 of div J = partial rho_cont / partial t.
 
 v — скорость дрейфа  
 Значение: скорость эндогенного дрейфа под давлением.  
-Используется в: t_delay ~ v^(-1/3), v = mu P.
+Используется в: t_delay ~ v^(-1/2), v = mu P.
 
 mu — коэффициент пропорциональности  
 Значение: коэффициент, связывающий давление P со скоростью дрейфа v.  
@@ -1312,7 +1312,7 @@ Theta_N >= Theta_crit
 Q(n+1) = Phi(Q(n), D(n), R(n), A(n), E(n))  
 Значение: рекурсивный эндогенный синтез следующего качественного состояния.
 
-t_delay ~ v^(-1/3)  
+t_delay ~ v^(-1/2)
 Значение: внутренняя рекурсивная задержка уменьшается при росте скорости дрейфа.
 
 v = mu P  

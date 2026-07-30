@@ -203,7 +203,7 @@ Algorithmic chain:
 
 Delay scaling law:
 
-`t_delay ~ v ^ (-1/3)`
+`t_delay ~ v ^ (-1/2)`
 
 Where:
 
@@ -479,7 +479,7 @@ Then the module launches a critical-overload demonstration through:
 
 Закон масштабирования задержки:
 
-`t_delay ~ v ^ (-1/3)`
+`t_delay ~ v ^ (-1/2)`
 
 Где:
 

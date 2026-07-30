@@ -760,17 +760,66 @@ def _run_collapse_case(
             "Degradation classification failed."
         )
 
-    if not (
-        protocol._calculate_delay_tau(
-            0.80
-        )
-        < protocol._calculate_delay_tau(
-            0.10
-        )
+    pressure_low = 0.10
+    pressure_high = 0.40
+    delay_low = protocol._calculate_delay_tau(
+        pressure_low
+    )
+    delay_high = protocol._calculate_delay_tau(
+        pressure_high
+    )
+    config = protocol.config
+
+    expected_low = max(
+        config.delay_base_tau_0
+        / math.sqrt(
+            config.pressure_velocity_coefficient_mu
+            * pressure_low
+            + config.delay_regularization_epsilon
+        ),
+        config.minimum_delay_tau,
+    )
+    expected_high = max(
+        config.delay_base_tau_0
+        / math.sqrt(
+            config.pressure_velocity_coefficient_mu
+            * pressure_high
+            + config.delay_regularization_epsilon
+        ),
+        config.minimum_delay_tau,
+    )
+
+    if not math.isclose(
+        delay_low,
+        expected_low,
+        rel_tol=1.0e-12,
+        abs_tol=1.0e-12,
     ):
         raise RuntimeError(
-            "Delay scale does not decrease "
-            "with pressure excess."
+            "Low-velocity delay does not follow "
+            "the inverse-square-root law."
+        )
+
+    if not math.isclose(
+        delay_high,
+        expected_high,
+        rel_tol=1.0e-12,
+        abs_tol=1.0e-12,
+    ):
+        raise RuntimeError(
+            "High-velocity delay does not follow "
+            "the inverse-square-root law."
+        )
+
+    if not math.isclose(
+        delay_low / delay_high,
+        2.0,
+        rel_tol=1.0e-8,
+        abs_tol=1.0e-8,
+    ):
+        raise RuntimeError(
+            "Fourfold velocity increase does not "
+            "halve the critical delay."
         )
 
     try:

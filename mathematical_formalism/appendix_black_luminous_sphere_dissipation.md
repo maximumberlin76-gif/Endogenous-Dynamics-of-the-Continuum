@@ -36,9 +36,9 @@ The singularity is avoided because the process is not modeled as an absolute col
 
 The dissolution unfolds as a high-frequency iterative process along the fractal time-beat structure of system bifurcation.
 
-Under the condition P >> C, the dynamics of coherence rescaling transform according to the Delay Scaling Law from Theorem 2:
+Under the condition P >> C, the coherence-rescaling dynamics follow the critical ramp-delay scaling law for a linear ramp term:
 
-t_delay ~ v^(-1/3)
+t_delay ~ v^(-1/2)
 
 where v is the endogenous drift velocity.
 
@@ -297,9 +297,9 @@ P(t) >> C(t) для всех t в Delta t
 
 Растворение разворачивается как высокочастотный итеративный процесс вдоль фрактальной потактовой структуры системной бифуркации.
 
-При условии P >> C динамика рескейлинга когерентности преобразуется согласно Закону масштабирования задержки из Теоремы 2:
+При условии P >> C динамика рескейлинга когерентности следует критическому закону рампового масштабирования задержки для линейного рампового члена:
 
-t_delay ~ v^(-1/3)
+t_delay ~ v^(-1/2)
 
 где v является скоростью эндогенного дрейфа.
 
