@@ -750,11 +750,11 @@ hierarchical diagnostics reports
 
 Execution:
 
-python module_edk_hierarchical_orchestrator/edk_hierarchical_orchestrator.py
+python module_edk_hierarchical_orchestrator/smoke_test.py --output-dir edk_hierarchical_smoke_output --tacts 3
 
 Diagnostics:
 
-python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py
+python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py --input-dir edk_hierarchical_smoke_output/diagnostics_integration/source --output-dir edk_hierarchical_smoke_output/manual_diagnostics
 
 Smoke test:
 
@@ -2006,11 +2006,11 @@ hierarchical_field_*.npz
 
 Запуск:
 
-python module_edk_hierarchical_orchestrator/edk_hierarchical_orchestrator.py
+python module_edk_hierarchical_orchestrator/smoke_test.py --output-dir edk_hierarchical_smoke_output --tacts 3
 
 Диагностика:
 
-python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py
+python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py --input-dir edk_hierarchical_smoke_output/diagnostics_integration/source --output-dir edk_hierarchical_smoke_output/manual_diagnostics
 
 Smoke test:
 

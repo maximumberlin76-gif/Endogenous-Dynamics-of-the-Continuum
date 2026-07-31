@@ -1,10 +1,29 @@
 # Continuous Integration
 
+[![EDK Stress and Scaling Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-stress-scaling-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-stress-scaling-validation.yml)
 [![EDK Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-validation.yml)
 [![EDK Module Execution](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-module-execution.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-module-execution.yml)
 [![EDK Artifact Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-artifact-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-artifact-validation.yml)
+[![EDK Python Compatibility](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-python-compatibility.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-python-compatibility.yml)
 
-The Endogenous Dynamics of the Continuum (EDK) repository uses three independent GitHub Actions validation layers.
+The Endogenous Dynamics of the Continuum (EDK) repository uses five independent GitHub Actions validation layers.
+
+## EDK Stress and Scaling Validation
+
+Workflow:
+
+`.github/workflows/edk-stress-scaling-validation.yml`
+
+Validates:
+
+- eight sustained numerical stress configurations;
+- domain counts from 32 to 1024;
+- `float32` and `float64` execution;
+- finite metrics and finite field arrays;
+- wrapped phase bounds;
+- amplitude bounds;
+- tact and simulation-time continuity;
+- linear state-memory scaling from 32 to 2048 domains.
 
 ## EDK Validation
 
@@ -68,28 +87,53 @@ Validates:
 - deterministic seeded replay equivalence;
 - repository integrity through `git diff --exit-code`.
 
+## EDK Python Compatibility
+
+Workflow:
+
+`.github/workflows/edk-python-compatibility.yml`
+
+Validates:
+
+- supported Python-version matrix execution;
+- Python source compilation;
+- full pytest execution;
+- smoke-test execution across the compatibility matrix;
+- dependency installation and package consistency.
+
 ## Validation Environment
 
 - GitHub Actions;
 - Ubuntu runner;
-- Python 3.11;
+- Python version matrix defined by the compatibility workflow;
+- Python 3.11 for the primary validation workflows;
 - NumPy;
 - Matplotlib;
 - pytest.
 
 ## CI Structure
 
-EDK Validation  
-→ compilation  
-→ pytest  
+EDK Stress and Scaling Validation
+→ sustained numerical stress
+→ state-memory scaling
+
+EDK Validation
+→ compilation
+→ pytest
 → smoke tests
 
-EDK Module Execution  
+EDK Module Execution
 → independent executable-module validation
 
-EDK Artifact Validation  
-→ artifact generation  
-→ structure validation  
-→ numeric validation  
-→ deterministic replay  
+EDK Artifact Validation
+→ artifact generation
+→ structure validation
+→ numeric validation
+→ deterministic replay
 → repository integrity
+
+EDK Python Compatibility
+→ Python-version matrix
+→ compilation
+→ pytest
+→ smoke tests

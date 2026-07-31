@@ -384,7 +384,7 @@ R(θ) may enter as the phase component of calculation, whereas C(t) requires int
 
 Base hierarchical run:
 
-python module_edk_hierarchical_orchestrator/edk_hierarchical_orchestrator.py
+python module_edk_hierarchical_orchestrator/smoke_test.py --output-dir edk_hierarchical_smoke_output --tacts 3
 
 Separate run of the continuum simulation layer:
 
@@ -428,7 +428,7 @@ python module_edk_marnov_retention_collapse_protocol/marnov_retention_diagnostic
 
 Run of the hierarchical orchestrator diagnostics:
 
-python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py
+python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py --input-dir edk_hierarchical_smoke_output/diagnostics_integration/source --output-dir edk_hierarchical_smoke_output/manual_diagnostics
 
 Separate run of the DNA biophoton layer:
 
@@ -900,7 +900,7 @@ R(θ) может входить как фазовый компонент рас�
 
 Базовый иерархический запуск:
 
-python module_edk_hierarchical_orchestrator/edk_hierarchical_orchestrator.py
+python module_edk_hierarchical_orchestrator/smoke_test.py --output-dir edk_hierarchical_smoke_output --tacts 3
 
 Отдельный запуск слоя симуляции Континуума:
 
@@ -944,7 +944,7 @@ python module_edk_marnov_retention_collapse_protocol/marnov_retention_diagnostic
 
 Запуск диагностики иерархического оркестратора:
 
-python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py
+python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py --input-dir edk_hierarchical_smoke_output/diagnostics_integration/source --output-dir edk_hierarchical_smoke_output/manual_diagnostics
 
 Отдельный запуск DNA-биофотонного слоя:
 

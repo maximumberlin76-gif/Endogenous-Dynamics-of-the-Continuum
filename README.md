@@ -1,6 +1,7 @@
 ![Endogenous Dynamics of the Continuum](assets/edk-hero-banner.png)
 
 [![EDK Stress and Scaling Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-stress-scaling-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-stress-scaling-validation.yml)
+[![EDK Python Compatibility](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-python-compatibility.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-python-compatibility.yml)
 [![EDK Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-validation.yml)
 [![EDK Module Execution](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-module-execution.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-module-execution.yml)
 [![EDK Artifact Validation](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-artifact-validation.yml/badge.svg)](https://github.com/maximumberlin76-gif/Endogenous-Dynamics-of-the-Continuum/actions/workflows/edk-artifact-validation.yml)
@@ -22,6 +23,8 @@ Repository:
 `Endogenous-Dynamics-of-the-Continuum`
 
 ## EN — Repository Status and Purpose
+
+Current release layer: `v1.1.0`.
 
 This repository contains the current theorem-algorithmic framework of Endogenous Dynamics of the Continuum.
 
@@ -521,13 +524,22 @@ Root structure:
 
     Endogenous-Dynamics-of-the-Continuum/
     │
+    ├── .github/workflows/
     ├── EDK_theorem_framework_EN_RU/
+    ├── assets/
     ├── glossary/
     ├── mathematical_formalism/
+    ├── phase_coupling_protocol/
     │
     ├── module_edk_continuum_simulation/
+    ├── module_edk_gpu_mean_field_phase_engine/
+    ├── module_edk_hierarchical_orchestrator/
     ├── module_edk_impulse_transition/
+    ├── module_edk_marnov_retention_collapse_protocol/
+    ├── module_edk_recursive_feedback_loop/
+    ├── module_edk_spatiotemporal_phase_delay/
     ├── module_edk_visual_protocol/
+    ├── module_edk_vortex_phase_field/
     ├── module_framework_core/
     ├── module_marnov_protocol_reverse_decoding/
     ├── module_metric_bridge_solver/
@@ -537,12 +549,10 @@ Root structure:
     ├── module_solar_synthesis/
     ├── module_wave_genetics/
     │
-    ├── phase_coupling/
-    │
-    ├── continuum_core_engine.py
-    ├── requirements.txt
+    ├── CI.md
     ├── CITATION.cff
     ├── LICENSE.md
+    ├── MODULE_INDEX_EN_RU.md
     └── README.md
 
 ### Theorem-Descriptive Corpus
@@ -581,29 +591,39 @@ Recommended reading order:
 
 Core executable modules:
 
+`module_edk_continuum_simulation/`
+
+`module_edk_gpu_mean_field_phase_engine/`
+
+`module_edk_hierarchical_orchestrator/`
+
+`module_edk_impulse_transition/`
+
+`module_edk_marnov_retention_collapse_protocol/`
+
+`module_edk_recursive_feedback_loop/`
+
+`module_edk_spatiotemporal_phase_delay/`
+
+`module_edk_visual_protocol/`
+
+`module_edk_vortex_phase_field/`
+
 `module_framework_core/`
+
+`module_marnov_protocol_reverse_decoding/`
+
+`module_metric_bridge_solver/`
+
+`module_molecular_phase_chemistry/`
+
+`module_organic_matrix/`
+
+`module_planetary_resonance/`
 
 `module_solar_synthesis/`
 
 `module_wave_genetics/`
-
-`module_molecular_phase_chemistry/`
-
-`module_planetary_resonance/`
-
-`module_organic_matrix/`
-
-`module_edk_visual_protocol/`
-
-`module_edk_impulse_transition/`
-
-`module_metric_bridge_solver/`
-
-`module_marnov_protocol_reverse_decoding/`
-
-`module_edk_continuum_simulation/`
-
-`continuum_core_engine.py`
 
 The causal architecture and executable dependency order are documented separately.
 
@@ -812,7 +832,7 @@ Main file:
 
 Documentation:
 
-`module_edk_impulse_transition/README_EN_RU.md`
+`module_edk_impulse_transition/README.md`
 
 Functions:
 
@@ -900,7 +920,7 @@ Operational chain:
 
 Path:
 
-`phase_coupling/`
+`phase_coupling_protocol/`
 
 Functions:
 
@@ -915,11 +935,11 @@ Controlled distinction:
 
 `phase synchronization ≠ phase coherence`
 
-### Continuum Core Engine
+### Hierarchical Orchestration Layer
 
-System orchestrator:
+System orchestration package:
 
-`continuum_core_engine.py`
+`module_edk_hierarchical_orchestrator/`
 
 Functions:
 
@@ -964,28 +984,41 @@ Activate the environment on Linux or macOS:
 Install dependencies:
 
     python -m pip install --upgrade pip
-    python -m pip install -r requirements.txt
+    python -m pip install "numpy>=1.26.0" "matplotlib>=3.8.0" pytest
 
 Current dependency set:
 
     numpy>=1.26.0
     matplotlib>=3.8.0
+    pytest
 
 Run selected modules from the repository root:
 
+    python module_edk_continuum_simulation/continuum_simulation.py
+    python module_edk_gpu_mean_field_phase_engine/edk_gpu_mean_field_phase_engine.py --backend cpu
+    python module_edk_impulse_transition/edk_impulse_transition_module.py
+    python module_edk_impulse_transition/poynting_flux_transition.py
+    python module_edk_recursive_feedback_loop/edk_recursive_feedback_loop_module.py
+    python module_edk_visual_protocol/edk_visual_protocol_module.py
+    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+    python module_framework_core/framework_core.py
+    python module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py
+    python module_metric_bridge_solver/metric_bridge.py
+    python module_molecular_phase_chemistry/molecular_phase_chemistry.py
+    python module_organic_matrix/marnov_organic_matrix_generator.py
+    python module_planetary_resonance/schumann_planetary_resonator.py
     python module_solar_synthesis/solar_synthesis_resonator.py
     python module_wave_genetics/wave_genetics_dna_oscillator.py
-    python module_molecular_phase_chemistry/molecular_phase_chemistry.py
-    python module_planetary_resonance/schumann_planetary_resonator.py
-    python module_organic_matrix/marnov_organic_matrix_generator.py
-    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
-    python module_edk_impulse_transition/poynting_flux_transition.py
-    python module_metric_bridge_solver/metric_bridge.py
-    python module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py
 
-Run the full system orchestrator:
+Run the validated hierarchical orchestration smoke suite:
 
-    python continuum_core_engine.py
+    python module_edk_hierarchical_orchestrator/smoke_test.py --output-dir edk_hierarchical_smoke_output --tacts 3
+
+Run diagnostics on the generated successful orchestration output:
+
+    python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py --input-dir edk_hierarchical_smoke_output/diagnostics_integration/source --output-dir edk_hierarchical_smoke_output/manual_diagnostics
+
+The configuration-driven orchestrator CLI requires a JSON configuration supplied through `--config`.
 
 ## EN — Operational Integrity Control
 
@@ -1135,6 +1168,8 @@ Publication type:
 `Endogenous-Dynamics-of-the-Continuum`
 
 ## RU — Статус и назначение репозитория
+
+Текущий релизный слой: `v1.1.0`.
 
 Данный репозиторий содержит текущий теоремно-алгоритмический фреймворк Эндогенной динамики Континуума.
 
@@ -1634,13 +1669,22 @@ Publication type:
 
     Endogenous-Dynamics-of-the-Continuum/
     │
+    ├── .github/workflows/
     ├── EDK_theorem_framework_EN_RU/
+    ├── assets/
     ├── glossary/
     ├── mathematical_formalism/
+    ├── phase_coupling_protocol/
     │
     ├── module_edk_continuum_simulation/
+    ├── module_edk_gpu_mean_field_phase_engine/
+    ├── module_edk_hierarchical_orchestrator/
     ├── module_edk_impulse_transition/
+    ├── module_edk_marnov_retention_collapse_protocol/
+    ├── module_edk_recursive_feedback_loop/
+    ├── module_edk_spatiotemporal_phase_delay/
     ├── module_edk_visual_protocol/
+    ├── module_edk_vortex_phase_field/
     ├── module_framework_core/
     ├── module_marnov_protocol_reverse_decoding/
     ├── module_metric_bridge_solver/
@@ -1650,12 +1694,10 @@ Publication type:
     ├── module_solar_synthesis/
     ├── module_wave_genetics/
     │
-    ├── phase_coupling/
-    │
-    ├── continuum_core_engine.py
-    ├── requirements.txt
+    ├── CI.md
     ├── CITATION.cff
     ├── LICENSE.md
+    ├── MODULE_INDEX_EN_RU.md
     └── README.md
 
 ### Теоремно-описательный корпус
@@ -1694,29 +1736,39 @@ Publication type:
 
 Основные исполняемые модули:
 
+`module_edk_continuum_simulation/`
+
+`module_edk_gpu_mean_field_phase_engine/`
+
+`module_edk_hierarchical_orchestrator/`
+
+`module_edk_impulse_transition/`
+
+`module_edk_marnov_retention_collapse_protocol/`
+
+`module_edk_recursive_feedback_loop/`
+
+`module_edk_spatiotemporal_phase_delay/`
+
+`module_edk_visual_protocol/`
+
+`module_edk_vortex_phase_field/`
+
 `module_framework_core/`
+
+`module_marnov_protocol_reverse_decoding/`
+
+`module_metric_bridge_solver/`
+
+`module_molecular_phase_chemistry/`
+
+`module_organic_matrix/`
+
+`module_planetary_resonance/`
 
 `module_solar_synthesis/`
 
 `module_wave_genetics/`
-
-`module_molecular_phase_chemistry/`
-
-`module_planetary_resonance/`
-
-`module_organic_matrix/`
-
-`module_edk_visual_protocol/`
-
-`module_edk_impulse_transition/`
-
-`module_metric_bridge_solver/`
-
-`module_marnov_protocol_reverse_decoding/`
-
-`module_edk_continuum_simulation/`
-
-`continuum_core_engine.py`
 
 Причинная архитектура и порядок программных зависимостей документируются отдельно.
 
@@ -1925,7 +1977,7 @@ Publication type:
 
 Документация:
 
-`module_edk_impulse_transition/README_EN_RU.md`
+`module_edk_impulse_transition/README.md`
 
 Функции:
 
@@ -2013,7 +2065,7 @@ Publication type:
 
 Путь:
 
-`phase_coupling/`
+`phase_coupling_protocol/`
 
 Функции:
 
@@ -2028,11 +2080,11 @@ Publication type:
 
 `фазовая синхронизация ≠ фазовая когерентность`
 
-### Ядро Континуума
+### Иерархический оркестрационный слой
 
-Системный оркестратор:
+Пакет системной оркестрации:
 
-`continuum_core_engine.py`
+`module_edk_hierarchical_orchestrator/`
 
 Функции:
 
@@ -2077,28 +2129,41 @@ Publication type:
 Установить зависимости:
 
     python -m pip install --upgrade pip
-    python -m pip install -r requirements.txt
+    python -m pip install "numpy>=1.26.0" "matplotlib>=3.8.0" pytest
 
 Текущий набор зависимостей:
 
     numpy>=1.26.0
     matplotlib>=3.8.0
+    pytest
 
 Запуск отдельных модулей из корня репозитория:
 
+    python module_edk_continuum_simulation/continuum_simulation.py
+    python module_edk_gpu_mean_field_phase_engine/edk_gpu_mean_field_phase_engine.py --backend cpu
+    python module_edk_impulse_transition/edk_impulse_transition_module.py
+    python module_edk_impulse_transition/poynting_flux_transition.py
+    python module_edk_recursive_feedback_loop/edk_recursive_feedback_loop_module.py
+    python module_edk_visual_protocol/edk_visual_protocol_module.py
+    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
+    python module_framework_core/framework_core.py
+    python module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py
+    python module_metric_bridge_solver/metric_bridge.py
+    python module_molecular_phase_chemistry/molecular_phase_chemistry.py
+    python module_organic_matrix/marnov_organic_matrix_generator.py
+    python module_planetary_resonance/schumann_planetary_resonator.py
     python module_solar_synthesis/solar_synthesis_resonator.py
     python module_wave_genetics/wave_genetics_dna_oscillator.py
-    python module_molecular_phase_chemistry/molecular_phase_chemistry.py
-    python module_planetary_resonance/schumann_planetary_resonator.py
-    python module_organic_matrix/marnov_organic_matrix_generator.py
-    python module_edk_visual_protocol/marnov_cubic_potential_visualizer.py
-    python module_edk_impulse_transition/poynting_flux_transition.py
-    python module_metric_bridge_solver/metric_bridge.py
-    python module_marnov_protocol_reverse_decoding/marnov_reverse_decoder.py
 
-Запуск полного системного оркестратора:
+Запуск проверенного smoke-набора иерархической оркестрации:
 
-    python continuum_core_engine.py
+    python module_edk_hierarchical_orchestrator/smoke_test.py --output-dir edk_hierarchical_smoke_output --tacts 3
+
+Запуск диагностики по сформированному успешному выходу оркестрации:
+
+    python module_edk_hierarchical_orchestrator/hierarchical_diagnostics.py --input-dir edk_hierarchical_smoke_output/diagnostics_integration/source --output-dir edk_hierarchical_smoke_output/manual_diagnostics
+
+Конфигурационный CLI оркестратора требует JSON-конфигурацию, переданную через `--config`.
 
 ## RU — Контроль операционной целостности
 

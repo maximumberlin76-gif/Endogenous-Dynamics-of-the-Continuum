@@ -55,7 +55,7 @@ The module also calculates:
 
 Run from the repository root:
 
-    pip install -r requirements.txt
+    python -m pip install "numpy>=1.26.0" "matplotlib>=3.8.0"
 
 ## EN — Launch
 
@@ -570,7 +570,7 @@ README-файл:
 
 Запуск из корневой папки репозитория:
 
-    pip install -r requirements.txt
+    python -m pip install "numpy>=1.26.0" "matplotlib>=3.8.0"
 
 ## RU — Запуск модуля
 
